@@ -67,7 +67,14 @@
       font-size: 1.4rem;
     }
 
-    .print-btn {
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
       border: 1px solid #d1d5db;
       background: #f9fafb;
       border-radius: 999px;
@@ -77,14 +84,16 @@
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
+      color: #111;
+      text-decoration: none;
     }
 
-    .print-btn span {
-      font-size: 1.1rem;
-    }
-
-    .print-btn:hover {
+    .btn:hover {
       background: #e5e7eb;
+    }
+
+    .btn span {
+      font-size: 1.1rem;
     }
 
     .meta {
@@ -167,10 +176,6 @@
       color: var(--accent);
     }
 
-    .solutions ul {
-      margin-top: 0.25rem;
-    }
-
     @media (max-width: 600px) {
       .page {
         padding: 1.2rem 1rem 1.4rem;
@@ -193,32 +198,41 @@
         box-shadow: none;
         border-radius: 0;
       }
-      .print-btn {
+      .btn {
         display: none;
       }
     }
   </style>
 </head>
+
 <body>
   <div class="page">
+
+    <!-- HEADER -->
     <header class="page-header">
       <div class="title-block">
         <small>Physik Klasse 10 · Magnetismus</small>
         <h1>Magneten – Lernzettel</h1>
       </div>
-      <button class="print-btn" onclick="window.print()">
-        <span>🖨️</span> Drucken / als PDF speichern
-      </button>
+
+      <div class="controls">
+        <a href="klasse10_downloads.html" class="btn">← Zurück</a>
+        <button class="btn" onclick="window.print()">
+          <span>🖨️</span> Drucken
+        </button>
+      </div>
     </header>
 
+    <!-- META -->
     <div class="meta">
       <div>FGO Perleberg · Physik Digital 7–10</div>
       <div>Name: ____________________ · Datum: ______________</div>
     </div>
 
+    <!-- CONTENT -->
     <section>
       <h2>1. Grundlagen</h2>
-      <p>Ein Magnet ist ein Körper, der bestimmte Stoffe (z.&nbsp;B. Eisen) anzieht. Jeder Magnet besitzt zwei Pole:</p>
+      <p>Ein Magnet ist ein Körper, der bestimmte Stoffe anzieht. Jeder Magnet hat zwei Pole:</p>
       <ul>
         <li><strong>Nordpol (N)</strong></li>
         <li><strong>Südpol (S)</strong></li>
@@ -230,43 +244,53 @@
 
     <section>
       <h2>2. Magnetische Stoffe</h2>
-      <p>Magnetisch deutlich anziehbare Stoffe sind zum Beispiel:</p>
+      <p>Magnetisch anziehbare Stoffe sind z. B.:</p>
       <ul>
         <li>Eisen</li>
         <li>Nickel</li>
         <li>Kobalt</li>
       </ul>
-      <p>Viele andere Metalle (z.&nbsp;B. Aluminium, Kupfer) reagieren kaum auf Magnete.</p>
+      <p>Andere Metalle (z. B. Aluminium, Kupfer) reagieren kaum.</p>
     </section>
 
     <section>
       <h2>3. Dauermagnet, Weichmagnet & Erdmagnetfeld</h2>
       <ul>
-        <li><strong>Dauermagnet:</strong> behält seine Magnetisierung lange (z.&nbsp;B. Kühlschrankmagnet).</li>
-        <li><strong>Weichmagnetische Stoffe:</strong> lassen sich leicht magnetisieren, verlieren die Magnetisierung aber auch schnell wieder.</li>
+        <li><strong>Dauermagnet:</strong> bleibt lange magnetisch.</li>
+        <li><strong>Weichmagnet:</strong> lässt sich leicht magnetisieren, verliert es aber schnell.</li>
       </ul>
-      <p>Die Erde wirkt selbst wie ein großer Magnet. Eine Kompassnadel richtet sich ungefähr in Nord-Süd-Richtung aus.</p>
+      <p>Die Erde besitzt ein Magnetfeld → Kompassnadel richtet sich daran aus.</p>
     </section>
 
+    <!-- TASKS -->
     <section class="tasks">
-      <h2>4. Kurze Übungsaufgaben</h2>
+      <h2>4. Kurze Aufgaben</h2>
       <ol>
-        <li>Nenne zwei Beispiele für magnetische Stoffe und zwei für nicht magnetische Stoffe.</li>
-        <li>Erkläre in einem Satz, was mit einem Stabmagneten passiert, wenn du ihn in der Mitte zerbrichst.</li>
-        <li>Warum kann man mit einem Kompass die Himmelsrichtungen bestimmen?</li>
+        <li>Nenne zwei magnetische und zwei nicht magnetische Stoffe.</li>
+        <li>Was passiert, wenn man einen Stabmagneten zerbricht?</li>
+        <li>Warum funktioniert ein Kompass?</li>
       </ol>
 
       <div class="solutions">
         <details>
-          <summary>Lösungen einblenden (nur zur Kontrolle)</summary>
+          <summary>Lösungen einblenden</summary>
           <ul>
-            <li><strong>Zu 1:</strong> Magnetisch: z.&nbsp;B. Eisen, Nickel, Kobalt. Nicht magnetisch: z.&nbsp;B. Holz, Kunststoff, Aluminium.</li>
-            <li><strong>Zu 2:</strong> Es entstehen zwei neue, kleinere Magnete – jeder mit Nord- und Südpol.</li>
-            <li><strong>Zu 3:</strong> Die Erde besitzt ein Magnetfeld. Die Kompassnadel ist ein kleiner Magnet und richtet sich ungefähr in Nord-Süd-Richtung aus.</li>
+            <li><strong>1:</strong> Magnetisch: Eisen/Nickel. Nicht magnetisch: Holz/Papier/Alu.</li>
+            <li><strong>2:</strong> Es entstehen zwei neue Magnete – beide mit N- und S-Pol.</li>
+            <li><strong>3:</strong> Erde hat Magnetfeld → Nadel richtet sich in Nord-Süd-Richtung aus.</li>
           </ul>
         </details>
       </div>
     </section>
+
+    <!-- BACK LINK BOTTOM -->
+    <p style="margin-top:1.6rem;">
+      <a href="klasse10_downloads.html"
+         style="color:#2563eb; text-decoration:none; font-weight:600;">
+        ← Zurück zu Downloads & Lernzetteln
+      </a>
+    </p>
+
   </div>
 </body>
 </html>
