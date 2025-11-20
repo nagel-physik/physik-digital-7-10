@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Klasse 10 – Downloads & PDFs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+      --c-accent: #facc15;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(250, 204, 21, 0.18), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.18), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.9);
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative;
+      z-index: 5;
+      max-width: 750px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.6rem 2.2rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      max-height: 100%;
+      overflow: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .back-link {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 0.2rem 0.9rem;
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .back-link:hover {
+      border-color: #e5e7eb;
+      color: #e5e7eb;
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.3rem;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 3vw, 2.2rem);
+      margin-bottom: 0.3rem;
+    }
+
+    .intro {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      margin-bottom: 0.8rem;
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 16px;
+      padding: 0.9rem 1rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      text-decoration: none;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+      transition: transform 0.1s ease;
+    }
+
+    .item:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    .icon {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .footer {
+      margin-top: 0.6rem;
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-align: right;
+    }
+
+    @media (max-width: 720px) {
+      .footer { text-align: center; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <main class="panel">
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse10.html">← Zurück zu Klasse 10</a>
+    </header>
+
+    <section>
+      <div class="tagline">klasse 10 · magnetismus</div>
+      <h1>Downloads & Lernzettel</h1>
+      <p class="intro">
+        Hier findest du Zusammenfassungen, Merkzettel und Lernhilfen als
+        <strong>druckoptimierte HTML-Seiten</strong>.  
+        Jede Seite kann direkt gedruckt oder als PDF gespeichert werden.
+      </p>
+    </section>
+
+    <section class="list">
+
+      <a class="item" href="download_10_magneten.html">
+        <span>Magneten – Zusammenfassung</span>
+        <span class="icon">📄</span>
+      </a>
+
+      <a class="item" href="download_10_magnetfeld.html">
+        <span>Magnetfeld – Lernzettel</span>
+        <span class="icon">📄</span>
+      </a>
+
+      <a class="item" href="download_10_elektrmagnet.html">
+        <span>Elektromagnet – Lernzettel</span>
+        <span class="icon">📄</span>
+      </a>
+
+      <a class="item" href="download_10_elektromotor.html">
+        <span>Elektromotor – Das Wichtigste</span>
+        <span class="icon">📄</span>
+      </a>
+
+      <a class="item" href="download_10_induktion.html">
+        <span>Induktion & Generator – Zusammenfassung</span>
+        <span class="icon">📄</span>
+      </a>
+
+      <a class="item" href="download_10_transformator.html">
+        <span>Transformator – Lernseite</span>
+        <span class="icon">📄</span>
+      </a>
+
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Downloads Klasse 10
+    </footer>
+  </main>
+</div>
+</body>
+</html>
