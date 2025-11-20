@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Magnetfeld – Lernzettel Klasse 10</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --page-bg: #e5e7eb;
+      --paper-bg: #ffffff;
+      --text-main: #111827;
+      --text-soft: #4b5563;
+      --accent: #2563eb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: var(--page-bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 1.5rem 0.5rem;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 800px;
+      background: var(--paper-bg);
+      border-radius: 16px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.25);
+      padding: 1.6rem 1.4rem 1.8rem;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .title-block small {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: #111;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #e5e7eb;
+    }
+
+    .btn span {
+      font-size: 1.1rem;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 0.4rem;
+    }
+
+    h2 {
+      font-size: 1.05rem;
+      margin-top: 1rem;
+      margin-bottom: 0.25rem;
+      color: var(--accent);
+    }
+
+    p {
+      font-size: 0.92rem;
+      margin-bottom: 0.25rem;
+      color: var(--text-main);
+    }
+
+    ul {
+      margin-left: 1.1rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+    }
+
+    li + li {
+      margin-top: 0.1rem;
+    }
+
+    .box {
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+
+    .merksatz {
+      border-left: 3px solid var(--accent);
+    }
+
+    .tasks {
+      margin-top: 0.8rem;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 0.6rem;
+    }
+
+    .tasks h2 {
+      margin-top: 0.4rem;
+    }
+
+    .tasks ol {
+      margin-left: 1.2rem;
+      margin-top: 0.15rem;
+      font-size: 0.9rem;
+    }
+
+    .tasks ol li + li {
+      margin-top: 0.25rem;
+    }
+
+    .solutions {
+      margin-top: 0.7rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .solutions summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        padding: 1.2rem 1rem 1.4rem;
+      }
+      h1 {
+        font-size: 1.25rem;
+      }
+      .page-header {
+        align-items: flex-start;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .page {
+        max-width: 100%;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- HEADER -->
+    <header class="page-header">
+      <div class="title-block">
+        <small>Physik Klasse 10 · Magnetismus</small>
+        <h1>Magnetfeld – Lernzettel</h1>
+      </div>
+
+      <div class="controls">
+        <a href="klasse10_downloads.html" class="btn">← Zurück</a>
+        <button class="btn" onclick="window.print()">
+          <span>🖨️</span> Drucken
+        </button>
+      </div>
+    </header>
+
+    <!-- META -->
+    <div class="meta">
+      <div>FGO Perleberg · Physik Digital 7–10</div>
+      <div>Name: ____________________ · Datum: ______________</div>
+    </div>
+
+    <!-- INHALT -->
+    <section>
+      <h2>1. Was ist ein Magnetfeld?</h2>
+      <p>
+        Ein <strong>Magnetfeld</strong> ist der Raum um einen Magneten, in dem
+        Kräfte auf andere Magnete oder magnetische Stoffe wirken.
+      </p>
+      <ul>
+        <li>Es ist unsichtbar, aber nachweisbar.</li>
+        <li>Je näher am Magneten, desto stärker ist das Feld.</li>
+        <li>Wirkt auch durch viele Materialien hindurch.</li>
+      </ul>
+      <div class="box merksatz">
+        <strong>Merksatz:</strong> Das Magnetfeld ist der „Wirkungsraum“ eines Magneten.
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Feldlinien</h2>
+      <p>
+        <strong>Feldlinien</strong> sind gedachte Linien, mit denen wir das Magnetfeld darstellen.
+        Sie zeigen, wie das Feld verläuft.
+      </p>
+      <ul>
+        <li>Feldlinien verlaufen <strong>außen von Nord nach Süd</strong>.</li>
+        <li>Sie schneiden sich nie.</li>
+        <li>Wo sie dicht beieinander liegen, ist das Feld stark.</li>
+      </ul>
+      <div class="box">
+        <strong>Skizzen-Idee für dein Heft:</strong><br />
+        Zeichne einen Stabmagneten mit N- und S-Pol und darum herum geschlossene
+        Feldlinien. Zwischen den Polen verlaufen sie fast gerade.
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Magnetfeld sichtbar machen</h2>
+      <p>
+        Das Magnetfeld kann man z.&nbsp;B. mit <strong>Eisenfeilspänen</strong> sichtbar machen:
+      </p>
+      <ul>
+        <li>Magnet auf den Tisch legen, Papier darüber.</li>
+        <li>Eisenfeilspäne (oder viele kleine Büroklammern) darauf streuen.</li>
+        <li>Papier leicht anklopfen.</li>
+        <li>Die Späne ordnen sich entlang der Feldlinien an.</li>
+      </ul>
+      <p>
+        So wird das Feldmuster um den Magneten sichtbar.
+      </p>
+    </section>
+
+    <!-- AUFGABEN -->
+    <section class="tasks">
+      <h2>4. Kurze Aufgaben</h2>
+      <ol>
+        <li>Erkläre in einem Satz, was man unter einem Magnetfeld versteht.</li>
+        <li>Nenne zwei wichtige Regeln für Feldlinien.</li>
+        <li>Beschreibe den Versuch mit Eisenfeilspänen in 3 kurzen Schritten.</li>
+      </ol>
+
+      <div class="solutions">
+        <details>
+          <summary>Lösungen einblenden</summary>
+          <ul>
+            <li><strong>1:</strong> Ein Magnetfeld ist der Raum um einen Magneten, in dem magnetische Kräfte wirken.</li>
+            <li><strong>2:</strong> Feldlinien verlaufen außen von Nord nach Süd; sie schneiden sich nie; dichte Linien = starkes Feld.</li>
+            <li><strong>3:</strong> Magnet unter Papier legen; Eisenfeilspäne darüber streuen; Papier leicht klopfen → Späne zeigen Feldlinien.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <!-- ZURÜCK-LINK UNTEN -->
+    <p style="margin-top:1.6rem;">
+      <a href="klasse10_downloads.html"
+         style="color:#2563eb; text-decoration:none; font-weight:600;">
+        ← Zurück zu Downloads & Lernzetteln
+      </a>
+    </p>
+
+  </div>
+</body>
+</html>
