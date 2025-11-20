@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Formeln Klasse 8 – Elektrizität</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+
+      --c-ohm:   #3b82f6;
+      --c-power: #f97316;
+      --c-charge:#22c55e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.22), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.9);
+      pointer-events: none;
+    }
+
+    .floaters {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .floaters span {
+      position: absolute;
+      font-size: 2.4rem;
+      color: rgba(148, 163, 184, 0.18);
+      animation: floatUp 26s linear infinite;
+      filter: blur(0.4px);
+    }
+
+    .floaters span:nth-child(1) { left: 14%; animation-duration: 27s; animation-delay: -5s; }
+    .floaters span:nth-child(2) { left: 33%; animation-duration: 25s; animation-delay: -11s; }
+    .floaters span:nth-child(3) { left: 60%; animation-duration: 29s; animation-delay: -17s; }
+    .floaters span:nth-child(4) { left: 82%; animation-duration: 23s; animation-delay: -8s; }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(115vh); }
+      100% { transform: translateY(-20vh); }
+    }
+
+    .panel {
+      position: relative;
+      z-index: 5;
+      max-width: 1150px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.4rem 2.2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+      max-height: 100%;
+      overflow: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .back-link {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 0.2rem 0.9rem;
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .back-link:hover {
+      border-color: #e5e7eb;
+      color: #e5e7eb;
+    }
+
+    .heading h1 {
+      font-size: clamp(1.9rem, 3.1vw, 2.4rem);
+      margin-bottom: 0.3rem;
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      color: rgba(148,163,184,0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.3rem;
+    }
+
+    .heading p {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 780px;
+    }
+
+    .section {
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.96);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+      padding: 1rem 1.1rem 1rem;
+    }
+
+    .section + .section { margin-top: 0.8rem; }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.4rem;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 0.08rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .pill.ohm    { color: var(--c-ohm);    border-color: var(--c-ohm); }
+    .pill.power  { color: var(--c-power);  border-color: var(--c-power); }
+    .pill.charge { color: var(--c-charge); border-color: var(--c-charge); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin-top: 0.4rem;
+    }
+
+    th, td {
+      padding: 0.4rem 0.4rem;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.9);
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-soft);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    .formula {
+      font-family: "SF Mono", ui-monospace, monospace;
+    }
+
+    .hint {
+      font-size: 0.75rem;
+      color: rgba(148,163,184,1);
+    }
+
+    .example {
+      margin-top: 0.4rem;
+      font-size: 0.78rem;
+      color: rgba(148,163,184,0.9);
+    }
+
+    .example strong {
+      color: #e5e7eb;
+    }
+
+    .footer {
+      margin-top: 0.6rem;
+      font-size: 0.78rem;
+      color: rgba(148,163,184,0.9);
+      text-align: right;
+    }
+/* Mobile-Optimierung: Tabellen horizontal scrollbar machen */
+    .table-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 0.4rem;
+      border-radius: 12px;
+    }
+
+    .table-scroll table {
+      min-width: 700px; /* ggf. erhöhen, falls dir etwas abgeschnitten erscheint */
+}
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <div class="floaters">
+    <span>U = R·I</span>
+    <span>P = U·I</span>
+    <span>I = Q/t</span>
+    <span>Ω</span>
+  </div>
+
+  <main class="panel">
+
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse8.html">← Zurück Klasse 8</a>
+    </header>
+
+    <section class="heading">
+      <div class="tagline">klasse 8 · elektrischer strom · spannung · widerstand · leistung</div>
+      <h1>Formelsammlung Klasse 8</h1>
+      <p>
+        Die wichtigsten Formeln für die Themen
+        <strong>Stromstärke</strong>, <strong>Spannung</strong>,
+        <strong>Widerstand</strong> und <strong>Leistung</strong>.
+        Einfach erklärt, mit Einheiten und typischen Beispielen aus dem Alltag.
+      </p>
+    </section>
+
+    
+<!-- Stromstärke -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-title">
+      <span style="color:var(--c-charge);">●</span>
+      Stromstärke
+    </div>
+    <span class="pill charge">Strom</span>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+          <tr>
+            <th>Formel</th>
+            <th>Bedeutung</th>
+            <th>Einheiten</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="formula">I = Q / t</td>
+            <td>
+              Stromstärke: wie viele elektrische Ladungen pro Sekunde fließen.
+              (Wird nicht immer gerechnet, aber grundlegend wichtig.)
+            </td>
+            <td class="hint">
+              I in A (Ampere)<br>
+              Q in C (Coulomb)<br>
+              t in s
+            </td>
+          </tr>
+            </tbody>
+    </table>
+  </div>
+
+  <div class="example">
+        <strong>Beispiel:</strong> Fließen in 2 Sekunden 10 C Ladung,
+        so beträgt die Stromstärke I = 10 C / 2 s = 5 A.
+      </div>
+    </section>
+
+    <!-- Ohmsches Gesetz -->
+    <section class="section">
+      <div class="section-header">
+        <div class="section-title">
+          <span style="color:var(--c-ohm);">●</span>
+          Ohmsches Gesetz
+        </div>
+        <span class="pill ohm">Widerstand</span>
+      </div>
+<div class="table-scroll">
+    <table>
+        <thead>
+          <tr>
+            <th>Formel</th>
+            <th>Bedeutung</th>
+            <th>Einheiten</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="formula">U = R · I</td>
+            <td>
+              Spannung U entsteht, wenn ein Strom I durch einen Widerstand R fließt.
+              Sehr wichtige Grundformel!
+            </td>
+            <td class="hint">
+              U in Volt (V)<br>
+              I in Ampere (A)<br>
+              R in Ohm (Ω)
+            </td>
+          </tr>
+          <tr>
+            <td class="formula">R = U / I</td>
+            <td>
+              Widerstand aus Spannung und Stromstärke bestimmen.
+            </td>
+            <td class="hint">
+              R in Ω
+            </td>
+          </tr>
+           </tbody>
+    </table>
+  </div>
+
+  <div class="example">
+        <strong>Beispiel:</strong> Eine LED hat 2 V Spannungsabfall und 0,02 A Strom.
+        Der Widerstand ist R = 2 V / 0,02 A = 100 Ω.
+      </div>
+    </section>
+
+    <!-- Leistung -->
+    <section class="section">
+      <div class="section-header">
+        <div class="section-title">
+          <span style="color:var(--c-power);">●</span>
+          Elektrische Leistung
+        </div>
+        <span class="pill power">Leistung</span>
+      </div>
+<div class="table-scroll">
+    <table>
+
+        <thead>
+          <tr>
+            <th>Formel</th>
+            <th>Bedeutung</th>
+            <th>Einheiten</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="formula">P = U · I</td>
+            <td>
+              Leistung: wie viel elektrische Energie pro Sekunde umgesetzt wird.
+            </td>
+            <td class="hint">
+              P in Watt (W)<br>
+              U in Volt (V)<br>
+              I in Ampere (A)
+            </td>
+          </tr>
+            </tbody>
+    </table>
+  </div>
+
+  <div class="example">
+        <strong>Beispiel:</strong> Ein Handy-Ladegerät liefert 5 V und 2 A.
+        Die Leistung ist P = 5 V · 2 A = 10 W.
+      </div>
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Formeln Klasse 8
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

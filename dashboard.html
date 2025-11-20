@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Physik Digital 7–10 – Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-grad-top: #0f172a;
+      --bg-grad-bottom: #000000;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+
+      --k7:  linear-gradient(135deg, #22d3ee, #3b82f6);
+      --k8:  linear-gradient(135deg, #a855f7, #6366f1);
+      --k9:  linear-gradient(135deg, #3b82f6, #2563eb);
+      --k10: linear-gradient(135deg, #22c55e, #16a34a);
+      --formeln: linear-gradient(135deg, #facc15, #f97316);
+      --exp:     linear-gradient(135deg, #fb923c, #f97316);
+      --dl:      linear-gradient(135deg, #e5e7eb, #9ca3af);
+      --contact: linear-gradient(135deg, #6366f1, #4f46e5);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, var(--bg-grad-top), var(--bg-dark) 55%, var(--bg-grad-bottom));
+      color: var(--text-main);
+      /* WICHTIG: Scrollen erlauben */
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+    }
+
+    .panel {
+      position: relative;
+      max-width: 520px;
+      width: 100%;
+      border-radius: 24px;
+      padding: 1.8rem 1.5rem 1.4rem;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .heading h1 {
+      font-size: clamp(1.8rem, 4.5vw, 2.4rem);
+      line-height: 1.1;
+      margin-bottom: 0.4rem;
+    }
+
+    .heading p {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    .subline {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(148, 163, 184, 0.9);
+      margin-bottom: 0.25rem;
+    }
+
+    .tiles {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 0.4rem;
+    }
+
+    .tile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 0.9rem 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+      color: #f9fafb;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.8);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
+      border: 1px solid rgba(15, 23, 42, 0.5);
+    }
+
+    .tile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+      filter: brightness(1.05);
+    }
+
+    .tile:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.8);
+      filter: brightness(0.97);
+    }
+
+    .tile.k7      { background: var(--k7); }
+    .tile.k8      { background: var(--k8); }
+    .tile.k9      { background: var(--k9); }
+    .tile.k10     { background: var(--k10); }
+    .tile.formeln { background: var(--formeln); }
+    .tile.exp     { background: var(--exp); }
+    .tile.dl      { background: var(--dl); color: #020617; }
+    .tile.ask     { background: var(--contact); }
+
+    .footer {
+      margin-top: 0.6rem;
+      font-size: 0.78rem;
+      color: rgba(148,163,184,0.9);
+      text-align: center;
+    }
+
+    @media (min-height: 750px) {
+      .app {
+        padding-top: 2.4rem;
+        padding-bottom: 2.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main class="panel">
+      <section class="heading">
+        <div class="subline">FGO Perleberg · Physik Digital</div>
+        <h1>Physik Digital 7–10 – Dashboard</h1>
+        <p>
+          Wähle deine Klassenstufe oder einen Bereich. Alle Inhalte sind für
+          Smartphone &amp; Smartboard optimiert.
+        </p>
+      </section>
+
+      <section class="tiles">
+        <a href="klasse7.html" class="tile k7">Klasse 7</a>
+        <a href="klasse8.html" class="tile k8">Klasse 8</a>
+        <a href="klasse9.html" class="tile k9">Klasse 9</a>
+        <a href="klasse10.html" class="tile k10">Klasse 10</a>
+        <a href="formelsammlung.html" class="tile formeln">Formelsammlung</a>
+
+        <!-- Platzhalter – wenn es später eigene Seiten gibt, einfach href anpassen -->
+        <a href="#" class="tile exp">Experimente</a>
+        <a href="#" class="tile dl">Downloads &amp; PDFs</a>
+
+        <a href="mailto:michael.nagel@lk.brandenburg.de?subject=Fragen%20zu%20Physik%20Digital%207%E2%80%9310"
+           class="tile ask">
+          Fragen an die Lehrkraft
+        </a>
+      </section>
+
+      <footer class="footer">
+        © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Dashboard
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

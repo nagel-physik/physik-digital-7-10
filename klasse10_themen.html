@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Klasse 10 – Themen & Theorie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+
+      --c-magnet:   #22c55e;
+      --c-dauer:    #16a34a;
+      --c-elektro:  #38bdf8;
+      --c-feld:     #a855f7;
+      --c-motor:    #f97316;
+      --c-induk:    #facc15;
+      --c-lenz:     #eab308;
+      --c-gen:      #fb7185;
+      --c-trafo:    #818cf8;
+      --c-wireless: #2dd4bf;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.25), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(34,197,94,0.22), transparent 60%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0,0,0,0.9);
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative;
+      z-index: 5;
+      max-width: 1150px;
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
+      padding: 2.2rem 2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.98), rgba(15,23,42,0.92));
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(148,163,184,0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      overflow: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: .9rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .back-link {
+      font-size: .85rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      padding: .2rem .9rem;
+      background: rgba(15,23,42,0.8);
+    }
+    .back-link:hover { border-color:#e5e7eb; color:#e5e7eb; }
+
+    .tagline {
+      font-size: .8rem;
+      color: rgba(148,163,184,0.9);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      margin-bottom: .3rem;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      margin-bottom: .2rem;
+    }
+
+    .intro {
+      font-size: .95rem;
+      color: var(--text-soft);
+      max-width: 780px;
+    }
+
+    .grid {
+      margin-top: .6rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .8rem;
+    }
+
+    .tile {
+      border-radius: 18px;
+      padding: .85rem 1rem;
+      background: rgba(15,23,42,0.98);
+      border: 1px solid rgba(30,64,175,0.6);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tile a {
+      display: flex;
+      flex-direction: column;
+      gap: .2rem;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .tile-header {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-weight: 600;
+      font-size: .98rem;
+    }
+
+    .icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      box-shadow: 0 0 18px rgba(15,23,42,0.9);
+    }
+
+    .tile p {
+      font-size: .86rem;
+      color: var(--text-soft);
+    }
+
+    .badge {
+      font-size: .7rem;
+      padding: .05rem .45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      color: rgba(148,163,184,0.95);
+      align-self: flex-start;
+      margin-top: .1rem;
+    }
+
+    /* individuelle Farben */
+    .magnet   .icon { background: var(--c-magnet); }
+    .dauer    .icon { background: var(--c-dauer); }
+    .emag     .icon { background: var(--c-elektro); }
+    .feld     .icon { background: var(--c-feld); }
+    .motor    .icon { background: var(--c-motor); }
+    .induk    .icon { background: var(--c-induk); }
+    .lenz     .icon { background: var(--c-lenz); }
+    .gen      .icon { background: var(--c-gen); }
+    .trafo    .icon { background: var(--c-trafo); }
+    .wireless .icon { background: var(--c-wireless); }
+
+    .tile:hover {
+      border-color: rgba(96,165,250,0.9);
+      transform: translateY(-1px);
+      transition: all .16s ease-out;
+    }
+
+    @media (max-width: 900px) {
+      .panel { padding: 1.8rem 1.4rem 2.1rem; }
+      .grid  { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    @media (max-width: 720px) {
+      .brand { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <main class="panel" aria-labelledby="k10-themen-title">
+
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse10.html">← Zurück Klasse 10</a>
+    </header>
+
+    <section>
+      <div class="tagline">klasse 10 · magnetismus · induktion · wellen · kernphysik</div>
+      <h1 id="k10-themen-title">Themen &amp; Theorie – Klasse 10</h1>
+      <p class="intro">
+        Wähle ein Thema aus. Jede Kachel bringt dich zu einer kompakten
+        Theorie-Seite: Merksätze, Beispiele und Skizzen – als Ergänzung
+        zum Schülerbuch.
+      </p>
+    </section>
+
+    <section class="grid" aria-label="Themenübersicht Klasse 10">
+      <!-- Magneten -->
+      <article class="tile magnet">
+        <a href="theorie_magneten.html">
+          <div class="tile-header">
+            <div class="icon">🧲</div>
+            <div>Magneten</div>
+          </div>
+          <p>Grundlagen, Pole, magnetische Stoffe, Erdmagnetfeld.</p>
+          <span class="badge">fertig</span>
+        </a>
+      </article>
+
+      <!-- Dauermagneten -->
+      <!-- Dauermagneten -->
+<article class="tile dauer">
+  <a href="theorie_dauermagneten.html">
+    <div class="tile-header">
+      <div class="icon">🧲</div>
+      <div>Dauermagneten</div>
+    </div>
+    <p>Magnetische Domänen, harte und weiche Magnete.</p>
+    <span class="badge">fertig</span>
+  </a>
+</article>
+
+      <!-- Elektromagneten -->
+      <article class="tile emag">
+  <a href="theorie_elektrmagneten.html">
+          <div class="tile-header">
+            <div class="icon">🌀</div>
+            <div>Elektromagneten</div>
+          </div>
+          <p>Stromdurchflossene Spule, Schaltmagnete, Anwendungen.</p>
+          <span class="badge">fertig</span>
+        </a>
+      </article>
+
+      <!-- Magnetfeld -->
+      <article class="tile magnetfeld">
+  <a href="theorie_magnetfeld.html">
+          <div class="tile-header">
+            <div class="icon">🌐</div>
+            <div>Magnetfeld</div>
+          </div>
+          <p>Feldlinien, Richtung, Darstellung mit Eisenfeilspänen.</p>
+          <span class="badge">fertig</span>
+        </a>
+      </article>
+
+      <!-- Elektromotor -->
+      <article class="tile motor">
+  <a href="theorie_elektromotor.html">
+          <div class="tile-header">
+            <div class="icon">⚙️</div>
+            <div>Elektromotor</div>
+          </div>
+          <p>Kraft im Magnetfeld, Drehbewegung, einfache Motoren.</p>
+          <span class="badge">fertig</span>
+  </a>
+</article>
+
+      <!-- Induktion -->
+<article class="tile induk">
+  <a href="theorie_induktion_lenz.html">
+    <div class="tile-header">
+      <div class="icon">⚡</div>
+      <div>Elektromagnetische Induktion</div>
+    </div>
+    <p>Spannung durch Bewegungen von Leitern im Magnetfeld.</p>
+    <span class="badge">fertig</span>
+  </a>
+</article>
+
+      <!-- Lenz -->
+<article class="tile lenz">
+  <a href="theorie_lenz.html">
+    <div class="tile-header">
+      <div class="icon">🔄</div>
+      <div>Induktion</div>
+    </div>
+    <p>Spannung durch Änderung des Magnetfelds.</p>
+    <span class="badge">fertig</span>
+  </a>
+</article>
+
+      <!-- Generator -->
+<article class="tile gen">
+  <a href="theorie_generator.html">
+    <div class="tile-header">
+      <div class="icon">🔄</div>
+      <div>Generator</div>
+    </div>
+    <p>Mechanische in elektrische Energie umwandeln.</p>
+    <span class="badge">fertig</span>
+  </a>
+</article>
+
+     <!-- Transformator -->
+<article class="tile traf">
+  <a href="theorie_transformator.html">
+    <div class="tile-header">
+      <div class="icon">🔌</div>
+      <div>Transformator</div>
+    </div>
+    <p>Spannung hoch- und heruntertransformieren.</p>
+    <span class="badge">fertig</span>
+  </a>
+</article>
+
+     <!-- Drahtlos -->
+<article class="tile draht">
+  <a href="theorie_drahtlos.html">
+    <div class="tile-header">
+      <div class="icon">📡</div>
+      <div>Drahtlose Energieübertragung</div>
+    </div>
+    <p>Energieübertragung durch elektromagnetische Felder.</p>
+    <span class="badge">fertig</span>
+  </a>
+</article>
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Themen Klasse 10
+    </footer>
+  </main>
+</div>
+</body>
+</html>

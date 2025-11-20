@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Induktion – Theorie Klasse 10</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+      --c-accent: #fbbf24;
+      --c-warn:   #facc15;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app { position: relative; width: 100%; height: 100vh; padding: 1.5rem; display: flex; align-items: center; justify-content: center; }
+
+    .bg-overlay {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(251,191,36,0.22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(34,197,94,0.18), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute; inset: 0;
+      box-shadow: inset 0 0 160px rgba(0,0,0,0.9);
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative; z-index: 5;
+      max-width: 1150px; width: 100%;
+      margin: 0 auto; padding: 2.2rem 2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.98), rgba(15,23,42,0.9));
+      box-shadow: 0 30px 80px rgba(0,0,0,0.9), 0 0 0 1px rgba(148,163,184,0.4);
+      display: flex; flex-direction: column; gap: 1.5rem;
+      max-height: 100%; overflow: auto;
+    }
+
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+
+    .brand { font-size:0.9rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--text-soft); }
+
+    .back-link {
+      font-size:0.85rem; color:var(--text-soft);
+      text-decoration:none; border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      padding:0.2rem 0.9rem; background:rgba(15,23,42,0.8);
+    }
+
+    .tagline {
+      font-size:0.8rem; color:rgba(148,163,184,0.9);
+      text-transform:uppercase; letter-spacing:0.18em; margin-bottom:0.3rem;
+    }
+
+    h1 { font-size:clamp(1.9rem, 3vw, 2.3rem); margin-bottom:0.3rem; }
+
+    .intro-text { font-size:0.95rem; color:var(--text-soft); max-width:780px; }
+
+    .grid { display:grid; grid-template-columns:minmax(0, 2.1fr) minmax(0, 1.4fr); gap:1rem;}
+
+    .section {
+      border-radius:20px; border:1px solid rgba(148,163,184,0.6);
+      background:rgba(15,23,42,0.96);
+      box-shadow:0 16px 40px rgba(0,0,0,0.75);
+      padding:0.9rem 1rem 1rem; font-size:0.92rem;
+    }
+
+    .section-title {
+      display:flex; align-items:center; gap:0.45rem;
+      font-weight:600; margin-bottom:0.3rem;
+    }
+
+    .section-title span.dot {
+      width:9px; height:9px; border-radius:999px;
+      background:var(--c-accent);
+      box-shadow:0 0 14px rgba(251,191,36,0.7);
+    }
+
+    ul { margin-left:1.1rem; margin-top:0.25rem; display:grid; gap:0.2rem;}
+
+    .merksatz {
+      margin-top:0.4rem; border-radius:14px;
+      padding:0.55rem 0.7rem; font-size:0.9rem;
+      border:1px solid rgba(250,204,21,0.9);
+      background:radial-gradient(circle at top left, rgba(250,204,21,0.12), transparent);
+      color:#facc15;
+    }
+
+    .example-box {
+      margin-top:0.4rem; border-radius:14px;
+      padding:0.55rem 0.7rem; font-size:0.9rem;
+      border:1px solid rgba(148,163,184,0.6);
+      background:rgba(15,23,42,0.96); color:var(--text-soft);
+    }
+
+    .sketch {
+      margin-top:0.4rem; border-radius:18px; padding:0.8rem;
+      background:radial-gradient(circle at top left, rgba(251,191,36,0.16), rgba(15,23,42,0.98));
+      border:1px dashed rgba(251,191,36,0.7); font-size:0.88rem;
+    }
+
+    .sketch-graphic {
+      margin-top:0.4rem;
+      display:grid; grid-template-columns:repeat(7, minmax(0, 1fr));
+      gap:0.2rem; align-items:center;
+      font-family:"SF Mono", ui-monospace, monospace; font-size:0.8rem;
+    }
+
+    .checklist { margin-top:0.4rem; font-size:0.88rem;}
+
+    .footer {
+      margin-top:0.3rem; font-size:0.78rem;
+      color:rgba(148,163,184,0.9); text-align:right;
+    }
+
+    @media (max-width:900px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <main class="panel" aria-labelledby="induktion-title">
+
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse10_themen.html">← Zurück zu Themen &amp; Theorie</a>
+    </header>
+
+    <section>
+      <div class="tagline">klasse 10 · elektromagnetismus · induktion</div>
+      <h1 id="induktion-title">Induktion</h1>
+      <p class="intro-text">
+        Die <strong>Induktion</strong> beschreibt das Entstehen einer elektrischen
+        Spannung durch Bewegung im Magnetfeld oder durch eine Änderung der
+        Magnetfeldstärke. Grundlage für viele Geräte in Technik und Alltag.
+      </p>
+    </section>
+
+    <section class="grid">
+
+      <!-- Linke Seite -->
+      <div>
+
+        <article class="section">
+          <h2 class="section-title"><span class="dot"></span>Was ist Induktion?</h2>
+          <p>
+            Eine elektrische Spannung entsteht, wenn sich der magnetische
+            Einfluss auf eine Leiterschleife ändert. Das nennt man
+            <strong>elektromagnetische Induktion</strong>.
+          </p>
+
+          <p style="margin-top:0.3rem;">Das kann passieren durch:</p>
+          <ul>
+            <li>Bewegung eines Magneten auf eine Spule zu</li>
+            <li>Herausziehen des Magneten</li>
+            <li>Bewegung der Spule relativ zum Magneten</li>
+            <li>Änderung der Stärke des Magnetfelds</li>
+          </ul>
+
+          <div class="merksatz">
+            <strong>Merksatz</strong><br>
+            Eine Spannung wird nur dann induziert, wenn sich das Magnetfeld
+            ändert – kein Effekt bei Stillstand.
+          </div>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title"><span class="dot"></span>Wodurch wird die Spannung größer?</h2>
+          <ul>
+            <li>schnellere Bewegung</li>
+            <li>stärkerer Magnet</li>
+            <li>mehr Windungen der Spule</li>
+          </ul>
+
+          <div class="example-box">
+            <strong>Beispiel:</strong><br>
+            Bei schneller Hin-und-her-Bewegung eines Magneten in einer Spule
+            leuchtet die Glühlampe kurz hell auf.
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Rechte Seite -->
+      <div>
+
+        <article class="section">
+          <h2 class="section-title"><span class="dot"></span>
+            Skizze: Magnet und Spule</h2>
+
+          <div class="sketch">
+            <p>Bewegung des Magneten → Änderung des Magnetfelds:</p>
+
+            <div class="sketch-graphic" aria-hidden="true">
+              <div>N</div><div>→</div><div>(Spule)</div><div></div><div></div><div></div><div></div>
+            </div>
+            <div class="sketch-graphic" aria-hidden="true">
+              <div></div><div>↑</div><div>U</div><div></div><div></div><div></div><div></div>
+            </div>
+
+            <p style="margin-top:0.5rem;">
+              Wird der Magnet bewegt, entsteht eine Induktionsspannung U.
+            </p>
+          </div>
+
+        </article>
+
+        <article class="section">
+          <h2 class="section-title"><span class="dot"></span>
+            Was solltest du können?</h2>
+
+          <div class="checklist">
+            <ul>
+              <li>Grundprinzip der Induktion erklären</li>
+              <li>Ursachen für starke Induktion nennen</li>
+              <li>klassisches Magnet-Spule-Experiment beschreiben</li>
+              <li>skizzieren, wann eine Spannung entsteht</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title"><span class="dot"></span>
+            Kurz-Zusammenfassung</h2>
+
+          <p>
+            Induktion entsteht immer dann, wenn sich ein Magnetfeld ändert –
+            z. B. durch Bewegung eines Magneten oder einer Spule. Die Spannung
+            wird größer bei stärkerem Magneten, schnellerer Bewegung oder mehr
+            Windungen der Spule.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Theorie „Induktion“
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

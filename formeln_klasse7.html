@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Formeln & Grundlagen – Klasse 7</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+
+      --c-therm:  #f97316;
+      --c-kraft:  #22c55e;
+      --c-temp:   #3b82f6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app { position: relative; width: 100%; height: 100vh; padding: 1.5rem; }
+
+    .bg-overlay {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.22), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(249,115,22,0.22), transparent 60%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute; inset: 0;
+      box-shadow: inset 0 0 160px rgba(0,0,0,0.9);
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative; z-index: 5;
+      max-width: 1100px;
+      width: 100%; height: 100%;
+      padding: 2rem;
+      border-radius: 26px;
+      background: rgba(15,23,42,0.95);
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.85),
+        0 0 0 1px rgba(148,163,184,0.35);
+      overflow: auto;
+    }
+
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .brand {
+      font-size: .85rem;
+      letter-spacing: .16em;
+      color: var(--text-soft);
+      text-transform: uppercase;
+    }
+
+    .back-link {
+      color: var(--text-soft);
+      padding: .2rem .7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      text-decoration: none;
+    }
+
+    .back-link:hover { color: #fff; border-color: #fff; }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: .2rem;
+    }
+
+    .tagline {
+      font-size: .8rem;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      letter-spacing: .15em;
+      margin-bottom: .6rem;
+    }
+
+    .section {
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(148,163,184,0.55);
+      padding: 1rem 1.2rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .pill {
+      font-size: .75rem;
+      padding: .1rem .6rem;
+      border-radius: 999px;
+      border: 1px solid;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-left: auto;
+    }
+
+    .pill.therm { border-color: var(--c-therm); color: var(--c-therm); }
+    .pill.temp  { border-color: var(--c-temp);  color: var(--c-temp); }
+    .pill.kraft { border-color: var(--c-kraft); color: var(--c-kraft); }
+
+    .formula {
+      font-family: monospace;
+      font-size: 1rem;
+      margin: .5rem 0;
+    }
+
+    .example {
+      margin-top: .5rem;
+      font-size: .85rem;
+      color: var(--text-soft);
+    }
+
+    .footer {
+      margin-top: 1rem;
+      text-align: right;
+      font-size: .8rem;
+      color: var(--text-soft);
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <main class="panel">
+
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a href="klasse7.html" class="back-link">← Zurück Klasse 7</a>
+    </header>
+
+    <div class="tagline">Klasse 7 · Grundlagen · Wärme · Kraft</div>
+    <h1>Formeln & Grundlagen Klasse 7</h1>
+    <p>
+      In der 7. Klasse stehen Grundlagen im Mittelpunkt: Wärme, Temperatur,
+      Ausdehnung und einfache Kräfte. Es gibt nur wenige Formeln – dafür viele
+      wichtige Begriffe und Beispiele aus dem Alltag.
+    </p>
+
+    <!-- Thermisches Verhalten -->
+    <section class="section">
+      <div class="section-title">
+        <span style="color:var(--c-therm);">●</span> Thermisches Verhalten von Körpern
+        <span class="pill therm">Wärme</span>
+      </div>
+
+      <p>
+        Wenn Stoffe wärmer werden, bewegen sich ihre Teilchen schneller.
+        Das kann man beobachten als:
+      </p>
+      <ul>
+        <li>Ausdehnung (z. B. Metall dehnt sich bei Hitze aus)</li>
+        <li>Aggregatzustandsänderung (Eis → Wasser → Dampf)</li>
+        <li>Temperaturänderung</li>
+      </ul>
+
+      <div class="example">
+        <strong>Alltag:</strong> Eisenbahn-Schienen haben Lücken, damit sie sich
+        im Sommer ausdehnen können.
+      </div>
+    </section>
+
+    <!-- Thermische Energie -->
+    <section class="section">
+      <div class="section-title">
+        <span style="color:var(--c-temp);">●</span> Thermische Energie & Wärme
+        <span class="pill temp">Energie</span>
+      </div>
+
+      <p>
+        Wärme ist Energie, die von einem Körper zum anderen übertragen wird.
+        Es gibt drei Arten der Wärmeübertragung:
+      </p>
+      <ul>
+        <li><strong>Leitung:</strong> Metalllöffel wird in heißem Wasser warm</li>
+        <li><strong>Strömung:</strong> Warme Luft steigt nach oben</li>
+        <li><strong>Strahlung:</strong> Sonne wärmt dein Gesicht</li>
+      </ul>
+
+      <p><strong>Wichtig:</strong> In Klasse 7 gibt es hier keine Rechenformeln.</p>
+    </section>
+
+    <!-- Kraft -->
+    <section class="section">
+      <div class="section-title">
+        <span style="color:var(--c-kraft);">●</span> Wechselwirkung & Kraft
+        <span class="pill kraft">Kraft</span>
+      </div>
+
+      <p>
+        Kräfte können:
+      </p>
+      <ul>
+        <li>Bewegung verändern</li>
+        <li>Verformen</li>
+        <li>Richtung ändern</li>
+      </ul>
+
+      <p>Die einzige wichtige Formel in Klasse 7 ist die <strong>Gewichtskraft</strong>:</p>
+
+      <div class="formula"><strong>F<sub>G</sub> = m · g</strong></div>
+
+      <ul>
+        <li>F<sub>G</sub> in Newton (N)</li>
+        <li>m in Kilogramm (kg)</li>
+        <li>g ≈ 9,81 m/s² (Erdbeschleunigung)</li>
+      </ul>
+
+      <div class="example">
+        <strong>Beispiel:</strong> Ein 5-kg-Rucksack hat eine Gewichtskraft von  
+        F = 5 · 9,81 ≈ 49 N.
+      </div>
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Grundlagen Klasse 7
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

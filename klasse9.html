@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Physik Klasse 9 – Überblick</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+
+      --c-topic: #3b82f6;
+      --c-training: #22c55e;
+      --c-exp: #f97316;
+      --c-dl: #94a3b8;
+      --c-formel: #eab308;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+  color: #e5e7eb;
+  min-height: 100vh;
+  margin: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+    .app {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 1.5rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.2), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.22), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.9);
+      pointer-events: none;
+    }
+
+    .floaters {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .floaters span {
+      position: absolute;
+      font-size: 2.4rem;
+      color: rgba(148, 163, 184, 0.18);
+      animation: floatUp 26s linear infinite;
+      filter: blur(0.4px);
+    }
+
+    .floaters span:nth-child(1) { left: 12%; animation-duration: 28s; animation-delay: -4s; }
+    .floaters span:nth-child(2) { left: 38%; animation-duration: 26s; animation-delay: -10s; }
+    .floaters span:nth-child(3) { left: 64%; animation-duration: 30s; animation-delay: -18s; }
+    .floaters span:nth-child(4) { left: 82%; animation-duration: 24s; animation-delay: -7s; }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh); }
+      100% { transform: translateY(-20vh); }
+    }
+
+    .panel {
+      position: relative;
+      z-index: 5;
+      max-width: 1150px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.4rem 2.2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .back-link {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 0.2rem 0.9rem;
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .back-link:hover {
+      border-color: #e5e7eb;
+      color: #e5e7eb;
+    }
+
+    .heading h1 {
+      font-size: clamp(1.9rem, 3.1vw, 2.4rem);
+      margin-bottom: 0.3rem;
+    }
+
+    .heading p {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 720px;
+    }
+
+    .heading strong {
+      color: #60a5fa;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .tile {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+      transition:
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out,
+        filter 0.12s ease-out;
+    }
+
+    .tile a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.4rem 1.1rem;
+      color: #0f172a;
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 0.08em;
+    }
+
+    .tile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.12s ease-out;
+      pointer-events: none;
+    }
+
+    .tile:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.9);
+      filter: brightness(1.02);
+    }
+
+    .tile:hover::after {
+      opacity: 1;
+    }
+
+    .tile.topic {
+      background: linear-gradient(135deg, #93c5fd, var(--c-topic), #1d4ed8);
+      color: #f9fafb;
+    }
+
+    .tile.training {
+      background: linear-gradient(135deg, #4ade80, var(--c-training), #16a34a);
+      color: #022c22;
+    }
+
+    .tile.exp {
+      background: linear-gradient(135deg, #fdba74, var(--c-exp), #c2410c);
+      color: #111827;
+    }
+
+    .tile.dl {
+      background: linear-gradient(135deg, #cbd5f5, var(--c-dl), #64748b);
+      color: #020617;
+    }
+
+    .tile.formel {
+      background: linear-gradient(135deg, #facc15, var(--c-formel), #ca8a04);
+      color: #111827;
+    }
+
+    .section-title {
+      margin-top: 0.6rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-soft);
+    }
+
+    .topics-table {
+      margin-top: 0.4rem;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .topics-table table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    .topics-table th,
+    .topics-table td {
+      padding: 0.55rem 0.8rem;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.9);
+    }
+
+    .topics-table th {
+      text-align: left;
+      background: rgba(15, 23, 42, 0.98);
+      font-weight: 600;
+      color: var(--text-soft);
+    }
+
+    .topics-table tr:nth-child(even) td {
+      background: rgba(15, 23, 42, 0.96);
+    }
+
+    .topics-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      color: rgba(148, 163, 184, 0.95);
+    }
+
+    .footer {
+      margin-top: 0.4rem;
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-align: right;
+    }
+
+    @media (max-width: 960px) {
+      .panel {
+        padding: 2rem 1.4rem 2.1rem;
+      }
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .tile a {
+        font-size: 1rem;
+      }
+      .footer {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <div class="floaters">
+    <span>v = s/t</span>
+    <span>a = Δv/Δt</span>
+    <span>F = m·a</span>
+    <span>E = W</span>
+  </div>
+
+  <main class="panel" aria-labelledby="k9-title">
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="dashboard.html">← Zurück zum Dashboard</a>
+    </header>
+
+    <section class="heading">
+      <h1 id="k9-title">Klasse 9 – Überblick</h1>
+      <p>
+        In Klasse 9 arbeitest du vor allem mit <strong>Bewegungen</strong>,
+        <strong>Kräften</strong> und <strong>Energie</strong>. Die drei großen
+        Blöcke sind: <strong>gleichförmige und beschleunigte Bewegungen</strong>,
+        <strong>Kraft und Beschleunigung</strong> sowie
+        <strong>mechanische Energie und Arbeit</strong>. Hier entstehen nach und nach
+        Theorie-PDFs, Training und Experimente zu diesen Themen.
+      </p>
+    </section>
+
+    <!-- Kachel-Navigation für Klasse 9 -->
+    <section class="grid" aria-label="Bereiche Klasse 9">
+      <article class="tile topic">
+        <a href="#">
+          Themen &amp; Theorie
+        </a>
+      </article>
+
+      <article class="tile training">
+        <a href="#">
+          Training &amp; Quiz
+        </a>
+      </article>
+
+      <article class="tile exp">
+        <a href="#">
+          Experimente
+        </a>
+      </article>
+
+      <article class="tile dl">
+        <a href="#">
+          Downloads &amp; PDFs
+        </a>
+      </article>
+
+      <article class="tile formel">
+  <a href="formeln_klasse9.html">Formeln Klasse 9</a>
+</article>
+    </section>
+
+    <!-- Themenübersicht Klasse 9 -->
+    <section>
+      <div class="section-title">Themenübersicht Klasse 9</div>
+      <div class="topics-table" aria-label="Themenliste Klasse 9">
+        <table>
+          <thead>
+            <tr>
+              <th>Bereich</th>
+              <th>Theorie (PDF)</th>
+              <th>Training</th>
+              <th>Experiment(e)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Gleichförmige &amp; beschleunigte Bewegungen</td>
+              <td>k9_bewegungen.pdf</td>
+              <td><span class="badge">folgt</span></td>
+              <td><span class="badge">z.B. Wagen auf Bahn, Smartphone-Messung</span></td>
+            </tr>
+            <tr>
+              <td>Kraft und Beschleunigung</td>
+              <td>k9_kraft_beschleunigung.pdf</td>
+              <td><span class="badge">folgt</span></td>
+              <td><span class="badge">Federkraftmesser, Reibung</span></td>
+            </tr>
+            <tr>
+              <td>Mechanische Energie und Arbeit</td>
+              <td>k9_energie_arbeit.pdf</td>
+              <td><span class="badge">folgt</span></td>
+              <td><span class="badge">Hubarbeit, Lageenergie</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10
+    </footer>
+  </main>
+</div>
+</body>
+</html>

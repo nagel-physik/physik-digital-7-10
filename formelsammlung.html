@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Physik Digital – Formelsammlung 7–10</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+
+      --k7: #22d3ee;
+      --k8: #a855f7;
+      --k9: #3b82f6;
+      --k10: #22c55e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.2), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.22), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.9);
+      pointer-events: none;
+    }
+
+    .floaters {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .floaters span {
+      position: absolute;
+      font-size: 2.4rem;
+      color: rgba(148, 163, 184, 0.18);
+      animation: floatUp 26s linear infinite;
+      filter: blur(0.4px);
+    }
+
+    .floaters span:nth-child(1) { left: 10%; animation-duration: 28s; animation-delay: -4s; }
+    .floaters span:nth-child(2) { left: 34%; animation-duration: 26s; animation-delay: -10s; }
+    .floaters span:nth-child(3) { left: 60%; animation-duration: 30s; animation-delay: -18s; }
+    .floaters span:nth-child(4) { left: 82%; animation-duration: 24s; animation-delay: -7s; }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh); }
+      100% { transform: translateY(-20vh); }
+    }
+
+    .panel {
+      position: relative;
+      z-index: 5;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.4rem 2.2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+      max-height: 100%;
+      overflow: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .back-link {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 0.2rem 0.9rem;
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .back-link:hover {
+      border-color: #e5e7eb;
+      color: #e5e7eb;
+    }
+
+    .heading h1 {
+      font-size: clamp(1.9rem, 3.1vw, 2.4rem);
+      margin-bottom: 0.3rem;
+    }
+
+    .heading p {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 780px;
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.3rem;
+    }
+
+    .sections {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+
+    .section {
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.96);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+      padding: 1rem 1.1rem 1rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 0.08rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: rgba(148, 163, 184, 0.95);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .badge-k7 { color: var(--k7); border-color: var(--k7); }
+    .badge-k8 { color: var(--k8); border-color: var(--k8); }
+    .badge-k9 { color: var(--k9); border-color: var(--k9); }
+    .badge-k10 { color: var(--k10); border-color: var(--k10); }
+
+    .section small {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin-top: 0.4rem;
+    }
+
+    th, td {
+      padding: 0.4rem 0.4rem;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.9);
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-soft);
+      background: rgba(15, 23, 42, 0.98);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .formula {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .hint {
+      font-size: 0.75rem;
+      color: rgba(148, 163, 184, 0.98);
+    }
+
+    .footer {
+      margin-top: 0.6rem;
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-align: right;
+    }
+
+    @media (max-width: 980px) {
+      .panel {
+        padding: 2rem 1.4rem 2.1rem;
+      }
+      .sections {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      th, td {
+        padding: 0.35rem 0.35rem;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .footer {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <div class="floaters">
+    <span>F = m·a</span>
+    <span>U = R·I</span>
+    <span>E = m·c²</span>
+    <span>P = U·I</span>
+  </div>
+
+  <main class="panel" aria-labelledby="fs-title">
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="dashboard.html">← Zurück zum Dashboard</a>
+    </header>
+
+    <section class="heading">
+      <div class="tagline">kompakt · prüfungsrelevant · 7.–10. klasse</div>
+      <h1 id="fs-title">Formelsammlung Physik 7–10</h1>
+      <p>
+        Hier findest du die wichtigsten Formeln aus den Themen der Klassen 7 bis 10.
+        Zu jeder Formel gibt es eine kurze Erklärung und die typischen Einheiten.
+        Nutze die Formeln zum Lernen, Wiederholen und für deine Klassenarbeiten.
+      </p>
+    </section>
+
+    <section class="sections" aria-label="Formeln nach Klassenstufe">
+      <!-- Klasse 7 -->
+      <article class="section" aria-label="Formeln Klasse 7">
+        <div class="section-header">
+          <div class="section-title">
+            <span style="color:var(--k7);">●</span> Klasse 7 – Wärme &amp; Kraft
+          </div>
+          <span class="pill badge-k7">Klasse 7</span>
+        </div>
+        <small>Thermisches Verhalten, thermische Energie &amp; Wechselwirkung/Kraft</small>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%;">Formel</th>
+              <th style="width: 42%;">Bedeutung</th>
+              <th style="width: 30%;">Typische Einheit(en)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="formula">F = m · a</td>
+              <td>Kraft = Masse · Beschleunigung</td>
+              <td class="hint">F in Newton (N), m in kg, a in m/s²</td>
+            </tr>
+            <tr>
+              <td class="formula">ΔE<sub>th</sub> = c · m · ΔT</td>
+              <td>Änderung der thermischen Energie beim Erwärmen/Abkühlen</td>
+              <td class="hint">ΔE in J, c in J/(kg·K), m in kg, ΔT in K/°C</td>
+            </tr>
+            <tr>
+              <td class="formula">ρ = m / V</td>
+              <td>Dichte = Masse / Volumen</td>
+              <td class="hint">ρ in kg/m³, m in kg, V in m³</td>
+            </tr>
+            <tr>
+              <td class="formula">p = F / A</td>
+              <td>Druck = Kraft / Fläche</td>
+              <td class="hint">p in Pa, F in N, A in m²</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+
+      <!-- Klasse 8 -->
+      <article class="section" aria-label="Formeln Klasse 8">
+        <div class="section-header">
+          <div class="section-title">
+            <span style="color:var(--k8);">●</span> Klasse 8 – Elektrischer Strom
+          </div>
+          <span class="pill badge-k8">Klasse 8</span>
+        </div>
+        <small>Strom, Spannung, Widerstand &amp; elektrische Leistung</small>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%;">Formel</th>
+              <th style="width: 42%;">Bedeutung</th>
+              <th style="width: 30%;">Typische Einheit(en)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="formula">I = Q / t</td>
+              <td>Stromstärke = transportierte Ladung / Zeit</td>
+              <td class="hint">I in A, Q in C, t in s</td>
+            </tr>
+            <tr>
+              <td class="formula">U = W / Q</td>
+              <td>Spannung = verrichtete Arbeit / Ladung</td>
+              <td class="hint">U in V, W in J, Q in C</td>
+            </tr>
+            <tr>
+              <td class="formula">U = R · I</td>
+              <td>Ohmsches Gesetz: Spannung, Widerstand, Stromstärke</td>
+              <td class="hint">U in V, R in Ω, I in A</td>
+            </tr>
+            <tr>
+              <td class="formula">P = U · I</td>
+              <td>Elektrische Leistung = Spannung · Stromstärke</td>
+              <td class="hint">P in W, U in V, I in A</td>
+            </tr>
+            <tr>
+              <td class="formula">P = R · I²</td>
+              <td>Verlustleistung an einem Widerstand</td>
+              <td class="hint">P in W, R in Ω, I in A</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+
+      <!-- Klasse 9 -->
+      <article class="section" aria-label="Formeln Klasse 9">
+        <div class="section-header">
+          <div class="section-title">
+            <span style="color:var(--k9);">●</span> Klasse 9 – Bewegung &amp; Energie
+          </div>
+          <span class="pill badge-k9">Klasse 9</span>
+        </div>
+        <small>Gleichförmige/ beschleunigte Bewegung, Arbeit &amp; Energie</small>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%;">Formel</th>
+              <th style="width: 42%;">Bedeutung</th>
+              <th style="width: 30%;">Typische Einheit(en)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="formula">v = s / t</td>
+              <td>Durchschnittsgeschwindigkeit = Weg / Zeit</td>
+              <td class="hint">v in m/s oder km/h, s in m, t in s</td>
+            </tr>
+            <tr>
+              <td class="formula">a = Δv / Δt</td>
+              <td>Beschleunigung = Geschwindigkeitsänderung / Zeit</td>
+              <td class="hint">a in m/s², v in m/s, t in s</td>
+            </tr>
+            <tr>
+              <td class="formula">s = ½ · a · t²</td>
+              <td>Weg bei gleichmäßiger Beschleunigung (Start aus Ruhe)</td>
+              <td class="hint">s in m, a in m/s², t in s</td>
+            </tr>
+            <tr>
+              <td class="formula">F = m · a</td>
+              <td>Kraftgesetz: Kraft = Masse · Beschleunigung</td>
+              <td class="hint">F in N, m in kg, a in m/s²</td>
+            </tr>
+            <tr>
+              <td class="formula">W = F · s</td>
+              <td>Arbeit = Kraft · Weg in Kraftrichtung</td>
+              <td class="hint">W in J, F in N, s in m</td>
+            </tr>
+            <tr>
+              <td class="formula">E<sub>pot</sub> = m · g · h</td>
+              <td>Potentielle (Lage-)Energie</td>
+              <td class="hint">E in J, m in kg, g ≈ 9,81 m/s², h in m</td>
+            </tr>
+            <tr>
+              <td class="formula">E<sub>kin</sub> = ½ · m · v²</td>
+              <td>Kinetische (Bewegungs-)Energie</td>
+              <td class="hint">E in J, m in kg, v in m/s</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+
+      <!-- Klasse 10 -->
+      <article class="section" aria-label="Formeln Klasse 10">
+        <div class="section-header">
+          <div class="section-title">
+            <span style="color:var(--k10);">●</span> Klasse 10 – Magnetismus, Wellen &amp; Kernphysik
+          </div>
+          <span class="pill badge-k10">Klasse 10</span>
+        </div>
+        <small>Magnetfelder/Induktion, Schwingungen/Wellen, Radioaktivität &amp; Optik</small>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%;">Formel</th>
+              <th style="width: 42%;">Bedeutung</th>
+              <th style="width: 30%;">Typische Einheit(en)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="formula">f = 1 / T</td>
+              <td>Frequenz = 1 / Periodendauer</td>
+              <td class="hint">f in Hz, T in s</td>
+            </tr>
+            <tr>
+              <td class="formula">v = λ · f</td>
+              <td>Ausbreitungsgeschwindigkeit einer Welle</td>
+              <td class="hint">v in m/s, λ in m, f in Hz</td>
+            </tr>
+            <tr>
+              <td class="formula">U<sub>ind</sub> ∼ ΔΦ / Δt</td>
+              <td>Induzierte Spannung hängt von Änderung des Magnetfeldes ab (vereinfachte Schreibweise)</td>
+              <td class="hint">U in V, Φ: magnetischer Fluss</td>
+            </tr>
+            <tr>
+              <td class="formula">P = U · I</td>
+              <td>Elektrische Leistung (auch bei Generator/Trafo wichtig)</td>
+              <td class="hint">P in W, U in V, I in A</td>
+            </tr>
+            <tr>
+              <td class="formula">E = h · f</td>
+              <td>Energie eines Photons (Licht, Quantenmodell – je nach Tiefe)</td>
+              <td class="hint">E in J, h: Planck-Konst., f in Hz</td>
+            </tr>
+            <tr>
+              <td class="formula">c = λ · f</td>
+              <td>Lichtgeschwindigkeit = Wellenlänge · Frequenz (für Licht)</td>
+              <td class="hint">c ≈ 3,0·10⁸ m/s</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Formelsammlung
+    </footer>
+  </main>
+</div>
+</body>
+</html>

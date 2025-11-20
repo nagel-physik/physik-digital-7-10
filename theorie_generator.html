@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Generator – Theorie Klasse 10</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+      --c-accent: #fb7185; /* Generator = „Energie“ / rot */
+      --c-warn:   #facc15;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(251,113,133,0.22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(56,189,248,0.2), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0,0,0,0.9);
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative;
+      z-index: 5;
+      max-width: 1150px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.2rem 2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.98), rgba(15,23,42,0.9));
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(148,163,184,0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-height: 100%;
+      overflow: auto;
+    }
+
+    .topbar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+      flex-wrap:wrap;
+    }
+
+    .brand {
+      font-size:0.9rem;
+      letter-spacing:0.16em;
+      text-transform:uppercase;
+      color:var(--text-soft);
+    }
+
+    .back-link {
+      font-size:0.85rem;
+      color:var(--text-soft);
+      text-decoration:none;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      padding:0.2rem 0.9rem;
+      background:rgba(15,23,42,0.8);
+    }
+
+    .back-link:hover {
+      border-color:#e5e7eb;
+      color:#e5e7eb;
+    }
+
+    .tagline {
+      font-size:0.8rem;
+      color:rgba(148,163,184,0.9);
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      margin-bottom:0.3rem;
+    }
+
+    h1 {
+      font-size:clamp(1.9rem, 3vw, 2.3rem);
+      margin-bottom:0.3rem;
+    }
+
+    .intro-text {
+      font-size:0.95rem;
+      color:var(--text-soft);
+      max-width:780px;
+    }
+
+    .grid {
+      display:grid;
+      grid-template-columns:minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap:1rem;
+    }
+
+    .section {
+      border-radius:20px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:rgba(15,23,42,0.96);
+      box-shadow:0 16px 40px rgba(0,0,0,0.75);
+      padding:0.9rem 1rem 1rem;
+      font-size:0.92rem;
+    }
+
+    .section-title {
+      display:flex;
+      align-items:center;
+      gap:0.45rem;
+      font-weight:600;
+      margin-bottom:0.3rem;
+    }
+
+    .section-title span.dot {
+      width:9px;
+      height:9px;
+      border-radius:999px;
+      background:var(--c-accent);
+      box-shadow:0 0 14px rgba(251,113,133,0.7);
+    }
+
+    ul {
+      margin-left:1.1rem;
+      margin-top:0.25rem;
+      display:grid;
+      gap:0.2rem;
+    }
+
+    .merksatz {
+      margin-top:0.4rem;
+      border-radius:14px;
+      padding:0.55rem 0.7rem;
+      font-size:0.9rem;
+      border:1px solid rgba(250,204,21,0.9);
+      background:radial-gradient(circle at top left, rgba(250,204,21,0.12), transparent);
+      color:#facc15;
+    }
+
+    .example-box {
+      margin-top:0.4rem;
+      border-radius:14px;
+      padding:0.55rem 0.7rem;
+      font-size:0.9rem;
+      border:1px solid rgba(148,163,184,0.6);
+      background:rgba(15,23,42,0.96);
+      color:var(--text-soft);
+    }
+
+    .sketch {
+      margin-top:0.4rem;
+      border-radius:18px;
+      padding:0.8rem;
+      background:radial-gradient(circle at top left, rgba(251,113,133,0.16), rgba(15,23,42,0.98));
+      border:1px dashed rgba(251,113,133,0.7);
+      font-size:0.88rem;
+    }
+
+    .sketch-graphic {
+      margin-top:0.4rem;
+      display:grid;
+      grid-template-columns:repeat(7, minmax(0,1fr));
+      gap:0.2rem;
+      align-items:center;
+      font-family:"SF Mono", ui-monospace, monospace;
+      font-size:0.8rem;
+    }
+
+    .checklist { margin-top:0.4rem; font-size:0.88rem; }
+
+    .footer {
+      margin-top:0.3rem;
+      font-size:0.78rem;
+      color:rgba(148,163,184,0.9);
+      text-align:right;
+    }
+
+    @media (max-width:900px) {
+      .panel { padding:1.8rem 1.4rem 2rem; }
+      .grid { grid-template-columns:1fr; }
+    }
+
+    @media (max-width:720px) {
+      .footer { text-align:center; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <main class="panel" aria-labelledby="generator-title">
+
+    <!-- Header -->
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse10_themen.html">← Zurück zu Themen &amp; Theorie</a>
+    </header>
+
+    <!-- Einleitung -->
+    <section>
+      <div class="tagline">klasse 10 · magnetismus · generator</div>
+      <h1 id="generator-title">Generator</h1>
+      <p class="intro-text">
+        Ein <strong>Generator</strong> wandelt <strong>mechanische Energie</strong>
+        in <strong>elektrische Energie</strong> um. Grundlage ist die
+        elektromagnetische Induktion: Durch Drehbewegung in einem Magnetfeld
+        wird eine Spannung erzeugt (vgl. Schülerbuch S. 76–77).
+      </p>
+    </section>
+
+    <!-- Inhalt -->
+    <section class="grid" aria-label="Inhalt Generator">
+
+      <!-- Linke Spalte -->
+      <div>
+
+        <!-- Grundprinzip -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Grundprinzip des Generators
+          </h2>
+          <p>
+            Im Generator dreht sich eine <strong>Spule</strong> oder ein
+            <strong>Leiterrahmen</strong> in einem Magnetfeld. Dabei ändert sich
+            der magnetische Fluss durch die Spule &rarr; es wird eine
+            <strong>Induktionsspannung</strong> erzeugt.
+          </p>
+
+          <ul>
+            <li>Spule / Leiter bewegt sich im Magnetfeld</li>
+            <li>Magnetfeld bleibt stehen (Dauermagnet oder Elektromagnet)</li>
+            <li>Änderung des Flusses &rarr; Induktion &rarr; elektrische Spannung</li>
+          </ul>
+
+          <div class="merksatz">
+            <strong>Merksatz</strong><br>
+            Generator: Bewegung im Magnetfeld &rarr; Induktion &rarr; elektrische Energie.
+          </div>
+        </article>
+
+        <!-- Aufbau -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Aufbau eines einfachen Wechselstromgenerators
+          </h2>
+          <p>Wichtige Bauteile:</p>
+          <ul>
+            <li><strong>Rotor</strong>: drehbare Spule / Leiterschleife</li>
+            <li><strong>Stator</strong>: feststehendes Magnetfeld (Dauermagnet oder Elektromagnet)</li>
+            <li><strong>Schleifringe</strong>: leiten den Strom von der Spule nach außen</li>
+            <li><strong>Bürsten</strong>: stellen den Kontakt zu den Schleifringen her</li>
+            <li><strong>Antrieb</strong>: Turbine, Kurbel, Motor … liefert die Drehbewegung</li>
+          </ul>
+
+          <div class="example-box">
+            <strong>Beispiel:</strong><br>
+            Beim Fahrraddynamo wird die Drehbewegung des Rads genutzt, um in
+            einer Spule im Magnetfeld eine Spannung zu erzeugen – das Licht
+            leuchtet.
+          </div>
+        </article>
+
+        <!-- Gleichstrom vs. Wechselstrom (optional) -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Gleichstrom- und Wechselstromgenerator
+          </h2>
+          <p>
+            Dreht sich die Spule gleichmäßig, ändert sich die Polung der
+            Induktionsspannung ständig:
+          </p>
+          <ul>
+            <li><strong>Wechselstromgenerator</strong>: Schleifringe &rarr; sinusförmige Wechselspannung</li>
+            <li><strong>Gleichstromgenerator</strong>: Kommutator (Stromwender)
+                sorgt dafür, dass außen nur Strom in einer Richtung anliegt</li>
+          </ul>
+        </article>
+
+      </div>
+
+      <!-- Rechte Spalte -->
+      <div>
+
+        <!-- Skizze -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Skizze: Generator im Magnetfeld
+          </h2>
+          <div class="sketch">
+            <p>Stark vereinfachtes Schema:</p>
+
+            <div class="sketch-graphic" aria-hidden="true">
+              <div>N</div><div>→</div><div>(Spule)</div><div>↻</div><div>(Spule)</div><div>←</div><div>S</div>
+            </div>
+            <div class="sketch-graphic" aria-hidden="true">
+              <div></div><div></div><div>U(t)</div><div>≈</div><div>~</div><div></div><div></div>
+            </div>
+
+            <p style="margin-top:0.5rem;">
+              Dreht sich die Spule, ändert sich der magnetische Fluss stetig
+              &rarr; es entsteht eine zeitlich veränderliche Spannung <em>U(t)</em>.
+            </p>
+          </div>
+        </article>
+
+        <!-- Energieumwandlung & Beispiele -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Energieumwandlung & Beispiele
+          </h2>
+          <p>
+            Im Generator wird <strong>mechanische Arbeit</strong> in
+            <strong>elektrische Energie</strong> umgewandelt.
+          </p>
+          <ul>
+            <li>Kraftwerke: Wasser-, Wind-, Kohle-, Gas-, Kernkraftwerke</li>
+            <li>Fahrraddynamo</li>
+            <li>Notstromaggregate</li>
+          </ul>
+
+          <div class="example-box">
+            <strong>Hinweis:</strong><br>
+            Je mehr Leistung der Generator liefern soll, desto mehr
+            mechanische Arbeit muss in den Antrieb gesteckt werden.
+          </div>
+        </article>
+
+        <!-- Was solltest du können -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Was solltest du können?
+          </h2>
+          <div class="checklist">
+            <ul>
+              <li>Grundprinzip der Induktion im Generator erklären.</li>
+              <li>Aufbau eines einfachen Generators beschreiben.</li>
+              <li>Beispiele aus dem Alltag nennen (Kraftwerk, Dynamo).</li>
+              <li>Die Energieumwandlung (mechanisch → elektrisch) benennen.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Zusammenfassung -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Kurz-Zusammenfassung
+          </h2>
+          <p>
+            Ein Generator nutzt die elektromagnetische Induktion: Durch Drehung
+            einer Spule in einem Magnetfeld entsteht eine Spannung. So wird
+            mechanische Energie in elektrische Energie umgewandelt – Grundlage
+            der meisten Stromerzeugung.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Theorie „Generator“
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,2083 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Training Klasse 10 – Magnetismus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+      --c-accent: #f97316;
+      --c-good: #22c55e;
+      --c-mid:  #eab308;
+      --c-bad:  #ef4444;
+      --tile-bg: rgba(15,23,42,0.96);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(249,115,22,0.20), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(56,189,248,0.20), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0,0,0,0.9);
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative;
+      z-index: 5;
+      max-width: 1150px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.1rem 2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.98), rgba(15,23,42,0.9));
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(148,163,184,0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      max-height: 100%;
+      overflow: auto;
+    }
+
+    .topbar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+      flex-wrap:wrap;
+    }
+
+    .brand {
+      font-size:0.9rem;
+      letter-spacing:0.16em;
+      text-transform:uppercase;
+      color:var(--text-soft);
+    }
+
+    .back-link {
+      font-size:0.85rem;
+      color:var(--text-soft);
+      text-decoration:none;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      padding:0.2rem 0.9rem;
+      background:rgba(15,23,42,0.8);
+    }
+
+    .back-link:hover {
+      border-color:#e5e7eb;
+      color:#e5e7eb;
+    }
+
+    .tagline {
+      font-size:0.8rem;
+      color:rgba(148,163,184,0.9);
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      margin-bottom:0.3rem;
+    }
+
+    h1 {
+      font-size:clamp(1.8rem, 3vw, 2.2rem);
+      margin-bottom:0.2rem;
+    }
+
+    .intro-text {
+      font-size:0.95rem;
+      color:var(--text-soft);
+      max-width:780px;
+    }
+
+    .layout {
+      display:grid;
+      grid-template-columns:minmax(0, 1.4fr) minmax(0, 2fr);
+      gap:1.2rem;
+      align-items:start;
+    }
+
+    .tile-list,
+    .quiz-card {
+      border-radius:20px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:var(--tile-bg);
+      box-shadow:0 16px 40px rgba(0,0,0,0.75);
+      padding:0.9rem 1rem 1.1rem;
+      font-size:0.92rem;
+    }
+
+    .tile-list-header {
+      font-weight:600;
+      margin-bottom:0.5rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:0.5rem;
+    }
+
+    .topic-list {
+      display:grid;
+      gap:0.35rem;
+      margin-top:0.2rem;
+    }
+
+    .topic-btn {
+      width:100%;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:rgba(15,23,42,0.92);
+      color:var(--text-main);
+      padding:0.45rem 0.7rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+      font-size:0.9rem;
+    }
+
+    .topic-btn span.label {
+      display:flex;
+      align-items:center;
+      gap:0.4rem;
+    }
+
+    .topic-btn span.badge {
+      font-size:0.75rem;
+      padding:0.1rem 0.45rem;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.8);
+      color:var(--text-soft);
+    }
+
+    .topic-btn:hover {
+      border-color:var(--c-accent);
+      box-shadow:0 0 0 1px rgba(249,115,22,0.7);
+    }
+
+    .quiz-header-line {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:0.5rem;
+      margin-bottom:0.4rem;
+    }
+
+    .quiz-topic-label {
+      font-weight:600;
+      font-size:0.95rem;
+      display:flex;
+      align-items:center;
+      gap:0.4rem;
+    }
+
+    .pill {
+      font-size:0.8rem;
+      padding:0.12rem 0.5rem;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      color:var(--text-soft);
+    }
+
+    .progress {
+      font-size:0.8rem;
+      color:var(--text-soft);
+    }
+
+    .question-text {
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f8fafc; /* etwas heller als die Antworten */
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(148,163,184,0.4);
+}
+
+    .answers {
+      margin-top:0.6rem;
+      display:grid;
+      gap:0.4rem;
+    }
+
+    .answer-btn {
+      width:100%;
+      text-align:left;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.96);
+      color:var(--text-main);
+      padding:0.45rem 0.7rem;
+      font-size:0.9rem;
+      cursor:pointer;
+    }
+
+    .answer-btn:hover {
+      border-color:var(--c-accent);
+    }
+
+    .answer-btn.correct {
+      border-color:var(--c-good);
+      background:rgba(34,197,94,0.12);
+    }
+
+    .answer-btn.wrong {
+      border-color:var(--c-bad);
+      background:rgba(239,68,68,0.12);
+    }
+
+    .feedback {
+      margin-top:0.5rem;
+      font-size:0.9rem;
+    }
+
+    .feedback.good { color:var(--c-good); }
+    .feedback.bad  { color:var(--c-bad); }
+
+    .controls {
+      margin-top:0.7rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:0.5rem;
+      flex-wrap:wrap;
+    }
+
+    .btn {
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.96);
+      color:var(--text-main);
+      padding:0.35rem 0.9rem;
+      font-size:0.88rem;
+      cursor:pointer;
+    }
+
+    .btn.primary {
+      border-color:var(--c-accent);
+      box-shadow:0 0 18px rgba(249,115,22,0.6);
+    }
+
+    .btn.primary:hover {
+      background:rgba(249,115,22,0.16);
+    }
+
+    .result-box {
+      margin-top:0.4rem;
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,0.7);
+      padding:0.6rem 0.8rem;
+      font-size:0.9rem;
+    }
+
+    .result-box.good { border-color:var(--c-good); }
+    .result-box.mid  { border-color:var(--c-mid); }
+    .result-box.bad  { border-color:var(--c-bad); }
+
+    .hint-text {
+      font-size:0.8rem;
+      color:var(--text-soft);
+      margin-top:0.6rem;
+    }
+
+    @media (max-width:900px) {
+      .panel { padding:1.7rem 1.3rem 2rem; }
+      .layout { grid-template-columns:1fr; }
+    }
+
+    @media (max-width:720px) {
+      .controls { flex-direction:column; align-items:stretch; }
+      .btn { width:100%; text-align:center; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <main class="panel">
+
+    <!-- Kopfbereich -->
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse10.html">← Zurück zu Klasse 10</a>
+    </header>
+
+    <section>
+      <div class="tagline">klasse 10 · magnetfelder &amp; induktion</div>
+      <h1>Training &amp; Quiz</h1>
+      <p class="intro-text">
+        Wähle ein Thema und beantworte bis zu <strong>15 Fragen</strong>. Du
+        bekommst direkt angezeigt, ob deine Antwort richtig war – am Ende siehst
+        du deine Punkte mit Feedback.
+      </p>
+    </section>
+
+    <section class="layout" aria-label="Training Klasse 10">
+
+      <!-- Themen-Auswahl -->
+      <aside class="tile-list">
+        <div class="tile-list-header">
+          <span><strong>Thema wählen</strong></span>
+          <span class="pill">15 Fragen · Multiple Choice</span>
+        </div>
+        <div class="topic-list">
+          <button class="topic-btn" data-topic="magneten">
+            <span class="label">🧲 Magneten</span>
+            <span class="badge">Basis</span>
+          </button>
+          <button class="topic-btn" data-topic="dauermagneten">
+            <span class="label">🧲 Dauermagneten</span>
+            <span class="badge">Basis</span>
+          </button>
+          <button class="topic-btn" data-topic="elektromagneten">
+            <span class="label">🔁 Elektromagneten</span>
+            <span class="badge">Strom &amp; Magnet</span>
+          </button>
+          <button class="topic-btn" data-topic="magnetfeld">
+            <span class="label">📈 Magnetfeld</span>
+            <span class="badge">Feldlinien</span>
+          </button>
+          <button class="topic-btn" data-topic="elektromotor">
+            <span class="label">⚙️ Elektromotor</span>
+            <span class="badge">Antrieb</span>
+          </button>
+          <button class="topic-btn" data-topic="induktion">
+            <span class="label">⚡ Induktion</span>
+            <span class="badge">Spannung</span>
+          </button>
+          <button class="topic-btn" data-topic="generator">
+            <span class="label">🔄 Generator</span>
+            <span class="badge">Kraftwerk</span>
+          </button>
+          <button class="topic-btn" data-topic="transformator">
+            <span class="label">🔌 Transformator</span>
+            <span class="badge">Spannung</span>
+          </button>
+          <button class="topic-btn" data-topic="drahtlos">
+            <span class="label">📡 Drahtlose Energieübertragung</span>
+            <span class="badge">Alltag</span>
+          </button>
+        </div>
+
+        <p class="hint-text">
+          Tipp: Starte mit <strong>Magneten</strong>, wenn du dir noch unsicher bist.
+        </p>
+      </aside>
+
+      <!-- Quiz-Bereich -->
+      <section class="quiz-card" id="quiz-area">
+        <div id="quiz-idle">
+          <p>Wähle links ein Thema, um ein Quiz zu starten.</p>
+          <p class="hint-text">
+            Du bekommst immer bis zu 15 Fragen zufällig aus dem Fragenpool
+            zu diesem Thema. Antworten anklicken, Feedback bekommen, weiter zur
+            nächsten Frage – ganz entspannt.
+          </p>
+        </div>
+
+        <div id="quiz-active" style="display:none;">
+          <div class="quiz-header-line">
+            <div class="quiz-topic-label">
+              <span id="quiz-topic-icon">🧲</span>
+              <span id="quiz-topic-name">Thema</span>
+            </div>
+            <div class="progress" id="quiz-progress">Frage 1 von 15</div>
+          </div>
+
+          <div class="pill" id="quiz-hint">Wähle die richtige Antwort.</div>
+
+          <div class="question-text" id="quiz-question-text">
+            Frage steht hier.
+          </div>
+
+          <div class="answers" id="quiz-answers"></div>
+
+          <div class="feedback" id="quiz-feedback"></div>
+
+          <div class="controls">
+            <button class="btn" id="btn-stop">Quiz beenden</button>
+            <button class="btn primary" id="btn-next" disabled>Weiter</button>
+          </div>
+        </div>
+
+        <div id="quiz-result" style="display:none;">
+          <div class="result-box" id="quiz-result-box">
+            <!-- Ergebnistext wird per JS eingefügt -->
+          </div>
+          <div class="controls" style="margin-top:0.7rem;">
+            <button class="btn primary" id="btn-restart-topic">
+              Thema neu starten
+            </button>
+            <button class="btn" id="btn-back-to-topics">
+              Zur Themenauswahl
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // --- Quiz-Daten: Klasse 10 Magnetismus & Induktion ---
+  // Bis zu 15 Fragen pro Thema. Wenn weniger hinterlegt sind,
+  // werden einfach alle vorhandenen verwendet.
+
+  const QUIZ_LENGTH = 15;
+
+  const QUIZ_TOPICS = {
+    magneten: {
+      name: "Magneten",
+      icon: "🧲",
+      questions: [
+        {
+          q: "Welche Aussage über Magnetpole ist richtig?",
+          a: [
+            "Gleichnamige Pole ziehen sich an.",
+            "Ungleichnamige Pole stoßen sich ab.",
+            "Gleichnamige Pole stoßen sich ab, ungleichnamige ziehen sich an.",
+            "Magnetpole haben keine Wechselwirkung."
+          ],
+          c: 2
+        },
+        {
+          q: "Wo befindet sich die stärkste Wirkung eines Stabmagneten?",
+          a: [
+            "In der Mitte des Magneten.",
+            "An den Polen.",
+            "Überall gleich stark.",
+            "Nur außen an der Hülle."
+          ],
+          c: 1
+        },
+        {
+          q: "Was passiert, wenn du einen Stabmagneten in der Mitte durchbrichst?",
+          a: [
+            "Es entsteht ein einzelner Nordpol und ein einzelner Südpol.",
+            "Magnetismus verschwindet komplett.",
+            "Es entstehen zwei neue Magnete mit jeweils Nord- und Südpol.",
+            "Nur die Bruchstelle ist magnetisch."
+          ],
+          c: 2
+        },
+        {
+          q: "Welche Stoffe werden typischerweise stark von Magneten angezogen?",
+          a: [
+            "Kunststoff und Glas",
+            "Aluminium und Kupfer",
+            "Eisen, Nickel, Kobalt",
+            "Holz und Papier"
+          ],
+          c: 2
+        },
+        {
+          q: "Wie nennt man Stoffe, die sich von Magneten anziehen lassen?",
+          a: [
+            "Elektrische Leiter",
+            "Magnetische Leiter",
+            "Ferro­magnetische Stoffe",
+            "Isolatoren"
+          ],
+          c: 2
+        },
+        {
+          q: "Welche der folgenden Anwendungen nutzt Magnete?",
+          a: [
+            "USB-Stick",
+            "Kreditkarte mit Magnetstreifen",
+            "Glühlampe",
+            "Lineal"
+          ],
+          c: 1
+        },
+        {
+          q: "Wodurch kann ein Nagel magnetisch werden?",
+          a: [
+            "Durch Anmalen mit roter Farbe.",
+            "Durch Erwärmen auf 30 °C.",
+            "Durch Reiben mit einem Stabmagneten in eine Richtung.",
+            "Durch Liegenlassen auf dem Tisch."
+          ],
+          c: 2
+        },
+        {
+          q: "Welche Aussage zu Erdmagnetfeld und Kompass ist richtig?",
+          a: [
+            "Der Kompass zeigt nach Süden, weil dort der Nordpol ist.",
+            "Der Kompass zeigt nach Norden, weil dort der magnetische Südpol der Erde liegt.",
+            "Der Kompass zeigt zufällig in eine Richtung.",
+            "Kompassnadeln sind elektrisch geladen."
+          ],
+          c: 1
+        },
+        {
+          q: "Was passiert mit einem Magneten beim starken Erhitzen über die Curie-Temperatur?",
+          a: [
+            "Er wird stärker.",
+            "Seine magnetische Ordnung geht verloren.",
+            "Er bekommt zusätzliche Pole.",
+            "Nichts, Magnetismus bleibt unverändert."
+          ],
+          c: 1
+        },
+        {
+          q: "Welche Form gehört NICHT zu typischen Dauermagneten?",
+          a: [
+            "Hufeisenmagnet",
+            "Stabmagnet",
+            "Ringmagnet",
+            "Kunststoffwürfel ohne Metall"
+          ],
+          c: 3
+        },
+        {
+          q: "Was zeigt ein Kompass an?",
+          a: [
+            "Die Richtung zum nächsten Magneten.",
+            "Die Richtung der Erdachse.",
+            "Die Richtung des magnetischen Nord-Süd-Feldes der Erde.",
+            "Die Windrichtung."
+          ],
+          c: 2
+        },
+        {
+          q: "Was versteht man unter einem Magnetpol?",
+          a: [
+            "Stellen mit der schwächsten Kraftwirkung.",
+            "Stellen ohne Magnetfeld.",
+            "Stellen mit besonders starker magnetischer Kraftwirkung.",
+            "Nur den Nordpol."
+          ],
+          c: 2
+        },
+        {
+          q: "Wie kannst du erkennen, welche Seite eines Stabmagneten der Nordpol ist?",
+          a: [
+            "Gar nicht, das ist zufällig.",
+            "Er ist immer blau angemalt.",
+            "Er wird vom Nordpol der Erde angezogen.",
+            "Er zeigt mit einem Kompass zusammen nach Norden."
+          ],
+          c: 3
+        },
+        {
+          q: "Welche Kombination ist unmöglich:",
+          a: [
+            "Magnet mit nur Nordpol.",
+            "Magnet mit Nord- und Südpol.",
+            "Magnetfeldlinien zwischen Nord- und Südpol.",
+            "Mehrere Magnete hintereinandergelegt."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Aussage zu Magnetismus im Alltag ist richtig?",
+          a: [
+            "Magnete werden nur in der Schule benutzt.",
+            "Magnete stecken z. B. in Lautsprechern und Elektromotoren.",
+            "Magnete funktionieren nur im Vakuum.",
+            "Magnete wirken nur im Labor."
+          ],
+          c: 1
+        }
+      ]
+    },
+
+    dauermagneten: {
+  name: "Dauermagneten",
+  icon: "🧲",
+  questions: [
+    {
+      q: "Was ist ein Dauermagnet?",
+      a: [
+        "Ein Magnet, der nur bei Stromfluss wirkt.",
+        "Ein Magnet, der seine Magnetisierung langfristig behält.",
+        "Ein Magnet, der nur im Labor funktioniert.",
+        "Ein Magnet, der nur bei niedriger Temperatur wirkt."
+      ],
+      c: 1
+    },
+    {
+      q: "Welches Material eignet sich gut für Dauermagneten?",
+      a: [
+        "Holz",
+        "Reines Kupfer",
+        "Stahl oder spezielle Legierungen",
+        "Kunststoff"
+      ],
+      c: 2
+    },
+    {
+      q: "Wie kann man einen Stahlstab zu einem Dauermagneten machen?",
+      a: [
+        "Durch Reiben mit einem Stabmagneten in eine Richtung.",
+        "Durch starkes Abkühlen mit Eis.",
+        "Durch Anmalen mit roter Farbe.",
+        "Durch einmaliges Fallenlassen auf den Boden."
+      ],
+      c: 0
+    },
+    {
+      q: "Was passiert mit den Elementarmagneten in einem gut magnetisierten Dauermagneten?",
+      a: [
+        "Sie sind zufällig ausgerichtet.",
+        "Sie sind geordnet und zeigen überwiegend in eine Richtung.",
+        "Sie verschwinden komplett.",
+        "Sie wechseln ständig ihre Richtung."
+      ],
+      c: 1
+    },
+    {
+      q: "Wie kann die Magnetkraft eines Dauermagneten geschwächt werden?",
+      a: [
+        "Durch häufiges Erwärmen über eine bestimmte Temperatur.",
+        "Durch vorsichtiges Aufbewahren in einer Schachtel.",
+        "Durch Aufkleben von Etiketten.",
+        "Durch normales Benutzen im Alltag."
+      ],
+      c: 0
+    },
+    {
+      q: "Welche Aussage zu Dauermagneten ist richtig?",
+      a: [
+        "Sie können nicht abgeschwächt werden.",
+        "Sie behalten ihre Magnetisierung für sehr lange Zeit.",
+        "Sie funktionieren nur im Erdmagnetfeld.",
+        "Sie ziehen alle Stoffe an."
+      ],
+      c: 1
+    },
+    {
+      q: "Wo werden Dauermagneten typischerweise eingesetzt?",
+      a: [
+        "In Kühlschranktüren und Magnetverschlüssen.",
+        "In Wasserleitungen.",
+        "In Backöfen.",
+        "In Glühlampenfassungen."
+      ],
+      c: 0
+    },
+    {
+      q: "Was ist beim Lagern von Dauermagneten günstig?",
+      a: [
+        "Beliebig durcheinander werfen.",
+        "Nord- und Südpol mit einem Weicheisenbügel verbinden (Hufeisenmagnet).",
+        "Magnete einzeln und weit voneinander entfernt lagern.",
+        "Magnete in Wasser legen."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Wirkung hat starkes Erhitzen über die Curie-Temperatur auf einen Dauermagneten?",
+      a: [
+        "Er wird besonders stark.",
+        "Er wechselt seine Pole.",
+        "Er verliert seine Magnetisierung weitgehend.",
+        "Es passiert nichts."
+      ],
+      c: 2
+    },
+    {
+      q: "Welche Form ist typisch für einen Dauermagneten?",
+      a: [
+        "Hufeisenmagnet",
+        "Glaskugel",
+        "Papierscheibe",
+        "Wassertröpfchen"
+      ],
+      c: 0
+    },
+    {
+      q: "Warum verwendet man für Dauermagneten oft hartmagnetische Stoffe?",
+      a: [
+        "Sie lassen sich leicht ummagnetisieren.",
+        "Sie behalten einmalige Magnetisierung besonders gut.",
+        "Sie leiten Strom besser.",
+        "Sie sind nicht metallisch."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Aussage zu magnetischen und nichtmagnetischen Stoffen ist korrekt?",
+      a: [
+        "Nur Dauermagneten sind magnetisch.",
+        "Alle Metalle sind magnetisch.",
+        "Nur Eisen, Nickel, Kobalt und einige Legierungen sind stark magnetisch.",
+        "Kunststoffe sind stark magnetisch."
+      ],
+      c: 2
+    },
+    {
+      q: "Warum ist ein Schraubenzieher manchmal magnetisch, nachdem man ihn an einem Magneten hatte?",
+      a: [
+        "Er hat Strom gespeichert.",
+        "Seine Elementarmagnete haben sich geordnet und er wurde teil­weise magnetisiert.",
+        "Er wurde elektrisch aufgeladen.",
+        "Er wurde leichter."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Anwendung nutzt einen Dauermagneten im Inneren eines Lautsprechers?",
+      a: [
+        "Zur Kühlung des Geräts.",
+        "Zur Bewegung der Membran mithilfe eines Magnetfelds.",
+        "Zur Stromversorgung.",
+        "Zur Beleuchtung."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Aussage zur Sicherheit im Umgang mit Dauermagneten ist sinnvoll?",
+      a: [
+        "Starke Magnete von Datenträgern (z. B. Festplatten) fernhalten.",
+        "Magnete immer an empfindliche Elektronik heften.",
+        "Magnete in die Mikrowelle legen.",
+        "Magnete an offenen Kabeln befestigen."
+      ],
+      c: 0
+    }
+  ]
+},
+    elektromagneten: {
+  name: "Elektromagneten",
+  icon: "🔁",
+  questions: [
+    {
+      q: "Wann wirkt ein Elektromagnet?",
+      a: [
+        "Nur, wenn ein Strom durch die Spule fließt.",
+        "Nur, wenn er sich schnell dreht.",
+        "Nur bei sehr niedriger Temperatur.",
+        "Auch ohne Stromfluss immer."
+      ],
+      c: 0
+    },
+    {
+      q: "Was verstärkt die Wirkung eines Elektromagneten am stärksten?",
+      a: [
+        "Ein Holzstab im Inneren der Spule.",
+        "Eine sehr geringe Stromstärke.",
+        "Ein Eisenkern im Inneren der Spule.",
+        "Eine bunte Isolierung des Drahtes."
+      ],
+      c: 2
+    },
+    {
+      q: "Welche Kombination verstärkt einen Elektromagneten?",
+      a: [
+        "Weniger Windungen, kleiner Strom, kein Eisenkern.",
+        "Viele Windungen, großer Strom, Eisenkern.",
+        "Kein Kern, dünner Draht, wenig Windungen.",
+        "Nur ein sehr langer Draht."
+      ],
+      c: 1
+    },
+    {
+      q: "Was passiert, wenn der Strom in einem Elektromagneten ausgeschaltet wird?",
+      a: [
+        "Das Magnetfeld verschwindet sofort.",
+        "Das Magnetfeld wird stärker.",
+        "Der Elektromagnet wird zu einem Dauermagneten.",
+        "Der Magnet fällt auseinander."
+      ],
+      c: 0
+    },
+    {
+      q: "Welche Anwendung nutzt einen Elektromagneten?",
+      a: [
+        "Schrottkran",
+        "Wasserkocher",
+        "Glühlampe",
+        "Lichtschalter"
+      ],
+      c: 0
+    },
+    {
+      q: "Warum ist ein Elektromagnet besonders praktisch?",
+      a: [
+        "Er kann ein- und ausgeschaltet werden.",
+        "Er ist immer gleich stark.",
+        "Er funktioniert ohne elektrischen Strom.",
+        "Er kann nur schwache Kräfte erzeugen."
+      ],
+      c: 0
+    },
+    {
+      q: "Wovon hängt die Stärke eines Elektromagneten NICHT ab?",
+      a: [
+        "Stromstärke",
+        "Windungszahl",
+        "Eisenkern",
+        "Farbe der Spule"
+      ],
+      c: 3
+    },
+    {
+      q: "Welche Energieform wird im Elektromagneten direkt genutzt?",
+      a: [
+        "Elektrische Energie",
+        "Chemische Energie",
+        "Wärmeenergie",
+        "Kernenergie"
+      ],
+      c: 0
+    },
+    {
+      q: "Wie verläuft das Magnetfeld eines stromdurchflossenen Leiters?",
+      a: [
+        "Gerade Linien nach oben.",
+        "Kreisförmig um den Leiter herum.",
+        "Zickzackförmig.",
+        "Es entsteht kein Magnetfeld."
+      ],
+      c: 1
+    },
+    {
+      q: "Was passiert, wenn man die Stromrichtung umkehrt?",
+      a: [
+        "Der Elektromagnet funktioniert nicht mehr.",
+        "Die Magnetfeldlinien werden unsichtbar.",
+        "Der Nord- und Südpol des Elektromagneten tauschen die Seiten.",
+        "Die Spule löst sich auf."
+      ],
+      c: 2
+    },
+    {
+      q: "Welcher Strom ist für Elektromagneten typisch?",
+      a: [
+        "Gleichstrom oder Wechselstrom – beides möglich.",
+        "Nur Wechselstrom.",
+        "Nur Gleichstrom.",
+        "Nur Hochspannung."
+      ],
+      c: 0
+    },
+    {
+      q: "Warum eignet sich ein Eisenkern besonders gut für Elektromagneten?",
+      a: [
+        "Eisen ist ein sehr guter elektrischer Leiter.",
+        "Eisen verstärkt das Magnetfeld durch Magnetisierung.",
+        "Eisen wird sehr warm.",
+        "Eisen ist durchsichtig für Magnetfelder."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Aussage über Spulen ist richtig?",
+      a: [
+        "Nur die Dicke des Drahtes bestimmt das Magnetfeld.",
+        "Je mehr Windungen, desto stärker das Magnetfeld (bei gleichem Strom).",
+        "Windungszahl spielt keine Rolle.",
+        "Spulen ohne Strom erzeugen immer ein Magnetfeld."
+      ],
+      c: 1
+    },
+    {
+      q: "Was passiert, wenn man einen Elektromagneten mit zu viel Strom betreibt?",
+      a: [
+        "Er wird sehr stark und gleichzeitig kälter.",
+        "Er kann überhitzen oder der Draht kann schmelzen.",
+        "Er verwandelt sich in einen Dauermagneten.",
+        "Er wird unsichtbar."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Anwendung nutzt Elektromagnete zur Bewegung von Teilen?",
+      a: [
+        "Relais und elektrische Türöffner",
+        "Glühbirnen",
+        "Wasserleitungen",
+        "Solarzellen"
+      ],
+      c: 0
+    }
+  ]
+},
+
+    magnetfeld: {
+  name: "Magnetfeld",
+  icon: "📈",
+  questions: [
+    {
+      q: "Wie kann man ein Magnetfeld sichtbar machen?",
+      a: [
+        "Mit Wasser.",
+        "Mit Eisenfeilspänen auf einem Blatt Papier.",
+        "Mit einer Lampe.",
+        "Mit Hitze."
+      ],
+      c: 1
+    },
+    {
+      q: "Wie verlaufen die Magnetfeldlinien außerhalb eines Stabmagneten?",
+      a: [
+        "Vom Südpol zum Nordpol.",
+        "Von Nordpol zu Südpol.",
+        "Im Kreis um den Magneten herum.",
+        "Zickzackförmig."
+      ],
+      c: 1
+    },
+    {
+      q: "Was zeigt die Richtung der Magnetfeldlinien an?",
+      a: [
+        "Die Richtung der Erdrotation.",
+        "Die Richtung, in die ein Nordpol zeigen würde.",
+        "Die kälteste Stelle des Magneten.",
+        "Die Richtung des Stroms im Magneten."
+      ],
+      c: 1
+    },
+    {
+      q: "Was bedeutet eine hohe Feldliniendichte?",
+      a: [
+        "Schwache magnetische Wirkung.",
+        "Starkes Magnetfeld.",
+        "Hohe Temperatur.",
+        "Hoher Luftdruck."
+      ],
+      c: 1
+    },
+    {
+      q: "Wo ist das Magnetfeld eines Stabmagneten am stärksten?",
+      a: [
+        "In der Mitte.",
+        "An den Polen.",
+        "Nur an der Oberfläche.",
+        "Im ganzen Magneten gleich."
+      ],
+      c: 1
+    },
+    {
+      q: "Wie verlaufen die Feldlinien innerhalb eines Stabmagneten?",
+      a: [
+        "Vom Nordpol zum Südpol.",
+        "Vom Südpol zum Nordpol.",
+        "Im Kreis nach außen.",
+        "Zufällig."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Aussage ist korrekt?",
+      a: [
+        "Magnetfeldlinien können sich schneiden.",
+        "Magnetfeldlinien sind reale Fäden.",
+        "Magnetfeldlinien sind ein Modell zur Darstellung des Feldes.",
+        "Magnetfeldlinien zeigen die Form des Magneten."
+      ],
+      c: 2
+    },
+    {
+      q: "Was passiert mit dem Magnetfeld, wenn zwei Nordpole eines Magneten zusammengebracht werden?",
+      a: [
+        "Die Feldlinien verbinden sich.",
+        "Die Pole ziehen sich an.",
+        "Die Pole stoßen sich ab.",
+        "Das Magnetfeld verschwindet."
+      ],
+      c: 2
+    },
+    {
+      q: "Welche Aussage zur Orientierung der Feldlinien ist richtig?",
+      a: [
+        "Sie bilden geschlossene Linien.",
+        "Sie enden am Südpol.",
+        "Sie starten am Südpol.",
+        "Sie sind immer gerade."
+      ],
+      c: 0
+    },
+    {
+      q: "Was zeigt ein Kompass an?",
+      a: [
+        "Die Richtung des geografischen Nordpols.",
+        "Die Richtung des magnetischen Südpols der Erde.",
+        "Die Windrichtung.",
+        "Die Temperatur."
+      ],
+      c: 1
+    },
+    {
+      q: "Warum zeigt die Kompassnadel nach Norden?",
+      a: [
+        "Weil dort der magnetische Nordpol liegt.",
+        "Weil die Kompassnadel elektrisch geladen ist.",
+        "Weil der magnetische Südpol der Erde in der Nähe des geografischen Nordens liegt.",
+        "Weil sich Pole nicht abstoßen."
+      ],
+      c: 2
+    },
+    {
+      q: "Welche Form hat das Magnetfeld eines stromdurchflossenen geraden Leiters?",
+      a: [
+        "Es gibt kein Magnetfeld.",
+        "Feldlinien verlaufen sternförmig nach außen.",
+        "Feldlinien verlaufen kreisförmig um den Leiter.",
+        "Feldlinien zeigen nur nach oben."
+      ],
+      c: 2
+    },
+    {
+      q: "Wie verändert sich das Magnetfeld eines Leiters, wenn der Strom stärker wird?",
+      a: [
+        "Das Magnetfeld wird schwächer.",
+        "Die Feldlinien verschwinden.",
+        "Das Magnetfeld wird stärker.",
+        "Das Magnetfeld bleibt unverändert."
+      ],
+      c: 2
+    },
+    {
+      q: "Welche Regel hilft, die Richtung der Feldlinien eines Leiters zu bestimmen?",
+      a: [
+        "Rechte-Hand-Regel.",
+        "Linke-Hand-Regel.",
+        "Drei-Finger-Regel.",
+        "Kompass-Regel."
+      ],
+      c: 0
+    },
+    {
+      q: "Welche Aussage zum Erdmagnetfeld ist richtig?",
+      a: [
+        "Der geografische Nordpol ist gleichzeitig der magnetische Nordpol.",
+        "Die Erde besitzt kein Magnetfeld.",
+        "Der geografische Norden stimmt ungefähr mit dem magnetischen Südpol überein.",
+        "Magnetkompass funktioniert auf der Erde nicht."
+      ],
+      c: 2
+    }
+  ]
+},
+
+    elektromotor: {
+  name: "Elektromotor",
+  icon: "⚙️",
+  questions: [
+    {
+      q: "Was wandelt ein Elektromotor um?",
+      a: [
+        "Elektrische Energie in mechanische Energie.",
+        "Mechanische Energie in elektrische Energie.",
+        "Wärmeenergie in Licht.",
+        "Chemische Energie in Wärme."
+      ],
+      c: 0
+    },
+    {
+      q: "Welche Kraft sorgt für die Drehung im Elektromotor?",
+      a: [
+        "Gewichtskraft.",
+        "Magnetische Kraft auf stromdurchflossene Leiter.",
+        "Fliehkraft.",
+        "Reibungskraft."
+      ],
+      c: 1
+    },
+    {
+      q: "Wie nennt man das drehbare Bauteil des Elektromotors?",
+      a: [
+        "Stator",
+        "Rotor",
+        "Kollektor",
+        "Transformator"
+      ],
+      c: 1
+    },
+    {
+      q: "Wie nennt man den festen Teil (Magnetfeld) eines Elektromotors?",
+      a: [
+        "Rotor",
+        "Stator",
+        "Kommutator",
+        "Eisenkern"
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Aufgabe hat der Kommutator?",
+      a: [
+        "Er erzeugt Strom.",
+        "Er tauscht regelmäßig die Stromrichtung im Rotor.",
+        "Er erzeugt das Magnetfeld.",
+        "Er hält den Motor zusammen."
+      ],
+      c: 1
+    },
+    {
+      q: "Warum ändert der Kommutator die Stromrichtung im Rotor?",
+      a: [
+        "Damit der Motor Licht erzeugt.",
+        "Damit ständig eine Kraft in dieselbe Drehrichtung wirkt.",
+        "Damit der Motor abkühlt.",
+        "Damit der Motor stehen bleibt."
+      ],
+      c: 1
+    },
+    {
+      q: "Was passiert, wenn kein Strom mehr fließt?",
+      a: [
+        "Der Motor dreht sich weiter.",
+        "Der Motor wird schneller.",
+        "Der Motor bleibt stehen.",
+        "Der Motor erzeugt Licht."
+      ],
+      c: 2
+    },
+    {
+      q: "Welche Energieform hat der Rotor im laufenden Betrieb?",
+      a: [
+        "Mechanische Rotationsenergie.",
+        "Wärmeenergie.",
+        "Chemische Energie.",
+        "Kernenergie."
+      ],
+      c: 0
+    },
+    {
+      q: "Was bestimmt die Drehrichtung eines Elektromotors?",
+      a: [
+        "Die Farbe des Motors.",
+        "Die Richtung des Magnetfelds und der Stromrichtung.",
+        "Nur die Stärke des Magneten.",
+        "Nur die Länge der Spule."
+      ],
+      c: 1
+    },
+    {
+      q: "Was passiert, wenn man die Stromrichtung im Motor ohne Kommutator nicht ändern würde?",
+      a: [
+        "Der Rotor würde gleichmäßig weiterdrehen.",
+        "Der Rotor würde nach kurzer Zeit hin- und herwippen.",
+        "Der Motor würde explodieren.",
+        "Es würde keinen Unterschied machen."
+      ],
+      c: 1
+    },
+    {
+      q: "Warum verwendet man im Motor einen Eisenkern im Rotor?",
+      a: [
+        "Damit der Motor leichter wird.",
+        "Zur Verstärkung des Magnetfelds.",
+        "Damit Strom nicht fließen muss.",
+        "Nur für die Wärmeableitung."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Aussage zu Elektromotoren ist korrekt?",
+      a: [
+        "Sie werden nur in Kraftwerken genutzt.",
+        "Sie sind selten im Alltag.",
+        "Sie befinden sich in vielen Geräten wie Ventilatoren, Bohrmaschinen und Waschmaschinen.",
+        "Sie existieren nur im Unterricht."
+      ],
+      c: 2
+    },
+    {
+      q: "Was wäre ein mögliches Problem, wenn der Rotor klemmt?",
+      a: [
+        "Der Motor wird nicht warm.",
+        "Der Stromfluss steigt an und der Motor kann überhitzen.",
+        "Der Motor dreht sich schneller.",
+        "Es passiert nichts."
+      ],
+      c: 1
+    },
+    {
+      q: "Was erzeugt die Drehkraft (Lorentzkraft) im Elektromotor?",
+      a: [
+        "Ein Magnetfeld, das auf einen stromdurchflossenen Leiter wirkt.",
+        "Die Schwerkraft.",
+        "Die elektrische Ladung der Luft.",
+        "Die Temperatur im Raum."
+      ],
+      c: 0
+    },
+    {
+      q: "Welche Bedingung ermöglicht den Dauerlauf eines Elektromotors?",
+      a: [
+        "Strom fließt und der Kommutator schaltet die Richtung passend um.",
+        "Der Motor wird gekühlt.",
+        "Die Spule hat nur eine Windung.",
+        "Die Magnetpole berühren sich."
+      ],
+      c: 0
+    }
+  ]
+},
+
+    induktion: {
+  name: "Induktion",
+  icon: "⚡",
+  questions: [
+    {
+      q: "Wann wird in einer Spule eine Spannung induziert?",
+      a: [
+        "Wenn sich das Magnetfeld durch die Spule ändert.",
+        "Wenn die Spule ruht und nichts passiert.",
+        "Nur bei Gleichstrom.",
+        "Nur bei sehr hoher Temperatur."
+      ],
+      c: 0
+    },
+    {
+      q: "Was verstärkt die Induktionsspannung?",
+      a: [
+        "Langsame Bewegung, schwacher Magnet.",
+        "Schnelle Bewegung, starker Magnet, viele Windungen.",
+        "Nur die Farbe der Spule.",
+        "Wenig Windungen und keine Bewegung."
+      ],
+      c: 1
+    },
+    {
+      q: "Was ist der Grundgedanke der elektromagnetischen Induktion?",
+      a: [
+        "Bewegte Ladung erzeugt Schall.",
+        "Ändernde Magnetfelder erzeugen elektrische Spannungen.",
+        "Wärme erzeugt Magnetfelder.",
+        "Licht erzeugt Strom in Spulen."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Größe beschreibt die Induktion physikalisch?",
+      a: [
+        "Den magnetischen Fluss durch eine Fläche.",
+        "Die Masse des Magneten.",
+        "Die Länge der Spule.",
+        "Die Temperatur des Leiters."
+      ],
+      c: 0
+    },
+    {
+      q: "Was passiert, wenn sich ein Magnet gleichmäßig (ohne Geschwindigkeitsänderung) in einer Spule bewegt?",
+      a: [
+        "Es wird keine Spannung erzeugt.",
+        "Es wird eine konstante Induktionsspannung erzeugt.",
+        "Es entstehen nur Geräusche.",
+        "Der Magnet verliert seine Pole."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Aussage ist korrekt?",
+      a: [
+        "Induktion tritt nur mit sehr starken Magneten auf.",
+        "Sowohl Bewegung des Magneten als auch Bewegung der Spule können Induktion erzeugen.",
+        "Nur Spulen können Induktion erzeugen.",
+        "Induktion funktioniert nur im Weltraum."
+      ],
+      c: 1
+    },
+    {
+      q: "Was erhöht NICHT die Induktionsspannung?",
+      a: [
+        "Mehr Windungen.",
+        "Stärkerer Magnet.",
+        "Schnellere Bewegung.",
+        "Gleiche Polung beider Spulen."
+      ],
+      c: 3
+    },
+    {
+      q: "Welche Alltagssituation nutzt Induktion?",
+      a: [
+        "Ein Kompass zeigt nach Norden.",
+        "Ein Fahrraddynamo erzeugt Licht.",
+        "Ein Thermometer misst Temperatur.",
+        "Ein Hammer schlägt einen Nagel ein."
+      ],
+      c: 1
+    },
+    {
+      q: "Wie nennt man den Vorgang, wenn eine Spule in einem Magnetfeld gedreht wird und Spannung entsteht?",
+      a: [
+        "Verstärkung",
+        "Induktion",
+        "Resonanz",
+        "Leitfähigkeit"
+      ],
+      c: 1
+    },
+    {
+      q: "Was passiert, wenn man den Magneten schneller in die Spule hineinbewegt?",
+      a: [
+        "Die Induktionsspannung sinkt.",
+        "Die Induktionsspannung steigt.",
+        "Der Magnet wird schwächer.",
+        "Es passiert nichts."
+      ],
+      c: 1
+    },
+    {
+      q: "Was ist ein magnetischer Fluss?",
+      a: [
+        "Die Bewegung von Luft im Magneten.",
+        "Ein Maß für die Menge an Magnetfeld, die eine Fläche durchsetzt.",
+        "Die Wärmeentwicklung im Leiter.",
+        "Die Geschwindigkeit eines Magneten."
+      ],
+      c: 1
+    },
+    {
+      q: "Wie wirkt Induktion auf leitende Ringe, wenn sich ein Magnet nähert?",
+      a: [
+        "Es entsteht nichts im Ring.",
+        "Es entstehen Wirbelströme, die ein eigenes Magnetfeld erzeugen.",
+        "Der Ring zerbricht.",
+        "Das Magnetfeld friert ein."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Größe spielt für die Induktionsspannung KEINE Rolle?",
+      a: [
+        "Änderung des magnetischen Flusses.",
+        "Zeit der Änderung.",
+        "Windungszahl.",
+        "Farbe der Spule."
+      ],
+      c: 3
+    },
+    {
+      q: "Wie kann man die Richtung der induzierten Spannung bestimmen?",
+      a: [
+        "Mit der Lenz-Regel.",
+        "Mit der Waage.",
+        "Mit einem Thermometer.",
+        "Mit der Faraday-Regel der Chromatik."
+      ],
+      c: 0
+    },
+    {
+      q: "Welche Aussage fasst Induktion gut zusammen?",
+      a: [
+        "Je schneller die Änderung des Magnetfelds, desto höher die Spannung.",
+        "Induktion hängt nur vom Material ab.",
+        "Induktion tritt nur bei Gleichstrom auf.",
+        "Induktion funktioniert nur im Vakuum."
+      ],
+      c: 0
+    }
+  ]
+},
+
+    generator: {
+  name: "Generator",
+  icon: "🔄",
+  questions: [
+    {
+      q: "Was macht ein Generator?",
+      a: [
+        "Er wandelt elektrische Energie in mechanische Energie um.",
+        "Er wandelt mechanische Energie in elektrische Energie um.",
+        "Er speichert elektrische Energie.",
+        "Er misst elektrische Spannung."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Bewegung führt im Generator zur Spannungserzeugung?",
+      a: [
+        "Das Drehen einer Spule im Magnetfeld.",
+        "Das Erhitzen eines Drahtes.",
+        "Das Schütteln des Generators.",
+        "Das Verschieben einer Batterie."
+      ],
+      c: 0
+    },
+    {
+      q: "Auf welchem Prinzip basiert der Generator?",
+      a: [
+        "Wärmeleitung",
+        "Elektromagnetische Induktion",
+        "Reibungselektrizität",
+        "Lichtabsorption"
+      ],
+      c: 1
+    },
+    {
+      q: "Was ist der Unterschied zwischen Elektromotor und Generator?",
+      a: [
+        "Es gibt keinen Unterschied.",
+        "Der Generator erzeugt Strom, der Motor verbraucht ihn.",
+        "Der Motor funktioniert nur ohne Magneten.",
+        "Der Generator erzeugt Wärme."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Energieform nutzt ein Generator als Eingang?",
+      a: [
+        "Elektrische Energie",
+        "Mechanische Energie",
+        "Kernenergie",
+        "Chemische Energie"
+      ],
+      c: 1
+    },
+    {
+      q: "Was passiert im Generator, wenn die Drehzahl erhöht wird?",
+      a: [
+        "Die Induktionsspannung steigt.",
+        "Der Generator erzeugt weniger Spannung.",
+        "Es passiert nichts.",
+        "Die Spule hört auf sich zu drehen."
+      ],
+      c: 0
+    },
+    {
+      q: "In welchem Gerät findet man einen kleinen Generator?",
+      a: [
+        "In der Wasserflasche.",
+        "Im Fahrraddynamo.",
+        "Im Klebestift.",
+        "Im USB-Stick."
+      ],
+      c: 1
+    },
+    {
+      q: "Was ist eine Voraussetzung für die Erzeugung von Wechselspannung im Generator?",
+      a: [
+        "Eine rotierende Spule im Magnetfeld.",
+        "Ein sehr heißer Draht.",
+        "Ein geschlossener Heizkreis.",
+        "Ein sehr kleiner Widerstand."
+      ],
+      c: 0
+    },
+    {
+      q: "Wie verändert sich die Spannung, wenn man die Windungszahl der Spule erhöht?",
+      a: [
+        "Die Spannung wird geringer.",
+        "Die Spannung bleibt gleich.",
+        "Die Spannung wird größer.",
+        "Die Spule funktioniert nicht mehr."
+      ],
+      c: 2
+    },
+    {
+      q: "Was beschreibt die Amplitude einer Wechselspannung?",
+      a: [
+        "Die maximale Stromstärke.",
+        "Die maximale Spannung (Höhe der Wellen).",
+        "Die Farbe der Leitungen.",
+        "Die Drehzahl des Magneten."
+      ],
+      c: 1
+    },
+    {
+      q: "Was passiert, wenn man im Generator die Drehrichtung ändert?",
+      a: [
+        "Die Spannung ändert ihre Polarität.",
+        "Der Generator explodiert.",
+        "Die Spannung bleibt gleich.",
+        "Die Spule hört auf zu funktionieren."
+      ],
+      c: 0
+    },
+    {
+      q: "Warum erzeugt ein Generator sinusförmige Spannung?",
+      a: [
+        "Weil mechanische Energie sinusförmig ist.",
+        "Weil sich die Spule mit konstanter Geschwindigkeit durch ein Magnetfeld dreht.",
+        "Weil Magnetfelder kreisförmig sind.",
+        "Weil Strom immer sinusförmig ist."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Aussage zu Kraftwerken ist korrekt?",
+      a: [
+        "Sie erzeugen Strom mithilfe großer Generatoren.",
+        "Sie erzeugen Strom mithilfe von Batterien.",
+        "Sie erzeugen Strom durch Reibung.",
+        "Sie benötigen keine Magnetfelder."
+      ],
+      c: 0
+    },
+    {
+      q: "Was führt NICHT zu einer stärkeren Induktionsspannung im Generator?",
+      a: [
+        "Schnellere Drehung.",
+        "Stärkeres Magnetfeld.",
+        "Mehr Windungen.",
+        "Farbliche Markierung der Spule."
+      ],
+      c: 3
+    },
+    {
+      q: "Wie nennt man den auf- und abschwingenden Verlauf der Spannung im Generator?",
+      a: [
+        "Dreieckspannung",
+        "Sinusspannung",
+        "Quadratspannung",
+        "Impulsspannung"
+      ],
+      c: 1
+    }
+  ]
+},
+
+    transformator: {
+  name: "Transformator",
+  icon: "🔌",
+  questions: [
+    {
+      q: "Wozu dient ein Transformator?",
+      a: [
+        "Zum Erhöhen oder Verringern einer Wechselspannung.",
+        "Zum Erzeugen von Licht.",
+        "Zum Speichern von elektrischer Energie.",
+        "Zum Erzeugen von Wärme."
+      ],
+      c: 0
+    },
+    {
+      q: "Welche Voraussetzung muss für einen Transformator erfüllt sein?",
+      a: [
+        "Er benötigt Gleichstrom.",
+        "Er benötigt Wechselstrom.",
+        "Er benötigt sehr hohe Temperaturen.",
+        "Er benötigt eine Batterie."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Wicklung eines Transformators ist mit der Stromquelle verbunden?",
+      a: [
+        "Primärspule",
+        "Sekundärspule",
+        "Hilfsspule",
+        "Induktionsspule"
+      ],
+      c: 0
+    },
+    {
+      q: "Welche Wicklung liefert die Ausgangsspannung?",
+      a: [
+        "Primärspule",
+        "Sekundärspule",
+        "Heizspule",
+        "Rotor"
+      ],
+      c: 1
+    },
+    {
+      q: "Wie nennt man einen Transformator, der die Spannung erhöht?",
+      a: [
+        "Aufwärtstransformator",
+        "Abwärtstransformator",
+        "Rückwärtstransformator",
+        "Seitentransformator"
+      ],
+      c: 0
+    },
+    {
+      q: "Wie nennt man einen Transformator, der die Spannung verringert?",
+      a: [
+        "Aufwärtstransformator",
+        "Abwärtstransformator",
+        "Gleichrichter",
+        "Wandler"
+      ],
+      c: 1
+    },
+    {
+      q: "Welcher Zusammenhang gilt beim idealen Transformator?",
+      a: [
+        "U₁ / U₂ = N₁ / N₂",
+        "U₁ / U₂ = I₁ / I₂",
+        "U₁ * U₂ = konstant",
+        "U₁ = U₂ immer"
+      ],
+      c: 0
+    },
+    {
+      q: "Was beschreibt N₁ und N₂ beim Transformator?",
+      a: [
+        "Temperaturen der Spulen.",
+        "Windungszahlen der Primär- und Sekundärspule.",
+        "Stromstärken der Spulen.",
+        "Durchmesser der Spulen."
+      ],
+      c: 1
+    },
+    {
+      q: "Was passiert, wenn die Sekundärspule mehr Windungen hat als die Primärspule?",
+      a: [
+        "Die Spannung steigt.",
+        "Die Spannung sinkt.",
+        "Es passiert nichts.",
+        "Der Transformator funktioniert nicht mehr."
+      ],
+      c: 0
+    },
+    {
+      q: "Was passiert, wenn die Primärspule mehr Windungen hat als die Sekundärspule?",
+      a: [
+        "Die Spannung steigt.",
+        "Die Spannung sinkt.",
+        "Der Transformator explodiert.",
+        "Die Spannung bleibt gleich."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Aussage trifft auf den Eisenkern eines Transformators zu?",
+      a: [
+        "Er verhindert das Magnetfeld.",
+        "Er leitet das Magnetfeld von der Primär- zur Sekundärspule.",
+        "Er speichert elektrische Energie.",
+        "Er dient nur zur Kühlung."
+      ],
+      c: 1
+    },
+    {
+      q: "Warum funktionieren Transformatoren nur mit Wechselstrom?",
+      a: [
+        "Weil Wechselstrom leichter zu erzeugen ist.",
+        "Weil nur ein veränderliches Magnetfeld eine Spannung in der Sekundärspule induziert.",
+        "Weil Gleichstrom zu heiß wird.",
+        "Weil Magnetfelder Gleichstrom nicht beeinflussen."
+      ],
+      c: 1
+    },
+    {
+      q: "Wofür wird ein Transformator im Alltag benutzt?",
+      a: [
+        "Zur Wandlung von Spannungen in Ladegeräten und Netzteilen.",
+        "Zum Erzeugen von WiFi-Signalen.",
+        "Zur Speicherung von Strom.",
+        "Zum Trocknen von Kleidung."
+      ],
+      c: 0
+    },
+    {
+      q: "Welche Energiegrößen bleiben im idealen Transformator erhalten?",
+      a: [
+        "Die Energiesumme: U₁·I₁ = U₂·I₂.",
+        "Die Spannung bleibt immer gleich.",
+        "Die Ströme bleiben immer gleich.",
+        "Nur die Windungszahl bleibt gleich."
+      ],
+      c: 0
+    },
+    {
+      q: "Welche Aussage ist korrekt?",
+      a: [
+        "Ein Transformator kann Gleichstrom verstärken.",
+        "Ein Transformator funktioniert nur bei Gleichspannung.",
+        "Ein Transformator benötigt ein veränderliches Magnetfeld.",
+        "Ein Transformator funktioniert ohne Eisenkern besser."
+      ],
+      c: 2
+    }
+  ]
+},
+    drahtlos: {
+  name: "Drahtlose Energieübertragung",
+  icon: "📡",
+  questions: [
+    {
+      q: "Auf welchem physikalischen Prinzip basiert drahtloses Laden?",
+      a: [
+        "Wärmeleitung",
+        "Elektromagnetische Induktion",
+        "Schallübertragung",
+        "Reibungselektrizität"
+      ],
+      c: 1
+    },
+    {
+      q: "Was ist für drahtlose Energieübertragung unbedingt notwendig?",
+      a: [
+        "Ein Kabel zwischen Sender und Empfänger",
+        "Zwei Spulen: eine Sendespule und eine Empfängerspule",
+        "Ein Laserstrahl",
+        "Eine Batterie in der Spule"
+      ],
+      c: 1
+    },
+    {
+      q: "Wodurch wird in der Empfängerspule eine Spannung erzeugt?",
+      a: [
+        "Durch ein veränderliches Magnetfeld der Sendespule",
+        "Durch Wärmeleitung",
+        "Durch eine Batterie im Gerät",
+        "Durch Reibung im Gerät"
+      ],
+      c: 0
+    },
+    {
+      q: "Wie nennt man die Stromart, die für drahtloses Laden erforderlich ist?",
+      a: [
+        "Gleichstrom",
+        "Wechselstrom",
+        "Druckstrom",
+        "Thermostrom"
+      ],
+      c: 1
+    },
+    {
+      q: "Was beeinflusst die Effizienz der drahtlosen Energieübertragung am stärksten?",
+      a: [
+        "Die Farbe des Geräts",
+        "Der Abstand und die Ausrichtung der Spulen",
+        "Die Lautstärke des Smartphones",
+        "Die Temperatur im Raum"
+      ],
+      c: 1
+    },
+    {
+      q: "Welches Alltagsgerät nutzt drahtlose Energieübertragung?",
+      a: [
+        "Computermaus ohne Kabel",
+        "Elektrische Zahnbürste",
+        "Hammer",
+        "Fahrradklingel"
+      ],
+      c: 1
+    },
+    {
+      q: "Warum müssen Sende- und Empfängerspule gut übereinander liegen?",
+      a: [
+        "Weil sich sonst die Luft erwärmt.",
+        "Weil nur dann genügend Magnetfeld zur Empfängerspule gelangt.",
+        "Weil sie sonst auseinanderfallen.",
+        "Weil das Smartphone sonst überhitzt."
+      ],
+      c: 1
+    },
+    {
+      q: "Warum nimmt die Ladeleistung mit zunehmendem Abstand stark ab?",
+      a: [
+        "Weil Magnetfelder über große Distanzen stärker werden.",
+        "Weil sich das Magnetfeld immer weiter verteilt und schwächer ankommt.",
+        "Weil das Gerät zu schwer wird.",
+        "Weil der Strom leiser wird."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Energieform wird im Empfänger erzeugt?",
+      a: [
+        "Wärmeenergie",
+        "Elektrische Energie",
+        "Kernenergie",
+        "Schallenergie"
+      ],
+      c: 1
+    },
+    {
+      q: "Wozu wird ein Eisenkern in Spulen manchmal genutzt?",
+      a: [
+        "Zur Verstärkung des magnetischen Flusses",
+        "Zur Kühlung der Spule",
+        "Zur Erzeugung von Licht",
+        "Zur Speicherung von Energie"
+      ],
+      c: 0
+    },
+    {
+      q: "Welche Aussage trifft auf Induktionsladegeräte zu?",
+      a: [
+        "Sie funktionieren nur bei direktem Kabelkontakt.",
+        "Sie funktionieren ohne Kabel, aber nur auf kurze Distanz.",
+        "Sie können Geräte aus 10 Metern Entfernung laden.",
+        "Sie benötigen keinen Strom."
+      ],
+      c: 1
+    },
+    {
+      q: "Welche technische Herausforderung gibt es beim drahtlosen Laden?",
+      a: [
+        "Sehr hohe Strahlungsgefahr",
+        "Geringere Effizienz im Vergleich zum Laden mit Kabel",
+        "Es entsteht keine Wärme",
+        "Magnete funktionieren nicht"
+      ],
+      c: 1
+    },
+    {
+      q: "Wo könnte drahtlose Energieübertragung in Zukunft noch eingesetzt werden?",
+      a: [
+        "Beim Laden von Elektroautos ohne Kabel",
+        "Bei Kühlschränken",
+        "Bei Holzöfen",
+        "Bei mechanischen Uhren"
+      ],
+      c: 0
+    },
+    {
+      q: "Welche physikalische Größe ändert sich bei Wechselstrom ständig?",
+      a: [
+        "Die Farbe des Kabels",
+        "Die Richtung der Stromstärke",
+        "Die Masse des Magneten",
+        "Die Länge des Leiters"
+      ],
+      c: 1
+    },
+    {
+      q: "Welche Aussage beschreibt drahtlose Energieübertragung am besten?",
+      a: [
+        "Elektrische Energie wird über Kabel übertragen.",
+        "Elektrische Energie wird über Magnetfelder zwischen Spulen übertragen.",
+        "Elektrische Energie entsteht spontan im Gerät.",
+        "Elektrische Energie wird durch Licht übertragen."
+      ],
+      c: 1
+     }
+  ]
+}
+};
+
+  // --- Zustand ---
+  let currentTopicId = null;
+  let currentQuestions = [];
+  let currentIndex = 0;
+  let correctCount = 0;
+  let answered = false;
+
+  // --- DOM-Elemente ---
+  const topicButtons = document.querySelectorAll(".topic-btn");
+  const quizIdle = document.getElementById("quiz-idle");
+  const quizActive = document.getElementById("quiz-active");
+  const quizResult = document.getElementById("quiz-result");
+
+  const topicIconEl = document.getElementById("quiz-topic-icon");
+  const topicNameEl = document.getElementById("quiz-topic-name");
+  const progressEl = document.getElementById("quiz-progress");
+  const hintEl = document.getElementById("quiz-hint");
+  const questionTextEl = document.getElementById("quiz-question-text");
+  const answersEl = document.getElementById("quiz-answers");
+  const feedbackEl = document.getElementById("quiz-feedback");
+
+  const btnNext = document.getElementById("btn-next");
+  const btnStop = document.getElementById("btn-stop");
+  const btnRestartTopic = document.getElementById("btn-restart-topic");
+  const btnBackToTopics = document.getElementById("btn-back-to-topics");
+  const resultBoxEl = document.getElementById("quiz-result-box");
+
+  // --- Helfer ---
+  function shuffle(array) {
+    const arr = array.slice();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function startQuiz(topicId) {
+  const topic = QUIZ_TOPICS[topicId];
+  if (!topic) return;
+
+  currentTopicId = topicId;
+  const pool = topic.questions || [];
+
+  // Immer QUIZ_LENGTH Fragen anzeigen.
+  // Wenn der Pool kleiner ist, werden Fragen gemischt wiederholt.
+  let selected = [];
+
+  if (pool.length === 0) {
+    // Sicherheitsfallback: kein Fragenpool
+    selected = [];
+  } else if (pool.length >= QUIZ_LENGTH) {
+    // Genug Fragen vorhanden → einfach mischen und 15 nehmen
+    selected = shuffle(pool).slice(0, QUIZ_LENGTH);
+  } else {
+    // Zu wenige Fragen → mehrfach durch den Pool laufen, bis wir 15 haben
+    const shuffled = shuffle(pool);
+    while (selected.length < QUIZ_LENGTH) {
+      for (const q of shuffled) {
+        selected.push(q);
+        if (selected.length === QUIZ_LENGTH) break;
+      }
+    }
+  }
+
+  currentQuestions = selected;
+  currentIndex = 0;
+  correctCount = 0;
+  answered = false;
+
+  topicIconEl.textContent = topic.icon;
+  topicNameEl.textContent = topic.name;
+  hintEl.textContent = "Wähle die richtige Antwort.";
+
+  quizIdle.style.display = "none";
+  quizResult.style.display = "none";
+  quizActive.style.display = "block";
+
+  renderQuestion();
+}
+  function renderQuestion() {
+    const qObj = currentQuestions[currentIndex];
+    if (!qObj) return;
+
+    progressEl.textContent = `Frage ${currentIndex + 1} von ${currentQuestions.length}`;
+    questionTextEl.textContent = qObj.q;
+    answersEl.innerHTML = "";
+    feedbackEl.textContent = "";
+    feedbackEl.className = "feedback";
+    btnNext.disabled = true;
+    answered = false;
+
+    qObj.a.forEach((text, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "answer-btn";
+      btn.textContent = text;
+      btn.addEventListener("click", () => handleAnswer(idx));
+      answersEl.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(index) {
+    if (answered) return;
+    answered = true;
+
+    const qObj = currentQuestions[currentIndex];
+    const buttons = answersEl.querySelectorAll(".answer-btn");
+
+    buttons.forEach((btn, idx) => {
+      btn.disabled = true;
+      if (idx === qObj.c) {
+        btn.classList.add("correct");
+      }
+      if (idx === index && idx !== qObj.c) {
+        btn.classList.add("wrong");
+      }
+    });
+
+    if (index === qObj.c) {
+      correctCount++;
+      feedbackEl.textContent = "✅ Richtig – stark!";
+      feedbackEl.classList.add("good");
+    } else {
+      feedbackEl.textContent = `❌ Nicht ganz. Richtige Antwort: "${qObj.a[qObj.c]}".`;
+      feedbackEl.classList.add("bad");
+    }
+
+    btnNext.disabled = false;
+  }
+
+  function showResult() {
+    quizActive.style.display = "none";
+    quizResult.style.display = "block";
+
+    const total = currentQuestions.length;
+    const quote = total > 0 ? correctCount / total : 0;
+
+    let moodClass = "mid";
+    let text = "";
+
+    if (quote <= 0.4) {
+      moodClass = "bad";
+      text = `Du hast ${correctCount} von ${total} Fragen richtig beantwortet. 🔴 
+      Noch etwas unsicher – schau dir das Thema in der Theorie an und probier das Quiz dann nochmal.`;
+    } else if (quote <= 0.7) {
+      moodClass = "mid";
+      text = `Du hast ${correctCount} von ${total} Fragen richtig beantwortet. 🟠 
+      Schon ganz gut! Mit etwas Wiederholung sitzt das Thema bald richtig.`;
+    } else {
+      moodClass = "good";
+      text = `Du hast ${correctCount} von ${total} Fragen richtig beantwortet. 🟢 
+      Sehr stark – du hast das Thema schon richtig gut drauf!`;
+    }
+
+    resultBoxEl.className = "result-box " + moodClass;
+    resultBoxEl.textContent = text;
+  }
+
+  function stopQuiz() {
+    quizActive.style.display = "none";
+    quizResult.style.display = "none";
+    quizIdle.style.display = "block";
+    currentTopicId = null;
+    currentQuestions = [];
+    currentIndex = 0;
+    correctCount = 0;
+  }
+
+  // --- Event-Listener ---
+  topicButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const topicId = btn.getAttribute("data-topic");
+      startQuiz(topicId);
+    });
+  });
+
+  btnNext.addEventListener("click", () => {
+    if (!answered) return;
+    currentIndex++;
+    if (currentIndex >= currentQuestions.length) {
+      showResult();
+    } else {
+      renderQuestion();
+    }
+  });
+
+  btnStop.addEventListener("click", () => {
+    stopQuiz();
+  });
+
+  btnRestartTopic.addEventListener("click", () => {
+    if (currentTopicId) {
+      startQuiz(currentTopicId);
+    }
+  });
+
+  btnBackToTopics.addEventListener("click", () => {
+    stopQuiz();
+  });
+</script>
+
+</body>
+</html>

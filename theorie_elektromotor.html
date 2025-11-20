@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Elektromotor – Theorie Klasse 10</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+
+      --c-accent: #f97316;
+      --c-warn:   #facc15;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(249,115,22,0.22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(59,130,246,0.18), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0,0,0,0.9);
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative;
+      z-index: 5;
+      max-width: 1150px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.2rem 2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.98), rgba(15,23,42,0.9));
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(148,163,184,0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-height: 100%;
+      overflow: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .back-link {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      padding: 0.2rem 0.9rem;
+      background: rgba(15,23,42,0.8);
+    }
+
+    .back-link:hover { border-color:#e5e7eb; color:#e5e7eb; }
+
+    .tagline {
+      font-size: 0.8rem;
+      color: rgba(148,163,184,0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.3rem;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      margin-bottom: 0.3rem;
+    }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 780px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 1rem;
+    }
+
+    .section {
+      border-radius: 20px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.96);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.75);
+      padding: 0.9rem 1rem 1rem;
+      font-size: 0.92rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .section-title span.dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--c-accent);
+      box-shadow: 0 0 14px rgba(249,115,22,0.7);
+    }
+
+    ul { margin-left: 1.1rem; margin-top: 0.25rem; display: grid; gap: 0.2rem; }
+
+    .merksatz {
+      margin-top: 0.4rem;
+      border-radius: 14px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+      border: 1px solid rgba(250,204,21,0.9);
+      background: radial-gradient(circle at top left, rgba(250,204,21,0.12), transparent);
+      color: #facc15;
+    }
+
+    .example-box {
+      margin-top: 0.4rem;
+      border-radius: 14px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.96);
+      color: var(--text-soft);
+    }
+
+    .sketch {
+      margin-top: 0.4rem;
+      border-radius: 18px;
+      padding: 0.8rem;
+      background: radial-gradient(circle at top left, rgba(249,115,22,0.16), rgba(15,23,42,0.98));
+      border: 1px dashed rgba(249,115,22,0.7);
+      font-size: 0.88rem;
+    }
+
+    .sketch-graphic {
+      margin-top: 0.4rem;
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 0.2rem;
+      align-items: center;
+      font-family: "SF Mono", ui-monospace, monospace;
+      font-size: 0.8rem;
+    }
+
+    .checklist { margin-top: 0.4rem; font-size: 0.88rem; }
+
+    .footer {
+      margin-top: 0.3rem;
+      font-size: 0.78rem;
+      color: rgba(148,163,184,0.9);
+      text-align: right;
+    }
+
+    @media (max-width: 900px) {
+      .panel { padding: 1.8rem 1.4rem 2rem; }
+      .grid { grid-template-columns: minmax(0,1fr); }
+    }
+
+    @media (max-width: 720px) {
+      .footer { text-align:center; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <main class="panel" aria-labelledby="motor-title">
+
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse10_themen.html">← Zurück zu Themen &amp; Theorie</a>
+    </header>
+
+    <section>
+      <div class="tagline">klasse 10 · magnetismus · kraft im magnetfeld</div>
+      <h1 id="motor-title">Elektromotor</h1>
+      <p class="intro-text">
+        Der <strong>Elektromotor</strong> wandelt elektrische Energie in
+        mechanische Bewegung um. Grundlage ist die Kraft auf einen strom-
+        durchflossenen Leiter im Magnetfeld. Diese Seite fasst die wichtigsten
+        Inhalte aus dem Schülerbuch (S. 68–71) zusammen.
+      </p>
+    </section>
+
+    <section class="grid" aria-label="Inhalt zu Elektromotoren">
+      <!-- Linke Spalte -->
+      <div>
+
+        <!-- Motorprinzip -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Motorprinzip: Kraft im Magnetfeld
+          </h2>
+          <p>
+            Fließt Strom durch einen Leiter, der sich in einem Magnetfeld befindet,
+            wirkt auf den Leiter eine <strong>magnetische Kraft</strong>. Bei einer
+            Leiterschleife oder Spule führt dies zu einer <strong>Drehbewegung</strong>.
+          </p>
+          <ul>
+            <li>Stromrichtung + Magnetfeldrichtung → bestimmen die Kraftrichtung.</li>
+            <li>Auf die eine Seite der Leiterschleife wirkt die Kraft nach oben,</li>
+            <li>auf die andere Seite nach unten → Drehmoment.</li>
+          </ul>
+          <div class="merksatz">
+            <strong>Merksatz</strong><br />
+            Ein Elektromotor beruht auf der Kraft, die auf stromdurchflossene
+            Leiter im Magnetfeld wirkt – so entsteht Drehbewegung.
+          </div>
+        </article>
+
+        <!-- Aufbau einfacher Motor -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Aufbau eines einfachen Gleichstrommotors
+          </h2>
+          <p>Typische Bestandteile:</p>
+          <ul>
+            <li><strong>Stator</strong>: Dauermagnet oder Elektromagnet (feststehendes Feld)</li>
+            <li><strong>Rotor / Anker</strong>: drehbare Spule bzw. Leiterschleife</li>
+            <li><strong>Kommutator</strong>: Stromwender, der die Stromrichtung im Rotor umkehrt</li>
+            <li><strong>Bürsten</strong>: stellen den Kontakt zwischen Spannungsquelle und Kommutator her</li>
+            <li><strong>Spannungsquelle</strong>: liefert die elektrische Energie</li>
+          </ul>
+
+          <div class="example-box">
+            <strong>Beispiel:</strong><br />
+            Beim Schulversuch mit einem einfachen Motor besteht der Rotor oft aus
+            einer Drahtschleife, die in den Polschuhen eines U-Magneten rotiert.
+          </div>
+        </article>
+
+        <!-- Linke-Hand-Regel optional -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Kraftrichtung bestimmen
+          </h2>
+          <p>
+            Um zu erkennen, in welche Richtung sich der Rotor dreht, kann eine
+            Handregel genutzt werden (z. B. Drei-Finger-Regel):
+          </p>
+          <ul>
+            <li>Daumen: Kraftrichtung</li>
+            <li>Zeigefinger: Magnetfeldrichtung (N → S)</li>
+            <li>Mittelfinger: Stromrichtung</li>
+          </ul>
+        </article>
+      </div>
+
+      <!-- Rechte Spalte -->
+      <div>
+        <!-- Skizze -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Skizze: Einfacher Motor
+          </h2>
+          <div class="sketch">
+            <p>Schematische Darstellung einer Leiterschleife im Magnetfeld:</p>
+
+            <div class="sketch-graphic" aria-hidden="true">
+              <div>N</div><div>→</div><div>|</div><div>|</div><div>←</div><div>S</div><div></div>
+            </div>
+            <div class="sketch-graphic" aria-hidden="true">
+              <div></div><div>↑ F</div><div>|</div><div>|</div><div>F ↓</div><div></div><div></div>
+            </div>
+
+            <p style="margin-top:0.5rem;">
+              Eine Seite der Schleife wird nach oben gedrückt, die andere nach
+              unten – es entsteht ein Drehmoment.
+            </p>
+          </div>
+        </article>
+
+        <!-- Energieumwandlung & Anwendungen -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Energieumwandlung & Anwendungen
+          </h2>
+          <p>
+            Im Elektromotor wird <strong>elektrische Energie</strong> in
+            <strong>mechanische Energie</strong> (Drehbewegung) umgewandelt.
+          </p>
+          <ul>
+            <li>Elektrogeräte (Mixer, Staubsauger, Bohrmaschine)</li>
+            <li>Elektrofahrrad, E-Scooter, Elektroauto</li>
+            <li>Lüfter und Pumpen</li>
+          </ul>
+          <div class="example-box">
+            <strong>Beispiel Alltag:</strong><br />
+            Im Akku-Schrauber sorgt ein kompakter Elektromotor dafür, dass sich
+            der Bit mit hohem Drehmoment drehen kann.
+          </div>
+        </article>
+
+        <!-- Was solltest du können -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Was solltest du können?
+          </h2>
+          <div class="checklist">
+            <ul>
+              <li>Motorprinzip mit „Kraft im Magnetfeld“ erklären.</li>
+              <li>Aufbau eines einfachen Gleichstrommotors beschreiben.</li>
+              <li>die Energieumwandlung benennen.</li>
+              <li>Alltagsbeispiele für Elektromotoren nennen.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Zusammenfassung -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Kurz-Zusammenfassung
+          </h2>
+          <p>
+            Im Elektromotor wirken Kräfte auf stromdurchflossene Leiter im
+            Magnetfeld. Diese Kräfte erzeugen ein Drehmoment auf eine Spule
+            (Rotor). Durch einen Kommutator wird die Stromrichtung so gewechselt,
+            dass sich der Rotor weiterdreht. So wird elektrische Energie in
+            mechanische Arbeit umgewandelt.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Theorie „Elektromotor“
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

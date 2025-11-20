@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Dauermagneten – Theorie Klasse 10</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+
+      --c-accent: #16a34a;
+      --c-soft:   #4ade80;
+      --c-warn:   #eab308;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(59,130,246,0.18), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.9);
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative;
+      z-index: 5;
+      max-width: 1150px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.2rem 2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-height: 100%;
+      overflow: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .back-link {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 0.2rem 0.9rem;
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .back-link:hover {
+      border-color: #e5e7eb;
+      color: #e5e7eb;
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.3rem;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      margin-bottom: 0.3rem;
+    }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 780px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 1rem;
+    }
+
+    .section {
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.96);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+      padding: 0.9rem 1rem 1rem;
+      font-size: 0.92rem;
+    }
+
+    .section + .section {
+      margin-top: 0.7rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .section-title span.dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--c-accent);
+      box-shadow: 0 0 14px rgba(34, 197, 94, 0.7);
+    }
+
+    ul {
+      margin-left: 1.1rem;
+      margin-top: 0.25rem;
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .merksatz {
+      margin-top: 0.4rem;
+      border-radius: 14px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+      border: 1px solid rgba(250, 204, 21, 0.9);
+      background: radial-gradient(circle at top left, rgba(250, 204, 21, 0.12), transparent);
+      color: #facc15;
+    }
+
+    .merksatz strong {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.76rem;
+      display: inline-block;
+      margin-bottom: 0.1rem;
+      opacity: 0.95;
+    }
+
+    .example-box {
+      margin-top: 0.4rem;
+      border-radius: 14px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.96);
+      color: var(--text-soft);
+    }
+
+    .example-box strong {
+      color: #e5e7eb;
+    }
+
+    .sketch {
+      margin-top: 0.4rem;
+      border-radius: 18px;
+      padding: 0.8rem;
+      background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.16), rgba(15, 23, 42, 0.98));
+      border: 1px dashed rgba(74, 222, 128, 0.7);
+      font-size: 0.88rem;
+    }
+
+    .sketch-graphic {
+      margin-top: 0.4rem;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.2rem;
+      align-items: center;
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.8rem;
+    }
+
+    .sketch-graphic div {
+      text-align: center;
+    }
+
+    .checklist {
+      margin-top: 0.4rem;
+      font-size: 0.88rem;
+    }
+
+    .checklist ul {
+      margin-top: 0.2rem;
+      gap: 0.15rem;
+    }
+
+    .checklist li::marker {
+      content: "▹ ";
+    }
+
+    .footer {
+      margin-top: 0.3rem;
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-align: right;
+    }
+
+    @media (max-width: 900px) {
+      .panel {
+        padding: 1.8rem 1.4rem 2rem;
+      }
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .footer {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <main class="panel" aria-labelledby="dauermagneten-title">
+
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse10_themen.html">← Zurück zu Themen &amp; Theorie</a>
+    </header>
+
+    <section>
+      <div class="tagline">klasse 10 · magnetismus · dauermagneten</div>
+      <h1 id="dauermagneten-title">Dauermagneten</h1>
+      <p class="intro-text">
+        Auf dieser Seite wiederholst du, wie <strong>Dauermagneten</strong>
+        aufgebaut sind, warum sie ihre Magnetwirkung lange behalten und
+        wofür man sie nutzt. Die Inhalte orientieren sich am Schülerbuch
+        (Kapitel „Dauermagneten“).
+      </p>
+    </section>
+
+    <section class="grid" aria-label="Inhalt und Skizzen zu Dauermagneten">
+      <!-- Linke Spalte: Inhalt -->
+      <div>
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Was ist ein Dauermagnet?
+          </h2>
+          <p>
+            Ein <strong>Dauermagnet</strong> ist ein Magnet, der seine
+            Magnetisierung über lange Zeit beibehält. Er besteht aus einem
+            Material, in dem die kleinen „Magnetbereiche“ (magnetische Domänen)
+            weitgehend in die gleiche Richtung ausgerichtet sind.
+          </p>
+          <p style="margin-top:0.35rem;">
+            Typische Materialien für Dauermagnete sind zum Beispiel:
+          </p>
+          <ul>
+            <li>Neodym-Eisen-Bor (sehr starke Magnete)</li>
+            <li>Ferrite (z. B. Kühlschrankmagnete)</li>
+            <li>AlNiCo-Legierungen (Aluminium, Nickel, Kobalt)</li>
+          </ul>
+
+          <div class="merksatz">
+            <strong>Merksatz</strong><br />
+            Je geordneter die magnetischen Bereiche im Inneren sind,
+            desto stärker wirkt der Dauermagnet nach außen.
+          </div>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Magnetische Domänen im Inneren
+          </h2>
+          <p>
+            In einem ferromagnetischen Stoff sind Atome zu
+            <strong>magnetischen Domänen</strong> zusammengefasst. Jede Domäne
+            wirkt wie ein kleiner Stabmagnet. In einem unmagnetisierten
+            Stück Eisen sind die Domänen zufällig verteilt – die Wirkungen
+            heben sich gegenseitig auf.
+          </p>
+          <p style="margin-top:0.35rem;">
+            Wird das Material magnetisiert (z. B. durch einen starken Magneten
+            oder eine Spule), richten sich viele Domänen in die gleiche
+            Richtung aus – nach außen erkennt man einen Magneten mit Nord- und
+            Südpol.
+          </p>
+
+          <div class="example-box">
+            <strong>Beispiel:</strong><br />
+            Hält man ein Stück Eisen längere Zeit an einen starken Magneten,
+            kann es selbst zum Magneten werden – ein Teil der Domänen bleibt
+            auch danach geordnet.
+          </div>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Harte und weiche magnetische Stoffe
+          </h2>
+          <p>
+            Materialien reagieren unterschiedlich darauf, ob und wie gut sie
+            ihre Magnetisierung behalten:
+          </p>
+          <ul>
+            <li><strong>Hartmagnetische Stoffe:</strong> schwer zu magnetisieren, behalten ihre Magnetisierung sehr lange.<br>
+                ➜ geeignet für Dauermagnete (z. B. Neodym).</li>
+            <li><strong>Weichmagnetische Stoffe:</strong> lassen sich leicht magnetisieren, verlieren die Magnetisierung aber schnell wieder.<br>
+                ➜ geeignet für Elektromagnete (z. B. Eisenkern).</li>
+          </ul>
+
+          <div class="merksatz">
+            <strong>Merksatz</strong><br />
+            Dauermagnete bestehen aus hartmagnetischen Stoffen, Kerne von
+            Elektromagneten aus weichmagnetischen Stoffen.
+          </div>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Entmagnetisierung
+          </h2>
+          <p>
+            Auch ein Dauermagnet kann geschwächt oder entmagnetisiert werden.
+            Typische Ursachen sind:
+          </p>
+          <ul>
+            <li><strong>Erhitzen</strong> über eine bestimmte Temperatur (Curie-Temperatur)</li>
+            <li><strong>Erschütterungen</strong> (z. B. starkes Schlagen)</li>
+            <li><strong>Gegenfelder</strong> durch andere starke Magnete</li>
+          </ul>
+          <p style="margin-top:0.35rem;">
+            Dabei geraten die Domänen wieder durcheinander – die geordnete
+            Ausrichtung geht verloren.
+          </p>
+        </article>
+      </div>
+
+      <!-- Rechte Spalte: Skizzen & Checkliste -->
+      <div>
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Skizze: Domänen in einem Magneten
+          </h2>
+          <div class="sketch">
+            <p>
+              Die folgende einfache ASCII-Skizze soll dir helfen, dir die
+              geordnete bzw. ungeordnete Ausrichtung der magnetischen Domänen
+              vorzustellen:
+            </p>
+            <div class="sketch-graphic" aria-hidden="true">
+              <div>↑</div><div>↓</div><div>↗︎</div><div>←</div><div>↘︎</div>
+            </div>
+            <p style="margin-top:0.35rem;">
+              Unmagnetisiert: Pfeile zeigen in viele Richtungen – Wirkungen heben
+              sich auf.
+            </p>
+            <div class="sketch-graphic" aria-hidden="true">
+              <div>↑</div><div>↑</div><div>↑</div><div>↑</div><div>↑</div>
+            </div>
+            <p style="margin-top:0.35rem;">
+              Dauermagnet: Pfeile (Domänen) zeigen überwiegend in die gleiche
+              Richtung – es entsteht ein starker Magnet.
+            </p>
+          </div>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Anwendungen von Dauermagneten
+          </h2>
+          <div class="checklist">
+            <p>Wichtige Einsatzgebiete sind zum Beispiel:</p>
+            <ul>
+              <li>Lautsprecher und Kopfhörer</li>
+              <li>Elektromotoren (Rotor und Stator)</li>
+              <li>Magnetverschlüsse (Taschen, Schranktüren)</li>
+              <li>Magnetkarten, Festplatten (historisch)</li>
+              <li>Generatoren und Windkraftanlagen</li>
+            </ul>
+          </div>
+
+          <div class="example-box">
+            <strong>Beispiel Alltag:</strong><br />
+            In vielen kleinen Motoren (z. B. in Lüftern oder Spielzeugautos)
+            sind starke Dauermagnete eingebaut, gegen die eine Spule mit
+            Stromfluss arbeitet. So entsteht eine Drehbewegung.
+          </div>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Was solltest du können?
+          </h2>
+          <div class="checklist">
+            <ul>
+              <li>erklären, was ein Dauermagnet ist.</li>
+              <li>den Unterschied zwischen hart- und weichmagnetischen Stoffen beschreiben.</li>
+              <li>die Rolle der magnetischen Domänen schildern.</li>
+              <li>Möglichkeiten der Entmagnetisierung nennen.</li>
+              <li>mindestens zwei technische Anwendungen von Dauermagneten aufzählen.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Kurz-Zusammenfassung
+          </h2>
+          <p>
+            Dauermagneten bestehen aus hartmagnetischen Stoffen, in denen viele
+            magnetische Domänen dauerhaft in die gleiche Richtung ausgerichtet
+            sind. Dadurch besitzen sie einen stabilen Nord- und Südpol und
+            können andere ferromagnetische Stoffe anziehen. Durch Erhitzen,
+            Erschütterungen oder Gegenfelder können sie geschwächt oder
+            entmagnetisiert werden. Dauermagneten werden in vielen technischen
+            Geräten eingesetzt – vom Lautsprecher bis zur Windkraftanlage.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Theorie „Dauermagneten“
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

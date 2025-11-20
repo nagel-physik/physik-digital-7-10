@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Formeln Klasse 9 – Bewegung, Kraft, Energie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+
+      --c-move:  #3b82f6;
+      --c-force: #22c55e;
+      --c-energy:#f97316;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.18), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.9);
+      pointer-events: none;
+    }
+
+    .floaters {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .floaters span {
+      position: absolute;
+      font-size: 2.4rem;
+      color: rgba(148, 163, 184, 0.18);
+      animation: floatUp 26s linear infinite;
+      filter: blur(0.4px);
+    }
+
+    .floaters span:nth-child(1) { left: 12%; animation-duration: 28s; animation-delay: -4s; }
+    .floaters span:nth-child(2) { left: 36%; animation-duration: 26s; animation-delay: -10s; }
+    .floaters span:nth-child(3) { left: 63%; animation-duration: 30s; animation-delay: -18s; }
+    .floaters span:nth-child(4) { left: 82%; animation-duration: 24s; animation-delay: -7s; }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh); }
+      100% { transform: translateY(-20vh); }
+    }
+
+    .panel {
+      position: relative;
+      z-index: 5;
+      max-width: 1150px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.4rem 2.2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+      max-height: 100%;
+      overflow: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .back-link {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 0.2rem 0.9rem;
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .back-link:hover {
+      border-color: #e5e7eb;
+      color: #e5e7eb;
+    }
+
+    .heading h1 {
+      font-size: clamp(1.9rem, 3.1vw, 2.4rem);
+      margin-bottom: 0.3rem;
+    }
+
+    .heading p {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 780px;
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.3rem;
+    }
+
+    .section {
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.96);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+      padding: 1rem 1.1rem 1rem;
+    }
+
+    .section + .section {
+      margin-top: 0.8rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.4rem;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 0.08rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: rgba(148, 163, 184, 0.95);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .pill.move   { color: var(--c-move);   border-color: var(--c-move); }
+    .pill.force  { color: var(--c-force);  border-color: var(--c-force); }
+    .pill.energy { color: var(--c-energy); border-color: var(--c-energy); }
+
+    .section small {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin-top: 0.4rem;
+    }
+
+    th, td {
+      padding: 0.4rem 0.4rem;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.9);
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-soft);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .formula {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .hint {
+      font-size: 0.75rem;
+      color: rgba(148, 163, 184, 0.98);
+    }
+
+    .example {
+      margin-top: 0.3rem;
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    .example strong {
+      color: #e5e7eb;
+    }
+
+    .footer {
+      margin-top: 0.6rem;
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-align: right;
+    }
+
+    @media (max-width: 900px) {
+      .panel {
+        padding: 2rem 1.4rem 2.1rem;
+      }
+      th, td {
+        padding: 0.35rem 0.35rem;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .footer {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <div class="floaters">
+    <span>v = s/t</span>
+    <span>F = m·a</span>
+    <span>W = F·s</span>
+    <span>E = m·g·h</span>
+  </div>
+
+  <main class="panel" aria-labelledby="fs9-title">
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse9.html">← Zurück Klasse 9</a>
+    </header>
+
+    <section class="heading">
+      <div class="tagline">klasse 9 · bewegung · kraft · energie</div>
+      <h1 id="fs9-title">Formelsammlung Klasse 9</h1>
+      <p>
+        Hier findest du die wichtigsten Formeln für die Themen
+        <strong>gleichförmige und beschleunigte Bewegungen</strong>,
+        <strong>Kraft &amp; Beschleunigung</strong> sowie
+        <strong>mechanische Energie &amp; Arbeit</strong>.
+        Jede Formel ist kurz erklärt und mit typischen Einheiten angegeben.
+      </p>
+    </section>
+
+    <!-- Bewegung -->
+    <section class="section" aria-label="Gleichförmige und beschleunigte Bewegung">
+      <div class="section-header">
+        <div class="section-title">
+          <span style="color:var(--c-move);">●</span>
+          Gleichförmige &amp; beschleunigte Bewegung
+        </div>
+        <span class="pill move">Bewegung</span>
+      </div>
+      <small>Geschwindigkeit, Beschleunigung und Weg-Zeit-Zusammenhang</small>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 28%;">Formel</th>
+            <th style="width: 42%;">Bedeutung</th>
+            <th style="width: 30%;">Größen &amp; Einheiten</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="formula">v = s / t</td>
+            <td>
+              <strong>Durchschnittsgeschwindigkeit</strong> bei gleichförmiger Bewegung:
+              in welcher Zeit wird welcher Weg zurückgelegt?
+            </td>
+            <td class="hint">
+              v in m/s oder km/h<br />
+              s in m oder km<br />
+              t in s oder h
+            </td>
+          </tr>
+          <tr>
+            <td class="formula">s = v · t</td>
+            <td>
+              <strong>Weg</strong> einer gleichförmigen Bewegung:
+              Geschwindigkeit mal Zeit.
+            </td>
+            <td class="hint">
+              s in m, v in m/s, t in s
+            </td>
+          </tr>
+          <tr>
+            <td class="formula">a = Δv / Δt</td>
+            <td>
+              <strong>Beschleunigung</strong>:
+              wie stark ändert sich die Geschwindigkeit pro Zeit?
+            </td>
+            <td class="hint">
+              a in m/s²<br />
+              Δv in m/s<br />
+              Δt in s
+            </td>
+          </tr>
+          <tr>
+            <td class="formula">v = a · t</td>
+            <td>
+              Geschwindigkeit bei <strong>gleichmäßiger Beschleunigung</strong>
+              aus der Ruhe (v<sub>0</sub> = 0).
+            </td>
+            <td class="hint">
+              v in m/s, a in m/s², t in s
+            </td>
+          </tr>
+          <tr>
+            <td class="formula">s = ½ · a · t²</td>
+            <td>
+              Zurückgelegter <strong>Weg bei Beschleunigung aus der Ruhe</strong>.
+              (Optional, je nach Kursniveau.)
+            </td>
+            <td class="hint">
+              s in m, a in m/s², t in s
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="example">
+        <strong>Beispiel:</strong> Ein Auto fährt gleichförmig mit v = 72 km/h
+        (= 20 m/s). In t = 10 s legt es den Weg s = v·t = 20 m/s · 10 s = 200 m zurück.
+      </div>
+    </section>
+
+    <!-- Kraft -->
+    <section class="section" aria-label="Kraft und Beschleunigung">
+      <div class="section-header">
+        <div class="section-title">
+          <span style="color:var(--c-force);">●</span>
+          Kraft &amp; Beschleunigung
+        </div>
+        <span class="pill force">Kraft</span>
+      </div>
+      <small>Zusammenhang von Kraft, Masse und Beschleunigung</small>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 28%;">Formel</th>
+            <th style="width: 42%;">Bedeutung</th>
+            <th style="width: 30%;">Größen &amp; Einheiten</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="formula">F = m · a</td>
+            <td>
+              <strong>Grundgesetz der Mechanik</strong>:
+              Eine Kraft bewirkt eine Beschleunigung eines Körpers.
+            </td>
+            <td class="hint">
+              F in Newton (N)<br />
+              m in kg<br />
+              a in m/s²
+            </td>
+          </tr>
+          <tr>
+            <td class="formula">F<sub>G</sub> = m · g</td>
+            <td>
+              <strong>Gewichtskraft</strong> eines Körpers im Schwerefeld der Erde.
+            </td>
+            <td class="hint">
+              F<sub>G</sub> in N<br />
+              m in kg<br />
+              g ≈ 9,81 m/s²
+            </td>
+          </tr>
+          <!-- Optional Reibung, nur falls du es nutzt -->
+          <!--
+          <tr>
+            <td class="formula">F<sub>R</sub> = μ · F<sub>N</sub></td>
+            <td>
+              Reibungskraft (optional): hängt von Normalkraft und Reibungszahl μ ab.
+            </td>
+            <td class="hint">
+              F_R, F_N in N, μ ohne Einheit
+            </td>
+          </tr>
+          -->
+        </tbody>
+      </table>
+
+      <div class="example">
+        <strong>Beispiel:</strong> Ein Schlitten (m = 40 kg) wird mit a = 0,5 m/s²
+        beschleunigt. Es wirkt eine Kraft F = m·a = 40 kg · 0,5 m/s² = 20 N.
+      </div>
+    </section>
+
+    <!-- Energie & Arbeit -->
+    <section class="section" aria-label="Mechanische Energie und Arbeit">
+      <div class="section-header">
+        <div class="section-title">
+          <span style="color:var(--c-energy);">●</span>
+          Mechanische Energie &amp; Arbeit
+        </div>
+        <span class="pill energy">Energie / Arbeit</span>
+      </div>
+      <small>Arbeit, Lageenergie und Bewegungsenergie</small>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 28%;">Formel</th>
+            <th style="width: 42%;">Bedeutung</th>
+            <th style="width: 30%;">Größen &amp; Einheiten</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="formula">W = F · s</td>
+            <td>
+              <strong>Arbeit</strong>:
+              Eine Kraft verrichtet Arbeit, wenn sie einen Körper entlang eines Weges bewegt.
+            </td>
+            <td class="hint">
+              W in Joule (J)<br />
+              F in N, s in m
+            </td>
+          </tr>
+          <tr>
+            <td class="formula">W<sub>H</sub> = m · g · h</td>
+            <td>
+              <strong>Hubarbeit</strong>: Arbeit beim Anheben eines Körpers.
+            </td>
+            <td class="hint">
+              W<sub>H</sub> in J<br />
+              m in kg, g in m/s², h in m
+            </td>
+          </tr>
+          <tr>
+            <td class="formula">E<sub>pot</sub> = m · g · h</td>
+            <td>
+              <strong>Potentielle (Lage-)Energie</strong> im Schwerefeld.
+            </td>
+            <td class="hint">
+              E in J, m in kg, g in m/s², h in m
+            </td>
+          </tr>
+          <tr>
+            <td class="formula">E<sub>kin</sub> = ½ · m · v²</td>
+            <td>
+              <strong>Kinetische (Bewegungs-)Energie</strong> eines Körpers.
+            </td>
+            <td class="hint">
+              E in J, m in kg, v in m/s
+            </td>
+          </tr>
+          <tr>
+            <td class="formula">E<sub>mech</sub> = E<sub>pot</sub> + E<sub>kin</sub></td>
+            <td>
+              <strong>Mechanische Gesamtenergie</strong> (ohne Reibung):
+              Summe aus Lage- und Bewegungsenergie.
+            </td>
+            <td class="hint">
+              E in J
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="example">
+        <strong>Beispiel:</strong> Eine 2-kg-Kugel liegt 5 m über dem Boden
+        (E_pot = 2·9,81·5 ≈ 98 J) und fällt herunter. Kurz vor dem Aufprall ist
+        fast die gesamte Energie als Bewegungsenergie E_kin vorhanden.
+      </div>
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Formeln Klasse 9
+    </footer>
+  </main>
+</div>
+</body>
+</html>

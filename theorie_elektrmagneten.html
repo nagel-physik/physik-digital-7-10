@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Elektromagneten – Theorie Klasse 10</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+
+      --c-accent: #38bdf8;
+      --c-warn: #facc15;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(56,189,248,0.22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(34,197,94,0.18), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0,0,0,0.9);
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative;
+      z-index: 5;
+      max-width: 1150px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.2rem 2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.98), rgba(15,23,42,0.9));
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(148,163,184,0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-height: 100%;
+      overflow: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .back-link {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      padding: 0.2rem 0.9rem;
+      background: rgba(15,23,42,0.8);
+    }
+
+    .back-link:hover {
+      border-color: #e5e7eb;
+      color: #e5e7eb;
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      color: rgba(148,163,184,0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.3rem;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      margin-bottom: 0.3rem;
+    }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 780px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 1rem;
+    }
+
+    .section {
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.96);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.75);
+      padding: 0.9rem 1rem 1rem;
+      font-size: 0.92rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .section-title span.dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--c-accent);
+      box-shadow: 0 0 14px rgba(56,189,248,0.7);
+    }
+
+    ul {
+      margin-left: 1.1rem;
+      margin-top: 0.25rem;
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .merksatz {
+      margin-top: 0.4rem;
+      border-radius: 14px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+      border: 1px solid rgba(250, 204, 21, 0.9);
+      background: radial-gradient(circle at top left, rgba(250,204,21,0.12), transparent);
+      color: #facc15;
+    }
+
+    .example-box {
+      margin-top: 0.4rem;
+      border-radius: 14px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.96);
+      color: var(--text-soft);
+    }
+
+    .sketch {
+      margin-top: 0.4rem;
+      border-radius: 18px;
+      padding: 0.8rem;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.16), rgba(15,23,42,0.98));
+      border: 1px dashed rgba(56,189,248,0.7);
+      font-size: 0.88rem;
+    }
+
+    .sketch-graphic {
+      margin-top: 0.4rem;
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 0.2rem;
+      align-items: center;
+      font-family: "SF Mono", ui-monospace, monospace;
+      font-size: 0.8rem;
+    }
+
+    .checklist {
+      margin-top: 0.4rem;
+      font-size: 0.88rem;
+    }
+
+    .footer {
+      margin-top: 0.3rem;
+      font-size: 0.78rem;
+      color: rgba(148,163,184,0.9);
+      text-align: right;
+    }
+
+    @media (max-width: 900px) {
+      .panel { padding: 1.8rem 1.4rem 2rem; }
+      .grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    @media (max-width: 720px) {
+      .footer { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <main class="panel" aria-labelledby="emag-title">
+
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse10_themen.html">← Zurück zu Themen &amp; Theorie</a>
+    </header>
+
+    <section>
+      <div class="tagline">klasse 10 · elektromagnetismus · strom &amp; spule</div>
+      <h1 id="emag-title">Elektromagneten</h1>
+      <p class="intro-text">
+        Ein <strong>Elektromagnet</strong> entsteht, wenn elektrischer Strom durch eine
+        Spule fließt. Diese Seite fasst die Grundlagen aus dem Schülerbuch
+        (Kapitel „Elektromagneten“) kompakt zusammen.
+      </p>
+    </section>
+
+    <section class="grid" aria-label="Inhalt zu Elektromagneten">
+      <div>
+        <!-- Grundlagen -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Wie entsteht ein Elektromagnet?
+          </h2>
+          <p>
+            Fließt Strom durch eine <strong>Spule</strong> (viele Windungen aus Kupferdraht),
+            entsteht um die Spule ein <strong>Magnetfeld</strong>. Dieses Magnetfeld ähnelt
+            dem eines Stabmagneten – mit Nord- und Südpol.
+          </p>
+
+          <ul>
+            <li>mehr Strom → stärkeres Magnetfeld</li>
+            <li>mehr Windungen → stärkeres Magnetfeld</li>
+            <li>Eisenkern in der Spule → Magnetwirkung steigt stark an</li>
+          </ul>
+
+          <div class="merksatz">
+            <strong>Merksatz</strong><br>
+            Je mehr Strom und je mehr Windungen die Spule hat, desto stärker
+            ist der entstehende Elektromagnet.
+          </div>
+        </article>
+
+        <!-- Stromrichtung -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Stromrichtung und Magnetpole
+          </h2>
+          <p>
+            Die Richtung des Magnetfelds hängt von der Stromrichtung ab.
+            Mit der <strong>Rechte-Hand-Regel</strong> kann man bestimmen, welcher Pol der
+            Spule zum Nordpol wird.
+          </p>
+
+          <p style="margin-top:0.35rem;">
+            Faustformel:
+          </p>
+          <ul>
+            <li>umfasst die rechte Hand die Spule so, dass der Daumen in Stromrichtung zeigt,</li>
+            <li>dann zeigt der Daumen Richtung <strong>Nordpol</strong> der Spule.</li>
+          </ul>
+
+          <div class="example-box">
+            <strong>Beispiel:</strong><br>
+            Fließt der Strom im Uhrzeigersinn vom Betrachter weg, liegt der Nordpol
+            am rechten Ende der Spule.
+          </div>
+        </article>
+
+        <!-- Anwendungen -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Anwendungen von Elektromagneten
+          </h2>
+          <p>
+            Elektromagneten sind abschaltbar – das macht sie besonders praktisch.
+            Wichtige Anwendungen:
+          </p>
+          <ul>
+            <li>Schaltmagnete (Relais)</li>
+            <li>Klingeln und Summer</li>
+            <li>Magnetkräne zum Heben schwerer Metallteile</li>
+            <li>Elektromotoren (als Teil der Magnetanordnung)</li>
+            <li>Magnetventile (Haushalt & Technik)</li>
+          </ul>
+        </article>
+
+        <!-- Eisenkern -->
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Warum verstärkt ein Eisenkern das Magnetfeld?
+          </h2>
+          <p>
+            Ein Eisenkern besteht aus vielen weichmagnetischen Domänen, die sich
+            beim Einschalten des Stroms in die gleiche Richtung ausrichten.
+          </p>
+          <p style="margin-top:0.3rem;">
+            Dadurch wird das Magnetfeld der Spule vervielfacht.
+          </p>
+        </article>
+      </div>
+
+      <!-- Rechte Spalte -->
+      <div>
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Skizze: Spule als Elektromagnet
+          </h2>
+
+          <div class="sketch">
+            <p>Einfache ASCII-Skizze einer stromdurchflossenen Spule:</p>
+
+            <div class="sketch-graphic" aria-hidden="true">
+              <div>~</div><div>~</div><div>~</div><div>~</div><div>~</div><div>~</div><div>~</div>
+            </div>
+            <p style="text-align:center;margin-top:0.3rem;">Spulenwindungen</p>
+
+            <div class="sketch-graphic" aria-hidden="true" style="margin-top:0.5rem;">
+              <div>N</div><div>→</div><div>→</div><div>→</div><div>S</div><div></div><div></div>
+            </div>
+            <p style="margin-top:0.4rem;">
+              Die Feldlinien verlaufen ähnlich wie bei einem Stabmagneten – von N nach S.
+            </p>
+          </div>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Was solltest du können?
+          </h2>
+
+          <div class="checklist">
+            <ul>
+              <li>Erklären, wie ein Elektromagnet entsteht.</li>
+              <li>Eisenkern und Spulenwindungen beschreiben.</li>
+              <li>die Rechte-Hand-Regel anwenden.</li>
+              <li>Anwendungen von Elektromagneten nennen.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title">
+            <span class="dot"></span>
+            Kurz-Zusammenfassung
+          </h2>
+          <p>
+            Ein Elektromagnet ist ein Magnet, der nur bei Stromfluss wirkt.
+            Seine Stärke hängt von der Anzahl der Windungen, der Stromstärke
+            und einem Eisenkern ab. Elektromagneten spielen eine zentrale Rolle
+            in technischen Geräten wie Relais, Kränen, Motoren und Magnetventilen.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Theorie „Elektromagneten“
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

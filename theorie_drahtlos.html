@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Drahtlose Energieübertragung – Theorie Klasse 10</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+      --c-accent: #22c55e; /* Grün für moderne drahtlose Technik */
+      --c-warn:   #facc15;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(16,185,129,0.2), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute; inset: 0;
+      box-shadow: inset 0 0 160px rgba(0,0,0,0.9);
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative; z-index: 5;
+      max-width: 1150px; width: 100%;
+      margin: 0 auto;
+      padding: 2.2rem 2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.98), rgba(15,23,42,0.9));
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(148,163,184,0.4);
+      display: flex; flex-direction: column; gap: 1.5rem;
+      max-height: 100%; overflow: auto;
+    }
+
+    .topbar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    .brand { font-size:0.9rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--text-soft); }
+
+    .back-link {
+      font-size:0.85rem; color:var(--text-soft);
+      text-decoration:none;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      padding:0.2rem 0.9rem;
+      background:rgba(15,23,42,0.8);
+    }
+
+    .tagline {
+      font-size:0.8rem; color:rgba(148,163,184,0.9);
+      text-transform:uppercase; letter-spacing:0.18em; margin-bottom:0.3rem;
+    }
+
+    h1 { font-size:clamp(1.9rem, 3vw, 2.3rem); margin-bottom:0.3rem; }
+    .intro-text { font-size:0.95rem; color:var(--text-soft); max-width:780px; }
+
+    .grid { display:grid; grid-template-columns:minmax(0,2.1fr) minmax(0,1.4fr); gap:1rem; }
+
+    .section {
+      border-radius:20px; border:1px solid rgba(148,163,184,0.6);
+      background:rgba(15,23,42,0.96); box-shadow:0 16px 40px rgba(0,0,0,0.75);
+      padding:0.9rem 1rem 1rem; font-size:0.92rem;
+    }
+
+    .section-title {
+      display:flex; align-items:center; gap:0.45rem;
+      font-weight:600; margin-bottom:0.3rem;
+    }
+
+    .section-title span.dot {
+      width:9px; height:9px; border-radius:999px;
+      background:var(--c-accent);
+      box-shadow:0 0 14px rgba(34,197,94,0.7);
+    }
+
+    ul { margin-left:1.1rem; margin-top:0.25rem; display:grid; gap:0.2rem; }
+
+    .merksatz {
+      margin-top:0.4rem; border-radius:14px;
+      padding:0.55rem 0.7rem; font-size:0.9rem;
+      border:1px solid rgba(250,204,21,0.9);
+      background:radial-gradient(circle at top left, rgba(250,204,21,0.12), transparent);
+      color:#facc15;
+    }
+
+    .example-box {
+      margin-top:0.4rem; border-radius:14px;
+      padding:0.55rem 0.7rem; font-size:0.9rem;
+      border:1px solid rgba(148,163,184,0.6);
+      background:rgba(15,23,42,0.96); color:var(--text-soft);
+    }
+
+    .sketch {
+      margin-top:0.4rem; border-radius:18px;
+      padding:0.8rem;
+      background:radial-gradient(circle at top left, rgba(34,197,94,0.16), rgba(15,23,42,0.98));
+      border:1px dashed rgba(34,197,94,0.7);
+      font-size:0.88rem;
+    }
+
+    .sketch-graphic {
+      margin-top:0.4rem;
+      display:grid; grid-template-columns:repeat(7, minmax(0,1fr));
+      gap:0.2rem; align-items:center;
+      font-family:"SF Mono", ui-monospace, monospace; font-size:0.8rem;
+    }
+
+    .checklist { margin-top:0.4rem; font-size:0.88rem; }
+    .footer { margin-top:0.3rem; font-size:0.78rem; color:rgba(148,163,184,0.9); text-align:right; }
+
+    @media (max-width:900px) { .grid { grid-template-columns:1fr; } }
+    @media (max-width:720px) { .footer { text-align:center; } }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <main class="panel" aria-labelledby="drahtlos-title">
+
+    <!-- Header -->
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse10_themen.html">← Zurück zu Themen &amp; Theorie</a>
+    </header>
+
+    <!-- Einleitung -->
+    <section>
+      <div class="tagline">klasse 10 · magnetismus · drahtlose energieübertragung</div>
+      <h1 id="drahtlos-title">Drahtlose Energieübertragung</h1>
+      <p class="intro-text">
+        Bei der <strong>drahtlosen Energieübertragung</strong> wird elektrische Energie
+        ohne Kabel mittels <strong>elektromagnetischer Wellen</strong> übertragen.
+        Grundlage ist die Erzeugung und Ausbreitung von
+        <strong>Wechselstrom–Magnetfeldern</strong> (vgl. Schülerbuch S. 82–85).
+      </p>
+    </section>
+
+    <!-- Inhalt -->
+    <section class="grid">
+
+      <!-- Linke Seite -->
+      <div>
+
+        <!-- Wie funktioniert das? -->
+        <article class="section">
+          <h2 class="section-title"><span class="dot"></span>Wie funktioniert das?</h2>
+          <p>
+            Wird ein <strong>Wechselstrom</strong> durch eine Sendespule geschickt,
+            entsteht ein sich ständig änderndes Magnetfeld. Dieses breitet sich aus.
+            Trifft es auf eine <strong>Empfängerspule</strong>, so wird dort eine
+            <strong>Induktionsspannung</strong> erzeugt.
+          </p>
+
+          <ul>
+            <li>Sendespule erzeugt wechselndes Magnetfeld</li>
+            <li>Magnetfeld breitet sich über die Luft aus</li>
+            <li>Empfängerspule empfängt das Feld</li>
+            <li>Induktion → elektrische Energie entsteht</li>
+          </ul>
+
+          <div class="merksatz">
+            <strong>Merksatz</strong><br>
+            Drahtlose Übertragung basiert auf Induktion und Wechselmagnetfeldern.
+          </div>
+        </article>
+
+        <!-- Wovon hängt die Stärke ab? -->
+        <article class="section">
+          <h2 class="section-title"><span class="dot"></span>Wovon hängt die Übertragung ab?</h2>
+
+          <ul>
+            <li><strong>Abstand</strong>: je kleiner, desto besser</li>
+            <li><strong>Ausrichtung der Spulen</strong></li>
+            <li><strong>Stromstärke</strong> im Sender</li>
+            <li><strong>Windungszahl</strong> der Spulen</li>
+            <li><strong>Frequenz</strong> des Wechselstroms</li>
+            <li><strong>Kernmaterial</strong> (Eisenkern → stärkere Kopplung)</li>
+          </ul>
+
+          <div class="example-box">
+            <strong>Alltagsbeispiel:</strong><br>
+            Smartphones laden per Induktion besonders gut, wenn das Gerät
+            exakt auf der Ladespule liegt.
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Rechte Seite -->
+      <div>
+
+        <!-- Skizze -->
+        <article class="section">
+          <h2 class="section-title"><span class="dot"></span>Skizze: Drahtloses Laden</h2>
+
+          <div class="sketch">
+            <p>Sehr vereinfachtes Prinzip:</p>
+
+            <div class="sketch-graphic" aria-hidden="true">
+              <div>(Spule)</div><div>)))</div><div>((()</div><div>(Spule)</div><div></div><div></div><div></div>
+            </div>
+
+            <p style="margin-top:0.4rem;">
+              Linke Spule sendet wechselnde Magnetfelder → rechte Spule nimmt Energie auf.
+            </p>
+          </div>
+        </article>
+
+        <!-- Vor- & Nachteile -->
+        <article class="section">
+          <h2 class="section-title"><span class="dot"></span>Vorteile & Nachteile</h2>
+
+          <ul>
+            <li>Kein Kabel nötig</li>
+            <li>Weniger Verschleiß</li>
+            <li>Sichere Übertragung (kein Funken)</li>
+            <li>Energieverlust höher als bei direkter Verkabelung</li>
+            <li>Benötigt gute Ausrichtung</li>
+          </ul>
+        </article>
+
+        <!-- Beispiele -->
+        <article class="section">
+          <h2 class="section-title"><span class="dot"></span>Wo wird das genutzt?</h2>
+
+          <ul>
+            <li>Induktionsladegeräte für Smartphones</li>
+            <li>Elektrische Zahnbürsten</li>
+            <li>Kontaktloses Laden von E-Autos (Test)</li>
+            <li>Medizinische Implantate (Herzschrittmacher)</li>
+          </ul>
+        </article>
+
+        <!-- Zusammenfassung -->
+        <article class="section">
+          <h2 class="section-title"><span class="dot"></span>Kurz-Zusammenfassung</h2>
+
+          <p>
+            Drahtlose Energieübertragung nutzt veränderliche Magnetfelder,
+            die von einer Sendespule ausgesendet und von einer Empfängerspule
+            aufgenommen werden. Sie funktioniert gut auf kurze Distanz
+            und ist weit verbreitet im Alltag – vom Handy bis zur Zahnbürste.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Theorie „Drahtlose Energieübertragung“
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>
