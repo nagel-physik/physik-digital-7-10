@@ -37,7 +37,6 @@
         Roboto, Helvetica, Arial, sans-serif;
       background: radial-gradient(circle at top, var(--bg-grad-top), var(--bg-dark) 55%, var(--bg-grad-bottom));
       color: var(--text-main);
-      /* WICHTIG: Scrollen erlauben */
       overflow-y: auto;
       overflow-x: hidden;
     }
@@ -84,9 +83,9 @@
     }
 
     .tiles {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.6rem;
       margin-top: 0.4rem;
     }
 
@@ -125,8 +124,6 @@
     .tile.k9      { background: var(--k9); }
     .tile.k10     { background: var(--k10); }
     .tile.formeln { background: var(--formeln); }
-    .tile.exp     { background: var(--exp); }
-    .tile.dl      { background: var(--dl); color: #020617; }
     .tile.ask     { background: var(--contact); }
 
     .footer {
@@ -151,8 +148,8 @@
         <div class="subline">FGO Perleberg · Physik Digital</div>
         <h1>Physik Digital 7–10 – Dashboard</h1>
         <p>
-          Wähle deine Klassenstufe oder einen Bereich. Alle Inhalte sind für
-          Smartphone &amp; Smartboard optimiert.
+          Wähle deine Klassenstufe oder die Formelsammlung. Alle Inhalte sind
+          für Smartphone &amp; Smartboard optimiert.
         </p>
       </section>
 
@@ -162,10 +159,6 @@
         <a href="klasse9.html" class="tile k9">Klasse 9</a>
         <a href="klasse10.html" class="tile k10">Klasse 10</a>
         <a href="formelsammlung.html" class="tile formeln">Formelsammlung</a>
-
-        <!-- Platzhalter – wenn es später eigene Seiten gibt, einfach href anpassen -->
-        <a href="#" class="tile exp">Experimente</a>
-        <a href="#" class="tile dl">Downloads &amp; PDFs</a>
 
         <a href="mailto:michael.nagel@lk.brandenburg.de?subject=Fragen%20zu%20Physik%20Digital%207%E2%80%9310"
            class="tile ask">
