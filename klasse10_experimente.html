@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Klasse 10 – Experimente zu Magnetismus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+
+      --c-accent: #22c55e;
+      --c-warn:   #facc15;
+      --c-demo:   #60a5fa;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.18), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.18), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.9);
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative;
+      z-index: 5;
+      max-width: 1150px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.2rem 2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-height: 100%;
+      overflow: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .back-link {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 0.2rem 0.9rem;
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .back-link:hover {
+      border-color: #e5e7eb;
+      color: #e5e7eb;
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.3rem;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      margin-bottom: 0.3rem;
+    }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 780px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .panel { padding: 1.8rem 1.4rem 2rem; }
+      .grid  { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .section {
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.96);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+      padding: 0.9rem 1rem 1rem;
+      font-size: 0.92rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.45rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .title-main {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-weight: 600;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--c-accent);
+      box-shadow: 0 0 14px rgba(34, 197, 94, 0.7);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.1rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      color: rgba(148, 163, 184, 0.95);
+      white-space: nowrap;
+    }
+
+    .badge-demo {
+      border-color: rgba(96, 165, 250, 0.9);
+      color: #bfdbfe;
+    }
+
+    .badge-easy {
+      border-color: rgba(34, 197, 94, 0.9);
+      color: #bbf7d0;
+    }
+
+    .badge-cheap {
+      border-color: rgba(250, 204, 21, 0.9);
+      color: #fef9c3;
+    }
+
+    .subline-topic {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 0.25rem;
+      opacity: 0.95;
+    }
+
+    ul {
+      margin-left: 1.1rem;
+      margin-top: 0.25rem;
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .steps ol {
+      margin-left: 1.2rem;
+      margin-top: 0.25rem;
+      display: grid;
+      gap: 0.2rem;
+      font-size: 0.9rem;
+    }
+
+    .steps ol li::marker {
+      font-weight: 600;
+    }
+
+    .hint, .explain, .safety {
+      margin-top: 0.45rem;
+      border-radius: 14px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+    }
+
+    .hint {
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.96);
+      color: var(--text-soft);
+    }
+
+    .explain {
+      border: 1px solid rgba(34, 197, 94, 0.8);
+      background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.12), transparent);
+      color: #bbf7d0;
+    }
+
+    .explain strong {
+      color: #dcfce7;
+    }
+
+    .safety {
+      border: 1px solid rgba(250, 204, 21, 0.9);
+      background: radial-gradient(circle at top left, rgba(250, 204, 21, 0.12), transparent);
+      color: #fef9c3;
+    }
+
+    .safety strong {
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      display: inline-block;
+      margin-bottom: 0.15rem;
+    }
+
+    .aside {
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.96);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+      padding: 0.9rem 1rem 1rem;
+      font-size: 0.9rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .aside h2 {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .footer {
+      margin-top: 0.3rem;
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-align: right;
+    }
+
+    @media (max-width: 720px) {
+      .footer { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
+  <main class="panel" aria-labelledby="exp10-title">
+
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse10.html">← Zurück zu Klasse 10</a>
+    </header>
+
+    <section>
+      <div class="tagline">klasse 10 · magnetismus · einfache experimente</div>
+      <h1 id="exp10-title">Experimente zu Magnetismus (Klasse 10)</h1>
+      <p class="intro-text">
+        Hier findest du einfache, günstige Experimente zu den Themen
+        <strong>Magneten, Magnetfeld, Elektromagnet, Elektromotor,
+        Induktion/Generator und Transformator</strong>. Viele Versuche kannst du
+        als Schülerexperiment durchführen, einige sind als
+        <strong>Lehrer-Demo</strong> gekennzeichnet.
+      </p>
+    </section>
+
+    <section class="grid" aria-label="Experimente und Hinweise">
+      <!-- Linke Spalte: Experimente -->
+      <div>
+
+        <!-- 1 Magneten -->
+        <article class="section">
+          <div class="section-title">
+            <div class="title-main">
+              <span class="dot"></span>
+              <span>Experiment 1 – Magnet-Schatzsuche</span>
+            </div>
+            <span class="badge badge-easy">Schülerexperiment</span>
+          </div>
+          <div class="subline-topic">Thema: Magneten &amp; Anziehung</div>
+
+          <p><strong>Ziel:</strong> Magnetische und nicht-magnetische Gegenstände unterscheiden.</p>
+
+          <p style="margin-top:0.3rem;"><strong>Material:</strong></p>
+          <ul>
+            <li>1 starker Stabmagnet oder Hufeisenmagnet</li>
+            <li>Karton oder dicker Papierbogen</li>
+            <li>kleine Metallteile (Büroklammern, Schrauben, Nägel) gemischt mit Nicht-Metall (Holzstückchen, Papierkugeln)</li>
+            <li>evtl. Becher oder Schale als „Schatzbehälter“</li>
+          </ul>
+
+          <div class="steps">
+            <p style="margin-top:0.3rem;"><strong>Durchführung (vereinfacht):</strong></p>
+            <ol>
+              <li>Lege die gemischten Kleinteile auf den Tisch und decke sie mit dem Karton ab.</li>
+              <li>Bewege den Magneten <em>unter</em> dem Karton hin und her.</li>
+              <li>Beobachte, welche Teile „mitwandern“.</li>
+              <li>Markiere oder sammle diese Teile als „magnetisch“.</li>
+              <li>Vergleiche mit den übrigen Teilen.</li>
+            </ol>
+          </div>
+
+          <div class="explain">
+            <strong>Erklärung:</strong><br />
+            Nur bestimmte Stoffe (z. B. Eisen, Nickel, Kobalt) werden vom Magneten
+            deutlich angezogen. Andere Materialien reagieren kaum. So kannst du
+            magnetische Stoffe einfach „herausfischen“.
+          </div>
+
+          <div class="safety">
+            <strong>Sicherheit:</strong><br />
+            Achte darauf, dass der Magnet nicht zu nah an elektronische Geräte
+            (Handy, Laptop) gehalten wird. Kleinteile nicht in den Mund nehmen.
+          </div>
+        </article>
+
+        <!-- 2 Magnetfeld sichtbar -->
+        <article class="section">
+          <div class="section-title">
+            <div class="title-main">
+              <span class="dot"></span>
+              <span>Experiment 2 – Magnetfeld sichtbar machen</span>
+            </div>
+            <span class="badge badge-easy">Schülerexperiment</span>
+          </div>
+          <div class="subline-topic">Thema: Magnetfeld &amp; Feldlinien</div>
+
+          <p><strong>Ziel:</strong> Die Form des Magnetfelds um einen Stabmagneten sichtbar machen.</p>
+
+          <p style="margin-top:0.3rem;"><strong>Material:</strong></p>
+          <ul>
+            <li>1 Stabmagnet</li>
+            <li>1 weißes Blatt Papier oder dünne Pappe</li>
+            <li>Eisenfeilspäne <em>oder</em> viele kleine Büroklammern</li>
+            <li>evtl. Löffel / Blatt zum Streuen</li>
+          </ul>
+
+          <div class="steps">
+            <p style="margin-top:0.3rem;"><strong>Durchführung:</strong></p>
+            <ol>
+              <li>Lege den Stabmagneten auf den Tisch.</li>
+              <li>Lege das Papier direkt über den Magneten.</li>
+              <li>Streue vorsichtig Eisenfeilspäne oder lege Büroklammern auf das Papier.</li>
+              <li>Klopfe leicht mit der Hand gegen das Papier.</li>
+              <li>Beobachte, wie sich die Späne/Clips anordnen.</li>
+            </ol>
+          </div>
+
+          <div class="explain">
+            <strong>Erklärung:</strong><br />
+            Die Eisenfeilspäne richten sich entlang der Feldlinien aus. So
+            erkennst du, wo das Magnetfeld stärker ist (dichte Späne) und wie es
+            vom Nord- zum Südpol verläuft.
+          </div>
+
+          <div class="safety">
+            <strong>Sicherheit:</strong><br />
+            Eisenfeilspäne nicht in Augen oder Mund bringen. Hände nach dem
+            Experiment waschen. Späne sorgfältig einsammeln.
+          </div>
+        </article>
+
+        <!-- 3 Kompass -->
+        <article class="section">
+          <div class="section-title">
+            <div class="title-main">
+              <span class="dot"></span>
+              <span>Experiment 3 – Einfacher Kompass</span>
+            </div>
+            <span class="badge badge-easy">Schülerexperiment</span>
+          </div>
+          <div class="subline-topic">Thema: Erdmagnetfeld &amp; Orientierung</div>
+
+          <p><strong>Ziel:</strong> Die Wirkung des Erdmagnetfeldes mit einem selbstgebauten Kompass nachweisen.</p>
+
+          <p style="margin-top:0.3rem;"><strong>Material:</strong></p>
+          <ul>
+            <li>dünne Nähnadel oder Büroklammer</li>
+            <li>kleiner Magnet (zum Magnetisieren der Nadel)</li>
+            <li>kleines Stück Kork, Styropor oder Plastikdeckel</li>
+            <li>Schüssel oder Glas mit Wasser</li>
+          </ul>
+
+          <div class="steps">
+            <p style="margin-top:0.3rem;"><strong>Durchführung:</strong></p>
+            <ol>
+              <li>Streiche die Nadel mehrmals in einer Richtung über den Magneten.</li>
+              <li>Stecke die Nadel vorsichtig in das Stück Kork / Styropor.</li>
+              <li>Setze das Ganze auf die Wasseroberfläche.</li>
+              <li>Warte, bis sich der „Kompass“ beruhigt hat.</li>
+              <li>Vergleiche die Richtung mit der bekannten Nordrichtung (z. B. über Karten-App).</li>
+            </ol>
+          </div>
+
+          <div class="explain">
+            <strong>Erklärung:</strong><br />
+            Die Nadel wird durch den Magneten selbst zum kleinen Magneten. Im
+            Erdmagnetfeld richtet sie sich ungefähr in Nord-Süd-Richtung aus –
+            wie eine Kompassnadel.
+          </div>
+
+          <div class="safety">
+            <strong>Sicherheit:</strong><br />
+            Vorsichtig mit der Nadel umgehen (Stichgefahr). Nadel nach dem
+            Experiment sicher entsorgen oder wieder verpacken.
+          </div>
+        </article>
+
+        <!-- 4 Elektromagnet -->
+        <article class="section">
+          <div class="section-title">
+            <div class="title-main">
+              <span class="dot"></span>
+              <span>Experiment 4 – Nagel-Elektromagnet</span>
+            </div>
+            <span class="badge badge-easy">Schülerexperiment</span>
+          </div>
+          <div class="subline-topic">Thema: Elektromagnet</div>
+
+          <p><strong>Ziel:</strong> Zeigen, dass ein stromdurchflossener Leiter ein Magnetfeld erzeugt.</p>
+
+          <p style="margin-top:0.3rem;"><strong>Material:</strong></p>
+          <ul>
+            <li>1 dicker Eisenkern (größerer Nagel oder Schraube ohne Beschichtung)</li>
+            <li>isolierter Kupferdraht (z. B. 0,5–1 mm, einige Meter)</li>
+            <li>Batterie (z. B. 4,5 V-Block oder 9 V, kurzzeitig)</li>
+            <li>Büroklammern oder kleine Nägel als „Last“</li>
+          </ul>
+
+          <div class="steps">
+            <p style="margin-top:0.3rem;"><strong>Durchführung:</strong></p>
+            <ol>
+              <li>Wickle den Kupferdraht möglichst ordentlich und eng um den Nagel (viele Windungen).</li>
+              <li>Lasse an beiden Enden des Drahtes ca. 10 cm frei.</li>
+              <li>Halte die freien Enden kurz an die Pole der Batterie.</li>
+              <li>Teste, ob der Nagel jetzt Büroklammern anziehen kann.</li>
+              <li>Unterbrich den Strom nach wenigen Sekunden wieder.</li>
+            </ol>
+          </div>
+
+          <div class="explain">
+            <strong>Erklärung:</strong><br />
+            Durch den Draht fließt Strom und erzeugt ein Magnetfeld. Der Eisenkern
+            verstärkt dieses Feld – es entsteht ein Elektromagnet. Ohne Strom ist
+            die magnetische Wirkung fast verschwunden.
+          </div>
+
+          <div class="safety">
+            <strong>Sicherheit:</strong><br />
+            Batterie nicht dauerhaft kurzschließen – sie kann warm werden. Draht
+            nicht zu lange an der Batterie lassen. Bei Erwärmung Versuch beenden.
+          </div>
+        </article>
+
+        <!-- 5 Homopolmotor -->
+        <article class="section">
+          <div class="section-title">
+            <div class="title-main">
+              <span class="dot"></span>
+              <span>Experiment 5 – Homopolmotor</span>
+            </div>
+            <span class="badge badge-easy">Schülerexperiment (unter Aufsicht)</span>
+          </div>
+          <div class="subline-topic">Thema: Elektromotor &amp; Lorentzkraft</div>
+
+          <p><strong>Ziel:</strong> Zeigen, dass auf einen stromdurchflossenen Leiter im Magnetfeld eine Kraft wirkt.</p>
+
+          <p style="margin-top:0.3rem;"><strong>Material (wie im Unterricht erprobt):</strong></p>
+          <ul>
+            <li>1 starke Rundzelle (z. B. AA oder C)</li>
+            <li>1 starker Ringmagnet (Neodym) passend zur Batterie</li>
+            <li>1 Stück Kupferdraht (ca. 10–15 cm, nicht isoliert oder abisoliert)</li>
+          </ul>
+
+          <div class="steps">
+            <p style="margin-top:0.3rem;"><strong>Durchführung (Kurzfassung):</strong></p>
+            <ol>
+              <li>Magnet auf den Minuspol der Batterie setzen.</li>
+              <li>Draht so biegen, dass er oben am Pluspol anliegt und unten den Magneten leicht berührt.</li>
+              <li>Wenn der Kontakt stimmt, beginnt der Draht sich zu drehen.</li>
+              <li>Mit verschiedenen Drahtformen experimentieren.</li>
+            </ol>
+          </div>
+
+          <div class="explain">
+            <strong>Erklärung:</strong><br />
+            Durch den Draht fließt Strom. Im Magnetfeld wirken Kräfte (Lorentzkraft)
+            auf den stromdurchflossenen Leiter – der Draht wird ausgelenkt und
+            beginnt sich zu drehen. Das ist ein einfaches Modell eines Elektromotors.
+          </div>
+
+          <div class="safety">
+            <strong>Sicherheit:</strong><br />
+            Batterie nicht dauerhaft in Betrieb lassen, zwischendurch Pausen einlegen.
+            Magnet und Draht nicht in die Nähe empfindlicher Elektronik bringen.
+          </div>
+        </article>
+
+        <!-- 6 Induktion / Generator -->
+        <article class="section">
+          <div class="section-title">
+            <div class="title-main">
+              <span class="dot"></span>
+              <span>Experiment 6 – Magnet in der Spule (Induktion)</span>
+            </div>
+            <span class="badge badge-demo">Lehrer-Demo oder Kleingruppe</span>
+          </div>
+          <div class="subline-topic">Thema: Induktion, Generator &amp; Trafo-Grundidee</div>
+
+          <p><strong>Ziel:</strong> Induktionsspannung durch sich änderndes Magnetfeld nachweisen.</p>
+
+          <p style="margin-top:0.3rem;"><strong>Material:</strong></p>
+          <ul>
+            <li>Spule mit vielen Windungen (Versuchsspule der Schule oder selbst gewickelt)</li>
+            <li>starker Stabmagnet</li>
+            <li>LED <em>oder</em> empfindliches Spannungsmessgerät</li>
+            <li>evtl. Anschlussleitungen</li>
+          </ul>
+
+          <div class="steps">
+            <p style="margin-top:0.3rem;"><strong>Durchführung:</strong></p>
+            <ol>
+              <li>Schließe die Spule an eine LED oder ein Messgerät an.</li>
+              <li>Bewege den Magneten schnell in die Spule hinein und wieder hinaus.</li>
+              <li>Beobachte: LED blinkt kurz oder Messgerät zeigt Spannungsspitzen.</li>
+              <li>Wiederhole den Versuch mit unterschiedlicher Geschwindigkeit.</li>
+            </ol>
+          </div>
+
+          <div class="explain">
+            <strong>Erklärung:</strong><br />
+            Ein sich änderndes Magnetfeld in der Spule erzeugt eine Induktionsspannung.
+            Je schneller sich das Magnetfeld ändert (schnelle Bewegung), desto größer ist
+            die Spannung. Dieses Prinzip wird in Generatoren und Transformatoren genutzt.
+          </div>
+
+          <div class="safety">
+            <strong>Sicherheit:</strong><br />
+            Magnet nicht fallen lassen (Bruchgefahr bei Neodym-Magneten). Auf
+            sichere Kabelverbindungen achten, Messgerät nicht überlasten.
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Rechte Spalte: Hinweise, Organisation -->
+      <div>
+        <aside class="aside">
+          <h2>Organisation im Unterricht</h2>
+          <p>
+            Die Experimente sind so gewählt, dass sie mit einfachen Mitteln
+            durchführbar sind. Du kannst sie z. B. als
+            <strong>Stationenlernen</strong> organisieren:
+          </p>
+          <ul style="margin-top:0.3rem;">
+            <li>Station A: Magnet-Schatzsuche</li>
+            <li>Station B: Magnetfeld sichtbar</li>
+            <li>Station C: Kompass bauen</li>
+            <li>Station D: Nagel-Elektromagnet</li>
+            <li>Station E: Homopolmotor</li>
+            <li>Station F: Induktion in der Spule (Demo / betreute Station)</li>
+          </ul>
+          <p style="margin-top:0.4rem;">
+            Zu jeder Station kannst du ein kurzes <strong>Arbeitsblatt mit
+            Beobachtungsaufträgen</strong> ergänzen (Beobachtung, Skizze, Erklärung
+            in eigenen Worten).
+          </p>
+        </aside>
+
+        <aside class="aside">
+          <h2>Materialkosten niedrig halten</h2>
+          <p>
+            Viele Materialien lassen sich mehrfach nutzen oder günstig beschaffen:
+          </p>
+          <ul style="margin-top:0.3rem;">
+            <li>Magnete im Klassensatz (z. B. 10–15 Stück) – jahrelang nutzbar</li>
+            <li>Büroklammern, Schrauben, Nägel – aus dem Baumarkt oder Vorrat</li>
+            <li>Kupferdraht – eine Rolle reicht für viele Experimente</li>
+            <li>Standard-Batterien – bei Bedarf aus dem Physikraum oder Vorrat</li>
+          </ul>
+          <p style="margin-top:0.4rem;">
+            Markiere in deinen Unterlagen, welche Versuche sich besonders gut für
+            „Schüler machen es selbst“ eignen und welche eher als Demo laufen.
+          </p>
+        </aside>
+
+        <aside class="aside">
+          <h2>Was solltest du können?</h2>
+          <ul>
+            <li>zu jedem Experiment das passende Thema benennen</li>
+            <li>Material, Aufbau und Durchführung kurz erklären</li>
+            <li>die Beobachtungen mit Fachbegriffen deuten (Magnetfeld, Induktion, Lorentzkraft)</li>
+            <li>mindestens ein Experiment sicher selbst aufbauen</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Experimente Klasse 10
+    </footer>
+  </main>
+</div>
+</body>
+</html>
