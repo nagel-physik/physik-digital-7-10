@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Mechanische Schwingungen – Kenngrößen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+      --c-accent: #0ea5e9;
+      --c-soft:   #38bdf8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem 0.6rem;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 900px;
+      border-radius: 24px;
+      padding: 1.4rem 1.3rem 1.6rem;
+      background: radial-gradient(circle at top left, rgba(14,165,233,0.28), rgba(15,23,42,0.98));
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(14,165,233,0.45);
+      border: 1px solid rgba(14,165,233,0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .brand {
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      color: #7dd3fc;
+    }
+
+    .back-link {
+      font-size: 0.82rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.8);
+      color: #e5e7eb;
+      text-decoration: none;
+      background: linear-gradient(to right, rgba(15,23,42,0.9), rgba(14,165,233,0.85));
+      box-shadow: 0 10px 25px rgba(15,23,42,0.85);
+    }
+
+    h1 { font-size: 1.45rem; }
+
+    .tagline {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #7dd3fc;
+      margin-top: .2rem;
+    }
+
+    .intro {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 650px;
+      margin-bottom: .3rem;
+    }
+
+    .section {
+      background: rgba(15,23,42,0.96);
+      border-radius: 16px;
+      padding: 0.95rem 1.05rem;
+      border: 1px solid rgba(148,163,184,0.6);
+      box-shadow: 0 14px 30px rgba(15,23,42,0.85);
+      font-size: 0.92rem;
+      margin-bottom: .6rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--c-accent);
+      color: white;
+      font-size: 1.1rem;
+      box-shadow: 0 0 20px rgba(14,165,233,0.85);
+    }
+
+    ul { margin-left: 1rem; }
+    ul li + li { margin-top: 0.25rem; }
+
+    .formula {
+      display: inline-block;
+      margin-top: 0.25rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      font-family: ui-monospace, monospace;
+      background: rgba(15,23,42,0.9);
+      font-size: 0.86rem;
+    }
+
+    .merksatz {
+      margin-top: 0.55rem;
+      border-radius: 14px;
+      padding: 0.65rem 0.75rem;
+      background: rgba(15,23,42,0.98);
+      border: 1px solid rgba(56,189,248,0.8);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 700px) {
+      .panel { padding: 1rem .9rem; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<main class="panel">
+
+  <header class="topbar">
+    <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+    <a class="back-link" href="klasse10_themen.html">← Zurück</a>
+  </header>
+
+  <section>
+    <div class="tagline">mechanik · schwingungen</div>
+    <h1>Kenngrößen einer Schwingung</h1>
+    <p class="intro">
+      Jede Schwingung hat bestimmte Eigenschaften, die man messen oder beschreiben kann.
+      Die drei wichtigsten sind <strong>Amplitude</strong>, <strong>Periodendauer</strong> und
+      <strong>Frequenz</strong>. Auf dieser Seite findest du die Grundlagen dazu.
+    </p>
+  </section>
+
+  <!-- Amplitude -->
+  <article class="section">
+    <div class="section-title">
+      <div class="icon">📏</div>
+      <strong>1. Amplitude A</strong>
+    </div>
+    <p>
+      Die <strong>Amplitude</strong> ist der <strong>größte Abstand</strong> von der Ruhelage.
+      Sie beschreibt, wie „weit“ ein System schwingt.
+    </p>
+    <ul>
+      <li>große Amplitude → starkes Schwingen</li>
+      <li>kleine Amplitude → sanftes Schwingen</li>
+      <li>Einheit: Meter (m)</li>
+    </ul>
+  </article>
+
+  <!-- Periodendauer -->
+  <article class="section">
+    <div class="section-title">
+      <div class="icon">⏱️</div>
+      <strong>2. Periodendauer T</strong>
+    </div>
+    <p>
+      Die <strong>Periodendauer T</strong> ist die Zeit für <strong>eine vollständige
+      Hin- und Herbewegung</strong>.
+    </p>
+    <ul>
+      <li>T wird in Sekunden (s) angegeben.</li>
+      <li>Beispiel: Eine Schaukel braucht 2 Sekunden für 1 Schwingung → T = 2 s</li>
+    </ul>
+  </article>
+
+  <!-- Frequenz -->
+  <article class="section">
+    <div class="section-title">
+      <div class="icon">🔁</div>
+      <strong>3. Frequenz f</strong>
+    </div>
+    <p>
+      Die <strong>Frequenz</strong> gibt an, wie viele Schwingungen ein System pro
+      Sekunde macht.
+    </p>
+    <ul>
+      <li>Einheit: Hertz (Hz)</li>
+      <li>1 Hz bedeutet: 1 Schwingung pro Sekunde</li>
+    </ul>
+
+    <p style="margin-top: .3rem;"><strong>Zusammenhang zwischen T und f:</strong></p>
+    <span class="formula">f = 1 / T</span>
+    <span class="formula">T = 1 / f</span>
+  </article>
+
+  <!-- Diagramm -->
+  <article class="section">
+    <div class="section-title">
+      <div class="icon">📈</div>
+      <strong>4. Schwingungsdiagramme</strong>
+    </div>
+    <p>
+      Eine Schwingung lässt sich gut in einem Zeit-Auslenkungs-Diagramm darstellen.
+    </p>
+    <ul>
+      <li>Der höchste Punkt ist die Amplitude.</li>
+      <li>Eine ganze Wellenform entspricht einer Periodendauer.</li>
+      <li>Mehr „Wellen“ pro Zeit → höhere Frequenz.</li>
+    </ul>
+
+    <div class="merksatz">
+      <strong>Merksatz:</strong><br>
+      Die Amplitude beschreibt die Stärke einer Schwingung.  
+      Die Periodendauer beschreibt die Zeit einer Schwingung.  
+      Die Frequenz gibt an, wie oft pro Sekunde geschwungen wird.
+    </div>
+  </article>
+
+</main>
+
+</body>
+</html>
