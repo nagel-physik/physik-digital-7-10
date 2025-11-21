@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <title>Mechanische Schwingungen – Kenngrößen</title>
+  <title>Mechanische Schwingungen – Fadenpendel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
@@ -71,14 +71,13 @@
       box-shadow: 0 10px 25px rgba(15,23,42,0.85);
     }
 
-    h1 { font-size: 1.45rem; }
+    h1 { font-size: 1.42rem; }
 
     .tagline {
       font-size: 0.75rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: #7dd3fc;
-      margin-top: .2rem;
     }
 
     .intro {
@@ -142,27 +141,9 @@
       font-size: 0.9rem;
     }
 
-    .nav-next {
-      text-align: right;
-      margin-top: 0.4rem;
-    }
-
-    .btn-next {
-      display: inline-block;
-      padding: 0.35rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid rgba(56,189,248,0.9);
-      text-decoration: none;
-      color: #e5e7eb;
-      font-size: 0.86rem;
-      background: linear-gradient(to right, rgba(15,23,42,0.95), rgba(56,189,248,0.9));
-      box-shadow: 0 10px 24px rgba(15,23,42,0.9);
-    }
-
     @media (max-width: 700px) {
       .panel { padding: 1rem .9rem; }
       .topbar { flex-direction: column; align-items: flex-start; }
-      .nav-next { text-align: left; }
     }
   </style>
 </head>
@@ -177,96 +158,87 @@
 
   <section>
     <div class="tagline">mechanik · schwingungen</div>
-    <h1>Kenngrößen einer Schwingung</h1>
+    <h1>Fadenpendel &amp; Einflussgrößen</h1>
     <p class="intro">
-      Jede Schwingung hat bestimmte Eigenschaften, die man messen oder beschreiben kann.
-      Die drei wichtigsten sind <strong>Amplitude</strong>, <strong>Periodendauer</strong> und
-      <strong>Frequenz</strong>. Auf dieser Seite findest du die Grundlagen dazu.
+      Das Fadenpendel ist ein klassisches Beispiel für eine Schwingung. Es zeigt sehr gut,
+      welche Größen die <strong>Schwingungsdauer</strong> beeinflussen – und welche nicht.
     </p>
   </section>
 
-  <!-- Amplitude -->
+  <!-- Was ist ein Fadenpendel? -->
+  <article class="section">
+    <div class="section-title">
+      <div class="icon">🎯</div>
+      <strong>1. Was ist ein Fadenpendel?</strong>
+    </div>
+    <p>
+      Ein Fadenpendel besteht aus einem kleinen Gewicht (der „Pendelmasse“), das an einem
+      dünnen, möglichst leichten Faden hängt. Es schwingt um eine Ruhelage hin und her.
+    </p>
+    <ul>
+      <li>Die Schwingung ist nahezu harmonisch.</li>
+      <li>Die Auslenkung sollte klein bleiben (ca. &lt; 15°).</li>
+    </ul>
+  </article>
+
+  <!-- Einfluss der Fadenlänge -->
   <article class="section">
     <div class="section-title">
       <div class="icon">📏</div>
-      <strong>1. Amplitude A</strong>
+      <strong>2. Einfluss der Fadenlänge</strong>
     </div>
     <p>
-      Die <strong>Amplitude</strong> ist der <strong>größte Abstand</strong> von der Ruhelage.
-      Sie beschreibt, wie „weit“ ein System schwingt.
+      Die <strong>Länge des Fadens</strong> hat einen deutlichen Einfluss auf die
+      <strong>Schwingungsdauer T</strong>.
     </p>
     <ul>
-      <li>große Amplitude → starkes Schwingen</li>
-      <li>kleine Amplitude → sanftes Schwingen</li>
-      <li>Einheit: Meter (m)</li>
+      <li>Langer Faden → Pendel schwingt langsamer → T wird größer.</li>
+      <li>Kurzer Faden → Pendel schwingt schneller → T wird kleiner.</li>
     </ul>
+    <p>
+      Die Schwingungsdauer ist also abhängig von der Pendellänge.
+    </p>
   </article>
 
-  <!-- Periodendauer -->
+  <!-- Einfluss der Masse -->
   <article class="section">
     <div class="section-title">
-      <div class="icon">⏱️</div>
-      <strong>2. Periodendauer T</strong>
+      <div class="icon">⚖️</div>
+      <strong>3. Einfluss der Pendelmasse</strong>
     </div>
     <p>
-      Die <strong>Periodendauer T</strong> ist die Zeit für <strong>eine vollständige
-      Hin- und Herbewegung</strong>.
+      Die <strong>Masse der Pendelkugel</strong> hat überraschenderweise
+      <strong>keinen Einfluss</strong> auf die Schwingungsdauer.
     </p>
     <ul>
-      <li>T wird in Sekunden (s) angegeben.</li>
-      <li>Beispiel: Eine Schaukel braucht 2 Sekunden für 1 Schwingung → T = 2 s</li>
+      <li>Schwere und leichte Kugeln schwingen gleich schnell.</li>
+      <li>Dies gilt für kleine Auslenkungen.</li>
     </ul>
   </article>
 
-  <!-- Frequenz -->
+  <!-- Einfluss der Auslenkung -->
   <article class="section">
     <div class="section-title">
-      <div class="icon">🔁</div>
-      <strong>3. Frequenz f</strong>
+      <div class="icon">↕️</div>
+      <strong>4. Einfluss der Auslenkung</strong>
     </div>
     <p>
-      Die <strong>Frequenz</strong> gibt an, wie viele Schwingungen ein System pro
-      Sekunde macht.
+      Für kleine Winkel (unter ca. 15°) gilt:
+      <strong>Die Auslenkung hat kaum Einfluss</strong> auf die Schwingungsdauer.
     </p>
     <ul>
-      <li>Einheit: Hertz (Hz)</li>
-      <li>1 Hz bedeutet: 1 Schwingung pro Sekunde</li>
+      <li>Nur bei großen Winkeln schwingt das Pendel messbar langsamer.</li>
+      <li>Im Unterricht wird daher immer mit kleiner Auslenkung gearbeitet.</li>
     </ul>
-
-    <p style="margin-top: .3rem;"><strong>Zusammenhang zwischen T und f:</strong></p>
-    <span class="formula">f = 1 / T</span>
-    <span class="formula">T = 1 / f</span>
   </article>
 
-  <!-- Diagramm -->
-  <article class="section">
-    <div class="section-title">
-      <div class="icon">📈</div>
-      <strong>4. Schwingungsdiagramme</strong>
-    </div>
-    <p>
-      Eine Schwingung lässt sich gut in einem Zeit-Auslenkungs-Diagramm darstellen.
-    </p>
-    <ul>
-      <li>Der höchste Punkt ist die Amplitude.</li>
-      <li>Eine ganze Wellenform entspricht einer Periodendauer.</li>
-      <li>Mehr „Wellen“ pro Zeit → höhere Frequenz.</li>
-    </ul>
-
-    <div class="merksatz">
-      <strong>Merksatz:</strong><br>
-      Die Amplitude beschreibt die Stärke einer Schwingung.  
-      Die Periodendauer beschreibt die Zeit einer Schwingung.  
-      Die Frequenz gibt an, wie oft pro Sekunde geschwungen wird.
-    </div>
+  <!-- Merksatz -->
+  <article class="section merksatz">
+    <strong>Merksatz:</strong><br><br>
+    Die Schwingungsdauer eines Fadenpendels hängt ab von der <u>Länge</u> des Fadens.  
+    Sie hängt <u>nicht</u> ab von der <u>Masse</u> der Kugel und (für kleine Winkel) auch
+    nicht von der <u>Auslenkung</u>.
   </article>
-
-  <!-- Weiter-Button zu Fadenpendel -->
-  <div class="nav-next">
-    <a class="btn-next" href="theorie_schwingungen_3_fadenpendel.html">
-      Weiter: Fadenpendel &amp; Einflussgrößen →
-    </a>
-  </div>
 
 </main>
 
