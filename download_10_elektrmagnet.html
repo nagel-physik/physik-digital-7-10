@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Elektromagnet – Lernzettel Klasse 10</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --page-bg: #e5e7eb;
+      --paper-bg: #ffffff;
+      --text-main: #111827;
+      --text-soft: #4b5563;
+      --accent: #2563eb;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: var(--page-bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 1.5rem 0.5rem;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 800px;
+      background: var(--paper-bg);
+      border-radius: 16px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.25);
+      padding: 1.6rem 1.4rem 1.8rem;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .title-block small {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    h1 { font-size: 1.4rem; }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: #111;
+      text-decoration: none;
+    }
+
+    .btn:hover { background: #e5e7eb; }
+
+    .btn span { font-size: 1.1rem; }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 0.4rem;
+    }
+
+    h2 {
+      font-size: 1.05rem;
+      margin-top: 1rem;
+      margin-bottom: 0.25rem;
+      color: var(--accent);
+    }
+
+    p {
+      font-size: 0.92rem;
+      margin-bottom: 0.25rem;
+      color: var(--text-main);
+    }
+
+    ul {
+      margin-left: 1.1rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+    }
+
+    li + li { margin-top: 0.1rem; }
+
+    .box {
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+
+    .merksatz { border-left: 3px solid var(--accent); }
+
+    .tasks {
+      margin-top: 0.8rem;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 0.6rem;
+    }
+
+    .tasks h2 { margin-top: 0.4rem; }
+
+    .tasks ol {
+      margin-left: 1.2rem;
+      margin-top: 0.15rem;
+      font-size: 0.9rem;
+    }
+
+    .tasks ol li + li { margin-top: 0.25rem; }
+
+    .solutions {
+      margin-top: 0.7rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .solutions summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      .page { padding: 1.2rem 1rem 1.4rem; }
+      h1 { font-size: 1.25rem; }
+      .page-header { align-items: flex-start; }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .page {
+        max-width: 100%;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .btn { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header class="page-header">
+      <div class="title-block">
+        <small>Physik Klasse 10 · Magnetismus</small>
+        <h1>Elektromagnet – Lernzettel</h1>
+      </div>
+
+      <div class="controls">
+        <a href="klasse10_downloads.html" class="btn">← Zurück</a>
+        <button class="btn" onclick="window.print()">
+          <span>🖨️</span> Drucken
+        </button>
+      </div>
+    </header>
+
+    <div class="meta">
+      <div>FGO Perleberg · Physik Digital 7–10</div>
+      <div>Name: ____________________ · Datum: ______________</div>
+    </div>
+
+    <section>
+      <h2>1. Was ist ein Elektromagnet?</h2>
+      <p>
+        Ein <strong>Elektromagnet</strong> ist ein Magnet, der nur dann wirkt,
+        wenn Strom durch eine Spule fließt. Meistens gibt es:
+      </p>
+      <ul>
+        <li>eine Spule aus Kupferdraht</li>
+        <li>einen Eisenkern (z.&nbsp;B. Nagel)</li>
+        <li>eine Spannungsquelle (z.&nbsp;B. Batterie)</li>
+      </ul>
+      <div class="box merksatz">
+        <strong>Merksatz:</strong> Strom an → Magnet an. Strom aus → Magnet fast weg.
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Wodurch wird der Elektromagnet stärker?</h2>
+      <p>Die Stärke des Elektromagneten hängt von mehreren Faktoren ab:</p>
+      <ul>
+        <li><strong>mehr Windungen</strong> der Spule → stärkeres Magnetfeld</li>
+        <li><strong>größerer Strom</strong> → stärkeres Magnetfeld</li>
+        <li><strong>Eisenkern</strong> in der Spule verstärkt das Feld</li>
+      </ul>
+      <div class="box">
+        <strong>Beispiel:</strong> Wenn du mehr Drahtwindungen um einen Nagel wickelst,
+        kann der Elektromagnet mehr Büroklammern anheben.
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Vorteile von Elektromagneten</h2>
+      <p>Gegenüber Dauermagneten haben Elektromagneten besondere Vorteile:</p>
+      <ul>
+        <li>man kann sie <strong>ein- und ausschalten</strong></li>
+        <li>man kann ihre Stärke <strong>verändern</strong> (Strom, Windungen)</li>
+        <li>man kann ihre <strong>Polung umkehren</strong> (z.&nbsp;B. durch Umpolen der Spannungsquelle)</li>
+      </ul>
+      <div class="box">
+        <strong>Typische Anwendungen:</strong> Schrottplatzkran, Türöffner, Relais,
+        Lautsprecher, Klingel, Elektromotor.
+      </div>
+    </section>
+
+    <section class="tasks">
+      <h2>4. Kurze Aufgaben</h2>
+      <ol>
+        <li>Erkläre in einem Satz, was ein Elektromagnet ist.</li>
+        <li>Nenne zwei Möglichkeiten, wie du einen Elektromagneten stärker machen kannst.</li>
+        <li>Nenne ein Beispiel, wo im Alltag ein Elektromagnet benutzt wird.</li>
+      </ol>
+
+      <div class="solutions">
+        <details>
+          <summary>Lösungen einblenden</summary>
+          <ul>
+            <li><strong>1:</strong> Ein Elektromagnet ist ein Magnet, der nur bei Stromfluss ein Magnetfeld erzeugt.</li>
+            <li><strong>2:</strong> Mehr Windungen der Spule; größeren Strom; Eisenkern verwenden.</li>
+            <li><strong>3:</strong> z.&nbsp;B. Schrottplatzkran, Türöffner, Relais, Klingel.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <p style="margin-top:1.6rem;">
+      <a href="klasse10_downloads.html"
+         style="color:#2563eb; text-decoration:none; font-weight:600;">
+        ← Zurück zu Downloads & Lernzetteln
+      </a>
+    </p>
+  </div>
+</body>
+</html>
