@@ -20,6 +20,8 @@
       --c-gen:      #fb7185;
       --c-trafo:    #818cf8;
       --c-wireless: #2dd4bf;
+      --c-schwing:  #0ea5e9;
+      --c-welle:    #22d3ee;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -46,91 +48,114 @@
       justify-content: center;
     }
 
-    .bg-overlay {
+    .bg-glow {
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at top left, rgba(59,130,246,0.25), transparent 60%),
-        radial-gradient(circle at bottom right, rgba(34,197,94,0.22), transparent 60%);
-      pointer-events: none;
-    }
-
-    .vignette {
-      position: absolute;
-      inset: 0;
-      box-shadow: inset 0 0 160px rgba(0,0,0,0.9);
+        radial-gradient(circle at 20% 0%, rgba(56,189,248,0.35), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(129,140,248,0.35), transparent 55%);
+      opacity: 0.9;
       pointer-events: none;
     }
 
     .panel {
       position: relative;
-      z-index: 5;
-      max-width: 1150px;
       width: 100%;
-      height: 100%;
-      margin: 0 auto;
-      padding: 2.2rem 2rem 2.4rem;
-      border-radius: 26px;
-      background: radial-gradient(circle at top, rgba(15,23,42,0.98), rgba(15,23,42,0.92));
+      max-width: 1100px;
+      max-height: 100%;
+      padding: 1.25rem 1.4rem 1.4rem;
+      border-radius: 24px;
+      background: radial-gradient(circle at top left, rgba(30,64,175,0.45), rgba(15,23,42,0.98));
       box-shadow:
-        0 30px 80px rgba(0,0,0,0.9),
-        0 0 0 1px rgba(148,163,184,0.4);
+        0 20px 60px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(129,140,248,0.45);
+      border: 1px solid rgba(129,140,248,0.7);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      gap: 1.4rem;
-      overflow: auto;
+      gap: 0.9rem;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(96,165,250,0.22), transparent 55%),
+        radial-gradient(circle at 90% 0%, rgba(52,211,153,0.20), transparent 55%);
+      opacity: 0.9;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .panel > * {
+      position: relative;
+      z-index: 1;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.9rem;
     }
 
     .brand {
-      font-size: .9rem;
-      letter-spacing: .16em;
+      font-weight: 600;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--text-soft);
+      font-size: 0.72rem;
+      color: #a5b4fc;
     }
 
     .back-link {
-      font-size: .85rem;
-      color: var(--text-soft);
-      text-decoration: none;
+      font-size: 0.82rem;
+      padding: 0.3rem 0.65rem;
       border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.6);
-      padding: .2rem .9rem;
-      background: rgba(15,23,42,0.8);
+      border: 1px solid rgba(148,163,184,0.75);
+      color: #e5e7eb;
+      text-decoration: none;
+      background: linear-gradient(to right, rgba(15,23,42,0.9), rgba(30,64,175,0.75));
+      box-shadow: 0 10px 25px rgba(15,23,42,0.85);
     }
-    .back-link:hover { border-color:#e5e7eb; color:#e5e7eb; }
+
+    .back-link:hover {
+      border-color: #e5e7eb;
+      box-shadow: 0 14px 32px rgba(15,23,42,0.9);
+    }
+
+    section {
+      position: relative;
+      z-index: 1;
+    }
 
     .tagline {
-      font-size: .8rem;
-      color: rgba(148,163,184,0.9);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      letter-spacing: .18em;
-      margin-bottom: .3rem;
+      color: #a5b4fc;
+      margin-bottom: 0.2rem;
     }
 
     h1 {
-      font-size: clamp(1.9rem, 3vw, 2.3rem);
-      margin-bottom: .2rem;
+      font-size: 1.45rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.2rem;
     }
 
     .intro {
-      font-size: .95rem;
+      font-size: 0.92rem;
       color: var(--text-soft);
-      max-width: 780px;
+      max-width: 640px;
     }
 
     .grid {
-      margin-top: .6rem;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: .8rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.9rem;
+      align-content: flex-start;
     }
 
     .tile {
@@ -149,14 +174,15 @@
       gap: .2rem;
       color: inherit;
       text-decoration: none;
+      height: 100%;
     }
 
     .tile-header {
       display: flex;
       align-items: center;
-      gap: .6rem;
+      gap: 0.55rem;
+      font-size: 0.98rem;
       font-weight: 600;
-      font-size: .98rem;
     }
 
     .icon {
@@ -172,21 +198,40 @@
     }
 
     .tile p {
-      font-size: .86rem;
+      font-size: 0.86rem;
       color: var(--text-soft);
     }
 
     .badge {
-      font-size: .7rem;
-      padding: .05rem .45rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      padding: 0.18rem 0.5rem;
       border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.6);
-      color: rgba(148,163,184,0.95);
-      align-self: flex-start;
-      margin-top: .1rem;
+      border: 1px solid rgba(148,163,184,0.8);
+      margin-top: 0.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #e5e7eb;
     }
 
-    /* individuelle Farben */
+    .tile::after {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      opacity: 0;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(59,130,246,0.16), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(16,185,129,0.16), transparent 55%);
+      transition: opacity 0.18s ease-out;
+      pointer-events: none;
+    }
+
+    .tile:hover::after {
+      opacity: 1;
+    }
+
     .magnet   .icon { background: var(--c-magnet); }
     .dauer    .icon { background: var(--c-dauer); }
     .emag     .icon { background: var(--c-elektro); }
@@ -197,27 +242,52 @@
     .gen      .icon { background: var(--c-gen); }
     .trafo    .icon { background: var(--c-trafo); }
     .wireless .icon { background: var(--c-wireless); }
+    .schwing  .icon { background: var(--c-schwing); }
+    .welle    .icon { background: var(--c-welle); }
 
-    .tile:hover {
-      border-color: rgba(96,165,250,0.9);
-      transform: translateY(-1px);
-      transition: all .16s ease-out;
+    .footer {
+      margin-top: 0.6rem;
+      font-size: 0.72rem;
+      color: rgba(148,163,184,0.9);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
     @media (max-width: 900px) {
-      .panel { padding: 1.8rem 1.4rem 2.1rem; }
-      .grid  { grid-template-columns: minmax(0, 1fr); }
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
-    @media (max-width: 720px) {
-      .brand { width: 100%; }
+    @media (max-width: 650px) {
+      .app {
+        padding: 0.65rem;
+        align-items: stretch;
+      }
+      .panel {
+        border-radius: 18px;
+        padding: 0.9rem 0.85rem 1.1rem;
+        max-height: none;
+      }
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+        max-height: none;
+      }
+      body {
+        align-items: stretch;
+      }
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 <body>
 <div class="app">
-  <div class="bg-overlay"></div>
-  <div class="vignette"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
 
   <main class="panel" aria-labelledby="k10-themen-title">
 
@@ -250,21 +320,20 @@
       </article>
 
       <!-- Dauermagneten -->
-      <!-- Dauermagneten -->
-<article class="tile dauer">
-  <a href="theorie_dauermagneten.html">
-    <div class="tile-header">
-      <div class="icon">🧲</div>
-      <div>Dauermagneten</div>
-    </div>
-    <p>Magnetische Domänen, harte und weiche Magnete.</p>
-    <span class="badge">fertig</span>
-  </a>
-</article>
+      <article class="tile dauer">
+        <a href="theorie_dauermagneten.html">
+          <div class="tile-header">
+            <div class="icon">🧲</div>
+            <div>Dauermagneten</div>
+          </div>
+          <p>Magnetische Domänen, harte und weiche Magnete.</p>
+          <span class="badge">fertig</span>
+        </a>
+      </article>
 
       <!-- Elektromagneten -->
       <article class="tile emag">
-  <a href="theorie_elektrmagneten.html">
+        <a href="theorie_elektrmagneten.html">
           <div class="tile-header">
             <div class="icon">🌀</div>
             <div>Elektromagneten</div>
@@ -275,92 +344,117 @@
       </article>
 
       <!-- Magnetfeld -->
-      <article class="tile magnetfeld">
-  <a href="theorie_magnetfeld.html">
+      <article class="tile feld">
+        <a href="theorie_magnetfeld.html">
           <div class="tile-header">
-            <div class="icon">🌐</div>
+            <div class="icon">📈</div>
             <div>Magnetfeld</div>
           </div>
-          <p>Feldlinien, Richtung, Darstellung mit Eisenfeilspänen.</p>
+          <p>Feldlinienbilder, Richtung, Feldstärke qualitativ.</p>
           <span class="badge">fertig</span>
         </a>
       </article>
 
       <!-- Elektromotor -->
       <article class="tile motor">
-  <a href="theorie_elektromotor.html">
+        <a href="theorie_elektromotor.html">
           <div class="tile-header">
             <div class="icon">⚙️</div>
             <div>Elektromotor</div>
           </div>
           <p>Kraft im Magnetfeld, Drehbewegung, einfache Motoren.</p>
           <span class="badge">fertig</span>
-  </a>
-</article>
+        </a>
+      </article>
 
       <!-- Induktion -->
-<article class="tile induk">
-  <a href="theorie_induktion_lenz.html">
-    <div class="tile-header">
-      <div class="icon">⚡</div>
-      <div>Elektromagnetische Induktion</div>
-    </div>
-    <p>Spannung durch Bewegungen von Leitern im Magnetfeld.</p>
-    <span class="badge">fertig</span>
-  </a>
-</article>
+      <article class="tile induk">
+        <a href="theorie_induktion_lenz.html">
+          <div class="tile-header">
+            <div class="icon">⚡</div>
+            <div>Elektromagnetische Induktion</div>
+          </div>
+          <p>Spannung durch Bewegungen von Leitern im Magnetfeld.</p>
+          <span class="badge">fertig</span>
+        </a>
+      </article>
 
       <!-- Lenz -->
-<article class="tile lenz">
-  <a href="theorie_lenz.html">
-    <div class="tile-header">
-      <div class="icon">🔄</div>
-      <div>Induktion</div>
-    </div>
-    <p>Spannung durch Änderung des Magnetfelds.</p>
-    <span class="badge">fertig</span>
-  </a>
-</article>
+      <article class="tile lenz">
+        <a href="theorie_lenz.html">
+          <div class="tile-header">
+            <div class="icon">🔄</div>
+            <div>Induktion</div>
+          </div>
+          <p>Richtungen der Induktionsspannung, Lenzsche Regel.</p>
+          <span class="badge">fertig</span>
+        </a>
+      </article>
 
       <!-- Generator -->
-<article class="tile gen">
-  <a href="theorie_generator.html">
-    <div class="tile-header">
-      <div class="icon">🔄</div>
-      <div>Generator</div>
-    </div>
-    <p>Mechanische in elektrische Energie umwandeln.</p>
-    <span class="badge">fertig</span>
-  </a>
-</article>
+      <article class="tile gen">
+        <a href="theorie_generator.html">
+          <div class="tile-header">
+            <div class="icon">🔄</div>
+            <div>Generator</div>
+          </div>
+          <p>Mechanische in elektrische Energie umwandeln.</p>
+          <span class="badge">fertig</span>
+        </a>
+      </article>
 
-     <!-- Transformator -->
-<article class="tile traf">
-  <a href="theorie_transformator.html">
-    <div class="tile-header">
-      <div class="icon">🔌</div>
-      <div>Transformator</div>
-    </div>
-    <p>Spannung hoch- und heruntertransformieren.</p>
-    <span class="badge">fertig</span>
-  </a>
-</article>
+      <!-- Transformator -->
+      <article class="tile trafo">
+        <a href="theorie_transformator.html">
+          <div class="tile-header">
+            <div class="icon">🔌</div>
+            <div>Transformator</div>
+          </div>
+          <p>Spannungen anpassen, Hoch- und Niederspannung.</p>
+          <span class="badge">fertig</span>
+        </a>
+      </article>
 
-     <!-- Drahtlos -->
-<article class="tile draht">
-  <a href="theorie_drahtlos.html">
-    <div class="tile-header">
-      <div class="icon">📡</div>
-      <div>Drahtlose Energieübertragung</div>
-    </div>
-    <p>Energieübertragung durch elektromagnetische Felder.</p>
-    <span class="badge">fertig</span>
-  </a>
-</article>
+      <!-- Mechanische Schwingungen -->
+      <article class="tile schwing">
+        <a href="theorie_schwingungen.html">
+          <div class="tile-header">
+            <div class="icon">〰️</div>
+            <div>Mechanische Schwingungen</div>
+          </div>
+          <p>Ruhelage, Auslenkung, Amplitude, Periodendauer, Frequenz.</p>
+          <span class="badge">neu</span>
+        </a>
+      </article>
+
+      <!-- Wellen -->
+      <article class="tile welle">
+        <a href="theorie_wellen.html">
+          <div class="tile-header">
+            <div class="icon">🌊</div>
+            <div>Wellen</div>
+          </div>
+          <p>Ausbreitung von Schwingungen, Wellenlänge, Ausbreitungsgeschwindigkeit.</p>
+          <span class="badge">neu</span>
+        </a>
+      </article>
+
+      <!-- Drahtlose Energieübertragung -->
+      <article class="tile wireless">
+        <a href="theorie_drahtlos.html">
+          <div class="tile-header">
+            <div class="icon">📡</div>
+            <div>Drahtlose Energieübertragung</div>
+          </div>
+          <p>Energieübertragung durch elektromagnetische Felder.</p>
+          <span class="badge">fertig</span>
+        </a>
+      </article>
     </section>
 
     <footer class="footer">
-      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Themen Klasse 10
+      <span>© 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Themen Klasse 10</span>
+      <span>Version: Magnetismus · Induktion · Schwingungen &amp; Wellen</span>
     </footer>
   </main>
 </div>
