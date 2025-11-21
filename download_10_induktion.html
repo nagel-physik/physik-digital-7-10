@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Induktion &amp; Generator – Lernzettel Klasse 10</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --page-bg: #e5e7eb;
+      --paper-bg: #ffffff;
+      --text-main: #111827;
+      --text-soft: #4b5563;
+      --accent: #2563eb;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: var(--page-bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 1.5rem 0.5rem;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 800px;
+      background: var(--paper-bg);
+      border-radius: 16px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.25);
+      padding: 1.6rem 1.4rem 1.8rem;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .title-block small {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    h1 { font-size: 1.4rem; }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: #111;
+      text-decoration: none;
+    }
+
+    .btn:hover { background: #e5e7eb; }
+
+    .btn span { font-size: 1.1rem; }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 0.4rem;
+    }
+
+    h2 {
+      font-size: 1.05rem;
+      margin-top: 1rem;
+      margin-bottom: 0.25rem;
+      color: var(--accent);
+    }
+
+    p {
+      font-size: 0.92rem;
+      margin-bottom: 0.25rem;
+      color: var(--text-main);
+    }
+
+    ul {
+      margin-left: 1.1rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+    }
+
+    li + li { margin-top: 0.1rem; }
+
+    .box {
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+
+    .merksatz { border-left: 3px solid var(--accent); }
+
+    .tasks {
+      margin-top: 0.8rem;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 0.6rem;
+    }
+
+    .tasks h2 { margin-top: 0.4rem; }
+
+    .tasks ol {
+      margin-left: 1.2rem;
+      margin-top: 0.15rem;
+      font-size: 0.9rem;
+    }
+
+    .tasks ol li + li { margin-top: 0.25rem; }
+
+    .solutions {
+      margin-top: 0.7rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .solutions summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      .page { padding: 1.2rem 1rem 1.4rem; }
+      h1 { font-size: 1.25rem; }
+      .page-header { align-items: flex-start; }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .page {
+        max-width: 100%;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .btn { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header class="page-header">
+      <div class="title-block">
+        <small>Physik Klasse 10 · Magnetismus</small>
+        <h1>Induktion &amp; Generator – Lernzettel</h1>
+      </div>
+
+      <div class="controls">
+        <a href="klasse10_downloads.html" class="btn">← Zurück</a>
+        <button class="btn" onclick="window.print()">
+          <span>🖨️</span> Drucken
+        </button>
+      </div>
+    </header>
+
+    <div class="meta">
+      <div>FGO Perleberg · Physik Digital 7–10</div>
+      <div>Name: ____________________ · Datum: ______________</div>
+    </div>
+
+    <section>
+      <h2>1. Was ist Induktion?</h2>
+      <p>
+        <strong>Induktion</strong> bedeutet: In einer Spule wird eine Spannung
+        erzeugt, wenn sich das Magnetfeld in der Spule <strong>ändert</strong>.
+      </p>
+      <div class="box merksatz">
+        <strong>Merksatz:</strong> Nur ein <strong>sich änderndes</strong>
+        Magnetfeld erzeugt eine Induktionsspannung – nicht ein unverändertes Feld.
+      </div>
+      <p>Typische Situation:</p>
+      <ul>
+        <li>Magnet wird in eine Spule hinein- und wieder herausbewegt.</li>
+        <li>Die Spule ist an LED oder Messgerät angeschlossen.</li>
+        <li>Beim Bewegen leuchtet die LED kurz oder das Messgerät schlägt aus.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. Wovon hängt die Induktionsspannung ab?</h2>
+      <p>Die Induktionsspannung wird größer, wenn:</p>
+      <ul>
+        <li>der Magnet <strong>schneller</strong> bewegt wird,</li>
+        <li>der Magnet <strong>stärker</strong> ist,</li>
+        <li>die Spule <strong>mehr Windungen</strong> hat.</li>
+      </ul>
+      <div class="box">
+        <strong>Merke:</strong> „Schnell, stark, viele“ → schnelle Bewegung,
+        starker Magnet, viele Windungen → große Induktionsspannung.
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Generator – Strom aus Bewegung</h2>
+      <p>
+        Ein <strong>Generator</strong> arbeitet mit dem Prinzip der Induktion:
+        Aus <strong>Bewegungsenergie</strong> wird <strong>elektrische Energie</strong>.
+      </p>
+      <ul>
+        <li>Eine Spule dreht sich im Magnetfeld <em>oder</em></li>
+        <li>Magnete drehen sich an einer Spule vorbei.</li>
+        <li>Dadurch ändert sich ständig das Magnetfeld in der Spule → Induktionsspannung.</li>
+      </ul>
+      <div class="box">
+        <strong>Beispiele:</strong> Fahrrad-Dynamo, Generator im Kraftwerk,
+        Windrad-Generator, Wasserkraftwerk.
+      </div>
+    </section>
+
+    <section class="tasks">
+      <h2>4. Kurze Aufgaben</h2>
+      <ol>
+        <li>Erkläre kurz, was mit „Induktion“ gemeint ist.</li>
+        <li>Nenne zwei Möglichkeiten, wie man die Induktionsspannung vergrößern kann.</li>
+        <li>Nenne ein Beispiel, wo im Alltag ein Generator verwendet wird.</li>
+      </ol>
+
+      <div class="solutions">
+        <details>
+          <summary>Lösungen einblenden</summary>
+          <ul>
+            <li><strong>1:</strong> In einer Spule wird eine Spannung erzeugt, wenn sich das Magnetfeld in der Spule ändert.</li>
+            <li><strong>2:</strong> z.&nbsp;B. Magnet schneller bewegen; stärkeren Magneten verwenden; Spule mit mehr Windungen nutzen.</li>
+            <li><strong>3:</strong> z.&nbsp;B. Dynamo am Fahrrad, Generator im Kraftwerk, Windenergieanlage.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <p style="margin-top:1.6rem;">
+      <a href="klasse10_downloads.html"
+         style="color:#2563eb; text-decoration:none; font-weight:600;">
+        ← Zurück zu Downloads & Lernzetteln
+      </a>
+    </p>
+  </div>
+</body>
+</html>
