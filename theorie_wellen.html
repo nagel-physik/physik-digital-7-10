@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Mechanische Wellen – Grundlagen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+      --c-accent: #0ea5e9;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 1.2rem 0.6rem;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 900px;
+      border-radius: 24px;
+      padding: 1.4rem 1.3rem 2rem;
+      background: radial-gradient(circle at top left, rgba(14,165,233,0.28), rgba(15,23,42,0.98));
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(14,165,233,0.45);
+      border: 1px solid rgba(14,165,233,0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      color: #7dd3fc;
+    }
+
+    .back-link {
+      font-size: 0.82rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.8);
+      color: #e5e7eb;
+      text-decoration: none;
+      background: linear-gradient(to right, rgba(15,23,42,0.9), rgba(14,165,233,0.85));
+      box-shadow: 0 10px 25px rgba(15,23,42,0.85);
+    }
+
+    .tagline {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #7dd3fc;
+    }
+
+    h1 { font-size: 1.4rem; margin-bottom: .3rem; }
+
+    .intro {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 650px;
+    }
+
+    .section {
+      background: rgba(15,23,42,0.96);
+      border-radius: 16px;
+      padding: 0.95rem 1.05rem;
+      border: 1px solid rgba(148,163,184,0.6);
+      box-shadow: 0 14px 30px rgba(15,23,42,0.85);
+      font-size: 0.92rem;
+      margin-bottom: .6rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--c-accent);
+      color: white;
+      font-size: 1.2rem;
+      box-shadow: 0 0 20px rgba(14,165,233,0.85);
+    }
+
+    ul { margin-left: 1rem; }
+    ul li + li { margin-top: 0.25rem; }
+
+    .merksatz {
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      background: rgba(15,23,42,0.98);
+      border: 1px solid rgba(56,189,248,0.8);
+      font-size: 0.9rem;
+      margin-top: .6rem;
+    }
+  </style>
+</head>
+
+<body>
+<main class="panel">
+
+  <header class="topbar">
+    <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+    <a class="back-link" href="klasse10_themen.html">← Zurück</a>
+  </header>
+
+  <!-- Einleitung -->
+  <section>
+    <div class="tagline">MECHANIK · WELLEN</div>
+    <h1>Mechanische Wellen – Grundlagen</h1>
+    <p class="intro">
+      Bei einer Welle breitet sich eine <strong>Störung</strong> im Raum aus.
+      Es wird <strong>Energie</strong> übertragen – aber die Teilchen des Mediums
+      bleiben in ihrer Nähe und laufen nicht mit der Welle mit.
+      Beispiele: Wasserwellen, Schall in Luft, Wellen auf einem Seil.
+    </p>
+  </section>
+
+  <!-- Was ist eine Welle? -->
+  <article class="section">
+    <div class="section-title">
+      <div class="icon">🌊</div>
+      <strong>1. Was ist eine Welle?</strong>
+    </div>
+    <p>
+      Eine Welle ist <strong>eine sich fortpflanzende Schwingung</strong>.
+    </p>
+    <ul>
+      <li>Die Teilchen vor Ort schwingen hin und her.</li>
+      <li>Die Schwingung breitet sich im Raum aus → das ist die Welle.</li>
+      <li>Es wird <strong>Energie</strong> weitergegeben, aber kein Stoff transportiert.</li>
+    </ul>
+    <p>
+      Beispiel: Wirfst du einen Stein ins Wasser, schwingen die Wasserteilchen auf und ab,
+      aber sie werden nicht mit dem Ring nach außen „mitgenommen“.
+    </p>
+  </article>
+
+  <!-- Wichtige Größen -->
+  <article class="section">
+    <div class="section-title">
+      <div class="icon">📏</div>
+      <strong>2. Wichtige Größen einer Welle</strong>
+    </div>
+    <ul>
+      <li><strong>Auslenkung</strong>: Abstand eines Teilchens von seiner Ruhelage.</li>
+      <li><strong>Amplitude A</strong>: größte Auslenkung – „Höhe“ der Welle.</li>
+      <li><strong>Wellenlänge λ</strong> (Lambda): Abstand zwischen zwei gleichen Punkten,
+        z. B. von Wellenberg zu Wellenberg.</li>
+      <li><strong>Periode T</strong>: Zeit für eine komplette Schwingung.</li>
+      <li><strong>Frequenz f</strong>: Schwingungen pro Sekunde, Einheit Hertz (Hz).</li>
+    </ul>
+    <p>
+      Zwischen diesen Größen gilt: <strong>f = 1 / T</strong>.
+    </p>
+  </article>
+
+  <!-- Transversal / Longitudinal -->
+  <article class="section">
+    <div class="section-title">
+      <div class="icon">↕️</div>
+      <strong>3. Quer- und Längswellen</strong>
+    </div>
+    <p>
+      Man unterscheidet bei mechanischen Wellen zwei wichtige Arten:
+    </p>
+    <ul>
+      <li><strong>Transversalwellen (Querwellen):</strong><br>
+        Die Teilchen schwingen <strong>senkrecht</strong> zur Ausbreitungsrichtung der Welle.<br>
+        Beispiel: Wellen auf einem gespannten Seil, Wasseroberflächenwellen.
+      </li>
+      <li><strong>Longitudinalwellen (Längswellen):</strong><br>
+        Die Teilchen schwingen <strong>in Ausbreitungsrichtung</strong> der Welle.<br>
+        Beispiel: Schall in Luft – Teilchen werden abwechselnd verdichtet und verdünnt.
+      </li>
+    </ul>
+  </article>
+
+  <!-- Ausbreitungsgeschwindigkeit -->
+  <article class="section">
+    <div class="section-title">
+      <div class="icon">⚡</div>
+      <strong>4. Ausbreitungsgeschwindigkeit</strong>
+    </div>
+    <p>
+      Eine Welle hat eine <strong>Ausbreitungsgeschwindigkeit v</strong>.
+      Sie gibt an, wie schnell sich ein Wellenberg im Raum fortbewegt.
+    </p>
+    <p>
+      Die Geschwindigkeit hängt vom <strong>Medium</strong> ab (z.&nbsp;B. Luft, Wasser, Seil)
+      und von der Art der Welle.
+    </p>
+    <p>
+      Zwischen Wellenlänge λ, Frequenz f und Ausbreitungsgeschwindigkeit v gilt:
+    </p>
+    <p style="margin-left: 1rem;">
+      <strong>v = λ · f</strong>
+    </p>
+    <p>
+      Diese Formel ist verwandt mit der bekannten Beziehung
+      <strong>v = s / t</strong>: Strecke pro Zeit.
+    </p>
+  </article>
+
+  <!-- Beispiele im Alltag -->
+  <article class="section">
+    <div class="section-title">
+      <div class="icon">🔊</div>
+      <strong>5. Wellen im Alltag</strong>
+    </div>
+    <ul>
+      <li><strong>Schallwellen:</strong> Sprache, Musik, Lärm – alles sind Longitudinalwellen in Luft.</li>
+      <li><strong>Wasserwellen:</strong> an Seen, Meeren, in Wellenbecken.</li>
+      <li><strong>Erdbebenwellen:</strong> breiten sich im Erdboden aus und können große Schäden anrichten.</li>
+      <li><strong>Stadionwelle:</strong> Menschen stehen nacheinander auf – schöne Analogie zur Welle.</li>
+    </ul>
+  </article>
+
+  <!-- Merksatz -->
+  <article class="section merksatz">
+    <strong>Merksatz:</strong><br><br>
+    Eine Welle ist eine sich ausbreitende Schwingung. Sie überträgt Energie,
+    aber die Teilchen des Mediums bleiben ungefähr an ihrem Platz.
+    Wichtige Größen sind Amplitude, Wellenlänge, Periode, Frequenz und
+    Ausbreitungsgeschwindigkeit.
+  </article>
+
+</main>
+</body>
+</html>
