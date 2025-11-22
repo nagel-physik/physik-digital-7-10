@@ -375,13 +375,21 @@
             <span class="label">📈 Magnetfeld</span>
             <span class="badge">Feldlinien</span>
           </button>
-          <button class="topic-btn" data-topic="elektromotor">
-            <span class="label">⚙️ Elektromotor</span>
-            <span class="badge">Antrieb</span>
-          </button>
           <button class="topic-btn" data-topic="induktion">
-            <span class="label">⚡ Induktion</span>
+            <span class="label">⚡ Induktion – Grundlagen</span>
             <span class="badge">Spannung</span>
+          </button>
+          <button class="topic-btn" data-topic="induktion_lenz">
+            <span class="label">↩️ Induktion &amp; Lenz-Regel</span>
+            <span class="badge">Richtung</span>
+          </button>
+          <button class="topic-btn" data-topic="dauermagneten_detail">
+            <span class="label">🧲 Dauermagneten – Aufbau</span>
+            <span class="badge">Innenleben</span>
+          </button>
+          <button class="topic-btn" data-topic="drahtlos_kurz">
+            <span class="label">📡 Drahtlose Energie – Einstieg</span>
+            <span class="badge">Überblick</span>
           </button>
           <button class="topic-btn" data-topic="generator">
             <span class="label">🔄 Generator</span>
@@ -394,6 +402,14 @@
           <button class="topic-btn" data-topic="drahtlos">
             <span class="label">📡 Drahtlose Energieübertragung</span>
             <span class="badge">Alltag</span>
+          </button>
+          <button class="topic-btn" data-topic="schwingungen">
+            <span class="label">🌀 Mechanische Schwingungen</span>
+            <span class="badge">Mechanik</span>
+          </button>
+          <button class="topic-btn" data-topic="wellen">
+            <span class="label">🌊 Wellen</span>
+            <span class="badge">Mechanik</span>
           </button>
         </div>
 
@@ -1864,7 +1880,7 @@
       ],
       c: 1
     },
-    {
+        {
       q: "Welche Aussage beschreibt drahtlose Energieübertragung am besten?",
       a: [
         "Elektrische Energie wird über Kabel übertragen.",
@@ -1875,7 +1891,319 @@
       c: 1
      }
   ]
-}
+},
+    schwingungen: {
+      name: "Mechanische Schwingungen",
+      icon: "🌀",
+      questions: [
+        {
+          q: "Was schwingt bei einer mechanischen Schwingung?",
+          a: [
+            "Die Zeit",
+            "Ein Körper um eine Ruhelage hin und her",
+            "Nur ein elektrisches Feld",
+            "Nur das Licht"
+          ],
+          c: 1
+        },
+        {
+          q: "Welche Größe beschreibt, wie weit ein Körper maximal ausgelenkt wird?",
+          a: [
+            "Amplitude",
+            "Periode",
+            "Frequenz",
+            "Wellenlänge"
+          ],
+          c: 0
+        },
+        {
+          q: "Die Schwingungsdauer T ist …",
+          a: [
+            "die Zeit für zehn Schwingungen",
+            "die Zeit für eine vollständige Hin- und Herbewegung",
+            "die Strecke, die der Körper zurücklegt",
+            "die Anzahl der Schwingungen pro Sekunde"
+          ],
+          c: 1
+        },
+        {
+          q: "Welche Einheit hat die Schwingungsdauer T?",
+          a: [
+            "Meter (m)",
+            "Sekunde (s)",
+            "Hertz (Hz)",
+            "Newton (N)"
+          ],
+          c: 1
+        },
+        {
+          q: "Die Frequenz f gibt an …",
+          a: [
+            "wie viele Schwingungen ein Körper pro Sekunde ausführt",
+            "wie groß die Amplitude ist",
+            "wie lang der Faden ist",
+            "wie schwer der Körper ist"
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Einheit hat die Frequenz f?",
+          a: [
+            "Sekunde (s)",
+            "Kilogramm (kg)",
+            "Hertz (Hz)",
+            "Meter (m)"
+          ],
+          c: 2
+        },
+        {
+          q: "Welche Beziehung zwischen T und f gilt?",
+          a: [
+            "f = 1 / T",
+            "f = T · T",
+            "T = f / 2",
+            "T = f · f"
+          ],
+          c: 0
+        },
+        {
+          q: "Bei einem Fadenpendel hängt die Schwingungsdauer T vor allem ab von …",
+          a: [
+            "der Masse der Kugel",
+            "der Farbe der Kugel",
+            "der Länge des Fadens",
+            "der Lufttemperatur"
+          ],
+          c: 2
+        },
+        {
+          q: "Welche Aussage zum Einfluss der Masse beim Fadenpendel ist richtig?",
+          a: [
+            "Schwere Kugeln schwingen deutlich langsamer.",
+            "Leichte Kugeln schwingen deutlich schneller.",
+            "Die Masse hat (für kleine Auslenkungen) keinen Einfluss auf T.",
+            "Die Masse bestimmt nur die Amplitude."
+          ],
+          c: 2
+        },
+        {
+          q: "Was versteht man unter einer gedämpften Schwingung?",
+          a: [
+            "Eine Schwingung mit sehr großer Amplitude.",
+            "Eine Schwingung, bei der die Amplitude mit der Zeit kleiner wird.",
+            "Eine Schwingung, die nur im Vakuum stattfindet.",
+            "Eine Schwingung, deren Frequenz sich ständig ändert."
+          ],
+          c: 1
+        },
+        {
+          q: "Was ist die Ursache dafür, dass reale Schwingungen gedämpft werden?",
+          a: [
+            "Reibung und Energieverluste, z. B. durch Luftwiderstand",
+            "Zu starke Magnetfelder",
+            "Zu hohe Temperatur",
+            "Zu kleine Masse"
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Größe bleibt bei einer idealen (nicht gedämpften) Schwingung konstant?",
+          a: [
+            "Amplitude",
+            "Frequenz und Schwingungsdauer",
+            "Masse des Körpers",
+            "Länge des Fadens"
+          ],
+          c: 1
+        },
+        {
+          q: "Du beobachtest ein Pendel: Mit der Zeit werden die Ausschläge immer kleiner. Was kannst du daraus schließen?",
+          a: [
+            "Es handelt sich um eine gedämpfte Schwingung.",
+            "Die Frequenz nimmt ständig zu.",
+            "Die Schwingung ist ideal und ohne Reibung.",
+            "Die Pendellänge wird größer."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Angabe beschreibt eine Schwingung vollständig?",
+          a: [
+            "Nur die Amplitude",
+            "Nur die Masse",
+            "Amplitude, Schwingungsdauer bzw. Frequenz und Ruhelage",
+            "Nur die Auslenkung in einem Zeitpunkt"
+          ],
+          c: 2
+        },
+        {
+          q: "Welche Alltagsbeobachtung ist ein Beispiel für eine Schwingung?",
+          a: [
+            "Ein Auto, das mit konstanter Geschwindigkeit fährt",
+            "Ein Lichtschalter, der ein- und ausgeschaltet wird",
+            "Eine schwingende Gitarrensaite",
+            "Eine Kugel, die einmal vom Tisch fällt"
+          ],
+          c: 2
+        }
+      ]
+    },
+    wellen: {
+      name: "Mechanische Wellen",
+      icon: "🌊",
+      questions: [
+        {
+          q: "Was breitet sich bei einer mechanischen Welle im Raum aus?",
+          a: [
+            "Stoff (Materie)",
+            "Nur Masse",
+            "Eine Störung bzw. Schwingung und damit Energie",
+            "Nur Temperatur"
+          ],
+          c: 2
+        },
+        {
+          q: "Welche Aussage ist typisch für eine Welle in einem Medium?",
+          a: [
+            "Die Teilchen werden mit der Welle weit weg transportiert.",
+            "Die Teilchen schwingen um ihre Ruhelage, die Welle läuft weiter.",
+            "Das Medium bleibt völlig in Ruhe.",
+            "Nur Licht kann Wellen bilden."
+          ],
+          c: 1
+        },
+        {
+          q: "Wie nennt man den Abstand zwischen zwei benachbarten Wellenbergen?",
+          a: [
+            "Amplitude",
+            "Schwingungsdauer",
+            "Wellenlänge",
+            "Frequenz"
+          ],
+          c: 2
+        },
+        {
+          q: "Welche Einheit hat die Wellenlänge λ?",
+          a: [
+            "Meter (m)",
+            "Sekunde (s)",
+            "Hertz (Hz)",
+            "Newton (N)"
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Größe gibt an, wie viele Schwingungen eine Welle pro Sekunde ausführt?",
+          a: [
+            "Amplitude",
+            "Wellenlänge",
+            "Frequenz",
+            "Auslenkung"
+          ],
+          c: 2
+        },
+        {
+          q: "Welche Beziehung zwischen Ausbreitungsgeschwindigkeit v, Wellenlänge λ und Frequenz f gilt?",
+          a: [
+            "v = λ · f",
+            "v = λ / f",
+            "v = f / λ",
+            "v = λ + f"
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Aussage zu Transversalwellen (Querwellen) ist richtig?",
+          a: [
+            "Die Teilchen schwingen in Ausbreitungsrichtung.",
+            "Die Teilchen schwingen senkrecht zur Ausbreitungsrichtung.",
+            "Es gibt keine Transversalwellen.",
+            "Sie können sich nur in Luft ausbreiten."
+          ],
+          c: 1
+        },
+        {
+          q: "Welche Aussage zu Longitudinalwellen (Längswellen) ist richtig?",
+          a: [
+            "Die Teilchen schwingen senkrecht zur Ausbreitungsrichtung.",
+            "Die Teilchen schwingen in Ausbreitungsrichtung.",
+            "Die Teilchen bleiben völlig in Ruhe.",
+            "Longitudinalwellen gibt es nur im Wasser."
+          ],
+          c: 1
+        },
+        {
+          q: "Schall in Luft ist ein Beispiel für …",
+          a: [
+            "eine Transversalwelle",
+            "eine Longitudinalwelle",
+            "eine stehende Welle",
+            "keine Welle"
+          ],
+          c: 1
+        },
+        {
+          q: "Welche Situation beschreibt am besten eine mechanische Welle?",
+          a: [
+            "Eine Person, die geradeaus läuft.",
+            "Ein Auto, das an der Ampel steht.",
+            "Eine Stadionwelle: Menschen stehen nacheinander auf und setzen sich wieder.",
+            "Eine Lampe, die leuchtet."
+          ],
+          c: 2
+        },
+        {
+          q: "Was passiert, wenn die Frequenz einer Welle größer wird (Medium bleibt gleich)?",
+          a: [
+            "Die Ausbreitungsgeschwindigkeit v wird automatisch größer.",
+            "Die Wellenlänge λ wird kleiner.",
+            "Die Amplitude wird größer.",
+            "Es entsteht keine Welle mehr."
+          ],
+          c: 1
+        },
+        {
+          q: "Was versteht man unter der Ausbreitungsgeschwindigkeit einer Welle?",
+          a: [
+            "Die Geschwindigkeit der einzelnen Teilchen.",
+            "Die Geschwindigkeit, mit der ein Wellenberg nach vorne läuft.",
+            "Die Geschwindigkeit der Luftmoleküle insgesamt.",
+            "Die Geschwindigkeit des Lichtes."
+          ],
+          c: 1
+        },
+        {
+          q: "Welche der folgenden Erscheinungen ist <strong>keine</strong> mechanische Welle?",
+          a: [
+            "Schall in Luft",
+            "Seilwelle",
+            "Wasserwelle",
+            "Licht im Vakuum"
+          ],
+          c: 3
+        },
+        {
+          q: "Warum werden Wasserwellen mit der Entfernung vom Entstehungsort oft kleiner?",
+          a: [
+            "Weil Energie auf eine größere Fläche verteilt wird und durch Reibung verloren geht.",
+            "Weil Wasser weiter weg schwerer ist.",
+            "Weil die Frequenz immer größer wird.",
+            "Weil die Teilchen stehen bleiben."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Größen beschreiben eine Welle vollständig?",
+          a: [
+            "Nur Amplitude und Masse",
+            "Nur Schwingungsdauer und Masse",
+            "Amplitude, Wellenlänge, Frequenz und Ausbreitungsgeschwindigkeit",
+            "Nur die Auslenkung in einem Zeitpunkt"
+          ],
+          c: 2
+        }
+      ]
+    }
 };
 
   // --- Zustand ---
