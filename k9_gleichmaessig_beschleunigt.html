@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Gleichmäßig beschleunigte Bewegung – Klasse 9</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-grad-top: #0f172a;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+      --accent: #f97316;
+      --box-bg: #0f172a;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, var(--bg-grad-top) 0, var(--bg-dark) 60%);
+      color: var(--text-main);
+      display:flex;
+      justify-content:center;
+      padding:1.25rem;
+    }
+
+    .app { width:100%; max-width:860px; }
+
+    .panel {
+      border-radius:26px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:radial-gradient(circle at top left, #020617 0, #020617 80%);
+      padding:1.4rem 1.5rem;
+      box-shadow:0 22px 60px rgba(0,0,0,0.9);
+    }
+
+    /* Header */
+    .header-top {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-bottom:0.5rem;
+      gap:0.5rem;
+    }
+
+    .subline {
+      font-size:0.8rem;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:rgba(156,163,175,0.95);
+    }
+
+    .back-link {
+      padding:0.25rem 0.7rem;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      color:var(--text-soft);
+      text-decoration:none;
+      font-size:0.78rem;
+    }
+    .back-link:hover { color:white; border-color:white; }
+
+    h1 { font-size:1.55rem; margin-bottom:0.3rem; }
+
+    .intro {
+      font-size:0.9rem;
+      color:rgba(209,213,219,0.95);
+      margin-bottom:0.9rem;
+      max-width:36rem;
+    }
+
+    /* Inhalt */
+    .section-box {
+      background:var(--box-bg);
+      padding:1rem;
+      border-radius:18px;
+      border:1px solid rgba(148,163,184,0.45);
+      margin-bottom:1.1rem;
+      box-shadow:0 16px 44px rgba(0,0,0,0.6);
+    }
+
+    .section-title {
+      font-size:1.05rem;
+      font-weight:600;
+      margin-bottom:0.5rem;
+      display:flex;
+      align-items:center;
+      gap:0.45rem;
+    }
+
+    .icon {
+      width:0.75rem;
+      height:0.75rem;
+      border-radius:50%;
+      background:var(--accent);
+    }
+
+    p { font-size:0.9rem; line-height:1.55rem; }
+
+    ul {
+      margin-left:1.1rem;
+      margin-top:0.4rem;
+      line-height:1.55rem;
+      font-size:0.9rem;
+    }
+
+    strong { color:#fb9f4a; }
+
+    code {
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size:0.9rem;
+    }
+
+    /* Merkkasten */
+    .merkkasten {
+      background:#40180a;
+      border-left:4px solid #f97316;
+      padding:0.9rem;
+      border-radius:10px;
+      margin-bottom:1rem;
+      font-size:0.9rem;
+    }
+
+    /* Aufgaben */
+    h3 { margin-top:0.8rem; margin-bottom:0.3rem; font-size:1rem; }
+
+    details {
+      background:#0d253f;
+      padding:0.8rem;
+      border-radius:12px;
+      margin-top:0.5rem;
+      border:1px solid rgba(148,163,184,0.4);
+      font-size:0.9rem;
+    }
+
+    summary {
+      cursor:pointer;
+      font-weight:600;
+      color:#f97316;
+      margin-bottom:0.4rem;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top:1rem;
+      text-align:right;
+      font-size:0.75rem;
+      color:rgba(148,163,184,0.9);
+    }
+
+    @media (max-width: 640px) {
+      body { padding:0.7rem; }
+      .panel { padding:1.2rem 1rem 1.3rem; border-radius:22px; }
+      h1 { font-size:1.4rem; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <main class="panel">
+
+    <div class="header-top">
+      <div class="subline">Physik · Klasse 9</div>
+      <a href="klasse9_themen.html" class="back-link">← Zurück</a>
+    </div>
+
+    <h1>Gleichmäßig beschleunigte Bewegung</h1>
+
+    <p class="intro">
+      Eine Bewegung heißt <strong>gleichmäßig beschleunigt</strong>, wenn die
+      Beschleunigung <strong>konstant</strong> ist. Das bedeutet: In jedem
+      Zeitabschnitt kommt gleich viel Geschwindigkeit dazu.
+    </p>
+
+    <!-- Abschnitt 1 -->
+    <div class="section-box">
+      <div class="section-title"><span class="icon"></span>1. Was bedeutet „gleichmäßig beschleunigt“?</div>
+      <p>
+        Die Geschwindigkeit steigt <strong>gleichmäßig</strong> an:
+      </p>
+      <ul>
+        <li>pro Sekunde kommt immer die gleiche Geschwindigkeit dazu</li>
+        <li>Beispiel: Auto beschleunigt im 1. Gang gleichmäßig</li>
+        <li>Beispiel: Kugel rollt eine schiefe Ebene hinunter</li>
+      </ul>
+      <p>
+        Startet ein Körper aus der Ruhe (v₀ = 0), gilt:
+      </p>
+      <p><code>v = a · t</code></p>
+    </div>
+
+    <!-- Abschnitt 2 -->
+    <div class="section-box">
+      <div class="section-title"><span class="icon"></span>2. Weg-Zeit-Gesetz</div>
+      <p>
+        Für den Weg gilt bei Start aus der Ruhe:
+      </p>
+      <p><code>s = ½ · a · t²</code></p>
+      <ul>
+        <li>der Weg wächst quadratisch</li>
+        <li>die Kurve im s-t-Diagramm wird immer steiler</li>
+      </ul>
+      <p>
+        Beispiel: Wenn die Zeit doppelt so groß wird, wird der Weg <strong>viermal so groß</strong>.
+      </p>
+    </div>
+
+    <!-- Abschnitt 3 -->
+    <div class="section-box">
+      <div class="section-title"><span class="icon"></span>3. v-t & s-t Diagramme</div>
+      <p><strong>v-t-Diagramm:</strong></p>
+      <ul>
+        <li>steigende Gerade → v nimmt gleichmäßig zu</li>
+        <li>Steigung = Beschleunigung</li>
+      </ul>
+      <p><strong>s-t-Diagramm:</strong></p>
+      <ul>
+        <li>gekrümmte Kurve (Parabel)</li>
+        <li>wird immer steiler → Geschwindigkeit steigt</li>
+      </ul>
+    </div>
+
+    <!-- Abschnitt 4 -->
+    <div class="section-box">
+      <div class="section-title"><span class="icon"></span>4. Beispiel</div>
+      <p>
+        Ein Motorrad beschleunigt aus der Ruhe mit a = 2 m/s².
+      </p>
+      <ul>
+        <li>nach 1 s: <code>v = 2 m/s</code></li>
+        <li>nach 2 s: <code>v = 4 m/s</code></li>
+        <li>nach 3 s: <code>v = 6 m/s</code></li>
+      </ul>
+      <p>
+        In gleicher Zeit kommt immer die gleiche Geschwindigkeit dazu.
+      </p>
+    </div>
+
+    <!-- Merkkasten -->
+    <div class="merkkasten">
+      <strong>Merke:</strong><br>
+      Gleichmäßig beschleunigt = Beschleunigung ist konstant.  
+      v-t-Diagramm: steigende Gerade.  
+      s-t-Diagramm: gekrümmte Kurve.  
+      Formeln (bei Start aus Ruhe): v = a·t und s = ½·a·t².
+    </div>
+
+    <!-- Aufgaben -->
+    <h3>Übungsaufgaben</h3>
+
+    <p><strong>1)</strong> Ein Auto beschleunigt aus dem Stand 4 s lang mit a = 3 m/s².  
+       Berechne die Geschwindigkeit nach 4 s.</p>
+    <details>
+      <summary>Lösung anzeigen</summary>
+      <p>
+        <code>v = a · t = 3 m/s² · 4 s = 12 m/s</code><br>
+        <strong>Antwort:</strong> v = 12 m/s
+      </p>
+    </details>
+
+    <p><strong>2)</strong> Wie weit fährt das Auto in den 4 s?</p>
+    <details>
+      <summary>Lösung anzeigen</summary>
+      <p>
+        <code>s = ½ · a · t²</code><br>
+        <code>s = ½ · 3 · 4² = 0.5 · 3 · 16 = 24 m</code><br>
+        <strong>Antwort:</strong> s = 24 m
+      </p>
+    </details>
+
+    <p><strong>3)</strong> Im s-t-Diagramm siehst du eine Kurve, die immer steiler wird.  
+       Was bedeutet das?</p>
+    <details>
+      <summary>Lösung anzeigen</summary>
+      <p>
+        Der Körper wird <strong>schneller</strong>.  
+        → Die Geschwindigkeit nimmt gleichmäßig zu.  
+        → Die Bewegung ist <strong>gleichmäßig beschleunigt</strong>.
+      </p>
+    </details>
+
+    <div class="footer">
+      © 2025 · M. Nagel · FGO Perleberg · Physik Digital 7–10 · Klasse 9
+    </div>
+
+  </main>
+</div>
+</body>
+</html>
