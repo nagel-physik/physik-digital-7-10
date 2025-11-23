@@ -2,173 +2,778 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <title>Training & Quiz – Klasse 9</title>
+  <title>Training Klasse 9 – Bewegung & Grundlagen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
     :root {
       --bg-dark: #020617;
-      --bg-grad-top: #0f172a;
       --text-main: #e5e7eb;
       --text-soft: #cbd5f5;
-
-      --btn1: linear-gradient(135deg, #3b82f6, #2563eb);
-      --btn2: linear-gradient(135deg, #6366f1, #4338ca);
-      --btn3: linear-gradient(135deg, #22c55e, #16a34a);
-      --btn4: linear-gradient(135deg, #f97316, #ea580c);
-      --btn5: linear-gradient(135deg, #eab308, #ca8a04);
-      --btn6: linear-gradient(135deg, #14b8a6, #0d9488);
+      --c-accent: #3b82f6;
+      --c-good: #22c55e;
+      --c-mid:  #eab308;
+      --c-bad:  #ef4444;
+      --tile-bg: rgba(15,23,42,0.96);
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: radial-gradient(circle at top, var(--bg-grad-top), var(--bg-dark) 55%);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
       color: var(--text-main);
-      display:flex;
-      justify-content:center;
-      padding:1.2rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
     .app {
-      width:100%;
-      max-width:960px;
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(56,189,248,0.20), transparent 55%);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0,0,0,0.9);
+      pointer-events: none;
     }
 
     .panel {
-      background:#020617;
-      border-radius:26px;
-      border:1px solid rgba(148,163,184,0.7);
-      padding:1.5rem;
-      box-shadow:0 22px 60px rgba(0,0,0,0.9);
+      position: relative;
+      z-index: 5;
+      max-width: 1150px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.1rem 2rem 2.4rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.98), rgba(15,23,42,0.9));
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(148,163,184,0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      max-height: 100%;
+      overflow: auto;
     }
 
-    .header-top {
+    .topbar {
       display:flex;
       justify-content:space-between;
       align-items:center;
+      gap:1rem;
       flex-wrap:wrap;
-      margin-bottom:0.8rem;
-      gap:0.5rem;
     }
 
-    .subline {
-      font-size:0.8rem;
+    .brand {
+      font-size:0.9rem;
       letter-spacing:0.16em;
       text-transform:uppercase;
-      color:rgba(156,163,175,0.95);
+      color:var(--text-soft);
     }
 
     .back-link {
-      padding:0.25rem 0.7rem;
-      border:1px solid rgba(148,163,184,0.7);
-      border-radius:999px;
-      text-decoration:none;
+      font-size:0.85rem;
       color:var(--text-soft);
-      font-size:0.78rem;
+      text-decoration:none;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      padding:0.2rem 0.9rem;
+      background:rgba(15,23,42,0.8);
     }
-    .back-link:hover { color:white; border-color:white; }
+
+    .back-link:hover {
+      border-color:#e5e7eb;
+      color:#e5e7eb;
+    }
+
+    .tagline {
+      font-size:0.8rem;
+      color:rgba(148,163,184,0.9);
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      margin-bottom:0.3rem;
+    }
 
     h1 {
-      font-size:1.6rem;
+      font-size:clamp(1.8rem, 3vw, 2.2rem);
+      margin-bottom:0.2rem;
+    }
+
+    .intro-text {
+      font-size:0.95rem;
+      color:var(--text-soft);
+      max-width:780px;
+    }
+
+    .layout {
+      display:grid;
+      grid-template-columns:minmax(0, 1.4fr) minmax(0, 2fr);
+      gap:1.2rem;
+      align-items:start;
+    }
+
+    .tile-list,
+    .quiz-card {
+      border-radius:20px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:var(--tile-bg);
+      box-shadow:0 16px 40px rgba(0,0,0,0.75);
+      padding:0.9rem 1rem 1.1rem;
+      font-size:0.92rem;
+    }
+
+    .tile-list-header {
+      font-weight:600;
+      margin-bottom:0.5rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:0.5rem;
+    }
+
+    .topic-list {
+      display:grid;
+      gap:0.35rem;
+      margin-top:0.2rem;
+    }
+
+    .topic-btn {
+      width:100%;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:rgba(15,23,42,0.92);
+      color:var(--text-main);
+      padding:0.45rem 0.7rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+      font-size:0.9rem;
+    }
+
+    .topic-btn span.label {
+      display:flex;
+      align-items:center;
+      gap:0.4rem;
+    }
+
+    .topic-btn span.badge {
+      font-size:0.75rem;
+      padding:0.1rem 0.45rem;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.8);
+      color:var(--text-soft);
+    }
+
+    .topic-btn:hover {
+      border-color:var(--c-accent);
+      box-shadow:0 0 0 1px rgba(59,130,246,0.7);
+    }
+
+    .quiz-header-line {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:0.5rem;
       margin-bottom:0.4rem;
     }
 
-    .intro {
-      font-size:0.9rem;
-      color:rgba(203,213,225,0.95);
-      margin-bottom:1.0rem;
-    }
-
-    .quiz-list {
-      display:flex;
-      flex-direction:column;
-      gap:0.75rem;
-    }
-
-    .quiz-btn {
-      padding:0.9rem 1rem;
-      border-radius:22px;
-      color:white;
-      text-decoration:none;
+    .quiz-topic-label {
       font-weight:600;
-      letter-spacing:0.05em;
-      text-transform:uppercase;
+      font-size:0.95rem;
       display:flex;
-      justify-content:center;
-      border:1px solid rgba(0,0,0,0.4);
-      box-shadow:0 16px 40px rgba(0,0,0,0.8);
-      transition:0.15s ease;
-    }
-    .quiz-btn:hover {
-      transform:translateY(-2px);
-      filter:brightness(1.05);
+      align-items:center;
+      gap:0.4rem;
     }
 
-    .q1 { background:var(--btn1); }
-    .q2 { background:var(--btn2); }
-    .q3 { background:var(--btn3); }
-    .q4 { background:var(--btn4); }
-    .q5 { background:var(--btn5); }
-    .q6 { background:var(--btn6); }
+    .pill {
+      font-size:0.8rem;
+      padding:0.12rem 0.5rem;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      color:var(--text-soft);
+    }
 
-    .footer {
-      margin-top:1rem;
-      text-align:right;
-      font-size:0.75rem;
-      color:rgba(148,163,184,0.9);
+    .progress {
+      font-size:0.8rem;
+      color:var(--text-soft);
+    }
+
+    .question-text {
+      margin-top: 0.6rem;
+      margin-bottom: 0.6rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #f8fafc;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid rgba(148,163,184,0.4);
+    }
+
+    .answers {
+      margin-top:0.6rem;
+      display:grid;
+      gap:0.4rem;
+    }
+
+    .answer-btn {
+      width:100%;
+      text-align:left;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.96);
+      color:var(--text-main);
+      padding:0.45rem 0.7rem;
+      font-size:0.9rem;
+      cursor:pointer;
+    }
+
+    .answer-btn:hover {
+      border-color:var(--c-accent);
+    }
+
+    .answer-btn.correct {
+      border-color:var(--c-good);
+      background:rgba(34,197,94,0.12);
+    }
+
+    .answer-btn.wrong {
+      border-color:var(--c-bad);
+      background:rgba(239,68,68,0.12);
+    }
+
+    .feedback {
+      margin-top:0.5rem;
+      font-size:0.9rem;
+    }
+
+    .feedback.good { color:var(--c-good); }
+    .feedback.bad  { color:var(--c-bad); }
+
+    .controls {
+      margin-top:0.7rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:0.5rem;
+      flex-wrap:wrap;
+    }
+
+    .btn {
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.96);
+      color:var(--text-main);
+      padding:0.35rem 0.9rem;
+      font-size:0.88rem;
+      cursor:pointer;
+    }
+
+    .btn.primary {
+      border-color:var(--c-accent);
+      box-shadow:0 0 18px rgba(59,130,246,0.6);
+    }
+
+    .btn.primary:hover {
+      background:rgba(59,130,246,0.16);
+    }
+
+    .result-box {
+      margin-top:0.4rem;
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,0.7);
+      padding:0.6rem 0.8rem;
+      font-size:0.9rem;
+    }
+
+    .result-box.good { border-color:var(--c-good); }
+    .result-box.mid  { border-color:var(--c-mid); }
+    .result-box.bad  { border-color:var(--c-bad); }
+
+    .hint-text {
+      font-size:0.8rem;
+      color:var(--text-soft);
+      margin-top:0.6rem;
+    }
+
+    @media (max-width:900px) {
+      .panel { padding:1.7rem 1.3rem 2rem; }
+      .layout { grid-template-columns:1fr; }
+    }
+
+    @media (max-width:720px) {
+      .controls { flex-direction:column; align-items:stretch; }
+      .btn { width:100%; text-align:center; }
     }
   </style>
 </head>
 
 <body>
 <div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
+
   <main class="panel">
 
-    <div class="header-top">
-      <div class="subline">Physik · Klasse 9</div>
-      <a href="klasse9.html" class="back-link">← Zurück</a>
-    </div>
+    <!-- Kopfbereich -->
+    <header class="topbar">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <a class="back-link" href="klasse9.html">← Zurück zu Klasse 9</a>
+    </header>
 
-    <h1>Training & Quiz – Klasse 9</h1>
+    <section>
+      <div class="tagline">klasse 9 · bewegung & diagramme</div>
+      <h1>Training &amp; Quiz</h1>
+      <p class="intro-text">
+        Wähle das Thema und beantworte bis zu <strong>15 Fragen</strong>.  
+        Du bekommst sofort Rückmeldung zu deiner Antwort – am Ende siehst du deine Punkte mit Feedback.
+      </p>
+    </section>
 
-    <p class="intro">
-      Wähle das Thema, das du üben möchtest.  
-      Jedes Quiz enthält <strong>15 Fragen</strong> – immer mit nur einer richtigen Antwort.
-    </p>
+    <section class="layout" aria-label="Training Klasse 9">
 
-    <div class="quiz-list">
-      <a class="quiz-btn q1" href="quiz_k9_bewegung_grundlagen.html">
-        Bewegung – Grundlagen
-      </a>
+      <!-- Themen-Auswahl -->
+      <aside class="tile-list">
+        <div class="tile-list-header">
+          <span><strong>Thema wählen</strong></span>
+          <span class="pill">15 Fragen · Multiple Choice</span>
+        </div>
+        <div class="topic-list">
+          <button class="topic-btn" data-topic="bewegung_grundlagen">
+            <span class="label">🚶 Bewegung – Grundlagen</span>
+            <span class="badge">Basis</span>
+          </button>
+        </div>
 
-      <a class="quiz-btn q2" href="quiz_k9_gleichfoermig.html">
-        Gleichförmige Bewegung
-      </a>
+        <p class="hint-text">
+          Weitere Themen (gleichförmig, beschleunigt, freier Fall) können wir später ergänzen.
+        </p>
+      </aside>
 
-      <a class="quiz-btn q3" href="quiz_k9_ungleichfoermig.html">
-        Ungleichförmige Bewegung
-      </a>
+      <!-- Quiz-Bereich -->
+      <section class="quiz-card" id="quiz-area">
+        <div id="quiz-idle">
+          <p>Wähle links ein Thema, um ein Quiz zu starten.</p>
+          <p class="hint-text">
+            Antworten anklicken, Feedback bekommen, weiter zur nächsten Frage – ganz entspannt wie in Klasse 10.
+          </p>
+        </div>
 
-      <a class="quiz-btn q4" href="quiz_k9_beschleunigung.html">
-        Beschleunigung & Diagramme
-      </a>
+        <div id="quiz-active" style="display:none;">
+          <div class="quiz-header-line">
+            <div class="quiz-topic-label">
+              <span id="quiz-topic-icon">🚶</span>
+              <span id="quiz-topic-name">Thema</span>
+            </div>
+            <div class="progress" id="quiz-progress">Frage 1 von 15</div>
+          </div>
 
-      <a class="quiz-btn q5" href="quiz_k9_gleichmaessig_beschleunigt.html">
-        Gleichmäßig beschleunigt
-      </a>
+          <div class="pill" id="quiz-hint">Wähle die richtige Antwort.</div>
 
-      <a class="quiz-btn q6" href="quiz_k9_freier_fall.html">
-        Freier Fall
-      </a>
-    </div>
+          <div class="question-text" id="quiz-question-text">
+            Frage steht hier.
+          </div>
 
-    <div class="footer">
-      © 2025 · M. Nagel · Physik Digital 7–10 · Klasse 9
-    </div>
+          <div class="answers" id="quiz-answers"></div>
+
+          <div class="feedback" id="quiz-feedback"></div>
+
+          <div class="controls">
+            <button class="btn" id="btn-stop">Quiz beenden</button>
+            <button class="btn primary" id="btn-next" disabled>Weiter</button>
+          </div>
+        </div>
+
+        <div id="quiz-result" style="display:none;">
+          <div class="result-box" id="quiz-result-box"></div>
+          <div class="controls" style="margin-top:0.7rem;">
+            <button class="btn primary" id="btn-restart-topic">
+              Thema neu starten
+            </button>
+            <button class="btn" id="btn-back-to-topics">
+              Zur Themenauswahl
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </section>
 
   </main>
 </div>
+
+<script>
+  const QUIZ_LENGTH = 15;
+
+  const QUIZ_TOPICS = {
+    bewegung_grundlagen: {
+      name: "Bewegung – Grundlagen",
+      icon: "🚶",
+      questions: [
+        {
+          q: "Wann sagen wir in der Physik, dass sich ein Körper „bewegt“?",
+          a: [
+            "Wenn er sich für uns schnell anfühlt.",
+            "Wenn sich sein Ort im Vergleich zu einem Bezugspunkt ändert.",
+            "Wenn er Geräusche macht.",
+            "Wenn er auf einer Straße steht."
+          ],
+          c: 1
+        },
+        {
+          q: "Was bedeutet „Ruhe“ in der Physik?",
+          a: [
+            "Der Körper ist immer unsichtbar.",
+            "Der Körper steht nur nachts still.",
+            "Der Ort des Körpers ändert sich nicht gegenüber einem Bezugspunkt.",
+            "Der Körper ist besonders leicht."
+          ],
+          c: 2
+        },
+        {
+          q: "Welches ist kein Beispiel für eine geradlinige Bewegung?",
+          a: [
+            "Auto auf einer langen, geraden Landstraße.",
+            "Aufzug fährt vom 1. in den 5. Stock.",
+            "Auto fährt im Kreis um einen Platz.",
+            "Zug fährt in einem langen Tunnel geradeaus."
+          ],
+          c: 2
+        },
+        {
+          q: "Welche Aussage über Kreisbewegungen ist richtig?",
+          a: [
+            "Der Körper bewegt sich auf einer Kreisbahn um einen Mittelpunkt.",
+            "Der Körper bewegt sich immer auf einer Geraden.",
+            "Kreisbewegungen kommen im Alltag kaum vor.",
+            "Kreisbewegung bedeutet, dass der Körper stehen bleibt."
+          ],
+          c: 0
+        },
+        {
+          q: "Welches Beispiel passt am besten zu einer Schwingung?",
+          a: [
+            "Ein Pendel, das hin und her schwingt.",
+            "Ein Auto auf gerader Straße.",
+            "Ein Fahrstuhl, der nach oben fährt.",
+            "Ein Zug im Bahnhof."
+          ],
+          c: 0
+        },
+        {
+          q: "Wofür steht das „s“ in der Formel v = s / t?",
+          a: [
+            "Für die Geschwindigkeit.",
+            "Für die Strecke (Weg), die zurückgelegt wird.",
+            "Für die Masse des Körpers.",
+            "Für die Temperatur."
+          ],
+          c: 1
+        },
+        {
+          q: "Welche Größe beschreibt die Geschwindigkeit?",
+          a: [
+            "Wie viel Weg pro Zeit zurückgelegt wird.",
+            "Wie stark ein Körper leuchtet.",
+            "Wie schwer ein Körper ist.",
+            "Wie laut ein Körper ist."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Einheit passt typischerweise zur Geschwindigkeit im Alltag?",
+          a: [
+            "km/h",
+            "Kilogramm (kg)",
+            "Newton (N)",
+            "Grad Celsius (°C)"
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Auto legt 100 m in 5 s zurück. Worum geht es, wenn du v = s / t berechnest?",
+          a: [
+            "Um die Durchschnittsgeschwindigkeit des Autos.",
+            "Um die Masse des Autos.",
+            "Um die Beschleunigung des Autos.",
+            "Um die Kraft des Motors."
+          ],
+          c: 0
+        },
+        {
+          q: "Welches ist ein typischer Bezugspunkt bei Bewegungen auf der Erde?",
+          a: [
+            "Die Erdoberfläche.",
+            "Die Sonne.",
+            "Ein Flugzeug in 10 km Höhe.",
+            "Eine Wolke."
+          ],
+          c: 0
+        },
+        {
+          q: "Was zeigt ein s-t-Diagramm?",
+          a: [
+            "Wie sich der zurückgelegte Weg mit der Zeit verändert.",
+            "Wie sich die Masse mit der Zeit verändert.",
+            "Wie sich die Temperatur mit der Zeit verändert.",
+            "Wie sich die Lautstärke mit der Zeit verändert."
+          ],
+          c: 0
+        },
+        {
+          q: "Was zeigt ein v-t-Diagramm?",
+          a: [
+            "Den Weg in Abhängigkeit von der Masse.",
+            "Die Geschwindigkeit in Abhängigkeit von der Zeit.",
+            "Die Temperatur in Abhängigkeit von der Zeit.",
+            "Die Kraft in Abhängigkeit vom Weg."
+          ],
+          c: 1
+        },
+        {
+          q: "In einem s-t-Diagramm ist eine waagerechte Linie eingezeichnet. Was bedeutet das?",
+          a: [
+            "Der Körper steht still, der Weg ändert sich nicht.",
+            "Der Körper beschleunigt immer stärker.",
+            "Der Körper fährt gleichförmig.",
+            "Der Körper wechselt seine Richtung."
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Fahrradfahrer bewegt sich mit konstanter Geschwindigkeit. Welche Aussage passt am besten?",
+          a: [
+            "In gleichen Zeiten legt er gleiche Wege zurück.",
+            "Er wird ständig schneller.",
+            "Er steht in Wirklichkeit still.",
+            "Er fährt nur bergab."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Aussage über „Bewegung ist relativ“ ist richtig?",
+          a: [
+            "Ob etwas ruht oder sich bewegt, hängt vom gewählten Bezugspunkt ab.",
+            "Ein Körper kann sich niemals bewegen.",
+            "Bewegung gibt es nur im Weltraum.",
+            "Bewegung hängt nur vom Gewicht des Körpers ab."
+          ],
+          c: 0
+        }
+      ]
+    }
+  };
+
+  // Zustand
+  let currentTopicId = null;
+  let currentQuestions = [];
+  let currentIndex = 0;
+  let correctCount = 0;
+  let answered = false;
+
+  // DOM
+  const topicButtons = document.querySelectorAll(".topic-btn");
+  const quizIdle = document.getElementById("quiz-idle");
+  const quizActive = document.getElementById("quiz-active");
+  const quizResult = document.getElementById("quiz-result");
+
+  const topicIconEl = document.getElementById("quiz-topic-icon");
+  const topicNameEl = document.getElementById("quiz-topic-name");
+  const progressEl = document.getElementById("quiz-progress");
+  const hintEl = document.getElementById("quiz-hint");
+  const questionTextEl = document.getElementById("quiz-question-text");
+  const answersEl = document.getElementById("quiz-answers");
+  const feedbackEl = document.getElementById("quiz-feedback");
+
+  const btnNext = document.getElementById("btn-next");
+  const btnStop = document.getElementById("btn-stop");
+  const btnRestartTopic = document.getElementById("btn-restart-topic");
+  const btnBackToTopics = document.getElementById("btn-back-to-topics");
+  const resultBoxEl = document.getElementById("quiz-result-box");
+
+  function shuffle(array) {
+    const arr = array.slice();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function startQuiz(topicId) {
+    const topic = QUIZ_TOPICS[topicId];
+    if (!topic) return;
+
+    currentTopicId = topicId;
+    const pool = topic.questions || [];
+
+    let selected = [];
+    if (pool.length >= QUIZ_LENGTH) {
+      selected = shuffle(pool).slice(0, QUIZ_LENGTH);
+    } else {
+      const shuffled = shuffle(pool);
+      while (selected.length < QUIZ_LENGTH) {
+        for (const q of shuffled) {
+          selected.push(q);
+          if (selected.length === QUIZ_LENGTH) break;
+        }
+      }
+    }
+
+    currentQuestions = selected;
+    currentIndex = 0;
+    correctCount = 0;
+    answered = false;
+
+    topicIconEl.textContent = topic.icon;
+    topicNameEl.textContent = topic.name;
+    hintEl.textContent = "Wähle die richtige Antwort.";
+
+    quizIdle.style.display = "none";
+    quizResult.style.display = "none";
+    quizActive.style.display = "block";
+
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const qObj = currentQuestions[currentIndex];
+    if (!qObj) return;
+
+    progressEl.textContent = `Frage ${currentIndex + 1} von ${currentQuestions.length}`;
+    questionTextEl.textContent = qObj.q;
+    answersEl.innerHTML = "";
+    feedbackEl.textContent = "";
+    feedbackEl.className = "feedback";
+    btnNext.disabled = true;
+    answered = false;
+
+    qObj.a.forEach((text, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "answer-btn";
+      btn.textContent = text;
+      btn.addEventListener("click", () => handleAnswer(idx));
+      answersEl.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(index) {
+    if (answered) return;
+    answered = true;
+
+    const qObj = currentQuestions[currentIndex];
+    const buttons = answersEl.querySelectorAll(".answer-btn");
+
+    buttons.forEach((btn, idx) => {
+      btn.disabled = true;
+      if (idx === qObj.c) {
+        btn.classList.add("correct");
+      }
+      if (idx === index && idx !== qObj.c) {
+        btn.classList.add("wrong");
+      }
+    });
+
+    if (index === qObj.c) {
+      correctCount++;
+      feedbackEl.textContent = "✅ Richtig – stark!";
+      feedbackEl.classList.add("good");
+    } else {
+      feedbackEl.textContent = `❌ Nicht ganz. Richtige Antwort: "${qObj.a[qObj.c]}".`;
+      feedbackEl.classList.add("bad");
+    }
+
+    btnNext.disabled = false;
+  }
+
+  function showResult() {
+    quizActive.style.display = "none";
+    quizResult.style.display = "block";
+
+    const total = currentQuestions.length;
+    const quote = total > 0 ? correctCount / total : 0;
+
+    let moodClass = "mid";
+    let text = "";
+
+    if (quote <= 0.4) {
+      moodClass = "bad";
+      text = `Du hast ${correctCount} von ${total} Fragen richtig beantwortet. 🔴 
+Noch etwas unsicher – schau dir die Theorie noch einmal an und probier das Quiz dann nochmal.`;
+    } else if (quote <= 0.7) {
+      moodClass = "mid";
+      text = `Du hast ${correctCount} von ${total} Fragen richtig beantwortet. 🟠 
+Schon ganz gut! Mit etwas Wiederholung sitzt das Thema bald richtig.`;
+    } else {
+      moodClass = "good";
+      text = `Du hast ${correctCount} von ${total} Fragen richtig beantwortet. 🟢 
+Sehr stark – du hast das Thema schon richtig gut drauf!`;
+    }
+
+    resultBoxEl.className = "result-box " + moodClass;
+    resultBoxEl.textContent = text;
+  }
+
+  function stopQuiz() {
+    quizActive.style.display = "none";
+    quizResult.style.display = "none";
+    quizIdle.style.display = "block";
+    currentTopicId = null;
+    currentQuestions = [];
+    currentIndex = 0;
+    correctCount = 0;
+  }
+
+  topicButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const topicId = btn.getAttribute("data-topic");
+      startQuiz(topicId);
+    });
+  });
+
+  btnNext.addEventListener("click", () => {
+    if (!answered) return;
+    currentIndex++;
+    if (currentIndex >= currentQuestions.length) {
+      showResult();
+    } else {
+      renderQuestion();
+    }
+  });
+
+  btnStop.addEventListener("click", () => {
+    stopQuiz();
+  });
+
+  btnRestartTopic.addEventListener("click", () => {
+    if (currentTopicId) {
+      startQuiz(currentTopicId);
+    }
+  });
+
+  btnBackToTopics.addEventListener("click", () => {
+    stopQuiz();
+  });
+</script>
+
 </body>
 </html>
