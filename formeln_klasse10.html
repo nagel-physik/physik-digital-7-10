@@ -16,47 +16,33 @@
     }
 
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     body {
+      min-height: 100vh;
+      margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      background: radial-gradient(circle at top, #0f172a 0, #020617 52%);
       color: var(--text-main);
-      min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      overflow: hidden;
+      padding: 1.25rem;
     }
 
-    .app {
+    .page {
       position: relative;
+      max-width: 1080px;
       width: 100%;
-      height: 100vh;
-      padding: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .bg-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at top left, rgba(34, 197, 94, 0.22), transparent 55%),
-        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.22), transparent 55%);
-      pointer-events: none;
-    }
-
-    .vignette {
-      position: absolute;
-      inset: 0;
-      box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.9);
-      pointer-events: none;
+      border-radius: 26px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: radial-gradient(circle at top left, #0b1220 0, #020617 62%);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.85);
+      padding: 1.4rem 1.6rem 1.5rem;
+      overflow: hidden;
     }
 
     .floaters {
@@ -75,74 +61,97 @@
       filter: blur(0.4px);
     }
 
-    .floaters span:nth-child(1) { left: 12%; animation-duration: 28s; animation-delay: -4s; }
-    .floaters span:nth-child(2) { left: 36%; animation-duration: 26s; animation-delay: -10s; }
-    .floaters span:nth-child(3) { left: 63%; animation-duration: 30s; animation-delay: -18s; }
-    .floaters span:nth-child(4) { left: 82%; animation-duration: 24s; animation-delay: -7s; }
+    .floaters span:nth-child(1) {
+      left: 8%;
+      bottom: -12%;
+      animation-duration: 30s;
+    }
+
+    .floaters span:nth-child(2) {
+      left: 42%;
+      bottom: -18%;
+      animation-duration: 34s;
+    }
+
+    .floaters span:nth-child(3) {
+      right: 12%;
+      bottom: -16%;
+      animation-duration: 28s;
+    }
 
     @keyframes floatUp {
-      0%   { transform: translateY(110vh); }
-      100% { transform: translateY(-20vh); }
+      0% {
+        transform: translateY(0) translateX(0);
+      }
+      100% {
+        transform: translateY(-120%) translateX(5%);
+      }
     }
 
-    .panel {
+    header {
+      margin-bottom: 1.1rem;
       position: relative;
-      z-index: 5;
-      max-width: 1150px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 2.4rem 2.2rem 2.4rem;
-      border-radius: 26px;
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
-      box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.9),
-        0 0 0 1px rgba(148, 163, 184, 0.4);
-      display: flex;
-      flex-direction: column;
-      gap: 1.6rem;
-      max-height: 100%;
-      overflow: auto;
+      z-index: 1;
     }
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
+    .badge-top {
+      display: inline-flex;
       align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .brand {
-      font-size: 0.9rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text-soft);
-    }
-
-    .back-link {
-      font-size: 0.85rem;
-      color: var(--text-soft);
-      text-decoration: none;
+      padding: 0.1rem 0.55rem;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      padding: 0.2rem 0.9rem;
-      background: rgba(15, 23, 42, 0.8);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      color: #cbd5f5;
+      margin-bottom: 0.4rem;
     }
 
-    .back-link:hover {
-      border-color: #e5e7eb;
-      color: #e5e7eb;
+    .badge-top span {
+      display: inline-flex;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 999px;
+      background: #22c55e;
+      margin-right: 0.4rem;
     }
 
-    .heading h1 {
-      font-size: clamp(1.9rem, 3.1vw, 2.4rem);
-      margin-bottom: 0.3rem;
+    h1 {
+      font-size: 1.7rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.15rem;
     }
 
-    .heading p {
-      font-size: 0.95rem;
-      color: var(--text-soft);
-      max-width: 780px;
+    .subtitle {
+      font-size: 0.9rem;
+      color: rgba(209, 213, 219, 0.9);
+      max-width: 32rem;
+    }
+
+    .meta-row {
+      margin-top: 0.7rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    .meta-pill {
+      padding: 0.16rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    main {
+      margin-top: 1rem;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+      gap: 1.2rem;
     }
 
     .tagline {
@@ -153,12 +162,14 @@
       margin-bottom: 0.3rem;
     }
 
+    /* WICHTIG: Kasten begrenzen + Überschrift flexibel machen */
     .section {
       border-radius: 20px;
       border: 1px solid rgba(148, 163, 184, 0.6);
       background: rgba(15, 23, 42, 0.96);
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
       padding: 1rem 1.1rem 1rem;
+      overflow: hidden; /* verhindert, dass Text optisch über die Rundung hinaus läuft */
     }
 
     .section + .section {
@@ -180,6 +191,10 @@
       display: flex;
       align-items: center;
       gap: 0.45rem;
+      flex: 1 1 auto;     /* Titel darf flexibel werden */
+      min-width: 0;       /* erlaubt weichen Zeilenumbruch in Flexbox */
+      word-wrap: break-word;
+      word-break: break-word; /* sorgt dafür, dass lange Wörter notfalls umgebrochen werden */
     }
 
     .pill {
@@ -187,349 +202,463 @@
       padding: 0.08rem 0.6rem;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.7);
-      color: rgba(148, 163, 184, 0.95);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      color: rgba(226, 232, 240, 0.96);
+      background: rgba(15, 23, 42, 0.85);
+      white-space: nowrap;
     }
 
-    .pill.magnet { color: var(--c-magnet); border-color: var(--c-magnet); }
-    .pill.wellen { color: var(--c-wellen); border-color: var(--c-wellen); }
-    .pill.radio  { color: var(--c-radio);  border-color: var(--c-radio); }
+    .pill.magnet {
+      border-color: rgba(34, 197, 94, 0.8);
+      color: rgba(74, 222, 128, 0.96);
+    }
+
+    .pill.wellen {
+      border-color: rgba(59, 130, 246, 0.8);
+      color: rgba(96, 165, 250, 0.96);
+    }
+
+    .pill.radio {
+      border-color: rgba(249, 115, 22, 0.8);
+      color: rgba(251, 146, 60, 0.96);
+    }
 
     .section small {
-      font-size: 0.75rem;
-      color: var(--text-soft);
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.98);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       font-size: 0.82rem;
-      margin-top: 0.4rem;
     }
 
-    th, td {
-      padding: 0.4rem 0.4rem;
-      border-bottom: 1px solid rgba(30, 41, 59, 0.9);
+    th,
+    td {
+      padding: 0.3rem 0.35rem;
       vertical-align: top;
-    }
-
-    th {
       text-align: left;
-      font-weight: 600;
-      color: var(--text-soft);
-      background: rgba(15, 23, 42, 0.98);
     }
 
-    tr:last-child td {
-      border-bottom: none;
+    thead th {
+      font-size: 0.8rem;
+      color: rgba(156, 163, 175, 0.96);
+      border-bottom: 1px solid rgba(55, 65, 81, 0.9);
+    }
+
+    tbody tr + tr td {
+      border-top: 1px dashed rgba(55, 65, 81, 0.9);
     }
 
     .formula {
-      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas,
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace;
-      font-size: 0.82rem;
+      font-size: 0.9rem;
+      color: #e5e7eb;
       white-space: nowrap;
     }
 
     .hint {
-      font-size: 0.75rem;
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.95);
+    }
+
+    .note {
+      margin-top: 0.45rem;
+      padding-top: 0.4rem;
+      border-top: 1px dashed rgba(55, 65, 81, 0.9);
+      font-size: 0.78rem;
       color: rgba(148, 163, 184, 0.98);
     }
 
-    .example {
-      margin-top: 0.3rem;
-      font-size: 0.78rem;
-      color: rgba(148, 163, 184, 0.9);
+    .aside-box {
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      background: radial-gradient(circle at top, #020617 0, #020617 70%);
+      padding: 0.85rem 1rem 0.95rem;
+      font-size: 0.85rem;
+      color: rgba(226, 232, 240, 0.98);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.85);
     }
 
-    .example strong {
-      color: #e5e7eb;
+    .aside-box + .aside-box {
+      margin-top: 0.9rem;
+    }
+
+    .aside-box h2 {
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .aside-box p {
+      margin-bottom: 0.35rem;
+      color: rgba(209, 213, 219, 0.96);
+    }
+
+    .aside-box ul {
+      margin-left: 1.1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .aside-box li {
+      margin-bottom: 0.18rem;
+    }
+
+    .pill-mini {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.06rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(148, 163, 184, 0.98);
+      margin-bottom: 0.15rem;
     }
 
     .footer {
-      margin-top: 0.6rem;
-      font-size: 0.78rem;
+      margin-top: 1rem;
+      font-size: 0.72rem;
       color: rgba(148, 163, 184, 0.9);
       text-align: right;
     }
 
+    .footer span {
+      opacity: 0.85;
+    }
+
     @media (max-width: 900px) {
-      .panel {
-        padding: 2rem 1.4rem 2.1rem;
+      main {
+        grid-template-columns: minmax(0, 1fr);
       }
-      th, td {
-        padding: 0.35rem 0.35rem;
+
+      .page {
+        padding-inline: 1.2rem;
       }
     }
 
-    @media (max-width: 720px) {
-      .footer {
-        text-align: center;
+    @media (max-width: 640px) {
+      body {
+        padding: 0.6rem;
+      }
+
+      .page {
+        border-radius: 22px;
+        padding: 1.1rem 1rem 1.15rem;
+      }
+
+      h1 {
+        font-size: 1.45rem;
+      }
+
+      .section-title {
+        font-size: 0.96rem;
+      }
+
+      table {
+        font-size: 0.78rem;
+      }
+
+      .formula {
+        font-size: 0.85rem;
+      }
+
+      .hint {
+        font-size: 0.74rem;
       }
     }
   </style>
 </head>
 <body>
-<div class="app">
-  <div class="bg-overlay"></div>
-  <div class="vignette"></div>
+  <div class="page">
+    <div class="floaters" aria-hidden="true">
+      <span>Φ</span>
+      <span>λ</span>
+      <span>T</span>
+    </div>
 
-  <div class="floaters">
-    <span>U<sub>ind</sub></span>
-    <span>λ · f</span>
-    <span>T<sub>1/2</sub></span>
-    <span>f = 1/T</span>
-  </div>
-
-  <main class="panel" aria-labelledby="fs10-title">
-    <header class="topbar">
-      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
-      <a class="back-link" href="klasse10.html">← Zurück Klasse 10</a>
+    <header>
+      <div class="badge-top">
+        <span></span>
+        Physik Klasse 10 · Formelsammlung
+      </div>
+      <h1>Magnetfelder, Schwingungen &amp; Wellen</h1>
+      <p class="subtitle">
+        Wichtige Formeln und Bedeutungen für Tests, Klassenarbeiten &amp;
+        Abschlussprüfungen der Sekundarstufe I.
+      </p>
+      <div class="meta-row">
+        <div class="meta-pill">Brandenburg · Sek I · Stand: Schuljahr 2025</div>
+        <div class="meta-pill">Niveau: Klasse 10 · EBR / FOR+</div>
+      </div>
     </header>
 
-    <section class="heading">
-      <div class="tagline">klasse 10 · magnetismus · wellen · radioaktivität</div>
-      <h1 id="fs10-title">Formelsammlung Klasse 10</h1>
-      <p>
-        Hier findest du die wichtigsten Formeln für die Themen
-        <strong>Magnetfelder &amp; elektromagnetische Induktion</strong>,
-        <strong>mechanische Schwingungen &amp; Wellen</strong> sowie
-        <strong>Radioaktivität &amp; Kernphysik</strong>.
-        Jede Formel ist mit Bedeutung und typischen Einheiten erklärt.
-      </p>
-    </section>
+    <main>
+      <section>
+        <div class="tagline">Magnetismus / Induktion</div>
 
-    <!-- Magnetfelder & Induktion -->
-    <section class="section" aria-label="Magnetfelder und elektromagnetische Induktion">
-      <div class="section-header">
-        <div class="section-title">
-          <span style="color:var(--c-magnet);">●</span>
-          Magnetfelder &amp; elektromagnetische Induktion
+        <div class="section">
+          <div class="section-header">
+            <div class="section-title">
+              <span style="color:var(--c-magnet);">●</span>
+              Magnetfelder &amp; elektromagnetische Induktion
+            </div>
+            <span class="pill magnet">Magnetfelder / Induktion</span>
+          </div>
+          <small>Generator, Transformator &amp; Induktionsprinzip (vereinfachte Sicht Sek. I)</small>
+
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 28%;">Formel</th>
+                <th style="width: 42%;">Bedeutung</th>
+                <th style="width: 30%;">Größen &amp; Einheiten</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="formula">
+                  U<sub>ind</sub> ∼ ΔΦ / Δt
+                </td>
+                <td>
+                  Die <strong>induzierte Spannung</strong> wird größer, wenn sich der
+                  magnetische Fluss Φ schneller ändert (z. B. schneller drehen,
+                  stärkeres Magnetfeld, mehr Windungen).
+                </td>
+                <td class="hint">
+                  U<sub>ind</sub> in Volt (V)<br />
+                  ΔΦ: Änderung des magnetischen Flusses<br />
+                  Δt: Zeitspanne
+                </td>
+              </tr>
+              <tr>
+                <td class="formula">
+                  U<sub>1</sub> / U<sub>2</sub> = n<sub>1</sub> / n<sub>2</sub>
+                </td>
+                <td>
+                  <strong>Transformator-Gleichung (Spannung)</strong>: Verhältnis der
+                  Spannungen entspricht dem Verhältnis der Windungszahlen von
+                  Primär- und Sekundärspule.
+                </td>
+                <td class="hint">
+                  U<sub>1</sub>, U<sub>2</sub> in Volt (V)<br />
+                  n<sub>1</sub>, n<sub>2</sub>: Windungszahlen (ohne Einheit)
+                </td>
+              </tr>
+              <tr>
+                <td class="formula">
+                  I<sub>1</sub> / I<sub>2</sub> = n<sub>2</sub> / n<sub>1</sub>
+                </td>
+                <td>
+                  <strong>Transformator-Gleichung (Strom)</strong>: In einem
+                  (idealen) Trafo verhält sich der Strom umgekehrt wie die
+                  Spannungen bzw. Windungszahlen.
+                </td>
+                <td class="hint">
+                  I<sub>1</sub>, I<sub>2</sub> in Ampere (A)<br />
+                  n<sub>1</sub>, n<sub>2</sub>: Windungszahlen
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="note">
+            <strong>Merke:</strong> Der Transformator ist ein <em>Wechselstrom-Gerät</em>.
+            Die hier verwendeten Zusammenhänge gelten nur idealisiert (ohne
+            Verluste).
+          </div>
         </div>
-        <span class="pill magnet">Magnetfelder / Induktion</span>
-      </div>
-      <small>Generator, Transformator &amp; Induktionsprinzip (vereinfachte Sicht Sek. I)</small>
 
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 28%;">Formel</th>
-            <th style="width: 42%;">Bedeutung</th>
-            <th style="width: 30%;">Größen &amp; Einheiten</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="formula">
-              U<sub>ind</sub> ∼ ΔΦ / Δt
-            </td>
-            <td>
-              Die <strong>induzierte Spannung</strong> wird größer, wenn sich der
-              magnetische Fluss Φ schneller ändert (z. B. schneller drehen,
-              stärkeres Magnetfeld, mehr Windungen).
-            </td>
-            <td class="hint">
-              U<sub>ind</sub> in Volt (V)<br />
-              ΔΦ: Änderung des magnetischen Flusses<br />
-              Δt: Zeitspanne
-            </td>
-          </tr>
-          <tr>
-            <td class="formula">
-              U<sub>1</sub> / U<sub>2</sub> = n<sub>1</sub> / n<sub>2</sub>
-            </td>
-            <td>
-              <strong>Transformator-Gleichung (Spannung)</strong>: Verhältnis der
-              Spannungen entspricht dem Verhältnis der Windungszahlen von
-              Primär- und Sekundärspule.
-            </td>
-            <td class="hint">
-              U<sub>1</sub>, U<sub>2</sub> in V<br />
-              n<sub>1</sub>, n<sub>2</sub>: Windungszahlen (ohne Einheit)
-            </td>
-          </tr>
-          <tr>
-            <td class="formula">
-              I<sub>1</sub> / I<sub>2</sub> = n<sub>2</sub> / n<sub>1</sub>
-            </td>
-            <td>
-              <strong>Transformator-Gleichung (Strom)</strong>: In einem (idealen)
-              Trafo verhält sich der Strom umgekehrt wie die Spannungen bzw.
-              Windungszahlen.
-            </td>
-            <td class="hint">
-              I<sub>1</sub>, I<sub>2</sub> in Ampere (A)<br />
-              n<sub>1</sub>, n<sub>2</sub>: Windungszahlen
-            </td>
-          </tr>
-          <tr>
-            <td class="formula">
-              P<sub>1</sub> ≈ P<sub>2</sub>
-            </td>
-            <td>
-              Im <strong>idealen Transformator</strong> ist die übertragene
-              elektrische Leistung nahezu gleich: Eingangsleistung ≈ Ausgangsleistung.
-            </td>
-            <td class="hint">
-              P in Watt (W)<br />
-              P = U · I
-            </td>
-          </tr>
-          <tr>
-            <td class="formula">
-              P = U · I
-            </td>
-            <td>
-              <strong>Elektrische Leistung</strong>: gibt an, wie viel elektrische
-              Energie pro Zeit umgewandelt wird (z. B. Generator, Verbraucher).
-            </td>
-            <td class="hint">
-              P in W, U in V, I in A
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="tagline" style="margin-top:1rem;">Schwingungen &amp; Wellen</div>
 
-      <div class="example">
-        <strong>Typisches Beispiel:</strong> Ein Transformator mit n₁ = 5000 und n₂ = 500
-        wandelt 230 V in eine kleinere Spannung um. Da n₂ : n₁ = 1 : 10,
-        gilt auch U₂ ≈ 23 V.
-      </div>
-    </section>
+        <div class="section">
+          <div class="section-header">
+            <div class="section-title">
+              <span style="color:var(--c-wellen);">●</span>
+              Mechanische Schwingungen (Pendel, Feder)
+            </div>
+            <span class="pill wellen">Schwingungen</span>
+          </div>
+          <small>Grundlagen für Pendel, Federpendel &amp; harmonische Schwingungen</small>
 
-    <!-- Schwingungen & Wellen -->
-    <section class="section" aria-label="Mechanische Schwingungen und Wellen">
-      <div class="section-header">
-        <div class="section-title">
-          <span style="color:var(--c-wellen);">●</span>
-          Mechanische Schwingungen &amp; Wellen
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 28%;">Formel</th>
+                <th style="width: 42%;">Bedeutung</th>
+                <th style="width: 30%;">Größen &amp; Einheiten</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="formula">
+                  T
+                </td>
+                <td>
+                  <strong>Schwingungsdauer</strong>: Zeit für eine vollständige
+                  Schwingung.
+                </td>
+                <td class="hint">
+                  T in Sekunden (s)
+                </td>
+              </tr>
+              <tr>
+                <td class="formula">
+                  f = 1 / T
+                </td>
+                <td>
+                  <strong>Frequenz</strong>: Anzahl der Schwingungen pro Sekunde.
+                  Je kleiner T, desto größer ist die Frequenz.
+                </td>
+                <td class="hint">
+                  f in Hertz (Hz)<br />
+                  T in Sekunden (s)
+                </td>
+              </tr>
+              <tr>
+                <td class="formula">
+                  A
+                </td>
+                <td>
+                  <strong>Amplitude</strong>: Größte Auslenkung aus der Ruhelage.
+                </td>
+                <td class="hint">
+                  A in Meter (m) oder Zentimeter (cm)
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <span class="pill wellen">Schwingungen / Wellen</span>
-      </div>
-      <small>Periodendauer, Frequenz, Ausbreitungsgeschwindigkeit von Wellen</small>
 
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 28%;">Formel</th>
-            <th style="width: 42%;">Bedeutung</th>
-            <th style="width: 30%;">Größen &amp; Einheiten</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="formula">
-              f = 1 / T
-            </td>
-            <td>
-              <strong>Frequenz</strong>: Anzahl der Schwingungen pro Sekunde.
-              Je kleiner T, desto größer ist die Frequenz.
-            </td>
-            <td class="hint">
-              f in Hertz (Hz)<br />
-              T in Sekunden (s)
-            </td>
-          </tr>
-          <tr>
-            <td class="formula">
-              T = 1 / f
-            </td>
-            <td>
-              <strong>Periodendauer</strong>: Zeit für eine vollständige Schwingung.
-            </td>
-            <td class="hint">
-              T in s, f in Hz
-            </td>
-          </tr>
-          <tr>
-            <td class="formula">
-              v = λ · f
-            </td>
-            <td>
-              <strong>Ausbreitungsgeschwindigkeit einer Welle</strong>:
-              Wie schnell sich Wellenberge ausbreiten.
-            </td>
-            <td class="hint">
-              v in m/s<br />
-              λ (Lambda) in m (Wellenlänge)<br />
-              f in Hz
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="section">
+          <div class="section-header">
+            <div class="section-title">
+              <span style="color:var(--c-wellen);">●</span>
+              Wellen (Wasserwellen, Seilwellen, Schall)
+            </div>
+            <span class="pill wellen">Wellen</span>
+          </div>
+          <small>Ausbreitung von Schwingungen im Raum</small>
 
-      <div class="example">
-        <strong>Typisches Beispiel:</strong> Eine Schallwelle hat die Wellenlänge
-        λ = 0,5 m und die Frequenz f = 600 Hz. Dann ist die
-        Ausbreitungsgeschwindigkeit v = λ·f = 0,5 m · 600 Hz = 300 m/s.
-      </div>
-    </section>
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 28%;">Formel</th>
+                <th style="width: 42%;">Bedeutung</th>
+                <th style="width: 30%;">Größen &amp; Einheiten</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="formula">
+                  v = λ · f
+                </td>
+                <td>
+                  <strong>Wellengeschwindigkeit</strong>: Eine Welle breitet sich mit
+                  der Geschwindigkeit v aus. Sie ist das Produkt aus
+                  Wellenlänge λ und Frequenz f.
+                </td>
+                <td class="hint">
+                  v in m/s<br />
+                  λ in Meter (m)<br />
+                  f in Hz
+                </td>
+              </tr>
+              <tr>
+                <td class="formula">
+                  λ
+                </td>
+                <td>
+                  <strong>Wellenlänge</strong>: Abstand zwischen zwei gleichen
+                  Punkten der Welle (z. B. Berg zu Berg).
+                </td>
+                <td class="hint">
+                  λ in Meter (m)
+                </td>
+              </tr>
+              <tr>
+                <td class="formula">
+                  A
+                </td>
+                <td>
+                  <strong>Amplitude</strong>: Maximale Auslenkung der schwingenden
+                  Teilchen aus der Ruhelage.
+                </td>
+                <td class="hint">
+                  A in Meter (m) oder Zentimeter (cm)
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-    <!-- Radioaktivität & Kernphysik -->
-    <section class="section" aria-label="Radioaktivität und Kernphysik">
-      <div class="section-header">
-        <div class="section-title">
-          <span style="color:var(--c-radio);">●</span>
-          Radioaktivität &amp; Kernphysik
+          <div class="note">
+            <strong>Merke:</strong> In der Welle wird <em>Energie</em> transportiert, aber
+            keine Materie dauerhaft mitgenommen. Die Teilchen schwingen nur um ihre
+            Ruhelage.
+          </div>
         </div>
-        <span class="pill radio">Radioaktivität / Kernphysik</span>
-      </div>
-      <small>Aktivität und Halbwertszeit – vereinfachte Darstellung Sek. I</small>
+      </section>
 
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 28%;">Formel</th>
-            <th style="width: 42%;">Bedeutung</th>
-            <th style="width: 30%;">Größen &amp; Einheiten</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="formula">
-              A = ΔN / Δt
-            </td>
-            <td>
-              <strong>Aktivität</strong>: Gibt an, wie viele radioaktive Kerne
-              pro Zeit zerfallen.
-            </td>
-            <td class="hint">
-              A in Becquerel (Bq)<br />
-              1 Bq = 1 Zerfall pro Sekunde<br />
-              ΔN: Anzahl der Zerfälle, Δt in s
-            </td>
-          </tr>
-          <tr>
-            <td class="formula">
-              N(t) = N<sub>0</sub> · (½)<sup>t / T<sub>1/2</sub></sup>
-            </td>
-            <td>
-              <strong>Zerfallsgesetz (vereinfacht)</strong>: beschreibt, wie
-              die Anzahl der noch vorhandenen Kerne mit der Zeit abnimmt.
-              Für jede Halbwertszeit T<sub>1/2</sub> halbiert sich N.
-            </td>
-            <td class="hint">
-              N(t): Anzahl Kerne zur Zeit t<br />
-              N₀: Anfangsanzahl<br />
-              T<sub>1/2</sub>: Halbwertszeit
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <aside>
+        <div class="aside-box">
+          <div class="pill-mini">Tipps für die Prüfung</div>
+          <h2>Wie nutze ich diese Formeln sinnvoll?</h2>
+          <p>
+            Lerne nicht nur die Formeln auswendig, sondern verstehe, was sie
+            <strong>bedeuten</strong> und in welchen Situationen sie angewendet
+            werden.
+          </p>
+          <ul>
+            <li>Markiere dir typische <strong>Aufgabentypen</strong>.</li>
+            <li>Mache dir kleine <strong>Eselsbrücken</strong> (z. B. v = λ·f).</li>
+            <li>Rechne beispielhafte Aufgaben mit Einheiten sauber durch.</li>
+          </ul>
+          <p>
+            Im Test solltest du immer zuerst prüfen, welche Größen gegeben sind
+            und welche Formel dazu passt.
+          </p>
+        </div>
 
-      <div class="example">
-        <strong>Typisches Beispiel:</strong> Hat eine Probe eine
-        Halbwertszeit von 5 Jahren und man startet mit N₀ = 1000 Kernen,
-        so sind nach 5 Jahren noch 500, nach 10 Jahren 250 und nach 15 Jahren
-        125 Kerne übrig.
-      </div>
-    </section>
+        <div class="aside-box">
+          <div class="pill-mini">Begriffe &amp; Symbole</div>
+          <h2>Wichtige Größen im Überblick</h2>
+          <ul>
+            <li><strong>U</strong>: Spannung (Volt, V)</li>
+            <li><strong>I</strong>: Stromstärke (Ampere, A)</li>
+            <li><strong>n</strong>: Windungszahl (ohne Einheit)</li>
+            <li><strong>T</strong>: Schwingungsdauer (Sekunden, s)</li>
+            <li><strong>f</strong>: Frequenz (Hertz, Hz)</li>
+            <li><strong>λ</strong>: Wellenlänge (Meter, m)</li>
+            <li><strong>A</strong>: Amplitude (Meter, m oder Zentimeter, cm)</li>
+          </ul>
+          <p>
+            Achte darauf, immer die <strong>richtigen Einheiten</strong> zu
+            verwenden – sonst können Ergebnisse schnell um Zehnerpotenzen
+            danebenliegen.
+          </p>
+        </div>
 
-    <footer class="footer">
-      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Formeln Klasse 10
-    </footer>
-  </main>
-</div>
+        <div class="aside-box">
+          <div class="pill-mini">Hinweis</div>
+          <h2>Abweichungen zum Buch</h2>
+          <p>
+            Diese Formelsammlung ist an das verwendete Schulbuch angepasst, fasst
+            die Inhalte aber <strong>reduziert und prüfungsorientiert</strong> zusammen.
+          </p>
+          <p>
+            Im Zweifel gilt immer: Die <strong>im Unterricht besprochenen</strong>
+            Beispiele und Hinweise deiner Lehrkraft sind maßgeblich.
+          </p>
+        </div>
+      </aside>
+    </main>
+
+    <div class="footer">
+      <span>© 2025 · M. Nagel · FGO Perleberg · Physik Digital 7–10 · Formeln Klasse 10</span>
+    </div>
+  </div>
 </body>
 </html>
