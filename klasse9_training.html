@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <title>Training Klasse 9 – Bewegung & Grundlagen</title>
+  <title>Training Klasse 9 – Bewegung & Diagramme</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
@@ -344,7 +344,7 @@
       <div class="tagline">klasse 9 · bewegung & diagramme</div>
       <h1>Training &amp; Quiz</h1>
       <p class="intro-text">
-        Wähle das Thema und beantworte bis zu <strong>15 Fragen</strong>.  
+        Wähle ein Thema und beantworte bis zu <strong>15 Fragen</strong>.  
         Du bekommst sofort Rückmeldung zu deiner Antwort – am Ende siehst du deine Punkte mit Feedback.
       </p>
     </section>
@@ -358,14 +358,23 @@
           <span class="pill">15 Fragen · Multiple Choice</span>
         </div>
         <div class="topic-list">
+
+          <!-- Quiz 1 -->
           <button class="topic-btn" data-topic="bewegung_grundlagen">
             <span class="label">🚶 Bewegung – Grundlagen</span>
             <span class="badge">Basis</span>
           </button>
+
+          <!-- Quiz 2 -->
+          <button class="topic-btn" data-topic="gleichfoermig">
+            <span class="label">➡️ Gleichförmige Bewegung</span>
+            <span class="badge">Level 1</span>
+          </button>
+
         </div>
 
         <p class="hint-text">
-          Weitere Themen (gleichförmig, beschleunigt, freier Fall) können wir später ergänzen.
+          Weitere Themen (beschleunigte Bewegung, freier Fall, Energie &amp; Arbeit) können wir später ergänzen.
         </p>
       </aside>
 
@@ -374,7 +383,7 @@
         <div id="quiz-idle">
           <p>Wähle links ein Thema, um ein Quiz zu starten.</p>
           <p class="hint-text">
-            Antworten anklicken, Feedback bekommen, weiter zur nächsten Frage – ganz entspannt wie in Klasse 10.
+            Antworten anklicken, Feedback bekommen, weiter zur nächsten Frage – wie in Klasse 10.
           </p>
         </div>
 
@@ -576,6 +585,163 @@
             "Ein Körper kann sich niemals bewegen.",
             "Bewegung gibt es nur im Weltraum.",
             "Bewegung hängt nur vom Gewicht des Körpers ab."
+          ],
+          c: 0
+        }
+      ]
+    },
+
+    gleichfoermig: {
+      name: "Gleichförmige Bewegung",
+      icon: "➡️",
+      questions: [
+        {
+          q: "Was bedeutet „gleichförmige Bewegung“?",
+          a: [
+            "Die Geschwindigkeit bleibt konstant.",
+            "Die Richtung ändert sich ständig.",
+            "Der Körper steht still.",
+            "Die Geschwindigkeit schwankt stark."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Formel gilt bei gleichförmiger Bewegung?",
+          a: [
+            "v = s / t",
+            "v = a · t",
+            "s = ½ · a · t²",
+            "F = m · a"
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Einheit gehört zur Geschwindigkeit v?",
+          a: [
+            "m/s oder km/h",
+            "kg",
+            "N",
+            "m²"
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Auto fährt 60 km in 1 Stunde. Welche Geschwindigkeit hat es?",
+          a: [
+            "60 km/h",
+            "30 km/h",
+            "120 km/h",
+            "6 km/h"
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Aussage stimmt für eine gleichförmige Bewegung?",
+          a: [
+            "In gleichen Zeiten werden gleiche Wege zurückgelegt.",
+            "Der Weg nimmt ständig zu.",
+            "Die Geschwindigkeit steigt immer weiter.",
+            "Das Fahrzeug bremst langsam ab."
+          ],
+          c: 0
+        },
+        {
+          q: "Was zeigt ein s-t-Diagramm bei einer gleichförmigen Bewegung?",
+          a: [
+            "Eine Gerade.",
+            "Eine Parabel.",
+            "Eine waagerechte Linie.",
+            "Eine Zickzack-Linie."
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Radfahrer fährt 20 m in 2 s. Wie groß ist seine Geschwindigkeit?",
+          a: [
+            "10 m/s",
+            "40 m/s",
+            "5 m/s",
+            "15 m/s"
+          ],
+          c: 0
+        },
+        {
+          q: "Wenn die Geschwindigkeit konstant bleibt, dann …",
+          a: [
+            "ändert sich der Weg gleichmäßig.",
+            "ändert sich die Masse des Körpers.",
+            "ändert sich die Richtung ständig.",
+            "ändert sich die Temperatur."
+          ],
+          c: 0
+        },
+        {
+          q: "Im v-t-Diagramm sieht man bei gleichförmiger Bewegung …",
+          a: [
+            "eine waagerechte Linie.",
+            "eine sinkende Kurve.",
+            "eine steigende Kurve.",
+            "eine Dreiecksform."
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Zug fährt mit 80 km/h. Wie weit kommt er in 2 Stunden?",
+          a: [
+            "160 km",
+            "40 km",
+            "80 km",
+            "100 km"
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Größen muss man teilen, um v zu berechnen?",
+          a: [
+            "Weg durch Zeit",
+            "Zeit durch Weg",
+            "Masse durch Zeit",
+            "Kraft durch Strecke"
+          ],
+          c: 0
+        },
+        {
+          q: "Das s-t-Diagramm zeigt eine Gerade durch den Ursprung. Was bedeutet das?",
+          a: [
+            "Start bei s = 0 und gleichförmige Bewegung.",
+            "Der Körper fliegt nach oben.",
+            "Der Körper fällt nach unten.",
+            "Die Geschwindigkeit wird kleiner."
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Auto fährt mit 50 km/h. Welche Strecke schafft es in 0,5 Stunden?",
+          a: [
+            "25 km",
+            "50 km",
+            "100 km",
+            "75 km"
+          ],
+          c: 0
+        },
+        {
+          q: "Was kann man über die Beschleunigung bei gleichförmiger Bewegung sagen?",
+          a: [
+            "Sie ist 0.",
+            "Sie ist 1.",
+            "Sie ist unendlich.",
+            "Sie ändert sich ständig."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche der folgenden Bewegungen ist gleichförmig?",
+          a: [
+            "Ein Auto im Tempomat auf gerader Strecke.",
+            "Ein Fahrstuhl beim Start.",
+            "Ein Fahrrad bergauf.",
+            "Ein Auto beim Bremsen."
           ],
           c: 0
         }
