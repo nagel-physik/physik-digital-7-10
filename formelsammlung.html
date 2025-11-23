@@ -31,6 +31,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      /* wichtig: nicht komplett verstecken, sonst kann auf sehr kleinen
+         Displays etwas abgeschnitten sein */
       overflow: hidden;
     }
 
@@ -208,12 +210,16 @@
       border-collapse: collapse;
       font-size: 0.82rem;
       margin-top: 0.4rem;
+      /* wichtig: feste Spaltenbreiten und Umbruch erlauben */
+      table-layout: fixed;
     }
 
     th, td {
       padding: 0.4rem 0.4rem;
       border-bottom: 1px solid rgba(30, 41, 59, 0.9);
       vertical-align: top;
+      word-wrap: break-word;
+      word-break: break-word;
     }
 
     th {
@@ -233,12 +239,15 @@
     .formula {
       font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 0.82rem;
-      white-space: nowrap;
+      /* hier war vorher white-space: nowrap; → entfernt, damit es im Kästchen bleibt */
+      white-space: normal;
+      word-break: break-word;
     }
 
     .hint {
       font-size: 0.75rem;
       color: rgba(148, 163, 184, 0.98);
+      word-break: break-word;
     }
 
     .footer {
@@ -261,6 +270,12 @@
     }
 
     @media (max-width: 720px) {
+      table {
+        font-size: 0.78rem;
+      }
+      .formula {
+        font-size: 0.78rem;
+      }
       .footer {
         text-align: center;
       }
@@ -307,33 +322,33 @@
         <small>Thermisches Verhalten, thermische Energie &amp; Wechselwirkung/Kraft</small>
         <table>
           <thead>
-            <tr>
-              <th style="width: 28%;">Formel</th>
-              <th style="width: 42%;">Bedeutung</th>
-              <th style="width: 30%;">Typische Einheit(en)</th>
-            </tr>
+          <tr>
+            <th style="width: 28%;">Formel</th>
+            <th style="width: 42%;">Bedeutung</th>
+            <th style="width: 30%;">Typische Einheit(en)</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="formula">F = m · a</td>
-              <td>Kraft = Masse · Beschleunigung</td>
-              <td class="hint">F in Newton (N), m in kg, a in m/s²</td>
-            </tr>
-            <tr>
-              <td class="formula">ΔE<sub>th</sub> = c · m · ΔT</td>
-              <td>Änderung der thermischen Energie beim Erwärmen/Abkühlen</td>
-              <td class="hint">ΔE in J, c in J/(kg·K), m in kg, ΔT in K/°C</td>
-            </tr>
-            <tr>
-              <td class="formula">ρ = m / V</td>
-              <td>Dichte = Masse / Volumen</td>
-              <td class="hint">ρ in kg/m³, m in kg, V in m³</td>
-            </tr>
-            <tr>
-              <td class="formula">p = F / A</td>
-              <td>Druck = Kraft / Fläche</td>
-              <td class="hint">p in Pa, F in N, A in m²</td>
-            </tr>
+          <tr>
+            <td class="formula">F = m · a</td>
+            <td>Kraft = Masse · Beschleunigung</td>
+            <td class="hint">F in Newton (N), m in kg, a in m/s²</td>
+          </tr>
+          <tr>
+            <td class="formula">ΔE<sub>th</sub> = c · m · ΔT</td>
+            <td>Änderung der thermischen Energie beim Erwärmen/Abkühlen</td>
+            <td class="hint">ΔE in J, c in J/(kg·K), m in kg, ΔT in K/°C</td>
+          </tr>
+          <tr>
+            <td class="formula">ρ = m / V</td>
+            <td>Dichte = Masse / Volumen</td>
+            <td class="hint">ρ in kg/m³, m in kg, V in m³</td>
+          </tr>
+          <tr>
+            <td class="formula">p = F / A</td>
+            <td>Druck = Kraft / Fläche</td>
+            <td class="hint">p in Pa, F in N, A in m²</td>
+          </tr>
           </tbody>
         </table>
       </article>
@@ -349,38 +364,38 @@
         <small>Strom, Spannung, Widerstand &amp; elektrische Leistung</small>
         <table>
           <thead>
-            <tr>
-              <th style="width: 28%;">Formel</th>
-              <th style="width: 42%;">Bedeutung</th>
-              <th style="width: 30%;">Typische Einheit(en)</th>
-            </tr>
+          <tr>
+            <th style="width: 28%;">Formel</th>
+            <th style="width: 42%;">Bedeutung</th>
+            <th style="width: 30%;">Typische Einheit(en)</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="formula">I = Q / t</td>
-              <td>Stromstärke = transportierte Ladung / Zeit</td>
-              <td class="hint">I in A, Q in C, t in s</td>
-            </tr>
-            <tr>
-              <td class="formula">U = W / Q</td>
-              <td>Spannung = verrichtete Arbeit / Ladung</td>
-              <td class="hint">U in V, W in J, Q in C</td>
-            </tr>
-            <tr>
-              <td class="formula">U = R · I</td>
-              <td>Ohmsches Gesetz: Spannung, Widerstand, Stromstärke</td>
-              <td class="hint">U in V, R in Ω, I in A</td>
-            </tr>
-            <tr>
-              <td class="formula">P = U · I</td>
-              <td>Elektrische Leistung = Spannung · Stromstärke</td>
-              <td class="hint">P in W, U in V, I in A</td>
-            </tr>
-            <tr>
-              <td class="formula">P = R · I²</td>
-              <td>Verlustleistung an einem Widerstand</td>
-              <td class="hint">P in W, R in Ω, I in A</td>
-            </tr>
+          <tr>
+            <td class="formula">I = Q / t</td>
+            <td>Stromstärke = transportierte Ladung / Zeit</td>
+            <td class="hint">I in A, Q in C, t in s</td>
+          </tr>
+          <tr>
+            <td class="formula">U = W / Q</td>
+            <td>Spannung = verrichtete Arbeit / Ladung</td>
+            <td class="hint">U in V, W in J, Q in C</td>
+          </tr>
+          <tr>
+            <td class="formula">U = R · I</td>
+            <td>Ohmsches Gesetz: Spannung, Widerstand, Stromstärke</td>
+            <td class="hint">U in V, R in Ω, I in A</td>
+          </tr>
+          <tr>
+            <td class="formula">P = U · I</td>
+            <td>Elektrische Leistung = Spannung · Stromstärke</td>
+            <td class="hint">P in W, U in V, I in A</td>
+          </tr>
+          <tr>
+            <td class="formula">P = R · I²</td>
+            <td>Verlustleistung an einem Widerstand</td>
+            <td class="hint">P in W, R in Ω, I in A</td>
+          </tr>
           </tbody>
         </table>
       </article>
@@ -396,48 +411,48 @@
         <small>Gleichförmige/ beschleunigte Bewegung, Arbeit &amp; Energie</small>
         <table>
           <thead>
-            <tr>
-              <th style="width: 28%;">Formel</th>
-              <th style="width: 42%;">Bedeutung</th>
-              <th style="width: 30%;">Typische Einheit(en)</th>
-            </tr>
+          <tr>
+            <th style="width: 28%;">Formel</th>
+            <th style="width: 42%;">Bedeutung</th>
+            <th style="width: 30%;">Typische Einheit(en)</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="formula">v = s / t</td>
-              <td>Durchschnittsgeschwindigkeit = Weg / Zeit</td>
-              <td class="hint">v in m/s oder km/h, s in m, t in s</td>
-            </tr>
-            <tr>
-              <td class="formula">a = Δv / Δt</td>
-              <td>Beschleunigung = Geschwindigkeitsänderung / Zeit</td>
-              <td class="hint">a in m/s², v in m/s, t in s</td>
-            </tr>
-            <tr>
-              <td class="formula">s = ½ · a · t²</td>
-              <td>Weg bei gleichmäßiger Beschleunigung (Start aus Ruhe)</td>
-              <td class="hint">s in m, a in m/s², t in s</td>
-            </tr>
-            <tr>
-              <td class="formula">F = m · a</td>
-              <td>Kraftgesetz: Kraft = Masse · Beschleunigung</td>
-              <td class="hint">F in N, m in kg, a in m/s²</td>
-            </tr>
-            <tr>
-              <td class="formula">W = F · s</td>
-              <td>Arbeit = Kraft · Weg in Kraftrichtung</td>
-              <td class="hint">W in J, F in N, s in m</td>
-            </tr>
-            <tr>
-              <td class="formula">E<sub>pot</sub> = m · g · h</td>
-              <td>Potentielle (Lage-)Energie</td>
-              <td class="hint">E in J, m in kg, g ≈ 9,81 m/s², h in m</td>
-            </tr>
-            <tr>
-              <td class="formula">E<sub>kin</sub> = ½ · m · v²</td>
-              <td>Kinetische (Bewegungs-)Energie</td>
-              <td class="hint">E in J, m in kg, v in m/s</td>
-            </tr>
+          <tr>
+            <td class="formula">v = s / t</td>
+            <td>Durchschnittsgeschwindigkeit = Weg / Zeit</td>
+            <td class="hint">v in m/s oder km/h, s in m, t in s</td>
+          </tr>
+          <tr>
+            <td class="formula">a = Δv / Δt</td>
+            <td>Beschleunigung = Geschwindigkeitsänderung / Zeit</td>
+            <td class="hint">a in m/s², v in m/s, t in s</td>
+          </tr>
+          <tr>
+            <td class="formula">s = ½ · a · t²</td>
+            <td>Weg bei gleichmäßiger Beschleunigung (Start aus Ruhe)</td>
+            <td class="hint">s in m, a in m/s², t in s</td>
+          </tr>
+          <tr>
+            <td class="formula">F = m · a</td>
+            <td>Kraftgesetz: Kraft = Masse · Beschleunigung</td>
+            <td class="hint">F in N, m in kg, a in m/s²</td>
+          </tr>
+          <tr>
+            <td class="formula">W = F · s</td>
+            <td>Arbeit = Kraft · Weg in Kraftrichtung</td>
+            <td class="hint">W in J, F in N, s in m</td>
+          </tr>
+          <tr>
+            <td class="formula">E<sub>pot</sub> = m · g · h</td>
+            <td>Potentielle (Lage-)Energie</td>
+            <td class="hint">E in J, m in kg, g ≈ 9,81 m/s², h in m</td>
+          </tr>
+          <tr>
+            <td class="formula">E<sub>kin</sub> = ½ · m · v²</td>
+            <td>Kinetische (Bewegungs-)Energie</td>
+            <td class="hint">E in J, m in kg, v in m/s</td>
+          </tr>
           </tbody>
         </table>
       </article>
@@ -453,43 +468,43 @@
         <small>Magnetfelder/Induktion, Schwingungen/Wellen, Radioaktivität &amp; Optik</small>
         <table>
           <thead>
-            <tr>
-              <th style="width: 28%;">Formel</th>
-              <th style="width: 42%;">Bedeutung</th>
-              <th style="width: 30%;">Typische Einheit(en)</th>
-            </tr>
+          <tr>
+            <th style="width: 28%;">Formel</th>
+            <th style="width: 42%;">Bedeutung</th>
+            <th style="width: 30%;">Typische Einheit(en)</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="formula">f = 1 / T</td>
-              <td>Frequenz = 1 / Periodendauer</td>
-              <td class="hint">f in Hz, T in s</td>
-            </tr>
-            <tr>
-              <td class="formula">v = λ · f</td>
-              <td>Ausbreitungsgeschwindigkeit einer Welle</td>
-              <td class="hint">v in m/s, λ in m, f in Hz</td>
-            </tr>
-            <tr>
-              <td class="formula">U<sub>ind</sub> ∼ ΔΦ / Δt</td>
-              <td>Induzierte Spannung hängt von Änderung des Magnetfeldes ab (vereinfachte Schreibweise)</td>
-              <td class="hint">U in V, Φ: magnetischer Fluss</td>
-            </tr>
-            <tr>
-              <td class="formula">P = U · I</td>
-              <td>Elektrische Leistung (auch bei Generator/Trafo wichtig)</td>
-              <td class="hint">P in W, U in V, I in A</td>
-            </tr>
-            <tr>
-              <td class="formula">E = h · f</td>
-              <td>Energie eines Photons (Licht, Quantenmodell – je nach Tiefe)</td>
-              <td class="hint">E in J, h: Planck-Konst., f in Hz</td>
-            </tr>
-            <tr>
-              <td class="formula">c = λ · f</td>
-              <td>Lichtgeschwindigkeit = Wellenlänge · Frequenz (für Licht)</td>
-              <td class="hint">c ≈ 3,0·10⁸ m/s</td>
-            </tr>
+          <tr>
+            <td class="formula">f = 1 / T</td>
+            <td>Frequenz = 1 / Periodendauer</td>
+            <td class="hint">f in Hz, T in s</td>
+          </tr>
+          <tr>
+            <td class="formula">v = λ · f</td>
+            <td>Ausbreitungsgeschwindigkeit einer Welle</td>
+            <td class="hint">v in m/s, λ in m, f in Hz</td>
+          </tr>
+          <tr>
+            <td class="formula">U<sub>ind</sub> ∼ ΔΦ / Δt</td>
+            <td>Induzierte Spannung hängt von Änderung des Magnetfeldes ab (vereinfachte Schreibweise)</td>
+            <td class="hint">U in V, Φ: magnetischer Fluss</td>
+          </tr>
+          <tr>
+            <td class="formula">P = U · I</td>
+            <td>Elektrische Leistung (auch bei Generator/Trafo wichtig)</td>
+            <td class="hint">P in W, U in V, I in A</td>
+          </tr>
+          <tr>
+            <td class="formula">E = h · f</td>
+            <td>Energie eines Photons (Licht, Quantenmodell – je nach Tiefe)</td>
+            <td class="hint">E in J, h: Planck-Konst., f in Hz</td>
+          </tr>
+          <tr>
+            <td class="formula">c = λ · f</td>
+            <td>Lichtgeschwindigkeit = Wellenlänge · Frequenz (für Licht)</td>
+            <td class="hint">c ≈ 3,0·10⁸ m/s</td>
+          </tr>
           </tbody>
         </table>
       </article>
