@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Gleichförmige Bewegung – Klasse 9</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-grad-top: #0f172a;
+      --bg-grad-bottom: #000000;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+      --accent: #3b82f6;
+      --box-bg: #0f172a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, var(--bg-grad-top) 0, var(--bg-dark) 55%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .panel {
+      border-radius: 26px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: radial-gradient(circle at top left, #020617 0, #020617 80%);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.9);
+      padding: 1.4rem 1.5rem;
+    }
+
+    /* Header */
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+      gap: 0.5rem;
+    }
+
+    .subline {
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(156, 163, 175, 0.95);
+    }
+
+    .back-link {
+      display: inline-block;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.78rem;
+    }
+
+    .back-link:hover {
+      color: white;
+      border-color: white;
+    }
+
+    h1 {
+      font-size: 1.55rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .intro {
+      font-size: 0.9rem;
+      color: rgba(209, 213, 219, 0.96);
+      margin-bottom: 0.9rem;
+      max-width: 36rem;
+    }
+
+    /* Inhalt */
+    .section-box {
+      background: var(--box-bg);
+      padding: 1rem;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      margin-bottom: 1.1rem;
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.6);
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .icon {
+      display: inline-block;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    p {
+      font-size: 0.9rem;
+      line-height: 1.55rem;
+    }
+
+    ul {
+      margin-left: 1.1rem;
+      margin-top: 0.4rem;
+      line-height: 1.55rem;
+      font-size: 0.9rem;
+    }
+
+    strong {
+      color: #93c5fd;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9rem;
+    }
+
+    /* Merkkasten */
+    .merkkasten {
+      background: #0d253f;
+      border-left: 4px solid #3b82f6;
+      padding: 0.9rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    /* Übungsaufgaben */
+    h3 {
+      margin-top: 0.8rem;
+      margin-bottom: 0.3rem;
+      font-size: 1rem;
+    }
+
+    details {
+      background: #0d253f;
+      padding: 0.8rem;
+      border-radius: 12px;
+      margin-top: 0.5rem;
+      border: 1px solid rgba(148,163,184,0.4);
+      font-size: 0.9rem;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: #93c5fd;
+      margin-bottom: 0.4rem;
+    }
+
+    .footer {
+      margin-top: 1rem;
+      text-align: right;
+      font-size: 0.75rem;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 0.7rem;
+      }
+      .panel {
+        padding: 1.2rem 1rem 1.3rem;
+        border-radius: 22px;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <main class="panel">
+
+    <div class="header-top">
+      <div class="subline">Physik · Klasse 9</div>
+      <a class="back-link" href="klasse9_themen.html">← Zurück</a>
+    </div>
+
+    <h1>Gleichförmige Bewegung</h1>
+    <p class="intro">
+      Bei einer gleichförmigen Bewegung ist die <strong>Geschwindigkeit konstant</strong>.
+      Das bedeutet: In gleichen Zeiten werden gleiche Wege zurückgelegt.
+    </p>
+
+    <!-- 1. Definition -->
+    <div class="section-box">
+      <div class="section-title">
+        <span class="icon"></span>
+        1. Was ist eine gleichförmige Bewegung?
+      </div>
+      <p>
+        Eine Bewegung heißt <strong>gleichförmig</strong>, wenn ein Körper in
+        <strong>gleichen Zeitabständen</strong> immer <strong>gleiche Strecken</strong>
+        zurücklegt.
+      </p>
+      <ul>
+        <li>Die Geschwindigkeit <strong>ändert sich nicht</strong>.</li>
+        <li>Beispiel: Zug fährt mit 80 km/h geradeaus ohne zu bremsen oder zu beschleunigen.</li>
+        <li>Beispiel: Auto im Tempomat auf der Autobahn.</li>
+      </ul>
+    </div>
+
+    <!-- 2. Formel v = s / t -->
+    <div class="section-box">
+      <div class="section-title">
+        <span class="icon"></span>
+        2. Formel für die gleichförmige Bewegung
+      </div>
+      <p>
+        Die wichtigste Formel ist:
+      </p>
+      <p>
+        <code>v = s / t</code>
+      </p>
+      <ul>
+        <li><strong>v</strong> – Geschwindigkeit in m/s oder km/h</li>
+        <li><strong>s</strong> – zurückgelegter Weg in m oder km</li>
+        <li><strong>t</strong> – benötigte Zeit in s oder h</li>
+      </ul>
+      <p>
+        Du kannst die Formel auch nach <strong>s</strong> oder <strong>t</strong> umstellen:
+      </p>
+      <ul>
+        <li><code>s = v · t</code></li>
+        <li><code>t = s / v</code></li>
+      </ul>
+    </div>
+
+    <!-- 3. s-t-Diagramm -->
+    <div class="section-box">
+      <div class="section-title">
+        <span class="icon"></span>
+        3. s-t-Diagramm (Weg-Zeit-Diagramm)
+      </div>
+      <p>
+        Im <strong>s-t-Diagramm</strong> trägst du den Weg s auf der y-Achse und die Zeit t
+        auf der x-Achse auf.
+      </p>
+      <ul>
+        <li>Bei einer gleichförmigen Bewegung ist der Graph eine <strong>Gerade</strong>.</li>
+        <li>Je steiler die Gerade, desto <strong>größer</strong> ist die Geschwindigkeit.</li>
+        <li>Beginnt die Gerade im Punkt (0 | 0), startet der Körper bei s = 0.</li>
+      </ul>
+      <p>
+        Die <strong>Steigung der Geraden</strong> entspricht der Geschwindigkeit.
+      </p>
+    </div>
+
+    <!-- 4. v-t-Diagramm -->
+    <div class="section-box">
+      <div class="section-title">
+        <span class="icon"></span>
+        4. v-t-Diagramm (Geschwindigkeit-Zeit-Diagramm)
+      </div>
+      <p>
+        Im <strong>v-t-Diagramm</strong> trägst du die Geschwindigkeit v auf der y-Achse
+        und die Zeit t auf der x-Achse auf.
+      </p>
+      <ul>
+        <li>Bei einer gleichförmigen Bewegung ist der Graph eine
+          <strong>waagerechte Linie</strong> (v bleibt gleich).</li>
+        <li>Je höher die Linie, desto schneller ist der Körper.</li>
+      </ul>
+      <p>
+        Eine waagerechte Linie bedeutet: Der Körper fährt mit <strong>konstanter Geschwindigkeit</strong>.
+      </p>
+    </div>
+
+    <!-- Merkkasten -->
+    <div class="merkkasten">
+      <strong>Merke:</strong><br>
+      Gleichförmige Bewegung bedeutet: v bleibt konstant.<br>
+      Im s-t-Diagramm bekommst du eine Gerade, im v-t-Diagramm eine waagerechte Linie.
+      Die Formel <code>v = s / t</code> ist die Grundlage für alle Aufgaben.
+    </div>
+
+    <!-- Übungsaufgaben -->
+    <h3>Übungsaufgaben</h3>
+
+    <p><strong>1)</strong> Ein Zug fährt 150 km in 2,0 h.  
+    Berechne die durchschnittliche Geschwindigkeit in km/h.</p>
+    <details>
+      <summary>Lösung anzeigen</summary>
+      <p>
+        Gegeben: s = 150 km, t = 2,0 h<br>
+        Gesucht: v<br><br>
+        <code>v = s / t = 150 km / 2,0 h = 75 km/h</code><br><br>
+        <strong>Antwort:</strong> v = 75 km/h
+      </p>
+    </details>
+
+    <p><strong>2)</strong> Ein Auto fährt mit v = 90 km/h gleichförmig.  
+    Wie weit kommt es in 3 Stunden?</p>
+    <details>
+      <summary>Lösung anzeigen</summary>
+      <p>
+        Gegeben: v = 90 km/h, t = 3 h<br>
+        Gesucht: s<br><br>
+        Formel: <code>s = v · t</code><br>
+        <code>s = 90 km/h · 3 h = 270 km</code><br><br>
+        <strong>Antwort:</strong> s = 270 km
+      </p>
+    </details>
+
+    <p><strong>3)</strong> Im s-t-Diagramm siehst du eine Gerade, die im Punkt (0 | 0)
+       beginnt und dann gleichmäßig ansteigt.  
+       Was sagt dir das über die Bewegung?</p>
+    <details>
+      <summary>Lösung anzeigen</summary>
+      <p>
+        Der Körper startet bei s = 0 und legt in gleichen Zeiten gleiche Wege zurück.<br>
+        → Es handelt sich um eine <strong>gleichförmige Bewegung</strong> mit
+        <strong>konstanter Geschwindigkeit</strong>.
+      </p>
+    </details>
+
+    <div class="footer">
+      © 2025 · M. Nagel · FGO Perleberg · Physik Digital 7–10 · Klasse 9
+    </div>
+
+  </main>
+</div>
+</body>
+</html>
