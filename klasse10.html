@@ -2,415 +2,257 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <title>Physik Klasse 10 – Überblick</title>
+  <title>Physik Klasse 10 – Übersicht</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
       --bg-dark: #020617;
+      --bg-grad-top: #0f172a;
+      --bg-grad-bottom: #000000;
       --text-main: #e5e7eb;
       --text-soft: #cbd5f5;
 
-      --c-topic: #22c55e;
-      --c-training: #3b82f6;
-      --c-exp: #f97316;
-      --c-dl: #94a3b8;
-      --c-formel: #eab308;
+      --btn-themen: linear-gradient(135deg, #6366f1, #3b82f6);
+      --btn-training: linear-gradient(135deg, #2563eb, #1d4ed8);
+      --btn-exp: linear-gradient(135deg, #fb923c, #f97316);
+      --btn-dl: linear-gradient(135deg, #64748b, #4b5563);
+      --btn-formeln: linear-gradient(135deg, #facc15, #f97316);
     }
 
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
-   body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
-  background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
-  color: #e5e7eb;
-  min-height: 100vh;
-  margin: 0;
-  /* WICHTIG: kein flex, kein vertical-center mehr */
-  overflow-y: auto;
-  overflow-x: hidden;
-}
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, var(--bg-grad-top) 0, var(--bg-dark) 55%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+
     .app {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  padding: 1.5rem 1rem;
-  display: flex;
-  justify-content: center;
-}
-
-    .bg-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at top left, rgba(56, 189, 248, 0.2), transparent 55%),
-        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.2), transparent 55%);
-      pointer-events: none;
-    }
-
-    .vignette {
-      position: absolute;
-      inset: 0;
-      box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.9);
-      pointer-events: none;
-    }
-
-    .floaters {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-      opacity: 0.35;
-    }
-
-    .floaters span {
-      position: absolute;
-      font-size: 2.4rem;
-      color: rgba(148, 163, 184, 0.18);
-      animation: floatUp 26s linear infinite;
-      filter: blur(0.4px);
-    }
-
-    .floaters span:nth-child(1) { left: 12%; animation-duration: 28s; animation-delay: -4s; }
-    .floaters span:nth-child(2) { left: 38%; animation-duration: 26s; animation-delay: -10s; }
-    .floaters span:nth-child(3) { left: 64%; animation-duration: 30s; animation-delay: -18s; }
-    .floaters span:nth-child(4) { left: 82%; animation-duration: 24s; animation-delay: -7s; }
-
-    @keyframes floatUp {
-      0%   { transform: translateY(110vh); }
-      100% { transform: translateY(-20vh); }
+      width: 100%;
+      max-width: 960px;
     }
 
     .panel {
-      position: relative;
-      z-index: 5;
-      max-width: 1150px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 2.4rem 2.2rem 2.4rem;
       border-radius: 26px;
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
-      box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.9),
-        0 0 0 1px rgba(148, 163, 184, 0.4);
-      display: flex;
-      flex-direction: column;
-      gap: 1.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: radial-gradient(circle at top left, #020617 0, #020617 80%);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.9);
+      padding: 1.3rem 1.5rem 1.4rem;
     }
 
-    .topbar {
+    header {
+      margin-bottom: 1rem;
+    }
+
+    .header-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
+      gap: 0.5rem;
       flex-wrap: wrap;
+      margin-bottom: 0.25rem;
     }
 
-    .brand {
-      font-size: 0.9rem;
-      letter-spacing: 0.16em;
+    .subline {
+      font-size: 0.8rem;
       text-transform: uppercase;
-      color: var(--text-soft);
+      letter-spacing: 0.16em;
+      color: rgba(156, 163, 175, 0.95);
     }
 
     .back-link {
-      font-size: 0.85rem;
+      display: inline-block;
       color: var(--text-soft);
-      text-decoration: none;
+      padding: 0.2rem 0.7rem;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.6);
-      padding: 0.2rem 0.9rem;
-      background: rgba(15, 23, 42, 0.8);
+      text-decoration: none;
+      font-size: 0.78rem;
+      white-space: nowrap;
     }
 
     .back-link:hover {
-      border-color: #e5e7eb;
-      color: #e5e7eb;
+      color: #ffffff;
+      border-color: #ffffff;
     }
 
-    .heading h1 {
-      font-size: clamp(1.9rem, 3.1vw, 2.4rem);
-      margin-bottom: 0.3rem;
+    h1 {
+      font-size: 1.5rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.2rem;
     }
 
-    .heading p {
-      font-size: 0.95rem;
-      color: var(--text-soft);
-      max-width: 720px;
+    .subtitle {
+      font-size: 0.9rem;
+      color: rgba(209, 213, 219, 0.95);
+      max-width: 32rem;
     }
 
-    .heading strong {
-      color: #4ade80;
+    /* Große Buttons */
+    .nav-section {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 0.8rem;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .tile {
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
-      transition:
-        transform 0.12s ease-out,
-        box-shadow 0.12s ease-out,
-        filter 0.12s ease-out;
-    }
-
-    .tile a {
+    .nav-button {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.4rem 1.1rem;
-      color: #0f172a;
+      padding: 0.9rem 0.6rem;
+      border-radius: 24px;
       text-decoration: none;
-      font-size: 1.05rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      text-align: center;
-      letter-spacing: 0.08em;
-    }
-
-    .tile::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 55%);
-      opacity: 0;
-      transition: opacity 0.12s ease-out;
-      pointer-events: none;
-    }
-
-    .tile:hover {
-      transform: translateY(-3px) scale(1.01);
-      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.9);
-      filter: brightness(1.02);
-    }
-
-    .tile:hover::after {
-      opacity: 1;
-    }
-
-    .tile.topic {
-      background: linear-gradient(135deg, #4ade80, var(--c-topic), #16a34a);
-      color: #022c22;
-    }
-
-    .tile.training {
-      background: linear-gradient(135deg, #93c5fd, var(--c-training), #1d4ed8);
       color: #f9fafb;
-    }
-
-    .tile.exp {
-      background: linear-gradient(135deg, #fdba74, var(--c-exp), #c2410c);
-      color: #111827;
-    }
-
-    .tile.dl {
-      background: linear-gradient(135deg, #cbd5f5, var(--c-dl), #64748b);
-      color: #020617;
-    }
-
-    .tile.formel {
-      background: linear-gradient(135deg, #facc15, var(--c-formel), #ca8a04);
-      color: #111827;
-    }
-
-    .section-title {
-      margin-top: 0.6rem;
+      font-weight: 600;
       font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-soft);
-    }
-
-    .topics-table {
-      margin-top: 0.4rem;
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.95);
-    }
-
-    .topics-table table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.86rem;
-    }
-
-    .topics-table th,
-    .topics-table td {
-      padding: 0.55rem 0.8rem;
-      border-bottom: 1px solid rgba(30, 41, 59, 0.9);
-    }
-
-    .topics-table th {
-      text-align: left;
-      background: rgba(15, 23, 42, 0.98);
-      font-weight: 600;
-      color: var(--text-soft);
-    }
-
-    .topics-table tr:nth-child(even) td {
-      background: rgba(15, 23, 42, 0.96);
-    }
-
-    .topics-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 0.1rem 0.5rem;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      text-transform: uppercase;
       letter-spacing: 0.08em;
-      border: 1px solid rgba(148, 163, 184, 0.9);
-      color: rgba(148, 163, 184, 0.95);
+      text-transform: uppercase;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.85);
+      border: 1px solid rgba(15, 23, 42, 0.85);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+      box-shadow: 0 22px 52px rgba(0, 0, 0, 0.95);
+    }
+
+    .nav-themen {
+      background: var(--btn-themen);
+    }
+    .nav-training {
+      background: var(--btn-training);
+    }
+    .nav-exp {
+      background: var(--btn-exp);
+    }
+    .nav-dl {
+      background: var(--btn-dl);
+    }
+    .nav-formeln {
+      background: var(--btn-formeln);
+      color: #111827;
+    }
+
+    /* Info-Box */
+    .info-box {
+      margin-top: 0.8rem;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: radial-gradient(circle at top left, #020617 0%, #020617 80%);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
+      padding: 1rem 1.2rem;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+    }
+
+    .info-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, 0.96);
+      margin-bottom: 0.5rem;
+    }
+
+    .info-pill span {
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 999px;
+      background: #38bdf8;
     }
 
     .footer {
-      margin-top: 0.4rem;
-      font-size: 0.78rem;
-      color: rgba(148, 163, 184, 0.9);
+      margin-top: 0.9rem;
+      font-size: 0.72rem;
       text-align: right;
+      color: rgba(148, 163, 184, 0.9);
     }
 
-    @media (max-width: 960px) {
+    @media (max-width: 640px) {
       .panel {
-        padding: 2rem 1.4rem 2.1rem;
+        padding: 1.1rem 1rem;
       }
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
 
-    @media (max-width: 720px) {
-      .grid {
-        grid-template-columns: minmax(0, 1fr);
+      h1 {
+        font-size: 1.35rem;
       }
-      .tile a {
-        font-size: 1rem;
-      }
-      .footer {
-        text-align: center;
+
+      .nav-button {
+        font-size: 0.92rem;
       }
     }
   </style>
 </head>
+
 <body>
-<div class="app">
-  <div class="bg-overlay"></div>
-  <div class="vignette"></div>
+  <div class="app">
+    <main class="panel">
+      <header>
+        <div class="header-top">
+          <div class="subline">Physik · Klasse 10</div>
+          <a href="dashboard.html" class="back-link">← Zurück zum Dashboard</a>
+        </div>
 
-  <div class="floaters">
-    <span>🧲</span>
-    <span>λ = v/f</span>
-    <span>E = mc²</span>
-    <span>⚡</span>
-  </div>
+        <h1>Klasse 10 – deine Physik-Übersicht</h1>
+        <p class="subtitle">
+          Wähle, was du brauchst: Theorie, Training, Experimente, Lernzettel oder wichtige Formeln.
+        </p>
+      </header>
 
-  <main class="panel" aria-labelledby="k10-title">
-    <header class="topbar">
-      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
-      <a class="back-link" href="dashboard.html">← Zurück zum Dashboard</a>
-    </header>
+      <section class="nav-section">
+        <a href="klasse10_themen.html" class="nav-button nav-themen">
+          Themen &amp; Theorie
+        </a>
+        <a href="klasse10_training.html" class="nav-button nav-training">
+          Training &amp; Quiz
+        </a>
+        <a href="klasse10_experimente.html" class="nav-button nav-exp">
+          Experimente
+        </a>
+        <a href="klasse10_downloads.html" class="nav-button nav-dl">
+          Downloads &amp; PDFs
+        </a>
+        <a href="formeln_klasse10.html" class="nav-button nav-formeln">
+          Formeln Klasse 10
+        </a>
+      </section>
 
-    <section class="heading">
-      <h1 id="k10-title">Klasse 10 – Überblick</h1>
-      <p>
-        In Klasse 10 bearbeitest du (laut Rahmenlehrplan) die Bereiche
-        <strong>Magnetfelder &amp; elektromagnetische Induktion</strong>,
-        <strong>mechanische Schwingungen &amp; Wellen</strong> sowie
-        <strong>Radioaktivität &amp; Kernphysik</strong>. Wenn noch Zeit ist,
-        folgt zusätzlich <strong>Optik</strong>. Hier findest du zukünftig
-        Theorie (PDF), Training und Experimente zu allen diesen Themen.
-      </p>
-    </section>
+      <section class="info-box">
+        <div class="info-pill">
+          <span></span>
+          Hinweis
+        </div>
 
-    <!-- Kachel-Navigation für Klasse 10 -->
-    <section class="grid" aria-label="Bereiche Klasse 10">
-      <article class="tile topic">
-  <a href="klasse10_themen.html">
-    THEMEN &amp; THEORIE
-  </a>
-</article>
+        <p>
+          Diese Lern-App ersetzt <strong>nicht</strong> den Unterricht oder das Schulbuch.
+          Sie soll dir helfen, <strong>außerhalb der Schule</strong> zu üben, Inhalte zu wiederholen
+          und dich gezielt auf Tests vorzubereiten.
+        </p>
 
-      <article class="tile training">
-  <a href="klasse10_training.html">
-    Training &amp; Quiz
-  </a>
-</article>
+        <p>
+          Die vollständige Theorie und alle offiziellen Aufgaben findest du weiterhin
+          im Unterricht und im Physikbuch.
+        </p>
+      </section>
 
-      <article class="tile exp">
-  <a href="klasse10_experimente.html">
-    Experimente
-  </a>
-</article>
-
-      <article class="tile dl">
-        <a href="klasse10_downloads.html">Downloads & PDFs</a>
-      </article>
-
-      <article class="tile formel">
-  <a href="formeln_klasse10.html">Formeln Klasse 10</a>
-</article>
-    </section>
-
-    <!-- Themenübersicht Klasse 10 -->
-    <section>
-      <div class="section-title">Themenübersicht Klasse 10</div>
-      <div class="topics-table" aria-label="Themenliste Klasse 10">
-        <table>
-          <thead>
-            <tr>
-              <th>Bereich</th>
-              <th>Theorie (PDF)</th>
-              <th>Training</th>
-              <th>Experiment(e)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Magnetfelder &amp; elektromagnetische Induktion</td>
-              <td>k10_magnetfelder_induktion.pdf</td>
-              <td><span class="badge">folgt</span></td>
-              <td><span class="badge">Magnete, Spule &amp; Induktion</span></td>
-            </tr>
-            <tr>
-              <td>Mechanische Schwingungen &amp; Wellen</td>
-              <td>k10_schwingungen_wellen.pdf</td>
-              <td><span class="badge">folgt</span></td>
-              <td><span class="badge">Federpendel, Schall</span></td>
-            </tr>
-            <tr>
-              <td>Radioaktivität &amp; Kernphysik</td>
-              <td>k10_radioaktivitaet_kernphysik.pdf</td>
-              <td><span class="badge">folgt</span></td>
-              <td><span class="badge">Modelle &amp; Simulationen</span></td>
-            </tr>
-            <tr>
-              <td>Optik (falls Zeit)</td>
-              <td>k10_optik.pdf</td>
-              <td><span class="badge">folgt</span></td>
-              <td><span class="badge">Linsen &amp; Lichtwege</span></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="footer">
+        © 2025 · M. Nagel · FGO Perleberg · Physik Digital 7–10 · Klasse 10
       </div>
-    </section>
-
-    <footer class="footer">
-      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10
-    </footer>
-  </main>
-</div>
+    </main>
+  </div>
 </body>
 </html>
