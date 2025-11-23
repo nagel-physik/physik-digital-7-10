@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Bewegung & Grundlagen – Klasse 9</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-grad-top: #0f172a;
+      --bg-grad-bottom: #000000;
+      --text-main: #e5e7eb;
+      --text-soft: #cbd5f5;
+      --accent: #38bdf8;
+      --box-bg: #0f172a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, var(--bg-grad-top) 0, var(--bg-dark) 55%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .panel {
+      border-radius: 26px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: radial-gradient(circle at top left, #020617 0, #020617 80%);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.9);
+      padding: 1.4rem 1.5rem;
+    }
+
+    /* Header */
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+      gap: 0.5rem;
+    }
+
+    .subline {
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(156, 163, 175, 0.95);
+    }
+
+    .back-link {
+      display: inline-block;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.78rem;
+    }
+
+    .back-link:hover {
+      color: white;
+      border-color: white;
+    }
+
+    h1 {
+      font-size: 1.55rem;
+      margin-bottom: 0.8rem;
+    }
+
+    /* Inhalt */
+    .section-box {
+      background: var(--box-bg);
+      padding: 1rem;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      margin-bottom: 1.1rem;
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.6);
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .icon {
+      display: inline-block;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    ul {
+      margin-left: 1.1rem;
+      margin-top: 0.4rem;
+      line-height: 1.55rem;
+    }
+
+    strong {
+      color: #93c5fd;
+    }
+
+    /* Merkkasten */
+    .merkkasten {
+      background: #0d253f;
+      border-left: 4px solid #38bdf8;
+      padding: 0.9rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    /* Übungsaufgaben */
+    details {
+      background: #0d253f;
+      padding: 0.8rem;
+      border-radius: 12px;
+      margin-top: 0.7rem;
+      border: 1px solid rgba(148,163,184,0.4);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: #93c5fd;
+      margin-bottom: 0.4rem;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 1rem;
+      text-align: right;
+      font-size: 0.75rem;
+      color: rgba(148, 163, 184, 0.9);
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <main class="panel">
+
+    <div class="header-top">
+      <div class="subline">Physik · Klasse 9</div>
+      <a class="back-link" href="klasse9_themen.html">← Zurück</a>
+    </div>
+
+    <h1>Bewegung – Grundlagen</h1>
+
+    <!-- 1. Was ist Bewegung? -->
+    <div class="section-box">
+      <div class="section-title">
+        <span class="icon"></span>
+        1. Was bedeutet „Bewegung“?
+      </div>
+      <p>
+        Ein Körper ist in Bewegung, wenn sich sein <strong>Ort</strong> im Vergleich zu einem
+        Bezugspunkt ändert. Ein Auto kann sich bewegen – ein Baum steht still.
+      </p>
+      <ul>
+        <li><strong>Bewegung</strong> = Ortsänderung</li>
+        <li><strong>Ruhe</strong> = keine Ortsänderung</li>
+        <li>Bezugspunkt entscheidet (z. B. Auto vs. Erde)</li>
+      </ul>
+    </div>
+
+    <!-- 2. Arten von Bewegung -->
+    <div class="section-box">
+      <div class="section-title"><span class="icon"></span>2. Arten der Bewegung</div>
+      <ul>
+        <li><strong>Geradlinige Bewegung</strong> (z. B. Auto auf gerader Straße)</li>
+        <li><strong>Kreisbewegung</strong> (z. B. Karussell, Rotorblatt)</li>
+        <li><strong>Schwingung</strong> (z. B. Pendel)</li>
+      </ul>
+    </div>
+
+    <!-- 3. Geschwindigkeit -->
+    <div class="section-box">
+      <div class="section-title"><span class="icon"></span>3. Geschwindigkeit – einfach erklärt</div>
+      <p>
+        Die Geschwindigkeit sagt, wie schnell sich ein Körper bewegt:
+      </p>
+      <p><strong>v = s / t</strong> &nbsp; (Strecke durch Zeit)</p>
+      <ul>
+        <li>v in m/s</li>
+        <li>s in m</li>
+        <li>t in s</li>
+      </ul>
+    </div>
+
+    <!-- 4. Diagramme -->
+    <div class="section-box">
+      <div class="section-title"><span class="icon"></span>4. Wichtige Diagramme</div>
+      <ul>
+        <li><strong>s-t-Diagramm:</strong> zeigt zurückgelegte Strecke</li>
+        <li><strong>v-t-Diagramm:</strong> zeigt Geschwindigkeit</li>
+      </ul>
+    </div>
+
+    <!-- Merkkasten -->
+    <div class="merkkasten">
+      <strong>Merke:</strong><br>
+      Bewegung ist relativ. Geschwindigkeit beschreibt, wie schnell sich ein Körper bewegt.  
+      Diagramme helfen, Bewegungen zu vergleichen und zu beschreiben.
+    </div>
+
+    <!-- Übungsaufgaben -->
+    <h3>Übungsaufgaben</h3>
+
+    <p><strong>1)</strong> Ein Auto fährt 100 m in 5 s.  
+    Berechne die Geschwindigkeit.</p>
+    <details>
+      <summary>Lösung anzeigen</summary>
+      v = s / t = 100 / 5 = <strong>20 m/s</strong>
+    </details>
+
+    <p><strong>2)</strong> Nenne drei Beispiele für Bewegungen aus deinem Alltag.</p>
+    <details>
+      <summary>Lösung anzeigen</summary>
+      z. B. Fahrradfahren, Aufzug, Karussell, Joggen
+    </details>
+
+    <p><strong>3)</strong> Was zeigt ein v-t-Diagramm?</p>
+    <details>
+      <summary>Lösung anzeigen</summary>
+      Es zeigt die <strong>Geschwindigkeit</strong> eines Körpers im Verlauf der Zeit.
+    </details>
+
+    <div class="footer">
+      © 2025 · M. Nagel · FGO Perleberg · Physik Digital 7–10 · Klasse 9
+    </div>
+
+  </main>
+</div>
+</body>
+</html>
