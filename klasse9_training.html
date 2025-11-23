@@ -406,33 +406,60 @@
       <p>Starte mit den Grundlagen und arbeite dich nach und nach vor.</p>
 
       <div class="topic-list">
-        <!-- Quiz 1 -->
-        <button class="topic-btn active" data-topic="bewegung_grundlagen">
-          <span class="label">
-            <span>🚶</span>
-            <span>Bewegung – Grundlagen</span>
-          </span>
-          <span class="badge">Basis</span>
-        </button>
+  <!-- Quiz 1 -->
+  <button class="topic-btn active" data-topic="bewegung_grundlagen">
+    <span class="label">
+      <span>🚶</span>
+      <span>Bewegung – Grundlagen</span>
+    </span>
+    <span class="badge">Basis</span>
+  </button>
 
-        <!-- Quiz 2 -->
-        <button class="topic-btn" data-topic="gleichfoermig">
-          <span class="label">
-            <span>➡️</span>
-            <span>Gleichförmige Bewegung</span>
-          </span>
-          <span class="badge">Level 1</span>
-        </button>
+  <!-- Quiz 2 -->
+  <button class="topic-btn" data-topic="gleichfoermig">
+    <span class="label">
+      <span>➡️</span>
+      <span>Gleichförmige Bewegung</span>
+    </span>
+    <span class="badge">Level 1</span>
+  </button>
 
-        <!-- Quiz 3 -->
-        <button class="topic-btn" data-topic="beschleunigt">
-          <span class="label">
-            <span>⚡</span>
-            <span>Beschleunigte Bewegung</span>
-          </span>
-          <span class="badge">Level 2</span>
-        </button>
-      </div>
+  <!-- Quiz 3 -->
+  <button class="topic-btn" data-topic="beschleunigt">
+    <span class="label">
+      <span>⚡</span>
+      <span>Beschleunigte Bewegung</span>
+    </span>
+    <span class="badge">Level 2</span>
+  </button>
+
+  <!-- Quiz 4 -->
+  <button class="topic-btn" data-topic="freier_fall">
+    <span class="label">
+      <span>⬇️</span>
+      <span>Freier Fall</span>
+    </span>
+    <span class="badge">Level 3</span>
+  </button>
+
+  <!-- Quiz 5 -->
+  <button class="topic-btn" data-topic="energie_arbeit">
+    <span class="label">
+      <span>🔧</span>
+      <span>Energie &amp; Arbeit</span>
+    </span>
+    <span class="badge">Level 4</span>
+  </button>
+
+  <!-- Quiz 6 -->
+  <button class="topic-btn" data-topic="kraft_beschleunigung">
+    <span class="label">
+      <span>💥</span>
+      <span>Kraft &amp; Beschleunigung (Extra)</span>
+    </span>
+    <span class="badge">Extra</span>
+  </button>
+</div>
 
       <div class="topic-info" id="topic-info">
         <span>💡</span>
@@ -482,7 +509,7 @@
 <script>
   // --- Quiz-Daten ---------------------------------------------------------
 
-  const QUIZ_TOPICS = {
+    const QUIZ_TOPICS = {
     bewegung_grundlagen: {
       name: "Bewegung – Grundlagen",
       icon: "🚶",
@@ -498,72 +525,52 @@
           c: 0
         },
         {
-          q: "Was braucht man, um eine Bewegung vollständig zu beschreiben?",
+          q: "Was braucht man, um eine Bewegung zu beschreiben?",
           a: [
-            "Ort, Zeit und Bezugssystem.",
-            "Nur die Geschwindigkeit.",
-            "Nur den Ort.",
-            "Nur die Masse des Körpers."
+            "Ort, Zeit und ein Bezugssystem.",
+            "Nur die Masse.",
+            "Nur die Temperatur.",
+            "Nur die Farbe."
           ],
           c: 0
         },
         {
           q: "Was ist ein Bezugssystem?",
           a: [
-            "Ein Körper oder Punkt, von dem aus eine Bewegung beobachtet wird.",
-            "Ein Messgerät für Geschwindigkeiten.",
-            "Eine Tabelle mit Messwerten.",
-            "Ein System aus Kräften."
+            "Der Beobachtungspunkt, von dem aus man die Bewegung betrachtet.",
+            "Ein besonderes Messgerät.",
+            "Ein Stromkreis.",
+            "Ein Kraftmesser."
           ],
           c: 0
         },
         {
           q: "Welche Größe gibt an, wie schnell sich der Ort ändert?",
           a: [
-            "Geschwindigkeit v",
-            "Masse m",
-            "Kraft F",
-            "Energie E"
+            "Geschwindigkeit v.",
+            "Masse m.",
+            "Kraft F.",
+            "Energie E."
           ],
           c: 0
         },
         {
           q: "Welche Einheit hat die Geschwindigkeit im SI-System?",
           a: [
-            "m/s",
-            "km/h",
-            "m²",
-            "m/s²"
+            "m/s.",
+            "m/s².",
+            "kg.",
+            "N."
           ],
           c: 0
         },
         {
-          q: "Womit kann man in einem s-t-Diagramm Bewegungen darstellen?",
+          q: "Was ist mit „v = s / t“ gemeint?",
           a: [
-            "Ort-Weg über die Zeit.",
-            "Kraft über die Zeit.",
-            "Masse über die Zeit.",
-            "Energie über den Ort."
-          ],
-          c: 0
-        },
-        {
-          q: "Welche Aussage ist richtig?",
-          a: [
-            "Bewegung ist relativ und hängt vom Beobachter ab.",
-            "Bewegung ist absolut und immer gleich.",
-            "Nur ruhende Körper können sich bewegen.",
-            "Bewegung hängt nur von der Masse ab."
-          ],
-          c: 0
-        },
-        {
-          q: "Was bedeutet „v = s / t“?",
-          a: [
-            "Geschwindigkeit = zurückgelegter Weg / benötigte Zeit.",
-            "Geschwindigkeit = Zeit / Weg.",
-            "Weg = Geschwindigkeit · Masse.",
-            "Kraft = Weg / Zeit."
+            "Geschwindigkeit = Weg : Zeit.",
+            "Geschwindigkeit = Zeit : Weg.",
+            "Geschwindigkeit = Masse : Zeit.",
+            "Geschwindigkeit = Kraft : Weg."
           ],
           c: 0
         },
@@ -572,68 +579,88 @@
           a: [
             "Weg s, Zeit t, Geschwindigkeit v.",
             "Masse m, Dichte ρ, Volumen V.",
-            "Stromstärke I, Spannung U, Widerstand R.",
-            "Energie E, Leistung P, Arbeit W."
+            "Temperatur T, Stromstärke I.",
+            "Energie E, Arbeit W."
           ],
           c: 0
         },
         {
-          q: "Ein Körper bewegt sich in gleicher Zeit immer gleich weit. Was trifft zu?",
+          q: "Was bedeutet „Bewegung ist relativ“?",
           a: [
-            "Die Geschwindigkeit ist konstant.",
-            "Die Geschwindigkeit wird größer.",
-            "Die Geschwindigkeit wird kleiner.",
-            "Der Körper steht still."
-          ],
-          c: 0
-        },
-        {
-          q: "Was kann man aus einem steilen Anstieg im s-t-Diagramm ablesen?",
-          a: [
-            "Hohe Geschwindigkeit.",
-            "Kleine Masse.",
-            "Große Kraft.",
-            "Kurze Zeit."
-          ],
-          c: 0
-        },
-        {
-          q: "Welche Kombination passt zusammen?",
-          a: [
-            "Geschwindigkeit – m/s.",
-            "Weg – m/s².",
-            "Zeit – m³.",
-            "Beschleunigung – kg."
-          ],
-          c: 0
-        },
-        {
-          q: "Wie bezeichnet man die Strecke, die in einer bestimmten Zeit zurückgelegt wird?",
-          a: [
-            "Weg s.",
-            "Arbeit W.",
-            "Impuls p.",
-            "Dichte ρ."
-          ],
-          c: 0
-        },
-        {
-          q: "Welche der folgenden Größen ist eine vektorielle Größe?",
-          a: [
-            "Geschwindigkeit (Richtung ist wichtig).",
-            "Zeit.",
-            "Masse.",
-            "Temperatur."
-          ],
-          c: 0
-        },
-        {
-          q: "Welche Aussage über Alltagssituationen ist richtig?",
-          a: [
-            "Ob etwas ruht oder sich bewegt, hängt vom gewählten Bezugspunkt ab.",
-            "Ein Auto ist immer in Ruhe.",
-            "Nur Planeten bewegen sich.",
+            "Ob etwas ruht oder sich bewegt, hängt vom Beobachter ab.",
+            "Bewegung ist immer gleich, egal wer beobachtet.",
+            "Nur schnelle Körper bewegen sich.",
             "Nur leichte Körper können sich bewegen."
+          ],
+          c: 0
+        },
+        {
+          q: "Was zeigt ein s-t-Diagramm?",
+          a: [
+            "Wie sich der Ort/Weg mit der Zeit verändert.",
+            "Wie sich die Masse mit der Zeit verändert.",
+            "Wie sich die Temperatur mit der Zeit verändert.",
+            "Wie sich die Kraft mit der Zeit verändert."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Größe ist KEINE typische Bewegungsgröße?",
+          a: [
+            "Temperatur.",
+            "Weg.",
+            "Zeit.",
+            "Geschwindigkeit."
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Auto steht an der Ampel. Was trifft zu?",
+          a: [
+            "Es befindet sich in Ruhe (im Bezugssystem Straße).",
+            "Es bewegt sich sehr schnell.",
+            "Es hat keine Masse.",
+            "Es hat keine Energie."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Angabe ist eine Geschwindigkeit?",
+          a: [
+            "50 km/h.",
+            "50 km.",
+            "50 s.",
+            "50 kg."
+          ],
+          c: 0
+        },
+        {
+          q: "Was braucht man zur Berechnung der Durchschnittsgeschwindigkeit?",
+          a: [
+            "Zurückgelegten Weg und dafür benötigte Zeit.",
+            "Nur die Masse.",
+            "Nur die Temperatur.",
+            "Nur die Farbe des Körpers."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche der folgenden Aussagen ist richtig?",
+          a: [
+            "Bewegung beschreibt eine Ortsänderung mit der Zeit.",
+            "Bewegung beschreibt eine Massenänderung.",
+            "Bewegung beschreibt eine Temperaturänderung.",
+            "Bewegung beschreibt eine Farbänderung."
+          ],
+          c: 0
+        },
+        {
+          q: "Warum ist das Bezugssystem wichtig?",
+          a: [
+            "Weil Bewegung nur im Vergleich zu einem Bezugssystem angegeben werden kann.",
+            "Weil Bewegung sonst nicht existiert.",
+            "Weil es die Masse bestimmt.",
+            "Weil es die Temperatur bestimmt."
           ],
           c: 0
         }
@@ -645,152 +672,152 @@
       icon: "➡️",
       questions: [
         {
-          q: "Was ist das Merkmal einer gleichförmigen Bewegung?",
+          q: "Was kennzeichnet eine gleichförmige Bewegung?",
           a: [
-            "Die Geschwindigkeit ist konstant.",
-            "Die Geschwindigkeit nimmt zu.",
-            "Die Geschwindigkeit nimmt ab.",
-            "Die Richtung ändert sich ständig."
+            "Die Geschwindigkeit bleibt konstant.",
+            "Die Geschwindigkeit wird immer größer.",
+            "Die Geschwindigkeit wird immer kleiner.",
+            "Der Körper steht still."
           ],
           c: 0
         },
         {
-          q: "Welche der folgenden Bewegungen ist näherungsweise gleichförmig?",
+          q: "Welches Beispiel passt zu einer näherungsweise gleichförmigen Bewegung?",
           a: [
-            "Zug im langen, geraden Abschnitt mit Tempomat.",
-            "Auto im Stadtverkehr.",
+            "Zug mit Tempomat auf gerader Strecke.",
+            "Auto im Stadtverkehr mit vielen Ampeln.",
             "Fahrstuhl beim Anfahren.",
-            "Fahrrad am Berg."
+            "Fahrrad mit ständig wechselndem Tempo."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Formel gilt bei gleichförmiger Bewegung?",
+          a: [
+            "s = v · t.",
+            "s = ½ · a · t².",
+            "F = m · a.",
+            "p = m · v."
           ],
           c: 0
         },
         {
           q: "Wie sieht das s-t-Diagramm einer gleichförmigen Bewegung aus?",
           a: [
-            "Eine Gerade mit konstanter Steigung.",
-            "Eine waagerechte Linie.",
-            "Eine Parabel.",
-            "Eine Zickzacklinie."
+            "Gerade mit konstanter Steigung.",
+            "Waagerechte Linie.",
+            "Parabel.",
+            "Zickzacklinie."
           ],
           c: 0
         },
         {
-          q: "Ein Körper bewegt sich gleichförmig. Verdoppelt man die Zeit, dann …",
+          q: "Was bedeutet eine größere Steigung im s-t-Diagramm?",
           a: [
+            "Größere Geschwindigkeit.",
+            "Kleinere Geschwindigkeit.",
+            "Größere Masse.",
+            "Größere Kraft."
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Auto bewegt sich gleichförmig. Halbiert man die Zeit, dann …",
+          a: [
+            "halbiert sich der zurückgelegte Weg.",
             "verdoppelt sich der Weg.",
             "bleibt der Weg gleich.",
-            "halbiert sich der Weg.",
             "wird der Weg null."
           ],
           c: 0
         },
         {
-          q: "Ein Auto fährt mit v = 20 m/s. Wie weit fährt es in 10 s (gleichförmig)?",
+          q: "Ein Fahrrad fährt mit v = 5 m/s. Wie weit kommt es in 20 s?",
           a: [
-            "200 m",
-            "2 m",
-            "20 m",
-            "10 m"
+            "100 m.",
+            "25 m.",
+            "4 m.",
+            "10 m."
           ],
           c: 0
         },
         {
-          q: "Welche Formel gilt für gleichförmige Bewegung?",
+          q: "Wie sieht das v-t-Diagramm bei gleichförmiger Bewegung aus?",
           a: [
-            "s = v · t",
-            "v = ½ · a · t²",
-            "F = m · a",
-            "p = m · v"
+            "Waagerechte Linie.",
+            "Steigende Gerade.",
+            "Sinkende Gerade.",
+            "Parabel."
           ],
           c: 0
         },
         {
-          q: "Im s-t-Diagramm einer gleichförmigen Bewegung ist die Steigung der Geraden …",
+          q: "Ein Auto legt in 2 h 120 km zurück. Wie groß ist die Durchschnittsgeschwindigkeit?",
           a: [
-            "die Geschwindigkeit v.",
-            "die Zeit t.",
-            "die Beschleunigung a.",
-            "die Masse m."
-          ],
-          c: 0
-        },
-        {
-          q: "Welche Einheit ist sinnvoll für eine Alltagsschilderung von Geschwindigkeit?",
-          a: [
-            "km/h",
-            "kg",
-            "m²",
-            "N"
-          ],
-          c: 0
-        },
-        {
-          q: "Ein Auto fährt 90 km in 1,5 h. Wie groß ist die Durchschnittsgeschwindigkeit?",
-          a: [
-            "60 km/h",
-            "45 km/h",
-            "90 km/h",
-            "135 km/h"
-          ],
-          c: 0
-        },
-        {
-          q: "Bei gleichförmiger Bewegung gilt: Wenn die Zeit halbiert wird, …",
-          a: [
-            "halbiert sich auch der zurückgelegte Weg.",
-            "bleibt der Weg gleich.",
-            "verdoppelt sich der Weg.",
-            "wird der Weg null."
+            "60 km/h.",
+            "120 km/h.",
+            "240 km/h.",
+            "30 km/h."
           ],
           c: 0
         },
         {
           q: "Welche Aussage passt zur gleichförmigen Bewegung?",
           a: [
-            "s-t-Diagramm: Gerade, v-t-Diagramm: waagerechte Linie.",
-            "s-t-Diagramm: Parabel, v-t-Diagramm: waagerechte Linie.",
-            "s-t-Diagramm: Gerade, v-t-Diagramm: steigende Gerade.",
-            "s-t-Diagramm: Zickzack, v-t-Diagramm: Gerade."
-          ],
-          c: 0
-        },
-        {
-          q: "Welche der folgenden Bewegungen ist am ehesten NICHT gleichförmig?",
-          a: [
-            "Fahrstuhl beim Starten und Anhalten.",
-            "Schiff auf ruhigem Meer mit Tempomat.",
-            "Rollband am Flughafen.",
-            "Zug auf langem Streckenabschnitt."
-          ],
-          c: 0
-        },
-        {
-          q: "Ein Jogger legt in 30 min 6 km zurück. Welche Größe ist hier gesucht, wenn man v berechnet?",
-          a: [
-            "Durchschnittsgeschwindigkeit.",
-            "Beschleunigung.",
-            "Masse.",
-            "Energie."
+            "In gleichen Zeiten werden gleiche Wege zurückgelegt.",
+            "In gleichen Zeiten werden immer größere Wege zurückgelegt.",
+            "Der Körper beschleunigt ständig.",
+            "Der Körper kann keinen Weg zurücklegen."
           ],
           c: 0
         },
         {
           q: "Welche Umrechnung ist korrekt?",
           a: [
-            "36 km/h = 10 m/s.",
-            "36 km/h = 5 m/s.",
-            "72 km/h = 10 m/s.",
-            "18 km/h = 10 m/s."
+            "36 km/h ≈ 10 m/s.",
+            "3,6 km/h ≈ 10 m/s.",
+            "10 km/h ≈ 36 m/s.",
+            "1 km/h ≈ 36 m/s."
           ],
-          c: 2
+          c: 0
         },
         {
-          q: "Welche Aussage über eine gleichförmige Bewegung stimmt?",
+          q: "Eine Person geht mit konstanter Geschwindigkeit. Welche Größe bleibt gleich?",
           a: [
-            "In gleichen Zeiten werden gleiche Wege zurückgelegt.",
-            "Der Körper wird immer schneller.",
-            "Der Körper wird immer langsamer.",
-            "Die Richtung ändert sich ständig."
+            "Die Geschwindigkeit.",
+            "Die zurückgelegte Strecke.",
+            "Die Zeit.",
+            "Die Masse."
+          ],
+          c: 0
+        },
+        {
+          q: "Was ist die SI-Einheit der Zeit?",
+          a: [
+            "Sekunde (s).",
+            "Meter (m).",
+            "Kilogramm (kg).",
+            "Newton (N)."
+          ],
+          c: 0
+        },
+        {
+          q: "Was zeigt ein Punkt im s-t-Diagramm?",
+          a: [
+            "Weg zu einem bestimmten Zeitpunkt.",
+            "Die Kraft zu einem bestimmten Zeitpunkt.",
+            "Die Masse des Körpers.",
+            "Die Temperatur des Körpers."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Aussage ist richtig?",
+          a: [
+            "Gleichförmige Bewegung: v ist konstant.",
+            "Gleichförmige Bewegung: a ist konstant und ungleich 0.",
+            "Gleichförmige Bewegung: s bleibt immer gleich.",
+            "Gleichförmige Bewegung: es gibt keinen Weg."
           ],
           c: 0
         }
@@ -805,49 +832,39 @@
           q: "Was bedeutet „beschleunigte Bewegung“?",
           a: [
             "Die Geschwindigkeit ändert sich.",
-            "Der Körper bewegt sich immer gleich schnell.",
+            "Der Körper bleibt immer gleich schnell.",
             "Der Körper steht still.",
-            "Der Weg wird kleiner."
+            "Der Körper bewegt sich im Kreis."
           ],
           c: 0
         },
         {
-          q: "Welche Formel gilt für gleichmäßig beschleunigte Bewegung?",
+          q: "Wie nennt man eine Beschleunigung, bei der a konstant bleibt?",
           a: [
-            "v = a · t",
-            "v = s / t",
-            "s = v · t",
-            "F = m · g"
+            "Gleichmäßig beschleunigte Bewegung.",
+            "Gleichförmige Bewegung.",
+            "Unregelmäßige Bewegung.",
+            "Ruhe."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Formel gilt für die Geschwindigkeitsänderung bei konstanter Beschleunigung?",
+          a: [
+            "v = a · t.",
+            "v = s / t.",
+            "s = v · t.",
+            "F = m · a."
           ],
           c: 0
         },
         {
           q: "Welche Einheit hat die Beschleunigung a?",
           a: [
-            "m/s²",
-            "m/s",
-            "kg",
-            "N/m"
-          ],
-          c: 0
-        },
-        {
-          q: "Ein Auto fährt schneller und schneller. Was passiert?",
-          a: [
-            "Es wird beschleunigt.",
-            "Es fährt gleichförmig.",
-            "Es wird langsamer.",
-            "Es bleibt stehen."
-          ],
-          c: 0
-        },
-        {
-          q: "Welche Größe gibt an, wie schnell sich die Geschwindigkeit ändert?",
-          a: [
-            "Beschleunigung",
-            "Masse",
-            "Weg",
-            "Kraftstoffverbrauch"
+            "m/s².",
+            "m/s.",
+            "kg.",
+            "N."
           ],
           c: 0
         },
@@ -857,97 +874,578 @@
             "Der Körper bremst ab.",
             "Der Körper wird schwerer.",
             "Der Körper fliegt nach oben.",
-            "Der Körper bewegt sich rückwärts."
+            "Der Körper ändert seine Farbe."
           ],
           c: 0
         },
         {
-          q: "Was zeigt ein v-t-Diagramm bei gleichmäßiger Beschleunigung?",
+          q: "Wie sieht das v-t-Diagramm bei gleichmäßiger Beschleunigung aus?",
           a: [
-            "Eine steigende Gerade.",
-            "Eine waagerechte Linie.",
-            "Eine sinkende Parabel.",
-            "Eine Zickzack-Linie."
+            "Steigende oder fallende Gerade.",
+            "Waagerechte Linie.",
+            "Parabel.",
+            "Zickzacklinie."
           ],
           c: 0
         },
         {
-          q: "Welche Formel beschreibt den Weg bei gleichmäßiger Beschleunigung?",
+          q: "Welche Formel beschreibt den Weg bei gleichmäßiger Beschleunigung (Start aus der Ruhe)?",
           a: [
-            "s = ½ · a · t²",
-            "s = v / t",
-            "s = F · t",
-            "s = m · a"
+            "s = ½ · a · t².",
+            "s = v · t.",
+            "s = m · a.",
+            "s = F · t."
           ],
           c: 0
         },
         {
-          q: "Ein Auto beschleunigt mit a = 2 m/s². Wie viel schneller wird es pro Sekunde?",
+          q: "Ein Auto beschleunigt mit a = 2 m/s². Wie stark erhöht sich v in 3 s?",
           a: [
-            "2 m/s",
-            "1 m/s",
-            "4 m/s",
-            "0,5 m/s"
+            "Um 6 m/s.",
+            "Um 2 m/s.",
+            "Um 3 m/s.",
+            "Um 1 m/s."
           ],
           c: 0
         },
         {
-          q: "Welche Aussage stimmt bei Beschleunigung a > 0?",
+          q: "Welche Aussage über Beschleunigung ist richtig?",
           a: [
-            "Die Geschwindigkeit nimmt zu.",
+            "Beschleunigung gibt an, wie schnell sich die Geschwindigkeit ändert.",
+            "Beschleunigung ist das Gleiche wie Weg.",
+            "Beschleunigung ist unabhängig von der Zeit.",
+            "Beschleunigung beschreibt nur eine Richtungsänderung."
+          ],
+          c: 0
+        },
+        {
+          q: "Was passiert bei a = 0?",
+          a: [
             "Die Geschwindigkeit bleibt konstant.",
-            "Der Körper steht still.",
-            "Der Körper fährt rückwärts."
+            "Die Geschwindigkeit wird immer größer.",
+            "Der Körper steht immer still.",
+            "Der Körper kann keinen Weg zurücklegen."
           ],
           c: 0
         },
         {
-          q: "Welche Aussage trifft auf eine Verzögerung zu?",
+          q: "Welche Aussage passt zum s-t-Diagramm einer gleichmäßig beschleunigten Bewegung?",
           a: [
-            "a ist negativ.",
-            "a ist positiv.",
-            "a ist 0.",
-            "a ist unendlich."
+            "Es ist eine Parabel.",
+            "Es ist eine Gerade.",
+            "Es ist eine waagerechte Linie.",
+            "Es ist eine Zickzacklinie."
           ],
           c: 0
         },
         {
-          q: "Im s-t-Diagramm ist eine nach oben geöffnete Parabel zu sehen. Was bedeutet das?",
+          q: "Welche Alltagssituation zeigt etwa gleichmäßige Beschleunigung?",
           a: [
-            "Beschleunigte Bewegung.",
-            "Gleichförmige Bewegung.",
-            "Der Körper steht still.",
-            "Der Körper schwingt."
+            "Auto, das gleichmäßig vom Parkplatz wegfährt.",
+            "Auto auf der Autobahn mit Tempomat.",
+            "Person, die still auf einem Stuhl sitzt.",
+            "Zug, der im Bahnhof steht."
           ],
           c: 0
         },
         {
-          q: "Eine Person lässt ein Objekt fallen. Welche Art von Bewegung ist das (ohne Luftwiderstand)?",
+          q: "Welche Einheit hat die Zeit t in den Formeln v = a · t und s = ½ · a · t²?",
+          a: [
+            "Sekunden (s).",
+            "Meter (m).",
+            "Kilogramm (kg).",
+            "Newton (N)."
+          ],
+          c: 0
+        },
+        {
+          q: "Wie lautet die korrekte Kombination?",
+          a: [
+            "a – m/s².",
+            "a – m/s.",
+            "a – kg.",
+            "a – J."
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Auto bremst von 20 m/s auf 0 m/s in 4 s gleichmäßig ab. Wie groß ist a?",
+          a: [
+            "-5 m/s².",
+            "5 m/s².",
+            "-20 m/s².",
+            "80 m/s²."
+          ],
+          c: 0
+        }
+      ]
+    },
+
+    freier_fall: {
+      name: "Freier Fall",
+      icon: "⬇️",
+      questions: [
+        {
+          q: "Was versteht man unter „freiem Fall“ (physikalisch)?",
+          a: [
+            "Bewegung eines Körpers nur unter dem Einfluss der Schwerkraft.",
+            "Bewegung eines Körpers nur mit Luftwiderstand.",
+            "Bewegung eines Körpers mit Motorantrieb.",
+            "Bewegung eines Körpers im Kreis."
+          ],
+          c: 0
+        },
+        {
+          q: "Wie groß ist die Erdbeschleunigung g ungefähr?",
+          a: [
+            "9,81 m/s².",
+            "1 m/s².",
+            "98,1 m/s².",
+            "0,98 m/s²."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Formel gilt für die Geschwindigkeit im freien Fall (Start aus der Ruhe)?",
+          a: [
+            "v = g · t.",
+            "v = s / t.",
+            "v = a / t.",
+            "v = m · g."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Formel gilt für den Fallweg beim freien Fall (Start aus der Ruhe)?",
+          a: [
+            "s = ½ · g · t².",
+            "s = g · t.",
+            "s = v · t.",
+            "s = m · g."
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Stein fällt 1 s im freien Fall. Wie groß ist seine Geschwindigkeit ungefähr?",
+          a: [
+            "v ≈ 9,8 m/s.",
+            "v ≈ 1 m/s.",
+            "v ≈ 98 m/s.",
+            "v ≈ 4,9 m/s."
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Körper fällt im freien Fall 2 s. Wie groß ist v ungefähr?",
+          a: [
+            "v ≈ 19,6 m/s.",
+            "v ≈ 9,8 m/s.",
+            "v ≈ 2 m/s.",
+            "v ≈ 4,9 m/s."
+          ],
+          c: 0
+        },
+        {
+          q: "Wie groß ist der Fallweg nach 2 s freiem Fall (ohne Luftwiderstand)?",
+          a: [
+            "s ≈ 19,6 m.",
+            "s ≈ 9,8 m.",
+            "s ≈ 4,9 m.",
+            "s ≈ 39,2 m."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Aussage stimmt (ohne Luftwiderstand)?",
+          a: [
+            "Alle Körper fallen gleich schnell.",
+            "Schwere Körper fallen schneller als leichte.",
+            "Leichte Körper fallen schneller als schwere.",
+            "Nur Metalle fallen."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Größe ist beim freien Fall (auf der Erde) näherungsweise konstant?",
+          a: [
+            "Beschleunigung g.",
+            "Geschwindigkeit v.",
+            "Weg s.",
+            "Masse m."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Art Bewegung ist der freie Fall (ohne Luftwiderstand)?",
           a: [
             "Gleichmäßig beschleunigte Bewegung.",
             "Gleichförmige Bewegung.",
-            "Kreisbewegung.",
-            "Keine Bewegung."
+            "Ruhe.",
+            "Kreisbewegung."
           ],
           c: 0
         },
         {
-          q: "Wie groß ist die Beschleunigung im freien Fall (ohne Luftwiderstand)?",
+          q: "Was zeigt ein v-t-Diagramm beim freien Fall?",
           a: [
-            "g ≈ 9,81 m/s²",
-            "1 m/s²",
-            "100 m/s²",
-            "0 m/s²"
+            "Die Geschwindigkeit nimmt linear mit der Zeit zu.",
+            "Die Geschwindigkeit bleibt immer gleich.",
+            "Die Geschwindigkeit nimmt zufällig zu oder ab.",
+            "Die Geschwindigkeit wird negativ."
           ],
           c: 0
         },
         {
-          q: "Ein Auto bremst gleichmäßig von 20 m/s auf 0 m/s in 4 s ab. Wie groß ist a?",
+          q: "Was zeigt ein s-t-Diagramm beim freien Fall?",
           a: [
-            "-5 m/s²",
-            "5 m/s²",
-            "-20 m/s²",
-            "80 m/s²"
+            "Eine Parabel (Weg wächst mit t²).",
+            "Eine Gerade.",
+            "Eine waagerechte Linie.",
+            "Eine Zickzacklinie."
+          ],
+          c: 0
+        },
+        {
+          q: "Was wird beim freien Fall in der Praxis oft vernachlässigt?",
+          a: [
+            "Luftwiderstand.",
+            "Schwerkraft.",
+            "Masse.",
+            "Zeit."
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Ball fällt aus größerer Höhe. Was passiert mit seiner Geschwindigkeit (ohne Luftwiderstand)?",
+          a: [
+            "Sie wird immer größer.",
+            "Sie bleibt gleich.",
+            "Sie wird immer kleiner.",
+            "Sie ist immer 0."
+          ],
+          c: 0
+        },
+        {
+          q: "Wie verändert sich der Weg pro Sekunde beim freien Fall?",
+          a: [
+            "Er wird in jeder Sekunde größer.",
+            "Er bleibt in jeder Sekunde gleich.",
+            "Er wird immer kleiner.",
+            "Er ist immer null."
+          ],
+          c: 0
+        }
+      ]
+    },
+
+    energie_arbeit: {
+      name: "Energie & Arbeit",
+      icon: "🔧",
+      questions: [
+        {
+          q: "Welche Formel beschreibt die (mechanische) Arbeit W?",
+          a: [
+            "W = F · s.",
+            "W = m · g.",
+            "W = v · t.",
+            "W = p · V."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Einheit hat die Arbeit W?",
+          a: [
+            "Joule (J).",
+            "Newton (N).",
+            "Meter (m).",
+            "Kilogramm (kg)."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Kombination passt?",
+          a: [
+            "1 J = 1 N · 1 m.",
+            "1 J = 1 kg · 1 m.",
+            "1 J = 1 m/s.",
+            "1 J = 1 N / m."
+          ],
+          c: 0
+        },
+        {
+          q: "Wann wird (mechanische) Arbeit verrichtet?",
+          a: [
+            "Wenn eine Kraft einen Körper entlang eines Weges bewegt.",
+            "Wenn ein Körper ruht.",
+            "Wenn keine Kraft wirkt.",
+            "Wenn nur die Masse sich ändert."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Formel beschreibt die potenzielle Lageenergie E_pot bei Höhe h?",
+          a: [
+            "E_pot = m · g · h.",
+            "E_pot = ½ · m · v².",
+            "E_pot = F · s.",
+            "E_pot = p · V."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Formel beschreibt die kinetische Energie E_kin?",
+          a: [
+            "E_kin = ½ · m · v².",
+            "E_kin = m · g · h.",
+            "E_kin = F · s.",
+            "E_kin = p · V."
+          ],
+          c: 0
+        },
+        {
+          q: "Was ist die SI-Einheit der Energie?",
+          a: [
+            "Joule (J).",
+            "Meter (m).",
+            "Sekunde (s).",
+            "Kilogramm (kg)."
+          ],
+          c: 0
+        },
+        {
+          q: "Eine Kiste (m = 20 kg) wird mit F = 50 N über 4 m gezogen. Wie groß ist W?",
+          a: [
+            "200 J.",
+            "5 J.",
+            "800 J.",
+            "1000 J."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Aussage zur Energie ist richtig?",
+          a: [
+            "Energie kann von einer Form in eine andere umgewandelt werden.",
+            "Energie kann aus dem Nichts entstehen.",
+            "Energie verschwindet einfach.",
+            "Energie hat keine Einheit."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Aussage ist richtig?",
+          a: [
+            "Leistung P = Arbeit W pro Zeit t.",
+            "Leistung P = Zeit pro Arbeit.",
+            "Leistung P = Kraft · Masse.",
+            "Leistung P = Weg · Zeit."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Einheit hat die Leistung P?",
+          a: [
+            "Watt (W).",
+            "Joule (J).",
+            "Newton (N).",
+            "Meter (m)."
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Motor verrichtet 6000 J Arbeit in 60 s. Wie groß ist die Leistung?",
+          a: [
+            "100 W.",
+            "10 W.",
+            "1000 W.",
+            "600 W."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Kombination ist korrekt?",
+          a: [
+            "1 W = 1 J/s.",
+            "1 W = 1 N.",
+            "1 W = 1 kg.",
+            "1 W = 1 m/s."
+          ],
+          c: 0
+        },
+        {
+          q: "Wodurch kann die Arbeit größer werden?",
+          a: [
+            "Durch größeren Weg oder größere Kraft.",
+            "Durch kleinere Kraft und kleineren Weg.",
+            "Durch kleinere Kraft bei gleichem Weg.",
+            "Durch kleineren Weg bei gleicher Kraft."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Aussage zur Energie im Alltag ist richtig?",
+          a: [
+            "Je mehr Arbeit pro Zeit, desto größer die Leistung.",
+            "Je mehr Leistung, desto kleiner die Arbeit.",
+            "Arbeit und Leistung sind dasselbe.",
+            "Arbeit spielt in der Physik keine Rolle."
+          ],
+          c: 0
+        }
+      ]
+    },
+
+    kraft_beschleunigung: {
+      name: "Kraft & Beschleunigung (Extra)",
+      icon: "💥",
+      questions: [
+        {
+          q: "Welche Formel stellt den Zusammenhang von Kraft, Masse und Beschleunigung dar?",
+          a: [
+            "F = m · a.",
+            "F = m · g.",
+            "F = s / t.",
+            "F = p · V."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Einheit hat die Kraft F?",
+          a: [
+            "Newton (N).",
+            "Joule (J).",
+            "Watt (W).",
+            "Meter (m)."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Kombination ist richtig?",
+          a: [
+            "1 N = 1 kg · m/s².",
+            "1 N = 1 kg.",
+            "1 N = 1 m/s.",
+            "1 N = 1 J/s."
+          ],
+          c: 0
+        },
+        {
+          q: "Was passiert, wenn auf die gleiche Masse eine größere Kraft wirkt?",
+          a: [
+            "Die Beschleunigung wird größer.",
+            "Die Beschleunigung wird kleiner.",
+            "Die Masse wird größer.",
+            "Die Masse wird kleiner."
+          ],
+          c: 0
+        },
+        {
+          q: "Was passiert, wenn bei gleicher Kraft die Masse größer wird?",
+          a: [
+            "Die Beschleunigung wird kleiner.",
+            "Die Beschleunigung wird größer.",
+            "Die Beschleunigung bleibt gleich.",
+            "Die Beschleunigung wird unendlich."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Aussage beschreibt den 2. Newtonschen Axiom (Kraftgesetz)?",
+          a: [
+            "F = m · a – Kraft bewirkt Beschleunigung.",
+            "Kräfte treten paarweise auf.",
+            "Kräfte immer im Gleichgewicht.",
+            "Kräfte haben keine Wirkung."
+          ],
+          c: 0
+        },
+        {
+          q: "Ein Körper der Masse 2 kg wird mit 6 N beschleunigt. Wie groß ist a?",
+          a: [
+            "3 m/s².",
+            "6 m/s².",
+            "2 m/s².",
+            "12 m/s²."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Aussage ist richtig?",
+          a: [
+            "Je größer F bei gleicher Masse, desto größer a.",
+            "Je größer F bei gleicher Masse, desto kleiner a.",
+            "Je größer F, desto kleiner die Wirkung.",
+            "Je größer F, desto kleiner die Masse."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Situation zeigt eine Kraftwirkung?",
+          a: [
+            "Auto beschleunigt beim Anfahren.",
+            "Buch liegt ruhig auf dem Tisch.",
+            "Auto steht auf dem Parkplatz.",
+            "Ball liegt still auf dem Boden."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Größe ist direkt proportional zur Beschleunigung a?",
+          a: [
+            "Kraft F (bei fester Masse).",
+            "Masse m.",
+            "Zeit t.",
+            "Temperatur T."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Größe ist umgekehrt proportional zur Beschleunigung a?",
+          a: [
+            "Masse m (bei fester Kraft).",
+            "Kraft F.",
+            "Weg s.",
+            "Energie E."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Einheit hat die Masse m im Kraftgesetz?",
+          a: [
+            "Kilogramm (kg).",
+            "Newton (N).",
+            "Joule (J).",
+            "Meter (m)."
+          ],
+          c: 0
+        },
+        {
+          q: "Wie wirkt sich eine resultierende Kraft von 0 N auf die Bewegung aus?",
+          a: [
+            "Keine Beschleunigung – Geschwindigkeit bleibt gleich.",
+            "Der Körper beschleunigt stark.",
+            "Der Körper ändert sofort seine Richtung zufällig.",
+            "Die Masse verschwindet."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche der folgenden Aussagen ist ein Beispiel für das Kraftgesetz?",
+          a: [
+            "Schwere LKW beschleunigen langsamer als leichte Autos bei gleicher Motorleistung.",
+            "Ein Auto hat vier Reifen.",
+            "Wasser kocht bei 100 °C.",
+            "Ein Jahr hat 365 Tage."
+          ],
+          c: 0
+        },
+        {
+          q: "Welche Aussage passt zur Kraft im Alltag?",
+          a: [
+            "Ohne resultierende Kraft keine Änderung der Geschwindigkeit.",
+            "Ohne Kraft gibt es keine Bewegung.",
+            "Kräfte haben immer nur eine Richtung: nach unten.",
+            "Kräfte sind nur in der Physik wichtig, nicht im Alltag."
           ],
           c: 0
         }
