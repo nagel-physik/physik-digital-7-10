@@ -61,6 +61,30 @@
       border: 1px solid rgba(148, 163, 184, 0.8);
       color: var(--text-soft);
     }
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.back-link {
+  display: inline-block;
+  color: var(--text-soft);
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  text-decoration: none;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.back-link:hover {
+  color: #fff;
+  border-color: #fff;
+}
 
     .top-badge span {
       width: 0.45rem;
@@ -309,16 +333,20 @@
 <body>
   <div class="page">
     <header>
-      <div class="top-badge">
-        <span></span>
-        Physik · Klasse 10 · Formeln
-      </div>
-      <h1>Magnetismus, Schwingungen &amp; Wellen</h1>
-      <p class="subtitle">
-        Wichtige Formeln mit Bedeutung und Einheiten – als Lernhilfe für Tests
-        und Klassenarbeiten.
-      </p>
-    </header>
+  <div class="header-top">
+    <div class="top-badge">
+      <span></span>
+      Physik · Klasse 10 · Formeln
+    </div>
+    <a href="klasse10.html" class="back-link">← Zurück Klasse 10</a>
+  </div>
+
+  <h1>Magnetismus, Schwingungen &amp; Wellen</h1>
+  <p class="subtitle">
+    Wichtige Formeln mit Bedeutung und Einheiten – als Lernhilfe für Tests
+    und Klassenarbeiten.
+  </p>
+</header>
 
     <main>
       <section>
