@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Lernzettel Klasse 9 – Gleichförmige Bewegung</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      padding: 1.5rem;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wrapper {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .page {
+      background: #ffffff;
+      color: #111827;
+      border-radius: 18px;
+      padding: 1.8rem 1.6rem 2rem;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+      border: 1px solid #e5e7eb;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .meta {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #6b7280;
+    }
+
+    h1 {
+      margin-top: 0.25rem;
+      font-size: 1.35rem;
+    }
+
+    .topic {
+      margin-top: 0.3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      padding: 0.18rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid #22c55e;
+      color: #166534;
+      background: #dcfce7;
+    }
+
+    .topic span.icon { font-size: 1rem; }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      align-items: flex-end;
+      font-size: 0.8rem;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 0.25rem 0.9rem;
+      background: #f9fafb;
+      color: #111827;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      border-color: #22c55e;
+      background: #22c55e;
+      color: #ecfdf5;
+    }
+
+    main p {
+      font-size: 0.94rem;
+      line-height: 1.5;
+      color: #111827;
+    }
+    main p + p { margin-top: 0.45rem; }
+
+    h2 {
+      font-size: 1.02rem;
+      margin-top: 0.9rem;
+      margin-bottom: 0.25rem;
+      color: #166534;
+    }
+
+    ul {
+      margin-left: 1rem;
+      margin-top: 0.3rem;
+      font-size: 0.94rem;
+      color: #111827;
+    }
+    li + li { margin-top: 0.18rem; }
+
+    .formula {
+      margin: 0.45rem 0;
+      padding: 0.4rem 0.55rem;
+      border-radius: 10px;
+      border: 1px dashed #9ca3af;
+      font-family: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.9rem;
+      background: #f9fafb;
+    }
+
+    .example {
+      margin-top: 0.4rem;
+      padding: 0.45rem 0.6rem;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 0.9rem;
+    }
+
+    .example strong { color: #166534; }
+
+    .hint {
+      font-size: 0.82rem;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+
+    .tasks {
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed #d1d5db;
+    }
+
+    .tasks h2 {
+      margin-top: 0;
+      margin-bottom: 0.35rem;
+    }
+
+    .task-list { margin-left: 1rem; }
+    .task-list li { margin-top: 0.35rem; }
+
+    .solution-toggle {
+      margin-top: 0.6rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.82rem;
+      background: #f9fafb;
+      cursor: pointer;
+    }
+
+    .solution-panel {
+      margin-top: 0.55rem;
+      padding: 0.55rem 0.7rem 0.6rem;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px solid #22c55e;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .solution-panel ul { margin-left: 1.1rem; }
+    .solution-panel li + li { margin-top: 0.3rem; }
+
+    footer {
+      margin-top: 0.9rem;
+      font-size: 0.76rem;
+      color: #6b7280;
+      text-align: right;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 1rem; }
+      .page { padding: 1.4rem 1.1rem 1.6rem; }
+      header { flex-direction: column; align-items: flex-start; }
+      .actions { align-items: flex-start; }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .wrapper { max-width: none; }
+      .page {
+        box-shadow: none;
+        border-radius: 0;
+        border: none;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="page">
+    <header>
+      <div>
+        <div class="meta">Physik · Klasse 9 · Bewegung</div>
+        <h1>Gleichförmige Bewegung – Lernzettel</h1>
+        <div class="topic">
+          <span class="icon">🚗</span>
+          <span>v = s / t</span>
+        </div>
+      </div>
+      <div class="actions">
+        <a href="klasse9_downloads.html" class="btn">← Zurück zu Downloads</a>
+        <button class="btn primary" onclick="window.print()">🖨️ Drucken</button>
+      </div>
+    </header>
+
+    <main>
+      <p>
+        Eine Bewegung heißt <strong>gleichförmig</strong>, wenn die
+        <strong>Geschwindigkeit v</strong> während des gesamten Bewegungsablaufs
+        <strong>konstant</strong> bleibt. In gleichen Zeitintervallen werden
+        gleich große Wege zurückgelegt.
+      </p>
+
+      <h2>Grundgrößen</h2>
+      <ul>
+        <li><strong>Weg s</strong> – wie weit ein Körper sich bewegt (Einheit: Meter m)</li>
+        <li><strong>Zeit t</strong> – wie lange die Bewegung dauert (Einheit: Sekunden s)</li>
+        <li><strong>Geschwindigkeit v</strong> – wie schnell die Bewegung ist</li>
+      </ul>
+
+      <div class="formula">
+        <strong>Formel:</strong> v = s / t
+      </div>
+      <p class="hint">
+        Für Rechnungen müssen Weg und Zeit in zueinander passenden Einheiten
+        eingesetzt werden, z.&nbsp;B. Meter und Sekunden.
+      </p>
+
+      <h2>Einheiten & Umrechnung</h2>
+      <ul>
+        <li>Standard-Einheit in der Physik: m/s (Meter pro Sekunde)</li>
+        <li>Alltagseinheit im Straßenverkehr: km/h (Kilometer pro Stunde)</li>
+      </ul>
+      <div class="formula">
+        1 m/s ≈ 3,6 km/h &nbsp; • &nbsp; 1 km/h ≈ 0,28 m/s
+      </div>
+
+      <div class="example">
+        <strong>Beispiel:</strong> Ein Fahrradfahrer legt in 40 s einen Weg von 100 m zurück.<br>
+        Geschwindigkeit: v = s / t = 100 m / 40 s = 2,5 m/s ≈ 9 km/h.
+      </div>
+
+      <h2>s-t-Diagramm</h2>
+      <p>
+        Bei gleichförmigen Bewegungen ist das <strong>s-t-Diagramm</strong>
+        eine <strong>Gerade</strong>. Je steiler die Gerade, desto größer ist
+        die Geschwindigkeit. Die Steigung entspricht der Geschwindigkeit v.
+      </p>
+
+      <div class="tasks">
+        <h2>Übungsaufgaben</h2>
+        <ol class="task-list">
+          <li>Ein Auto fährt gleichförmig mit 90 km/h. Wie weit kommt es in 20 Minuten?</li>
+          <li>Ein Jogger läuft mit 2,8 m/s. Wie lange braucht er für 700 m?</li>
+          <li>In einem s-t-Diagramm steigt die Strecke pro Sekunde um 3 m. Welche Geschwindigkeit hat der Körper?</li>
+        </ol>
+
+        <button class="solution-toggle" onclick="toggleSolution()">
+          Lösungen anzeigen
+        </button>
+
+        <div class="solution-panel" id="solution-panel">
+          <ul>
+            <li>
+              90 km/h = 25 m/s, t = 20 min = 1200 s → s = v·t = 25·1200 = 30 000 m = <strong>30 km</strong>.
+            </li>
+            <li>
+              t = s / v = 700 m / 2,8 m/s = 250 s ≈ <strong>4,2 min</strong>.
+            </li>
+            <li>
+              Steigung = 3 m pro s → v = <strong>3 m/s</strong>.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      © 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Lernzettel Klasse 9
+    </footer>
+  </div>
+</div>
+
+<script>
+  let open = false;
+  function toggleSolution() {
+    const panel = document.getElementById('solution-panel');
+    open = !open;
+    panel.style.display = open ? 'block' : 'none';
+    document.querySelector('.solution-toggle').textContent =
+      open ? 'Lösungen ausblenden' : 'Lösungen anzeigen';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Lernzettel Klasse 9 – Freier Fall</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Layout wie oben, Akzent orange (#ea580c) */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      padding: 1.5rem;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .wrapper { max-width: 900px; width: 100%; }
+    .page {
+      background: #ffffff;
+      color: #111827;
+      border-radius: 18px;
+      padding: 1.8rem 1.6rem 2rem;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+      border: 1px solid #e5e7eb;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .meta { font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: #6b7280; }
+    h1 { margin-top: 0.25rem; font-size: 1.35rem; }
+    .topic {
+      margin-top: 0.3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      padding: 0.18rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid #ea580c;
+      color: #9a3412;
+      background: #ffedd5;
+    }
+    .topic span.icon { font-size: 1rem; }
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      align-items: flex-end;
+      font-size: 0.8rem;
+    }
+    .btn {
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 0.25rem 0.9rem;
+      background: #f9fafb;
+      color: #111827;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+    }
+    .btn.primary {
+      border-color: #ea580c;
+      background: #ea580c;
+      color: #fffbeb;
+    }
+    main p { font-size: 0.94rem; line-height: 1.5; color: #111827; }
+    main p + p { margin-top: 0.45rem; }
+    h2 { font-size: 1.02rem; margin-top: 0.9rem; margin-bottom: 0.25rem; color: #9a3412; }
+    ul { margin-left: 1rem; margin-top: 0.3rem; font-size: 0.94rem; color: #111827; }
+    li + li { margin-top: 0.18rem; }
+    .formula {
+      margin: 0.45rem 0;
+      padding: 0.4rem 0.55rem;
+      border-radius: 10px;
+      border: 1px dashed #9ca3af;
+      font-family: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.9rem;
+      background: #f9fafb;
+    }
+    .example {
+      margin-top: 0.4rem;
+      padding: 0.45rem 0.6rem;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 0.9rem;
+    }
+    .example strong { color: #9a3412; }
+    .tasks { margin-top: 1rem; padding-top: 0.75rem; border-top: 1px dashed #d1d5db; }
+    .task-list { margin-left: 1rem; }
+    .task-list li { margin-top: 0.35rem; }
+    .solution-toggle {
+      margin-top: 0.6rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.82rem;
+      background: #f9fafb;
+      cursor: pointer;
+    }
+    .solution-panel {
+      margin-top: 0.55rem;
+      padding: 0.55rem 0.7rem 0.6rem;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px solid #ea580c;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .solution-panel ul { margin-left: 1.1rem; }
+    .solution-panel li + li { margin-top: 0.3rem; }
+    footer { margin-top: 0.9rem; font-size: 0.76rem; color: #6b7280; text-align: right; }
+    @media (max-width: 700px) {
+      body { padding: 1rem; }
+      .page { padding: 1.4rem 1.1rem 1.6rem; }
+      header { flex-direction: column; align-items: flex-start; }
+      .actions { align-items: flex-start; }
+    }
+    @media print {
+      body { background: #ffffff; padding: 0; }
+      .wrapper { max-width: none; }
+      .page { box-shadow: none; border-radius: 0; border: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="page">
+    <header>
+      <div>
+        <div class="meta">Physik · Klasse 9 · Fallbewegung</div>
+        <h1>Freier Fall – Lernzettel</h1>
+        <div class="topic">
+          <span class="icon">⬇️</span>
+          <span>g ≈ 9,81 m/s²</span>
+        </div>
+      </div>
+      <div class="actions">
+        <a href="klasse9_downloads.html" class="btn">← Zurück zu Downloads</a>
+        <button class="btn primary" onclick="window.print()">🖨️ Drucken</button>
+      </div>
+    </header>
+
+    <main>
+      <p>
+        Beim <strong>freien Fall</strong> wirkt (im Modell) nur die
+        <strong>Gravitationskraft</strong>. Luftwiderstand wird vernachlässigt.
+      </p>
+
+      <h2>Fallbeschleunigung</h2>
+      <p>Alle Körper fallen mit der gleichen Fallbeschleunigung:</p>
+      <div class="formula">g ≈ 9,81 m/s² (oft gerundet: 10 m/s²)</div>
+
+      <h2>Geschwindigkeit</h2>
+      <p>Start aus der Ruhe (v₀ = 0):</p>
+      <div class="formula">v = g · t</div>
+
+      <h2>Fallstrecke</h2>
+      <p>Strecke beim freien Fall aus der Ruhe:</p>
+      <div class="formula">s = ½ · g · t²</div>
+
+      <div class="example">
+        <strong>Beispiel:</strong> Stein fällt 2 s → v ≈ 10·2 = 20 m/s, s ≈ 0,5·10·4 = 20 m.
+      </div>
+
+      <div class="tasks">
+        <h2>Übungsaufgaben</h2>
+        <ol class="task-list">
+          <li>Ball fällt 1,5 s im freien Fall. Mit welcher Geschwindigkeit trifft er auf?</li>
+          <li>Wie tief fällt ein Stein in 3 s?</li>
+          <li>Ein Körper erreicht nach 0,8 s eine Geschwindigkeit von 8 m/s. Welchen Wert für g hast du benutzt?</li>
+        </ol>
+
+        <button class="solution-toggle" onclick="toggleSolution()">
+          Lösungen anzeigen
+        </button>
+
+        <div class="solution-panel" id="solution-panel">
+          <ul>
+            <li>v ≈ 10 · 1,5 = <strong>15 m/s</strong>.</li>
+            <li>s ≈ 0,5 · 10 · 9 = <strong>45 m</strong>.</li>
+            <li>g = v/t ≈ 8/0,8 = <strong>10 m/s²</strong>.</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <footer>© 2025 – M. Nagel · FGO Perleberg · Physik Digital 7–10 · Lernzettel Klasse 9</footer>
+  </div>
+</div>
+
+<script>
+  let open = false;
+  function toggleSolution() {
+    const p = document.getElementById('solution-panel');
+    open = !open;
+    p.style.display = open ? 'block' : 'none';
+    document.querySelector('.solution-toggle').textContent =
+      open ? 'Lösungen ausblenden' : 'Lösungen anzeigen';
+  }
+</script>
+</body>
+</html>
