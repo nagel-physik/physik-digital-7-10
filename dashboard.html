@@ -10,14 +10,14 @@
       --bg-grad-top: #0f172a;
       --bg-grad-bottom: #000000;
       --text-main: #e5e7eb;
-      --text-soft: #cbd5f5;
+      --text-soft: #9ca3af;
 
-      --k7: linear-gradient(135deg, #22d3ee, #3b82f6);
-      --k8: linear-gradient(135deg, #a855f7, #6366f1);
-      --k9: linear-gradient(135deg, #3b82f6, #2563eb);
-      --k10: linear-gradient(135deg, #22c55e, #16a34a);
-      --formeln: linear-gradient(135deg, #facc15, #f97316);
-      --ask: linear-gradient(135deg, #6366f1, #4f46e5);
+      --k7: linear-gradient(135deg, #22c55e, #16a34a);
+      --k8: linear-gradient(135deg, #0ea5e9, #2563eb);
+      --k9: linear-gradient(135deg, #a855f7, #6366f1);
+      --k10: linear-gradient(135deg, #f97316, #ea580c);
+      --formeln: linear-gradient(135deg, #facc15, #eab308);
+      --contact: linear-gradient(135deg, #64748b, #4b5563);
     }
 
     * {
@@ -26,67 +26,75 @@
       padding: 0;
     }
 
-    html,
     body {
-      height: 100%;
-    }
-
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(circle at top, var(--bg-grad-top) 0, var(--bg-dark) 55%);
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 50%, #000 100%);
       color: var(--text-main);
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 1.25rem;
+      padding: 1.5rem;
     }
 
     .app {
       width: 100%;
-      max-width: 960px;
+      max-width: 900px;
+      margin: auto;
     }
 
     .panel {
+      background: radial-gradient(circle at top left, #1e293b, #020617 55%);
       border-radius: 26px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: radial-gradient(circle at top left, #020617 0, #020617 80%);
-      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.9);
-      padding: 1.3rem 1.5rem 1.4rem;
+      padding: 1.4rem 1.6rem 1.6rem;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
+      border: 1px solid rgba(15, 23, 42, 0.9);
     }
 
-    .heading {
-      margin-bottom: 1rem;
+    header {
+      margin-bottom: 1.4rem;
     }
 
-    .subline {
+    .top-line {
       font-size: 0.8rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: rgba(156, 163, 175, 0.95);
-      margin-bottom: 0.25rem;
+      color: var(--text-soft);
+      margin-bottom: 0.4rem;
     }
 
     h1 {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       letter-spacing: 0.03em;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.35rem;
     }
 
-    .heading p {
+    .subtitle {
       font-size: 0.9rem;
-      color: rgba(209, 213, 219, 0.95);
-      max-width: 30rem;
+      color: var(--text-soft);
+      line-height: 1.45;
+    }
+
+    .subtitle b {
+      color: #e5e7eb;
+      font-weight: 600;
     }
 
     .tiles {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 0.7rem;
-      margin-bottom: 1rem;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.9rem;
+      margin: 1.4rem 0 1.6rem;
+    }
+
+    @media (min-width: 640px) {
+      .tiles {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     .tile {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -99,234 +107,347 @@
       font-size: 0.95rem;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
       border: 1px solid rgba(15, 23, 42, 0.85);
-      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+      transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        filter 0.12s ease;
     }
 
-    .tile:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.05);
-      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.9);
+    .tile span {
+      pointer-events: none;
     }
 
     .tile.k7 {
       background: var(--k7);
     }
+
     .tile.k8 {
       background: var(--k8);
     }
+
     .tile.k9 {
       background: var(--k9);
     }
+
     .tile.k10 {
       background: var(--k10);
     }
+
     .tile.formeln {
       background: var(--formeln);
       color: #111827;
-      font-weight: 600;
-    }
-    .tile.ask {
-      background: var(--ask);
     }
 
-    /* ⭐ Bewertungs-Karte */
-
-    .rating-card {
-      margin-top: 0.5rem;
-      border-radius: 20px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: radial-gradient(circle at top left, #020617 0, #020617 80%);
-      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.85);
-      padding: 0.9rem 1rem 1rem;
-      color: #e5e7eb;
+    .tile.contact {
+      background: var(--contact);
     }
 
-    .rating-card h2 {
-      font-size: 1rem;
-      margin-bottom: 0.3rem;
+    .tile:hover,
+    .tile:active {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.9);
+      filter: brightness(1.03);
     }
 
-    .rating-card p {
-      font-size: 0.85rem;
-      margin-bottom: 0.5rem;
-      color: rgba(209, 213, 219, 0.96);
+    @media (hover: none) {
+      .tile:hover {
+        transform: none;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+        filter: none;
+      }
     }
 
-    .rating-stars {
-      display: flex;
-      gap: 0.35rem;
-      margin-bottom: 0.45rem;
-    }
-
-    .rating-stars button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.7rem;
-      line-height: 1;
-      padding: 0;
-      color: rgba(148, 163, 184, 0.75);
-      transition: transform 0.1s ease, color 0.1s ease;
-    }
-
-    .rating-stars button.selected,
-    .rating-stars button:hover {
-      color: #facc15;
-      transform: scale(1.1);
-    }
-
-    .rating-info {
-      font-size: 0.8rem;
-      color: rgba(148, 163, 184, 0.96);
-    }
-
-    .rating-card button.send-rating {
-      margin-top: 0.55rem;
-      padding: 0.25rem 0.9rem;
+    /* "NEU"-Badge für Klasse 9 & 10 – Sichtbarkeit per JS */
+    .tile.k9::after,
+    .tile.k10::after {
+      content: "NEU";
+      position: absolute;
+      top: 0.47rem;
+      right: 0.85rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.12rem 0.52rem;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.85);
-      background: transparent;
+      border: 1px solid rgba(248, 250, 252, 0.9);
+      background: rgba(15, 23, 42, 0.98);
       color: #e5e7eb;
-      font-size: 0.8rem;
+      box-shadow: 0 0 10px rgba(15, 23, 42, 0.95);
+      opacity: 0;
+      transform: scale(0.9);
+      transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+    }
+
+    .tile.show-new::after {
+      opacity: 1;
+      transform: scale(1);
+      animation: pulse-badge 1.4s ease-in-out 2;
+    }
+
+    @keyframes pulse-badge {
+      0% {
+        box-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
+      }
+      50% {
+        box-shadow: 0 0 16px rgba(96, 165, 250, 1);
+      }
+      100% {
+        box-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
+      }
+    }
+
+    /* Feedback-Bereich */
+    .feedback {
+      margin-top: 0.5rem;
+      padding: 0.9rem 1rem 0.8rem;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.93);
+      border: 1px solid rgba(30, 64, 175, 0.7);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+    }
+
+    .feedback h2 {
+      font-size: 0.95rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .feedback p {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-bottom: 0.5rem;
+    }
+
+    .stars {
+      display: flex;
+      gap: 0.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .star-btn {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at 30% 15%, #0f172a, #020617);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: #64748b;
       cursor: pointer;
+      transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease,
+        background 0.12s ease,
+        color 0.12s ease,
+        border-color 0.12s ease;
     }
 
-    .rating-card button.send-rating:disabled {
-      opacity: 0.4;
-      cursor: default;
+    .star-btn.selected {
+      color: #fbbf24;
+      border-color: #fbbf24;
+      background: radial-gradient(circle at 30% 15%, #1e293b, #020617);
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.6);
     }
 
-    .rating-card button.send-rating:not(:disabled):hover {
-      border-color: #ffffff;
+    .star-btn:active {
+      transform: scale(0.94);
     }
 
-    .footer {
-      margin-top: 0.8rem;
-      font-size: 0.72rem;
-      text-align: right;
+    .feedback-actions {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .feedback textarea {
+      width: 100%;
+      min-height: 3rem;
+      border-radius: 10px;
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-main);
+      font-size: 0.78rem;
+      padding: 0.4rem 0.5rem;
+      resize: vertical;
+    }
+
+    .feedback textarea::placeholder {
       color: rgba(148, 163, 184, 0.9);
     }
 
-    @media (max-width: 640px) {
-      body {
-        padding: 0.7rem;
-      }
+    .feedback button.send-btn {
+      margin-left: auto;
+      padding: 0.32rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(94, 234, 212, 0.9);
+      background: radial-gradient(circle at 20% 0, #22c55e, #0f766e);
+      color: #ecfdf5;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      box-shadow: 0 12px 25px rgba(5, 150, 105, 0.7);
+      transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        filter 0.12s ease;
+    }
 
-      .panel {
-        padding: 1.1rem 1rem 1.25rem;
-        border-radius: 22px;
-      }
+    .feedback button.send-btn span.icon {
+      font-size: 0.95rem;
+    }
 
-      h1 {
-        font-size: 1.35rem;
-      }
+    .feedback button.send-btn:hover {
+      transform: translateY(-0.5px);
+      filter: brightness(1.03);
+      box-shadow: 0 16px 30px rgba(5, 150, 105, 0.85);
+    }
 
-      .tile {
-        padding-block: 0.8rem;
-        font-size: 0.9rem;
-      }
+    .feedback button.send-btn:active {
+      transform: translateY(0.5px) scale(0.97);
+      box-shadow: 0 10px 20px rgba(5, 150, 105, 0.7);
+    }
+
+    footer {
+      margin-top: 0.9rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(148, 163, 184, 0.85);
+    }
+
+    footer span.dot {
+      margin: 0 0.4rem;
+      opacity: 0.7;
     }
   </style>
 </head>
 <body>
   <div class="app">
     <main class="panel">
-      <section class="heading">
-        <div class="subline">FGO Perleberg · Physik Digital</div>
+      <header>
+        <div class="top-line">FGO Perleberg · Physik Digital</div>
         <h1>Physik Digital 7–10 – Dashboard</h1>
-        <p>
-          Wähle deine Klassenstufe oder die Formelsammlung. Alle Inhalte sind
-          für Smartphone &amp; Smartboard optimiert.
+        <p class="subtitle">
+          Wähle deine Klassenstufe oder die <b>Formelsammlung</b>.  
+          Alle Inhalte sind für <b>Smartphone</b> &amp; <b>Smartboard</b> optimiert.
         </p>
-      </section>
+      </header>
 
       <section class="tiles">
-        <a href="klasse7.html" class="tile k7">Klasse 7</a>
-        <a href="klasse8.html" class="tile k8">Klasse 8</a>
-        <a href="klasse9.html" class="tile k9">Klasse 9</a>
-        <a href="klasse10.html" class="tile k10">Klasse 10</a>
-        <a href="formelsammlung.html" class="tile formeln">Formelsammlung</a>
-
-        <a
-          href="mailto:michael.nagel@lk.brandenburg.de?subject=Fragen%20zu%20Physik%20Digital%207%E2%80%9310"
-          class="tile ask"
-        >
-          Fragen an die Lehrkraft
+        <a href="klasse7.html" class="tile k7">
+          <span>Klasse 7</span>
+        </a>
+        <a href="klasse8.html" class="tile k8">
+          <span>Klasse 8</span>
+        </a>
+        <a href="klasse9.html" class="tile k9">
+          <span>Klasse 9</span>
+        </a>
+        <a href="klasse10.html" class="tile k10">
+          <span>Klasse 10</span>
+        </a>
+        <a href="formelsammlung.html" class="tile formeln">
+          <span>Formelsammlung 7–10</span>
+        </a>
+        <a href="mailto:michael.nagel@lk.brandenburg.de?subject=Fragen%20zu%20Physik%20Digital%207-10"
+           class="tile contact">
+          <span>Fragen an die Lehrkraft</span>
         </a>
       </section>
 
-      <!-- ⭐ Bewertungsbereich -->
-      <section class="rating-card">
-        <h2>Wie findest du diese Physik-App?</h2>
-        <p>
-          Bewerte die App mit Sternen (1–5). Deine Rückmeldung hilft, die App
-          für die nächsten Klassen noch besser zu machen.
-        </p>
+      <section class="feedback">
+        <h2>Wie gefällt dir diese App?</h2>
+        <p>Tippe auf die Sterne und schicke mir anonymes Feedback. So kann ich Physik Digital weiter verbessern.</p>
 
-        <div class="rating-stars" id="ratingStars">
-          <button type="button" data-value="1" aria-label="1 Stern">★</button>
-          <button type="button" data-value="2" aria-label="2 Sterne">★</button>
-          <button type="button" data-value="3" aria-label="3 Sterne">★</button>
-          <button type="button" data-value="4" aria-label="4 Sterne">★</button>
-          <button type="button" data-value="5" aria-label="5 Sterne">★</button>
+        <div class="stars" id="starRow">
+          <button class="star-btn" data-value="1">★</button>
+          <button class="star-btn" data-value="2">★</button>
+          <button class="star-btn" data-value="3">★</button>
+          <button class="star-btn" data-value="4">★</button>
+          <button class="star-btn" data-value="5">★</button>
         </div>
 
-        <div class="rating-info" id="ratingInfo">
-          Tippe auf einen Stern, um deine Bewertung auszuwählen.
-        </div>
+        <textarea id="feedbackText" placeholder="Was hat dir geholfen? Was kann besser werden? (optional)"></textarea>
 
-        <button class="send-rating" id="sendRatingBtn" disabled>
-          Bewertung per E-Mail senden
-        </button>
+        <div class="feedback-actions">
+          <button class="send-btn" id="sendFeedback">
+            <span class="icon">📧</span>
+            <span>Feedback per Mail senden</span>
+          </button>
+        </div>
       </section>
 
-      <div class="footer">
-        © 2025 · M. Nagel · FGO Perleberg · Physik Digital 7–10
-      </div>
+      <footer>
+        Version 1.0 <span class="dot">·</span>
+        Stand: Schuljahr 2025 <span class="dot">·</span>
+        © 2025 – M. Nagel · Physik Digital 7–10
+      </footer>
     </main>
   </div>
 
   <script>
-    (function () {
-      const stars = document.querySelectorAll("#ratingStars button");
-      const info = document.getElementById("ratingInfo");
-      const sendBtn = document.getElementById("sendRatingBtn");
-      let currentRating = 0;
+    // --- NEU-Badges zeitlich begrenzen -----------------------------
+    const NEW_BADGE_DAYS = 30; // Sichtbarkeit in Tagen
 
-      stars.forEach((star) => {
-        star.addEventListener("click", () => {
-          currentRating = parseInt(star.dataset.value, 10);
+    // Veröffentlichungstage der Klassen (kannst du anpassen)
+    const publishedDates = {
+      k9: "2025-11-20",
+      k10: "2025-11-10"
+    };
 
-          stars.forEach((s) => {
-            const val = parseInt(s.dataset.value, 10);
-            s.classList.toggle("selected", val <= currentRating);
-          });
-
-          info.textContent =
-            "Ausgewählte Bewertung: " + currentRating + " von 5 Sternen.";
-          sendBtn.disabled = false;
-        });
-      });
-
-      sendBtn.addEventListener("click", () => {
-        if (!currentRating) return;
-
-        // ✉️ Mail-Adresse für Bewertungen
-        const teacherMail = "michael.nagel@lk.brandenburg.de";
-
-        const subject = encodeURIComponent("Bewertung Physik-Digital-App");
-        const body = encodeURIComponent(
-          "Bewertung: " +
-            currentRating +
-            " von 5 Sternen\n\n" +
-            "Optional: Schreibe hier noch kurz, was dir gut gefällt oder was verbessert werden kann."
-        );
-
-        const mailtoLink =
-          "mailto:" + teacherMail + "?subject=" + subject + "&body=" + body;
-        window.location.href = mailtoLink;
+    (function setNewBadges() {
+      const today = new Date();
+      Object.entries(publishedDates).forEach(([tileClass, pubDate]) => {
+        const diffTime = today - new Date(pubDate);
+        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+        if (diffDays <= NEW_BADGE_DAYS) {
+          document.querySelectorAll(".tile." + tileClass)
+            .forEach(tile => tile.classList.add("show-new"));
+        }
       });
     })();
+
+    // --- Sterne-Feedback per Mail ---------------------------------
+    const starButtons = document.querySelectorAll(".star-btn");
+    const feedbackText = document.getElementById("feedbackText");
+    const sendBtn = document.getElementById("sendFeedback");
+    let selectedStars = 0;
+
+    starButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        selectedStars = Number(btn.dataset.value);
+        starButtons.forEach(b => {
+          b.classList.toggle("selected", Number(b.dataset.value) <= selectedStars);
+        });
+      });
+    });
+
+    sendBtn.addEventListener("click", () => {
+      if (!selectedStars) {
+        alert("Bitte wähle zuerst eine Stern-Bewertung.");
+        return;
+      }
+
+      const subject = encodeURIComponent("Feedback Physik Digital 7–10 (" + selectedStars + " Sterne)");
+      const bodyLines = [
+        "Bewertung: " + "★".repeat(selectedStars) + " (" + selectedStars + " von 5)",
+        "",
+        "Feedback der Schülerin / des Schülers:",
+        feedbackText.value || "(kein zusätzlicher Kommentar eingegeben)",
+        "",
+        "--- automatisch generiert über das Dashboard Physik Digital 7–10 ---"
+      ];
+      const body = encodeURIComponent(bodyLines.join("\n"));
+
+      window.location.href = "mailto:michael.nagel@lk.brandenburg.de?subject=" +
+        subject + "&body=" + body;
+    });
   </script>
 </body>
 </html>
