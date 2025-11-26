@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Physik Klasse 9 – Formelrechner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000);
+      color: #e5e7eb;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 900px;
+      background: radial-gradient(circle at top, rgba(59,130,246,0.2), #020617);
+      border-radius: 22px;
+      padding: 1.6rem 1.5rem 1.8rem;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+      border: 1px solid rgba(148,163,184,0.45);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .meta {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+
+    h1 {
+      font-size: 1.35rem;
+      margin-top: 0.25rem;
+    }
+
+    header p {
+      margin-top: 0.35rem;
+      font-size: 0.9rem;
+      color: #cbd5f5;
+    }
+
+    .chip {
+      align-self: flex-start;
+      border-radius: 999px;
+      padding: 0.25rem 0.8rem;
+      border: 1px solid rgba(52,211,153,0.8);
+      background: radial-gradient(circle at top, rgba(52,211,153,0.25), rgba(15,23,42,0.95));
+      font-size: 0.82rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 0 18px rgba(52,211,153,0.55);
+    }
+
+    .chip span.icon { font-size: 1rem; }
+
+    .back-link {
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 0.25rem 0.9rem;
+      border: 1px solid rgba(148,163,184,0.6);
+      font-size: 0.82rem;
+      color: #e5e7eb;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(15,23,42,0.9);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
+      gap: 1.2rem;
+    }
+
+    .panel {
+      border-radius: 18px;
+      padding: 1rem 1rem 1.1rem;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(148,163,184,0.55);
+    }
+
+    .panel h2 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .panel p {
+      font-size: 0.9rem;
+      color: #cbd5f5;
+    }
+
+    .topic-select {
+      margin-top: 0.7rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .topic-select label {
+      font-size: 0.86rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.45rem;
+      border-radius: 999px;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .topic-select input {
+      accent-color: #22c55e;
+    }
+
+    .topic-select label span.badge {
+      font-size: 0.7rem;
+      padding: 0.05rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.8);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+    }
+
+    .topic-select label.active {
+      border-color: rgba(52,211,153,0.9);
+      background: radial-gradient(circle at left, rgba(52,211,153,0.2), transparent);
+    }
+
+    /* Formular rechts */
+
+    .formula-row {
+      margin-top: 0.4rem;
+      padding: 0.4rem 0.55rem;
+      border-radius: 10px;
+      border: 1px dashed rgba(148,163,184,0.8);
+      font-family: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.9rem;
+      color: #e5e7eb;
+      background: rgba(15,23,42,0.9);
+    }
+
+    .small-hint {
+      margin-top: 0.35rem;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .var-select {
+      margin-top: 0.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      font-size: 0.82rem;
+    }
+
+    .var-select button {
+      border-radius: 999px;
+      padding: 0.2rem 0.7rem;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .var-select button.active {
+      border-color: rgba(59,130,246,0.95);
+      background: radial-gradient(circle at top, rgba(59,130,246,0.3), rgba(15,23,42,1));
+    }
+
+    .inputs {
+      margin-top: 0.7rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .field label {
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+
+    .field input {
+      width: 100%;
+      margin-top: 0.2rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.8);
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      font-size: 0.9rem;
+    }
+
+    .field small {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .actions-row {
+      margin-top: 0.7rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-main {
+      border-radius: 999px;
+      padding: 0.35rem 1.1rem;
+      border: none;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #052e16;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      border: 1px solid rgba(148,163,184,0.8);
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 0.7rem;
+      padding: 0.55rem 0.7rem;
+      border-radius: 12px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(56,189,248,0.9);
+      font-size: 0.9rem;
+    }
+
+    .result strong {
+      color: #7dd3fc;
+    }
+
+    .steps {
+      margin-top: 0.45rem;
+      font-size: 0.84rem;
+      color: #cbd5f5;
+    }
+
+    .steps ol {
+      margin-left: 1rem;
+      margin-top: 0.25rem;
+    }
+
+    .steps li + li { margin-top: 0.2rem; }
+
+    .footer-note {
+      margin-top: 0.8rem;
+      font-size: 0.78rem;
+      color: #9ca3af;
+      text-align: right;
+    }
+
+    @media (max-width: 750px) {
+      body { padding: 1rem; }
+      .app { padding: 1.2rem 1.1rem 1.5rem; }
+      header { flex-direction: column; }
+      .layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div>
+      <div class="meta">Klasse 9 · Physik · Mechanik</div>
+      <h1>Formelrechner &amp; Schritt-für-Schritt-Hilfe</h1>
+      <p>
+        Wähle einen Themenbereich, entscheide, welche Größe du berechnen
+        möchtest, gib die bekannten Werte ein und sehen dir den Rechenweg an.
+      </p>
+    </div>
+    <div>
+      <a href="klasse9.html" class="back-link">← Zurück zu Klasse 9</a>
+      <div class="chip" style="margin-top:0.4rem;">
+        <span class="icon">🧮</span>
+        <span>Training statt Spicken</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- LINKS: Themenwahl -->
+    <section class="panel">
+      <h2>Thema wählen</h2>
+      <p>Such dir zuerst ein Themengebiet aus:</p>
+
+      <div class="topic-select" id="topic-select">
+        <label data-topic="gleichfoermig" class="active">
+          <input type="radio" name="topic" value="gleichfoermig" checked />
+          <span>Gleichförmige Bewegung (s, v, t)</span>
+          <span class="badge">s = v · t</span>
+        </label>
+
+        <label data-topic="beschleunigt">
+          <input type="radio" name="topic" value="beschleunigt" />
+          <span>Gleichmäßig beschleunigt (Start aus Ruhe)</span>
+          <span class="badge">v = a · t, s = ½ · a · t²</span>
+        </label>
+
+        <label data-topic="freierfall">
+          <input type="radio" name="topic" value="freierfall" />
+          <span>Freier Fall (ohne Luftwiderstand)</span>
+          <span class="badge">h = ½ · g · t²</span>
+        </label>
+
+        <label data-topic="arbeit">
+          <input type="radio" name="topic" value="arbeit" />
+          <span>Arbeit, Energie &amp; Leistung</span>
+          <span class="badge">W, E, P</span>
+        </label>
+      </div>
+
+      <p class="small-hint" style="margin-top:0.8rem;">
+        <strong>Tipp:</strong> Achte auf die Einheiten! Meistens rechnet man in
+        Metern (m), Sekunden (s), Kilogramm (kg) und Newton (N).
+      </p>
+    </section>
+
+    <!-- RECHTS: Eingabe & Ergebnis -->
+    <section class="panel" id="panel-right">
+      <h2 id="formula-title">Gleichförmige Bewegung</h2>
+
+      <div class="formula-row" id="formula-display">
+        s = v · t
+      </div>
+
+      <p class="small-hint" id="formula-hint">
+        Bei gleichförmiger Bewegung ist die Geschwindigkeit v konstant.
+        Du kannst nach s, v oder t umstellen.
+      </p>
+
+      <div class="var-select" id="var-select"></div>
+
+      <div class="inputs" id="inputs"></div>
+
+      <div class="actions-row">
+        <button class="btn-main" id="btn-calc">Berechnen</button>
+        <button class="btn-ghost" id="btn-clear">Zurücksetzen</button>
+      </div>
+
+      <div class="result" id="result" style="display:none;">
+        <div id="result-main"></div>
+        <div class="steps" id="result-steps"></div>
+      </div>
+
+      <div class="footer-note">
+        Diese Seite ersetzt nicht das Lehrbuch – sie hilft dir nur beim Üben
+        und Rechnen.
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+  // --- Datenmodell für die Themen ---------------------------
+
+  const TOPICS = {
+    gleichfoermig: {
+      title: "Gleichförmige Bewegung",
+      formula: "s = v · t",
+      hint: "v konstant – du kannst nach s, v oder t umstellen.",
+      vars: [
+        { id: "s", label: "s – Weg", unit: "m", solveFor: "s" },
+        { id: "v", label: "v – Geschwindigkeit", unit: "m/s", solveFor: "v" },
+        { id: "t", label: "t – Zeit", unit: "s", solveFor: "t" },
+      ],
+      compute: (solveFor, values) => {
+        const { s, v, t } = values;
+        const steps = [];
+        let result, symbol, unit;
+
+        if (solveFor === "s") {
+          symbol = "s";
+          unit = "m";
+          steps.push("Gegeben: v und t");
+          steps.push("Formel: s = v · t");
+          result = v * t;
+        } else if (solveFor === "v") {
+          symbol = "v";
+          unit = "m/s";
+          steps.push("Gegeben: s und t");
+          steps.push("Formel: v = s / t");
+          result = s / t;
+        } else {
+          symbol = "t";
+          unit = "s";
+          steps.push("Gegeben: s und v");
+          steps.push("Formel: t = s / v");
+          result = s / v;
+        }
+
+        steps.push(`Einsetzen und berechnen → ${symbol} ≈ ${result.toFixed(2)} ${unit}`);
+        return { symbol, value: result, unit, steps };
+      }
+    },
+
+    beschleunigt: {
+      title: "Gleichmäßig beschleunigt (Start aus Ruhe)",
+      formula: "v = a · t und s = ½ · a · t²",
+      hint: "Start aus Ruhe: v₀ = 0. Nutze je nach Aufgabe v = a·t oder s = ½·a·t².",
+      vars: [
+        { id: "v", label: "v – Endgeschwindigkeit", unit: "m/s", solveFor: "v" },
+        { id: "a", label: "a – Beschleunigung", unit: "m/s²", solveFor: "a" },
+        { id: "t", label: "t – Zeit", unit: "s", solveFor: "t" },
+      ],
+      compute: (solveFor, values) => {
+        const { v, a, t } = values;
+        const steps = [];
+        let result, symbol, unit;
+
+        if (solveFor === "v") {
+          symbol = "v"; unit = "m/s";
+          steps.push("Formel: v = a · t");
+          result = a * t;
+        } else if (solveFor === "a") {
+          symbol = "a"; unit = "m/s²";
+          steps.push("Formel: a = v / t");
+          result = v / t;
+        } else {
+          symbol = "t"; unit = "s";
+          steps.push("Formel: t = v / a");
+          result = v / a;
+        }
+
+        steps.push(`Einsetzen → ${symbol} ≈ ${result.toFixed(2)} ${unit}`);
+        return { symbol, value: result, unit, steps };
+      }
+    },
+
+    freierfall: {
+      title: "Freier Fall (ohne Luftwiderstand)",
+      formula: "h = ½ · g · t² und v = g · t",
+      hint: "g ≈ 9,81 m/s² (oft gerundet 10 m/s²). Start aus Ruhe, ohne Luftwiderstand.",
+      vars: [
+        { id: "h", label: "h – Fallhöhe", unit: "m", solveFor: "h" },
+        { id: "t", label: "t – Fallzeit", unit: "s", solveFor: "t" }
+      ],
+      compute: (solveFor, values) => {
+        const g = 9.81;
+        const { h, t } = values;
+        const steps = [];
+        let result, symbol, unit;
+
+        if (solveFor === "h") {
+          symbol = "h"; unit = "m";
+          steps.push("Formel: h = ½ · g · t²");
+          result = 0.5 * g * t * t;
+        } else {
+          symbol = "t"; unit = "s";
+          steps.push("Formel: t = √(2·h / g)");
+          result = Math.sqrt((2 * h) / g);
+        }
+
+        steps.push(`Einsetzen → ${symbol} ≈ ${result.toFixed(2)} ${unit}`);
+        return { symbol, value: result, unit, steps };
+      }
+    },
+
+    arbeit: {
+      title: "Arbeit, Energie & Leistung",
+      formula: "W = F · s, E_pot = m·g·h, E_kin = ½·m·v², P = W / t",
+      hint: "Je nach Aufgabe wählst du Arbeit W, Energie oder Leistung P als Zielgröße.",
+      vars: [
+        { id: "W", label: "W – Arbeit", unit: "J", solveFor: "W" },
+        { id: "P", label: "P – Leistung", unit: "W", solveFor: "P" },
+        { id: "Epot", label: "E_pot – pot. Energie", unit: "J", solveFor: "Epot" },
+        { id: "Ekin", label: "E_kin – Bewegungsenergie", unit: "J", solveFor: "Ekin" }
+      ],
+      compute: (solveFor, values) => {
+        const g = 9.81;
+        const { F, s, t, m, h, v } = values;
+        const steps = [];
+        let symbol, unit, result;
+
+        if (solveFor === "W") {
+          symbol = "W"; unit = "J";
+          steps.push("Verwende: W = F · s");
+          result = F * s;
+        } else if (solveFor === "P") {
+          symbol = "P"; unit = "W";
+          steps.push("Verwende: P = W / t");
+          result = values.W / t;
+        } else if (solveFor === "Epot") {
+          symbol = "E_pot"; unit = "J";
+          steps.push("Verwende: E_pot = m · g · h");
+          result = m * g * h;
+        } else {
+          symbol = "E_kin"; unit = "J";
+          steps.push("Verwende: E_kin = ½ · m · v²");
+          result = 0.5 * m * v * v;
+        }
+
+        steps.push(`Einsetzen → ${symbol} ≈ ${result.toFixed(2)} ${unit}`);
+        return { symbol, value: result, unit, steps };
+      }
+    }
+  };
+
+  // --- UI-Logik ---------------------------------------------
+
+  const topicSelectEl = document.getElementById("topic-select");
+  const varSelectEl   = document.getElementById("var-select");
+  const inputsEl      = document.getElementById("inputs");
+  const resultBox     = document.getElementById("result");
+  const resultMain    = document.getElementById("result-main");
+  const resultSteps   = document.getElementById("result-steps");
+  const formulaTitle  = document.getElementById("formula-title");
+  const formulaDisplay= document.getElementById("formula-display");
+  const formulaHint   = document.getElementById("formula-hint");
+
+  let currentTopicId = "gleichfoermig";
+  let currentSolveFor = null;
+
+  function renderTopic(topicId) {
+    currentTopicId = topicId;
+    const topic = TOPICS[topicId];
+
+    // Label-Optik
+    [...topicSelectEl.querySelectorAll("label")].forEach(label => {
+      label.classList.toggle("active", label.dataset.topic === topicId);
+    });
+
+    formulaTitle.textContent = topic.title;
+    formulaDisplay.textContent = topic.formula;
+    formulaHint.textContent = topic.hint;
+
+    // Variable-Auswahl-Buttons
+    varSelectEl.innerHTML = "";
+    topic.vars.forEach((v, index) => {
+      const btn = document.createElement("button");
+      btn.textContent = `${v.label}`;
+      btn.dataset.solveFor = v.solveFor;
+      if (index === 0) {
+        btn.classList.add("active");
+        currentSolveFor = v.solveFor;
+      }
+      btn.addEventListener("click", () => {
+        currentSolveFor = v.solveFor;
+        [...varSelectEl.querySelectorAll("button")]
+          .forEach(b => b.classList.toggle("active", b === btn));
+        buildInputs();
+        clearResult();
+      });
+      varSelectEl.appendChild(btn);
+    });
+
+    buildInputs();
+    clearResult();
+  }
+
+  function buildInputs() {
+    const topic = TOPICS[currentTopicId];
+    inputsEl.innerHTML = "";
+
+    // Welche Eingaben werden für dieses "solveFor" gebraucht?
+    let fields = [];
+
+    if (currentTopicId === "gleichfoermig") {
+      if (currentSolveFor === "s") fields = ["v","t"];
+      else if (currentSolveFor === "v") fields = ["s","t"];
+      else fields = ["s","v"];
+    } else if (currentTopicId === "beschleunigt") {
+      if (currentSolveFor === "v") fields = ["a","t"];
+      else if (currentSolveFor === "a") fields = ["v","t"];
+      else fields = ["v","a"];
+    } else if (currentTopicId === "freierfall") {
+      if (currentSolveFor === "h") fields = ["t"];
+      else fields = ["h"];
+    } else {
+      // arbeit
+      if (currentSolveFor === "W") fields = ["F","s"];
+      else if (currentSolveFor === "P") fields = ["W","t"];
+      else if (currentSolveFor === "Epot") fields = ["m","h"];
+      else fields = ["m","v"];
+    }
+
+    const UNIT_MAP = {
+      s: "m", v: "m/s", t: "s", a: "m/s²", h: "m", F: "N",
+      W: "J", m: "kg"
+    };
+
+    fields.forEach(id => {
+      const field = document.createElement("div");
+      field.className = "field";
+
+      const label = document.createElement("label");
+      label.textContent = id === id.toUpperCase()
+        ? `${id} in ${UNIT_MAP[id] || ""}`
+        : `${id} in ${UNIT_MAP[id] || ""}`;
+
+      const input = document.createElement("input");
+      input.type = "number";
+      input.step = "any";
+      input.id   = `input-${id}`;
+      input.placeholder = "Wert eingeben";
+
+      const small = document.createElement("small");
+      small.textContent = `Einheit: ${UNIT_MAP[id] || "-"}`;
+
+      field.appendChild(label);
+      field.appendChild(input);
+      field.appendChild(small);
+      inputsEl.appendChild(field);
+    });
+  }
+
+  function clearResult() {
+    resultBox.style.display = "none";
+    resultMain.textContent = "";
+    resultSteps.innerHTML = "";
+  }
+
+  document.getElementById("btn-calc").addEventListener("click", () => {
+    const topic = TOPICS[currentTopicId];
+    const neededValues = {};
+
+    // alle Inputs einsammeln
+    [...inputsEl.querySelectorAll("input")].forEach(input => {
+      const id = input.id.replace("input-","");
+      neededValues[id] = parseFloat(input.value.replace(",", "."));
+    });
+
+    // Fehlende Werte checken
+    for (const key in neededValues) {
+      if (isNaN(neededValues[key])) {
+        alert("Bitte alle benötigten Werte eingeben.");
+        return;
+      }
+    }
+
+    const { symbol, value, unit, steps } = topic.compute(currentSolveFor, neededValues);
+
+    resultMain.innerHTML = `<strong>${symbol}</strong> ≈ <strong>${value.toFixed(2)} ${unit}</strong>`;
+    resultSteps.innerHTML = `
+      <div>Rechenweg:</div>
+      <ol>${steps.map(s => `<li>${s}</li>`).join("")}</ol>
+    `;
+    resultBox.style.display = "block";
+  });
+
+  document.getElementById("btn-clear").addEventListener("click", () => {
+    [...inputsEl.querySelectorAll("input")].forEach(i => i.value = "");
+    clearResult();
+  });
+
+  // Themenwechsel über die Radiobuttons
+  [...topicSelectEl.querySelectorAll("input[name='topic']")].forEach(radio => {
+    radio.addEventListener("change", () => renderTopic(radio.value));
+  });
+
+  // Startansicht
+  renderTopic("gleichfoermig");
+</script>
+</body>
+</html>
