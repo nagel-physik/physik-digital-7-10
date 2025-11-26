@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Physik Digital – Experimente Klasse 9</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-grad-top: #0f172a;
+      --bg-grad-bottom: #000000;
+      --card-bg: rgba(15, 23, 42, 0.96);
+      --border-soft: rgba(148, 163, 184, 0.65);
+      --text-main: #e5e7eb;
+      --text-soft: #9ca3af;
+      --accent: #22c55e;
+      --accent2: #38bdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, var(--bg-grad-top), var(--bg-dark) 55%, var(--bg-grad-bottom));
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1100px;
+      height: 100vh;
+      padding: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .panel {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      max-height: 100%;
+      padding: 1.8rem 1.6rem 1.7rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.4);
+      overflow: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .back-btn {
+      text-decoration: none;
+      font-size: 0.82rem;
+      color: var(--text-main);
+      padding: 0.25rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: rgba(15, 23, 42, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .back-btn span.icon {
+      font-size: 0.9rem;
+    }
+
+    .back-btn:hover {
+      border-color: #e5e7eb;
+    }
+
+    .heading h1 {
+      font-size: clamp(1.6rem, 3.2vw, 2.1rem);
+      margin-bottom: 0.25rem;
+    }
+
+    .heading .tagline {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-soft);
+      margin-bottom: 0.3rem;
+    }
+
+    .heading p {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      max-width: 46rem;
+    }
+
+    .info-box {
+      margin-top: 0.8rem;
+      border-radius: 18px;
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      padding: 0.7rem 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text-soft);
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+    .info-box span.icon {
+      font-size: 1rem;
+      margin-top: 0.1rem;
+    }
+
+    .info-box strong {
+      color: #e5e7eb;
+    }
+
+    .experiments-grid {
+      margin-top: 1.3rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .experiments-grid {
+        grid-template-columns: 1fr;
+      }
+      .panel {
+        padding: 1.5rem 1.3rem 1.5rem;
+      }
+    }
+
+    .experiment-card {
+      border-radius: 20px;
+      border: 1px solid var(--border-soft);
+      background: var(--card-bg);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+      padding: 0.9rem 1rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .experiment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.6rem;
+      margin-bottom: 0.2rem;
+      flex-wrap: wrap;
+    }
+
+    .experiment-title {
+      font-size: 1rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .experiment-title span.icon {
+      font-size: 1.1rem;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.1rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      color: rgba(226, 232, 240, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .badge.topic-k9 {
+      border-color: rgba(56, 189, 248, 0.9);
+      color: #bae6fd;
+    }
+
+    .experiment-meta {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.1rem;
+    }
+
+    .pill {
+      font-size: 0.72rem;
+      padding: 0.08rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      color: rgba(148, 163, 184, 0.95);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 0.3rem;
+      margin-bottom: 0.1rem;
+      color: rgba(226, 232, 240, 0.95);
+    }
+
+    ul {
+      list-style: none;
+      font-size: 0.82rem;
+      color: var(--text-soft);
+      margin-left: 0.2rem;
+    }
+
+    ul li {
+      position: relative;
+      padding-left: 0.9rem;
+      margin-bottom: 0.15rem;
+    }
+
+    ul li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: -0.02rem;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    .hint {
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.95);
+      margin-top: 0.2rem;
+    }
+
+    .highlight {
+      color: var(--accent2);
+      font-weight: 500;
+    }
+
+    .math {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.8rem;
+      color: #e5e7eb;
+    }
+
+    .footer-note {
+      margin-top: 0.9rem;
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-align: right;
+    }
+
+    @media (max-width: 640px) {
+      .app {
+        padding: 1.1rem;
+      }
+      .panel {
+        padding: 1.2rem 1.1rem 1.3rem;
+      }
+      .experiment-card {
+        padding: 0.85rem 0.9rem 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <main class="panel">
+    <header class="topbar">
+      <div class="brand">FGO Perleberg · Physik Digital</div>
+      <a href="klasse9.html" class="back-btn">
+        <span class="icon">←</span>
+        <span>Zurück zu Klasse 9</span>
+      </a>
+    </header>
+
+    <section class="heading">
+      <div class="tagline">experimente · bewegung &amp; energie · klasse 9</div>
+      <h1>Experimente Klasse 9 – Bewegung &amp; Energie</h1>
+      <p>
+        Hier findest du einfache Versuche zu den Themen
+        <strong>Bewegung</strong>, <strong>Beschleunigung</strong>,
+        <strong>freier Fall</strong> sowie <strong>Arbeit &amp; Energie</strong>.
+        Die Experimente sind als <strong>Unterstützung zum Unterricht</strong> gedacht und
+        können – je nach Material – im Klassenraum oder zu Hause durchgeführt werden.
+      </p>
+      <div class="info-box">
+        <span class="icon">⚠️</span>
+        <div>
+          <strong>Wichtiger Hinweis:</strong> Sicherheit geht vor!  
+          Führe Experimente nur durch, wenn es die Lehrkraft erlaubt, der Aufbau stabil ist
+          und niemand gefährdet wird. Manche Versuche (z.&nbsp;B. Treppe) sollten nur
+          unter Aufsicht gemacht werden.
+        </div>
+      </div>
+    </section>
+
+    <section class="experiments-grid" aria-label="Experimente Klasse 9">
+      <!-- EXP 1: Gleichförmige Bewegung -->
+      <article class="experiment-card" aria-label="Experiment Gleichförmige Bewegung">
+        <div class="experiment-header">
+          <div class="experiment-title">
+            <span class="icon">🚶‍♂️</span>
+            <span>Gleichförmige Bewegung – der rollende Becher</span>
+          </div>
+          <span class="badge topic-k9">Bewegung</span>
+        </div>
+        <div class="experiment-meta">
+          Ziel: Gleichförmige Bewegung erkennen und die Geschwindigkeit bestimmen.
+          <div class="pill-row">
+            <span class="pill">sehr wenig Material</span>
+            <span class="pill">Tischversuch</span>
+            <span class="pill">für Kleingruppen</span>
+          </div>
+        </div>
+
+        <div class="section-title">Material</div>
+        <ul>
+          <li>Glatter Tisch oder Boden</li>
+          <li>1 Plastikbecher oder kleiner Ball</li>
+          <li>Maßband oder Lineal</li>
+          <li>Stoppuhr (Handy reicht)</li>
+          <li>Klebeband (für Markierungen)</li>
+        </ul>
+
+        <div class="section-title">Aufbau</div>
+        <ul>
+          <li>Auf dem Tisch eine Strecke von <span class="highlight">1 m</span> markieren (Start &amp; Ziel).</li>
+          <li>Der Becher wird so aufgestellt, dass er frei und ohne Hindernisse rollen kann.</li>
+        </ul>
+
+        <div class="section-title">Durchführung</div>
+        <ul>
+          <li>Den Becher <strong>sanft</strong> anstoßen, sodass er möglichst gleichmäßig rollt.</li>
+          <li>Beim Passieren der Startmarkierung wird die Stoppuhr gestartet, beim Ziel wieder gestoppt.</li>
+          <li>Den Versuch mindestens <strong>3–5 Mal</strong> wiederholen.</li>
+        </ul>
+
+        <div class="section-title">Auswertung</div>
+        <ul>
+          <li>Für jeden Durchgang die Geschwindigkeit berechnen:
+            <div class="math">v = s / t</div>
+          </li>
+          <li>Die Zeiten und Geschwindigkeiten vergleichen:
+            <ul>
+              <li>ähnliche Zeiten → Bewegung annähernd gleichförmig,</li>
+              <li>sehr verschiedene Zeiten → eher ungleichförmig (Untergrund, Stoß verschieden).</li>
+            </ul>
+          </li>
+          <li>Zusatz: Verschiedene Unterlagen testen (Holz, Tischdecke, Hefter) und Unterschiede beschreiben.</li>
+        </ul>
+
+        <p class="hint">
+          Tipp: Lass die SuS Skizzen oder ein kleines s–t-Diagramm zeichnen, um die
+          gleichförmige Bewegung zu veranschaulichen.
+        </p>
+      </article>
+
+      <!-- EXP 2: Beschleunigte Bewegung -->
+      <article class="experiment-card" aria-label="Experiment Beschleunigte Bewegung">
+        <div class="experiment-header">
+          <div class="experiment-title">
+            <span class="icon">⚡</span>
+            <span>Beschleunigte Bewegung – Auto auf der schiefen Ebene</span>
+          </div>
+          <span class="badge topic-k9">Beschleunigung</span>
+        </div>
+        <div class="experiment-meta">
+          Ziel: Beobachten, dass die Geschwindigkeit bei einer schiefen Ebene zunimmt (Beschleunigung).
+          <div class="pill-row">
+            <span class="pill">Rampe</span>
+            <span class="pill">einfache Zeitmessung</span>
+            <span class="pill">gut sichtbar</span>
+          </div>
+        </div>
+
+        <div class="section-title">Material</div>
+        <ul>
+          <li>Spielzeugauto oder kleiner Wagen</li>
+          <li>Brett / dickes Buch als Rampe</li>
+          <li>Maßband oder Lineal</li>
+          <li>Stoppuhr (Handy)</li>
+          <li>Klebeband für Start-/Zielmarken</li>
+        </ul>
+
+        <div class="section-title">Aufbau</div>
+        <ul>
+          <li>Das Brett an einem Ende erhöhen (z.&nbsp;B. Stapel Bücher) → schiefe Ebene.</li>
+          <li>Auf der Rampe eine Messstrecke (z.&nbsp;B. <span class="highlight">80 cm</span>) markieren.</li>
+          <li>Startmarkierung und Zielmarkierung deutlich kennzeichnen.</li>
+        </ul>
+
+        <div class="section-title">Durchführung</div>
+        <ul>
+          <li>Das Auto wird an der oberen Markierung <strong>nur losgelassen</strong> (nicht angeschubst!).</li>
+          <li>Die Zeit messen, bis das Auto die Zielmarkierung erreicht.</li>
+          <li>Mehrere Durchgänge durchführen und möglichst gleichmäßig loslassen.</li>
+          <li>Rampe <strong>steiler</strong> machen und Zeit erneut messen.</li>
+        </ul>
+
+        <div class="section-title">Auswertung</div>
+        <ul>
+          <li>Beobachtung: Das Auto startet langsam und wird im Laufe der Strecke schneller.</li>
+          <li>Gemeinsam den Begriff <strong>Beschleunigung</strong> einführen:
+            <div class="math">a = Δv / Δt</div>
+          </li>
+          <li>Vergleichen, wie sich die Zeit bei flacher und steiler Rampe unterscheidet
+            (steiler → Strecke schneller zurückgelegt → stärkere Beschleunigung).</li>
+        </ul>
+
+        <p class="hint">
+          Hinweis: Wenn Messungen zu ungenau sind, reicht eine qualitative Auswertung:
+          „Am Anfang langsam, am Ende schnell“ = beschleunigte Bewegung.
+        </p>
+      </article>
+
+      <!-- EXP 3: Freier Fall -->
+      <article class="experiment-card" aria-label="Experiment Freier Fall">
+        <div class="experiment-header">
+          <div class="experiment-title">
+            <span class="icon">⬇️</span>
+            <span>Freier Fall – Blatt und Münze</span>
+          </div>
+          <span class="badge topic-k9">Freier Fall</span>
+        </div>
+        <div class="experiment-meta">
+          Ziel: Luftwiderstand erkennen und verstehen, dass alle Körper im Vakuum gleich fallen würden.
+          <div class="pill-row">
+            <span class="pill">Blatt &amp; Münze</span>
+            <span class="pill">Schnellversuch</span>
+            <span class="pill">für Demo geeignet</span>
+          </div>
+        </div>
+
+        <div class="section-title">Material</div>
+        <ul>
+          <li>1 Blatt Papier</li>
+          <li>1 Münze (z.&nbsp;B. 1-€-Stück)</li>
+          <li>Evtl. Stuhl oder Tisch, um höher zu stehen</li>
+        </ul>
+
+        <div class="section-title">Aufbau</div>
+        <ul>
+          <li>Die Lehrkraft oder ein/e Schüler/in steht erhöht (z.&nbsp;B. auf einer Stufe oder neben dem Tisch).</li>
+          <li>Blatt Papier und Münze werden in gleicher Höhe gehalten.</li>
+        </ul>
+
+        <div class="section-title">Durchführung</div>
+        <ul>
+          <li>Blatt und Münze gleichzeitig fallen lassen.</li>
+          <li>Beobachten: Die Münze ist deutlich schneller unten als das flache Blatt.</li>
+          <li>Dann das Blatt zu einem kleinen Ball knüllen.</li>
+          <li>Nun das Papierknäuel und die Münze gleichzeitig fallen lassen.</li>
+          <li>Beobachten: Beide kommen (fast) gleichzeitig unten an.</li>
+        </ul>
+
+        <div class="section-title">Auswertung</div>
+        <ul>
+          <li>Erklärung: Das flache Blatt hat einen <strong>großen Luftwiderstand</strong> → es wird stärker gebremst.</li>
+          <li>Beim Papierknäuel ist die Form ähnlich der Münze → Luftwiderstand wirkt weniger.</li>
+          <li>Merksatz: Ohne Luftwiderstand (im Vakuum) würden alle Körper gleich schnell fallen
+            (gleiche Erdbeschleunigung <span class="math">g ≈ 9,81 m/s²</span>).</li>
+        </ul>
+
+        <p class="hint">
+          Optional: Videos von Fallversuchen im Vakuum (z.&nbsp;B. Feder und Hammer) können zur Vertiefung gezeigt werden.
+        </p>
+      </article>
+
+      <!-- EXP 4: Arbeit & Energie -->
+      <article class="experiment-card" aria-label="Experiment Arbeit und Energie">
+        <div class="experiment-header">
+          <div class="experiment-title">
+            <span class="icon">🪜</span>
+            <span>Arbeit &amp; Energie – die Treppen-Arbeit</span>
+          </div>
+          <span class="badge topic-k9">Arbeit &amp; Energie</span>
+        </div>
+        <div class="experiment-meta">
+          Ziel: Verstehen, dass beim Treppensteigen mechanische Arbeit verrichtet wird.
+          <div class="pill-row">
+            <span class="pill">Alltagssituation</span>
+            <span class="pill">Treppenhaus</span>
+            <span class="pill">mit Gruppen gut möglich</span>
+          </div>
+        </div>
+
+        <div class="section-title">Material</div>
+        <ul>
+          <li>Treppenhaus in der Schule (z.&nbsp;B. 10 Stufen)</li>
+          <li>Stoppuhr (Handy)</li>
+          <li>ca. Körpermasse der SuS (z.&nbsp;B. aus Beispielen: 50 kg, 60 kg …)</li>
+        </ul>
+
+        <div class="section-title">Aufbau</div>
+        <ul>
+          <li>Höhe einer Stufe abschätzen (z.&nbsp;B. 17 cm = 0,17 m).</li>
+          <li>Gesamthöhe einer Treppe berechnen:
+            <span class="math">h = Anzahl&nbsp;Stufen · Stufenhöhe</span>.
+            <br>Beispiel: 10 Stufen → <span class="math">h ≈ 1,7 m</span>.
+          </li>
+        </ul>
+
+        <div class="section-title">Durchführung</div>
+        <ul>
+          <li>Eine Schülerin / ein Schüler steigt die Treppe zügig, aber sicher hinauf.</li>
+          <li>Die Zeit wird gemessen (Start unten, Stopp oben).</li>
+          <li>Mehrere SuS mit unterschiedlicher Masse können nacheinander die gleiche Treppe hinaufgehen.</li>
+        </ul>
+
+        <div class="section-title">Auswertung</div>
+        <ul>
+          <li>Gewichtskraft:
+            <div class="math">F = m · g</div>
+          </li>
+          <li>Mechanische Arbeit beim Hinaufsteigen:
+            <div class="math">W = F · h = m · g · h</div>
+          </li>
+          <li>Beispiele gemeinsam rechnen (z.&nbsp;B. 60 kg, 1,7 m).</li>
+          <li>Zusatz (für schnelle SuS): Leistung berechnen:
+            <div class="math">P = W / t</div>
+            und vergleichen, wer die höchste Leistung hatte.
+          </li>
+        </ul>
+
+        <p class="hint">
+          Wichtig: Sicherheitsregeln besprechen (nicht drängeln, nicht rennen, Geländer benutzen).
+          Die Rechnung kann auch komplett im Klassenraum anhand eines Beispiel-Szenarios durchgeführt werden.
+        </p>
+      </article>
+    </section>
+
+    <div class="footer-note">
+      Experimente Klasse 9 – Bewegung &amp; Energie · Physik Digital 7–10
+    </div>
+  </main>
+</div>
+</body>
+</html>
