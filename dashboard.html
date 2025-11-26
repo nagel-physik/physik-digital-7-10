@@ -334,6 +334,19 @@ function updateMailLink() {
     `mailto:michael.nagel@lk.brandenburg.de?subject=Feedback%20Physik%20Digital&body=${body}`;
   sendBtn.href = href;
 }
+// Nach dem Klick auf "Feedback per Mail senden" Eingaben zurücksetzen
+sendBtn.addEventListener("click", () => {
+  // kleinen Moment warten, damit der Mail-Client geöffnet wird
+  setTimeout(() => {
+    rating = 0;
+    // Sterne zurücksetzen
+    stars.forEach(s => s.classList.remove("active"));
+    // Textfeld leeren
+    feedbackText.value = "";
+    // Mail-Link wieder auf Standard setzen
+    updateMailLink();
+  }, 600);
+});
 </script>
 
 </body>
