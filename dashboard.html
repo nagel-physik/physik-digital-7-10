@@ -1,453 +1,340 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <title>Physik Digital 7–10 – Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --bg-dark: #020617;
-      --bg-grad-top: #0f172a;
-      --bg-grad-bottom: #000000;
-      --text-main: #e5e7eb;
-      --text-soft: #9ca3af;
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Physik Digital 7–10 – Dashboard</title>
 
-      --k7: linear-gradient(135deg, #22c55e, #16a34a);
-      --k8: linear-gradient(135deg, #0ea5e9, #2563eb);
-      --k9: linear-gradient(135deg, #a855f7, #6366f1);
-      --k10: linear-gradient(135deg, #f97316, #ea580c);
-      --formeln: linear-gradient(135deg, #facc15, #eab308);
-      --contact: linear-gradient(135deg, #64748b, #4b5563);
-    }
+<style>
+:root {
+  --bg-dark: #020617;
+  --bg-grad-top: #0f172a;
+  --bg-grad-bottom: #000000;
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  --text-main: #e5e7eb;
+  --text-soft: #cbd5f5;
 
-    body {
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #0f172a 0, #020617 50%, #000 100%);
-      color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      padding: 1.5rem;
-    }
+  /* Kachel-Farben */
+  --k7: linear-gradient(135deg, #22c55e, #16a34a);
+  --k8: linear-gradient(135deg, #22d3ee, #3b82f6);
+  --k9: linear-gradient(135deg, #a855f7, #6366f1);
+  --k10: linear-gradient(135deg, #f97316, #ea580c);
+  --formeln: linear-gradient(135deg, #facc15, #f97316);
+  --contact: linear-gradient(135deg, #6366f1, #4f46e5);
 
-    .app {
-      width: 100%;
-      max-width: 900px;
-      margin: auto;
-    }
+  --glow-green: rgba(74, 222, 128, 0.35);
+}
 
-    .panel {
-      background: radial-gradient(circle at top left, #1e293b, #020617 55%);
-      border-radius: 26px;
-      padding: 1.4rem 1.6rem 1.6rem;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
-      border: 1px solid rgba(15, 23, 42, 0.9);
-    }
+/* Grundlayout */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: radial-gradient(circle at top, var(--bg-grad-top), var(--bg-grad-bottom));
+  color: var(--text-main);
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1.2rem 3.5rem 1.2rem;
+}
 
-    header {
-      margin-bottom: 1.4rem;
-    }
+.panel {
+  padding-top: 1.2rem;
+}
 
-    .top-line {
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-soft);
-      margin-bottom: 0.4rem;
-    }
+/* Überschrift */
+.heading-label {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  letter-spacing: 0.12rem;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
 
-    h1 {
-      font-size: 1.45rem;
-      letter-spacing: 0.03em;
-      margin-bottom: 0.35rem;
-    }
+.heading h1 {
+  font-size: 1.95rem;
+  margin: 0;
+  line-height: 1.25;
+}
 
-    .subtitle {
-      font-size: 0.9rem;
-      color: var(--text-soft);
-      line-height: 1.45;
-    }
+.heading p {
+  font-size: 0.95rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0;
+  color: var(--text-soft);
+}
 
-    .subtitle b {
-      color: #e5e7eb;
-      font-weight: 600;
-    }
+/* Uhr + Datum */
+.timebox {
+  margin-top: 0.6rem;
+  margin-bottom: 0.4rem;
+  text-align: left;
+}
 
-    .tiles {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 0.9rem;
-      margin: 1.4rem 0 1.6rem;
-    }
+#clock {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #38bdf8;
+  letter-spacing: 0.08em;
+}
 
-    @media (min-width: 640px) {
-      .tiles {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
+#date {
+  margin-top: 0.15rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #94a3b8;
+  letter-spacing: 0.03em;
+}
 
-    .tile {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0.85rem 0.6rem;
-      border-radius: 18px;
-      text-decoration: none;
-      color: #f9fafb;
-      font-weight: 500;
-      font-size: 0.95rem;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
-      border: 1px solid rgba(15, 23, 42, 0.85);
-      transition:
-        transform 0.12s ease,
-        box-shadow 0.12s ease,
-        filter 0.12s ease;
-    }
+/* Kacheln */
+.tiles {
+  margin-top: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-    .tile span {
-      pointer-events: none;
-    }
+.tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0.8rem;
+  border-radius: 18px;
+  text-decoration: none;
+  color: #f9fafb;
+  font-weight: 500;
+  font-size: 1.1rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.78);
+  border: 1px solid rgba(15, 23, 42, 0.9);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  position: relative;
+}
 
-    .tile.k7 {
-      background: var(--k7);
-    }
+.tile:hover {
+  transform: scale(1.03);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.9);
+}
 
-    .tile.k8 {
-      background: var(--k8);
-    }
+/* Farbakzente */
+.k7    { background: var(--k7); }
+.k8    { background: var(--k8); }
+.k9    { background: var(--k9); }
+.k10   { background: var(--k10); }
+.form  { background: var(--formeln); }
+.ask   { background: var(--contact); }
 
-    .tile.k9 {
-      background: var(--k9);
-    }
+/* NEU-Badge */
+.tile-badge {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.8rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 250, 252, 0.9);
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  box-shadow: 0 0 12px rgba(148, 163, 184, 0.9);
+  text-transform: uppercase;
+}
 
-    .tile.k10 {
-      background: var(--k10);
-    }
+/* Feedback-Box */
+.feedback-box {
+  margin-top: 2.2rem;
+  padding: 1.4rem;
+  border-radius: 22px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(15, 23, 42, 0.75);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7);
+}
 
-    .tile.formeln {
-      background: var(--formeln);
-      color: #111827;
-    }
+.feedback-box h2 {
+  margin: 0 0 0.6rem 0;
+  font-size: 1.2rem;
+}
 
-    .tile.contact {
-      background: var(--contact);
-    }
+.feedback-box p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+}
 
-    .tile:hover,
-    .tile:active {
-      transform: translateY(-1px) scale(1.01);
-      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.9);
-      filter: brightness(1.03);
-    }
+/* Sterne */
+.stars {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+}
 
-    @media (hover: none) {
-      .tile:hover {
-        transform: none;
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
-        filter: none;
-      }
-    }
+.star {
+  font-size: 1.7rem;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: transform 0.12s ease, opacity 0.12s ease, color 0.12s ease;
+}
 
-    /* "NEU"-Badge für Klasse 9 & 10 – Sichtbarkeit per JS */
-    .tile.k9::after,
-    .tile.k10::after {
-      content: "NEU";
-      position: absolute;
-      top: 0.47rem;
-      right: 0.85rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.12rem 0.52rem;
-      border-radius: 999px;
-      border: 1px solid rgba(248, 250, 252, 0.9);
-      background: rgba(15, 23, 42, 0.98);
-      color: #e5e7eb;
-      box-shadow: 0 0 10px rgba(15, 23, 42, 0.95);
-      opacity: 0;
-      transform: scale(0.9);
-      transition:
-        opacity 0.25s ease,
-        transform 0.25s ease;
-    }
+.star.active {
+  opacity: 1;
+  color: #facc15;
+  transform: scale(1.15);
+}
 
-    .tile.show-new::after {
-      opacity: 1;
-      transform: scale(1);
-      animation: pulse-badge 1.4s ease-in-out 2;
-    }
+/* Feedback-Textfeld */
+textarea {
+  width: 100%;
+  margin-top: 0.9rem;
+  padding: 0.75rem;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: rgba(15, 23, 42, 0.95);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  resize: none;
+}
 
-    @keyframes pulse-badge {
-      0% {
-        box-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
-      }
-      50% {
-        box-shadow: 0 0 16px rgba(96, 165, 250, 1);
-      }
-      100% {
-        box-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
-      }
-    }
+/* Sende-Button */
+.send-btn {
+  margin-top: 1.1rem;
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #064e3b;
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  border: 1px solid #86efac;
+  box-shadow: 0 0 22px var(--glow-green);
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
 
-    /* Feedback-Bereich */
-    .feedback {
-      margin-top: 0.5rem;
-      padding: 0.9rem 1rem 0.8rem;
-      border-radius: 18px;
-      background: rgba(15, 23, 42, 0.93);
-      border: 1px solid rgba(30, 64, 175, 0.7);
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
-    }
-
-    .feedback h2 {
-      font-size: 0.95rem;
-      margin-bottom: 0.1rem;
-    }
-
-    .feedback p {
-      font-size: 0.78rem;
-      color: var(--text-soft);
-      margin-bottom: 0.5rem;
-    }
-
-    .stars {
-      display: flex;
-      gap: 0.2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .star-btn {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: radial-gradient(circle at 30% 15%, #0f172a, #020617);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      color: #64748b;
-      cursor: pointer;
-      transition:
-        transform 0.1s ease,
-        box-shadow 0.1s ease,
-        background 0.12s ease,
-        color 0.12s ease,
-        border-color 0.12s ease;
-    }
-
-    .star-btn.selected {
-      color: #fbbf24;
-      border-color: #fbbf24;
-      background: radial-gradient(circle at 30% 15%, #1e293b, #020617);
-      box-shadow: 0 0 12px rgba(251, 191, 36, 0.6);
-    }
-
-    .star-btn:active {
-      transform: scale(0.94);
-    }
-
-    .feedback-actions {
-      display: flex;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
-      flex-wrap: wrap;
-    }
-
-    .feedback textarea {
-      width: 100%;
-      min-height: 3rem;
-      border-radius: 10px;
-      border: 1px solid rgba(51, 65, 85, 0.9);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--text-main);
-      font-size: 0.78rem;
-      padding: 0.4rem 0.5rem;
-      resize: vertical;
-    }
-
-    .feedback textarea::placeholder {
-      color: rgba(148, 163, 184, 0.9);
-    }
-
-    .feedback button.send-btn {
-      margin-left: auto;
-      padding: 0.32rem 0.75rem;
-      border-radius: 999px;
-      border: 1px solid rgba(94, 234, 212, 0.9);
-      background: radial-gradient(circle at 20% 0, #22c55e, #0f766e);
-      color: #ecfdf5;
-      font-size: 0.78rem;
-      font-weight: 500;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      box-shadow: 0 12px 25px rgba(5, 150, 105, 0.7);
-      transition:
-        transform 0.12s ease,
-        box-shadow 0.12s ease,
-        filter 0.12s ease;
-    }
-
-    .feedback button.send-btn span.icon {
-      font-size: 0.95rem;
-    }
-
-    .feedback button.send-btn:hover {
-      transform: translateY(-0.5px);
-      filter: brightness(1.03);
-      box-shadow: 0 16px 30px rgba(5, 150, 105, 0.85);
-    }
-
-    .feedback button.send-btn:active {
-      transform: translateY(0.5px) scale(0.97);
-      box-shadow: 0 10px 20px rgba(5, 150, 105, 0.7);
-    }
-
-    footer {
-      margin-top: 0.9rem;
-      text-align: center;
-      font-size: 0.75rem;
-      color: rgba(148, 163, 184, 0.85);
-    }
-
-    footer span.dot {
-      margin: 0 0.4rem;
-      opacity: 0.7;
-    }
-  </style>
+/* Footer */
+.footer {
+  margin-top: 1.8rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+</style>
 </head>
+
 <body>
-  <div class="app">
-    <main class="panel">
-      <header>
-        <div class="top-line">FGO Perleberg · Physik Digital</div>
-        <h1>Physik Digital 7–10 – Dashboard</h1>
-        <p class="subtitle">
-          Wähle deine Klassenstufe oder die <b>Formelsammlung</b>.  
-          Alle Inhalte sind für <b>Smartphone</b> &amp; <b>Smartboard</b> optimiert.
-        </p>
-      </header>
+<div class="panel">
 
-      <section class="tiles">
-        <a href="klasse7.html" class="tile k7">
-          <span>Klasse 7</span>
-        </a>
-        <a href="klasse8.html" class="tile k8">
-          <span>Klasse 8</span>
-        </a>
-        <a href="klasse9.html" class="tile k9">
-          <span>Klasse 9</span>
-        </a>
-        <a href="klasse10.html" class="tile k10">
-          <span>Klasse 10</span>
-        </a>
-        <a href="formelsammlung.html" class="tile formeln">
-          <span>Formelsammlung 7–10</span>
-        </a>
-        <a href="mailto:michael.nagel@lk.brandenburg.de?subject=Fragen%20zu%20Physik%20Digital%207-10"
-           class="tile contact">
-          <span>Fragen an die Lehrkraft</span>
-        </a>
-      </section>
+  <section class="heading">
+    <div class="heading-label">FGO Perleberg · Physik Digital</div>
+    <h1>Wähle deine Klassenstufe</h1>
+    <p>Formelsammlung und Inhalte sind für Smartphone &amp; Smartboard optimiert.</p>
 
-      <section class="feedback">
-        <h2>Wie gefällt dir diese App?</h2>
-        <p>Tippe auf die Sterne und schicke mir anonymes Feedback. So kann ich Physik Digital weiter verbessern.</p>
+    <div class="timebox">
+      <div id="clock">--:--:--</div>
+      <div id="date">--.--.----</div>
+    </div>
+  </section>
 
-        <div class="stars" id="starRow">
-          <button class="star-btn" data-value="1">★</button>
-          <button class="star-btn" data-value="2">★</button>
-          <button class="star-btn" data-value="3">★</button>
-          <button class="star-btn" data-value="4">★</button>
-          <button class="star-btn" data-value="5">★</button>
-        </div>
+  <section class="tiles">
+    <a href="klasse7.html" class="tile k7">Klasse 7</a>
+    <a href="klasse8.html" class="tile k8">Klasse 8</a>
 
-        <textarea id="feedbackText" placeholder="Was hat dir geholfen? Was kann besser werden? (optional)"></textarea>
+    <a href="klasse9.html" class="tile k9">
+      Klasse 9
+      <span class="tile-badge">NEU</span>
+    </a>
 
-        <div class="feedback-actions">
-          <button class="send-btn" id="sendFeedback">
-            <span class="icon">📧</span>
-            <span>Feedback per Mail senden</span>
-          </button>
-        </div>
-      </section>
+    <a href="klasse10.html" class="tile k10">
+      Klasse 10
+      <span class="tile-badge">NEU</span>
+    </a>
 
-      <footer>
-        Version 1.0 <span class="dot">·</span>
-        Stand: Schuljahr 2025 <span class="dot">·</span>
-        © 2025 – M. Nagel · Physik Digital 7–10
-      </footer>
-    </main>
+    <a href="formelsammlung.html" class="tile form">Formelsammlung 7–10</a>
+
+    <a href="mailto:michael.nagel@lk.brandenburg.de?subject=Fragen%20zu%20Physik%20Digital"
+       class="tile ask">Fragen an die Lehrkraft</a>
+  </section>
+
+  <div class="feedback-box">
+    <h2>Wie gefällt dir diese App?</h2>
+    <p>Tippe auf die Sterne und schicke anonymes Feedback. So kann ich Physik Digital weiter verbessern.</p>
+
+    <div class="stars" id="stars">
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+    </div>
+
+    <textarea id="feedbackText"
+      placeholder="Was hat dir geholfen? Was kann besser werden? (optional)"></textarea>
+
+    <a id="sendBtn" class="send-btn"
+       href="mailto:michael.nagel@lk.brandenburg.de?subject=Feedback%20Physik%20Digital&body=Feedback%3A%20">
+       📧 Feedback per Mail senden
+    </a>
   </div>
 
-  <script>
-    // --- NEU-Badges zeitlich begrenzen -----------------------------
-    const NEW_BADGE_DAYS = 30; // Sichtbarkeit in Tagen
+  <div class="footer">
+    Version 1.0 · Stand: Schuljahr 2025<br />
+    © 2025 – M. Nagel · Physik Digital 7–10
+  </div>
 
-    // Veröffentlichungstage der Klassen (kannst du anpassen)
-    const publishedDates = {
-      k9: "2025-11-20",
-      k10: "2025-11-10"
-    };
+</div>
 
-    (function setNewBadges() {
-      const today = new Date();
-      Object.entries(publishedDates).forEach(([tileClass, pubDate]) => {
-        const diffTime = today - new Date(pubDate);
-        const diffDays = diffTime / (1000 * 60 * 60 * 24);
-        if (diffDays <= NEW_BADGE_DAYS) {
-          document.querySelectorAll(".tile." + tileClass)
-            .forEach(tile => tile.classList.add("show-new"));
-        }
-      });
-    })();
+<script>
+/* Uhrzeit aktualisieren */
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2, "0");
+  const m = String(now.getMinutes()).padStart(2, "0");
+  const s = String(now.getSeconds()).padStart(2, "0");
+  document.getElementById("clock").textContent = `${h}:${m}:${s}`;
+}
 
-    // --- Sterne-Feedback per Mail ---------------------------------
-    const starButtons = document.querySelectorAll(".star-btn");
-    const feedbackText = document.getElementById("feedbackText");
-    const sendBtn = document.getElementById("sendFeedback");
-    let selectedStars = 0;
+/* Datum aktualisieren */
+function updateDate() {
+  const now = new Date();
+  const options = {
+    weekday: "long",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  };
+  document.getElementById("date").textContent =
+    now.toLocaleDateString("de-DE", options);
+}
 
-    starButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        selectedStars = Number(btn.dataset.value);
-        starButtons.forEach(b => {
-          b.classList.toggle("selected", Number(b.dataset.value) <= selectedStars);
-        });
-      });
+updateClock();
+updateDate();
+setInterval(updateClock, 1000);
+
+/* Sterne-Feedback */
+const stars = document.querySelectorAll(".star");
+const sendBtn = document.getElementById("sendBtn");
+const feedbackText = document.getElementById("feedbackText");
+let rating = 0;
+
+stars.forEach((star, index) => {
+  star.addEventListener("click", () => {
+    rating = index + 1;
+    stars.forEach((s, i) => {
+      s.classList.toggle("active", i < rating);
     });
+    updateMailLink();
+  });
+});
 
-    sendBtn.addEventListener("click", () => {
-      if (!selectedStars) {
-        alert("Bitte wähle zuerst eine Stern-Bewertung.");
-        return;
-      }
+feedbackText.addEventListener("input", updateMailLink);
 
-      const subject = encodeURIComponent("Feedback Physik Digital 7–10 (" + selectedStars + " Sterne)");
-      const bodyLines = [
-        "Bewertung: " + "★".repeat(selectedStars) + " (" + selectedStars + " von 5)",
-        "",
-        "Feedback der Schülerin / des Schülers:",
-        feedbackText.value || "(kein zusätzlicher Kommentar eingegeben)",
-        "",
-        "--- automatisch generiert über das Dashboard Physik Digital 7–10 ---"
-      ];
-      const body = encodeURIComponent(bodyLines.join("\n"));
+function updateMailLink() {
+  const text = encodeURIComponent(feedbackText.value || "");
+  const body =
+    `Bewertung: ${rating} Sterne.%0A%0AFeedback:%0A${text}`;
+  const href =
+    `mailto:michael.nagel@lk.brandenburg.de?subject=Feedback%20Physik%20Digital&body=${body}`;
+  sendBtn.href = href;
+}
+</script>
 
-      window.location.href = "mailto:michael.nagel@lk.brandenburg.de?subject=" +
-        subject + "&body=" + body;
-    });
-  </script>
 </body>
 </html>
