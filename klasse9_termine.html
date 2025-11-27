@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<title>Klasse 9 – Termine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+:root {
+  --bg: #020617;
+  --panel: #0f172a;
+  --text: #e5e7eb;
+  --text-soft: #9ca3af;
+  --accent: #38bdf8;
+  --border: rgba(148,163,184,0.35);
+}
+
+body {
+  margin: 0;
+  padding: 1.4rem 1rem 2rem;
+  background: radial-gradient(circle at top, #0f172a 0%, #020617 60%, #000 100%);
+  color: var(--text);
+  font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+/* Layout */
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0 0 0.8rem 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: var(--text-soft);
+  margin-bottom: 1.4rem;
+  font-size: 0.9rem;
+}
+
+/* Eingabeformular */
+.form-box {
+  background: var(--panel);
+  padding: 1rem 1.2rem;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  margin-bottom: 1.4rem;
+  box-shadow: 0 18px 40px rgba(15,23,42,0.75);
+}
+
+label {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
+input, select {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.8rem;
+  border-radius: 10px;
+  background: #0f172a;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+button.save-btn {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #022c22;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 18px 45px rgba(22,163,74,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+button.save-btn:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+/* Terminliste */
+.term-list {
+  margin-top: 1.2rem;
+}
+
+.term-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.term-left {
+  max-width: 65%;
+}
+
+.term-subject {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.35);
+  margin-bottom: 0.55rem;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.term-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.term-desc {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.term-right {
+  text-align: right;
+}
+
+.term-date {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Badge: Resttage */
+.badge {
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 0.6rem;
+}
+
+.badge-soon {
+  background: rgba(250,204,21,0.25);
+  color: #facc15;
+  border: 1px solid rgba(250,204,21,0.45);
+}
+
+.badge-tomorrow {
+  background: rgba(251,146,60,0.25);
+  color: #fb923c;
+  border: 1px solid rgba(251,146,60,0.45);
+}
+
+.badge-today {
+  background: rgba(239,68,68,0.25);
+  color: #ef4444;
+  border: 1px solid rgba(239,68,68,0.45);
+}
+
+.badge-passed {
+  background: rgba(148,163,184,0.25);
+  color: #cbd5e1;
+  border: 1px solid rgba(148,163,184,0.45);
+}
+
+/* Löschen */
+button.delete-btn {
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.4);
+  background: rgba(255,255,255,0.06);
+  color: #f1f5f9;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+button.delete-btn:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* Zurück */
+.back-btn {
+  display: inline-block;
+  margin-top: 1.7rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 12px;
+  background: #1f2937;
+  color: white;
+  text-decoration: none;
+  border: 1px solid var(--border);
+}
+
+.back-btn:hover {
+  background: #374151;
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<h1>Termine Klasse 9</h1>
+<p class="subtitle">
+Trage hier Tests, Lernzielkontrollen oder Abgaben ein.<br>
+Die Termine werden nur auf <b>deinem Gerät</b> gespeichert.
+</p>
+
+<div class="form-box">
+
+  <label>Fach</label>
+  <select id="subject">
+    <option value="Physik">Physik</option>
+    <option value="NaWi">NaWi</option>
+  </select>
+
+  <label>Titel</label>
+  <input id="title" type="text" placeholder="z. B. Test: Bewegung" />
+
+  <label>Beschreibung (optional)</label>
+  <input id="desc" type="text" placeholder="Kapitel, Seiten, Themen…" />
+
+  <label>Datum</label>
+  <input id="date" type="date" />
+
+  <button class="save-btn" onclick="addTerm()">Termin speichern</button>
+</div>
+
+<div id="termList" class="term-list"></div>
+
+<a href="klasse9.html" class="back-btn">← Zurück</a>
+
+</div>
+
+<script>
+function loadTerms() {
+  const list = document.getElementById("termList");
+  list.innerHTML = "";
+
+  const terms = JSON.parse(localStorage.getItem("k9_events") || "[]");
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  terms.forEach((t, index) => {
+    const d = new Date(t.date);
+    const diffDays = Math.round((d - today) / (1000 * 60 * 60 * 24));
+    let badge = "";
+
+    if (diffDays > 1) {
+      badge = `<span class="badge badge-soon">${diffDays} Tage</span>`;
+    } else if (diffDays === 1) {
+      badge = `<span class="badge badge-tomorrow">in 1 Tag</span>`;
+    } else if (diffDays === 0) {
+      badge = `<span class="badge badge-today">Heute!</span>`;
+    } else {
+      badge = `<span class="badge badge-passed">Vorbei</span>`;
+    }
+
+    const card = document.createElement("div");
+    card.className = "term-card";
+
+    card.innerHTML = `
+      <div class="term-left">
+        <div class="term-subject">${t.subject}</div>
+        <div class="term-title">${t.title}</div>
+        <div class="term-desc">${t.desc || "(keine Beschreibung)"}</div>
+      </div>
+
+      <div class="term-right">
+        <div class="term-date">${d.toLocaleDateString("de-DE")}</div>
+        ${badge}
+        <button class="delete-btn" onclick="deleteTerm(${index})">Löschen</button>
+      </div>
+    `;
+
+    list.appendChild(card);
+  });
+}
+
+function addTerm() {
+  const subject = document.getElementById("subject").value;
+  const title   = document.getElementById("title").value.trim();
+  const desc    = document.getElementById("desc").value.trim();
+  const date    = document.getElementById("date").value;
+
+  if (!title || !date) {
+    alert("Bitte Titel und Datum eingeben.");
+    return;
+  }
+
+  const terms = JSON.parse(localStorage.getItem("k9_events") || "[]");
+  terms.push({ subject, title, desc, date });
+  localStorage.setItem("k9_events", JSON.stringify(terms));
+
+  document.getElementById("title").value = "";
+  document.getElementById("desc").value = "";
+  document.getElementById("date").value = "";
+
+  loadTerms();
+}
+
+function deleteTerm(i) {
+  const terms = JSON.parse(localStorage.getItem("k9_events") || "[]");
+  terms.splice(i, 1);
+  localStorage.setItem("k9_events", JSON.stringify(terms));
+  loadTerms();
+}
+
+loadTerms();
+</script>
+</body>
+</html>
