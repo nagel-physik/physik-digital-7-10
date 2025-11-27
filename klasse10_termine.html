@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Termine Physik & NaWi – Klasse 10</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-top: #0f172a;
+      --bg-bottom: #000000;
+
+      --text-main: #e5e7eb;
+      --text-soft: #94a3b8;
+
+      --accent-physik: #38bdf8;
+      --accent-nawi: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont;
+      background: radial-gradient(circle at top, var(--bg-top), var(--bg-bottom));
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 1.4rem 1rem 2.2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 720px;
+    }
+
+    header {
+      margin-bottom: 1.5rem;
+    }
+
+    .subline {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-soft);
+      margin-bottom: 0.3rem;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+    }
+
+    header p {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      line-height: 1.4;
+    }
+
+    .info-box {
+      margin-top: 0.8rem;
+      padding: 0.8rem 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.9);
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .info-box strong {
+      color: #e5e7eb;
+    }
+
+    /* Formular */
+    .card {
+      margin-top: 1.4rem;
+      padding: 1rem;
+      border-radius: 16px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(148,163,184,0.7);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.7);
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.85rem;
+    }
+
+    label {
+      color: var(--text-soft);
+    }
+
+    input[type="date"],
+    select,
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 0.5rem 0.6rem;
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: rgba(15,23,42,0.95);
+      color: var(--text-main);
+      font-size: 0.9rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .btn-primary {
+      margin-top: 0.4rem;
+      width: 100%;
+      padding: 0.7rem;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      color: #0b1120;
+      box-shadow: 0 0 18px rgba(56,189,248,0.55);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 0 24px rgba(56,189,248,0.8);
+    }
+
+    /* Terminliste */
+    .list-header {
+      margin-top: 1.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    .list-header strong {
+      color: var(--text-main);
+    }
+
+    .termine-list {
+      margin-top: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .termin-card {
+      padding: 0.7rem 0.8rem;
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.9);
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .termin-headline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .fach-badge {
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(148,163,184,0.7);
+    }
+
+    .fach-physik {
+      border-color: rgba(56,189,248,0.9);
+      color: #bae6fd;
+    }
+
+    .fach-nawi {
+      border-color: rgba(34,197,94,0.9);
+      color: #bbf7d0;
+    }
+
+    .termin-datum {
+      font-size: 0.82rem;
+      color: var(--text-soft);
+    }
+
+    .termin-kategorie {
+      font-size: 0.8rem;
+      color: #e5e7eb;
+    }
+
+    .termin-notiz {
+      font-size: 0.85rem;
+      color: #cbd5f5;
+    }
+
+    .termin-footer {
+      margin-top: 0.3rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+
+    .btn-small {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: transparent;
+      color: #e5e7eb;
+      cursor: pointer;
+    }
+
+    .btn-small:hover {
+      background: rgba(148,163,184,0.2);
+    }
+
+    .tag-status {
+      font-size: 0.75rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(250,204,21,0.8);
+      color: #facc15;
+    }
+
+    .tag-heute {
+      border-color: rgba(248,113,113,0.9);
+      color: #fecaca;
+    }
+
+    .empty {
+      margin-top: 0.8rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .back {
+      margin-top: 1.8rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .back a {
+      text-decoration: none;
+      color: #e5e7eb;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+    }
+
+    .back a:hover {
+      background: rgba(148,163,184,0.2);
+    }
+
+    @media (max-width: 620px) {
+      body {
+        padding: 1.3rem 0.8rem 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="subline">Physik Digital · Klasse 10</div>
+      <h1>Termine Physik &amp; NaWi</h1>
+      <p>
+        Hier kannst du deine eigenen Termine für <strong>Physik</strong> und
+        <strong>NaWi</strong> eintragen – zum Beispiel Tests, kurze Lernkontrollen
+        oder Abgaben.
+      </p>
+
+      <div class="info-box">
+        <strong>Wichtig:</strong> Diese Terminliste wird nur auf <strong>diesem Gerät</strong>
+        gespeichert (lokaler Speicher im Browser). Sie ersetzt keinen offiziellen
+        Klassenkalender und keine Einträge von Lehrkräften.
+        Nutze sie als Hilfe, um <strong>außerhalb der Schule</strong> den Überblick über
+        deine Physik- und NaWi-Termine zu behalten.
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Neuen Termin eintragen</h2>
+
+        <div class="form-row">
+          <label for="date">Datum</label>
+          <input type="date" id="date" />
+        </div>
+
+        <div class="form-row">
+          <label for="subject">Fach</label>
+          <select id="subject">
+            <option value="Physik">Physik</option>
+            <option value="NaWi">NaWi</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="category">Art des Termins</label>
+          <select id="category">
+            <option value="Test / Lernzielkontrolle">Test / Lernzielkontrolle</option>
+            <option value="Klassenarbeit">Klassenarbeit</option>
+            <option value="Abgabe (z.B. Mappe/Projekt)">Abgabe (z.B. Mappe/Projekt)</option>
+            <option value="Experiment / Versuchstag">Experiment / Versuchstag</option>
+            <option value="Sonstiges">Sonstiges</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="note">Kurzbeschreibung (z.B. „Test: Magnetismus“)</label>
+          <input type="text" id="note" placeholder="z.B. Test: Induktion & Generator" />
+        </div>
+
+        <button class="btn-primary" id="saveBtn">Termin speichern</button>
+      </section>
+
+      <section class="list-header">
+        <strong>Deine kommenden Physik- &amp; NaWi-Termine</strong>
+        <span id="summaryText"></span>
+      </section>
+
+      <section class="termine-list" id="termineList">
+        <!-- Termine werden hier eingefügt -->
+      </section>
+
+      <p class="empty" id="emptyHint" style="display:none;">
+        Noch keine Termine eingetragen. Trage oben deinen ersten Termin ein.
+      </p>
+
+      <section class="back">
+        <span>Zurück zur Übersicht der 10. Klasse:</span>
+        <a href="klasse10.html">⬅ Zurück zu Klasse 10</a>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "pd10_termine_physik_nawi";
+
+    const dateInput = document.getElementById("date");
+    const subjectInput = document.getElementById("subject");
+    const categoryInput = document.getElementById("category");
+    const noteInput = document.getElementById("note");
+    const saveBtn = document.getElementById("saveBtn");
+    const listEl = document.getElementById("termineList");
+    const emptyHint = document.getElementById("emptyHint");
+    const summaryText = document.getElementById("summaryText");
+
+    function loadTermine() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return [];
+        return JSON.parse(raw);
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveTermine(termine) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(termine));
+    }
+
+    function sortByDate(a, b) {
+      if (!a.date) return 1;
+      if (!b.date) return -1;
+      return a.date.localeCompare(b.date);
+    }
+
+    function formatDate(iso) {
+      if (!iso) return "ohne Datum";
+      const d = new Date(iso + "T00:00:00");
+      if (isNaN(d.getTime())) return iso;
+      return d.toLocaleDateString("de-DE", {
+        weekday: "short",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      });
+    }
+
+    function daysDiff(iso) {
+      if (!iso) return null;
+      const today = new Date();
+      const d = new Date(iso + "T00:00:00");
+      if (isNaN(d.getTime())) return null;
+      const diffMs = d.getTime() - new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+      ).getTime();
+      return Math.round(diffMs / (1000 * 60 * 60 * 24));
+    }
+
+    function renderTermine() {
+      const termine = loadTermine().sort(sortByDate);
+      listEl.innerHTML = "";
+
+      if (!termine.length) {
+        emptyHint.style.display = "block";
+        summaryText.textContent = "";
+        return;
+      }
+
+      emptyHint.style.display = "none";
+      summaryText.textContent = termine.length === 1
+        ? "1 eingetragener Termin"
+        : termine.length + " eingetragene Termine";
+
+      termine.forEach((t, index) => {
+        const wrapper = document.createElement("article");
+        wrapper.className = "termin-card";
+
+        const headline = document.createElement("div");
+        headline.className = "termin-headline";
+
+        const fachBadge = document.createElement("span");
+        fachBadge.className = "fach-badge " +
+          (t.subject === "NaWi" ? "fach-nawi" : "fach-physik");
+        fachBadge.textContent = t.subject;
+
+        const datumSpan = document.createElement("span");
+        datumSpan.className = "termin-datum";
+        datumSpan.textContent = formatDate(t.date);
+
+        headline.appendChild(fachBadge);
+        headline.appendChild(datumSpan);
+
+        const katSpan = document.createElement("div");
+        katSpan.className = "termin-kategorie";
+        katSpan.textContent = t.category || "Termin";
+
+        const noteSpan = document.createElement("div");
+        noteSpan.className = "termin-notiz";
+        noteSpan.textContent = t.note || "(keine Beschreibung)";
+
+        const footer = document.createElement("div");
+        footer.className = "termin-footer";
+
+        const diff = daysDiff(t.date);
+        if (diff !== null) {
+          const tag = document.createElement("span");
+          tag.className = "tag-status";
+          if (diff === 0) {
+            tag.className = "tag-status tag-heute";
+            tag.textContent = "heute";
+          } else if (diff === 1) {
+            tag.textContent = "in 1 Tag";
+          } else if (diff > 1 && diff <= 7) {
+            tag.textContent = "in " + diff + " Tagen";
+          } else if (diff < 0) {
+            tag.textContent = "Termin vorbei";
+          } else {
+            tag.textContent = "in Zukunft";
+          }
+          footer.appendChild(tag);
+        }
+
+        const delBtn = document.createElement("button");
+        delBtn.className = "btn-small";
+        delBtn.textContent = "Löschen";
+        delBtn.addEventListener("click", () => {
+          const all = loadTermine();
+          all.splice(index, 1);
+          saveTermine(all);
+          renderTermine();
+        });
+
+        footer.appendChild(delBtn);
+
+        wrapper.appendChild(headline);
+        wrapper.appendChild(katSpan);
+        wrapper.appendChild(noteSpan);
+        wrapper.appendChild(footer);
+
+        listEl.appendChild(wrapper);
+      });
+    }
+
+    saveBtn.addEventListener("click", () => {
+      const dateVal = dateInput.value;
+      const subjectVal = subjectInput.value;
+      const catVal = categoryInput.value;
+      const noteVal = noteInput.value.trim();
+
+      if (!dateVal) {
+        alert("Bitte ein Datum eingeben.");
+        return;
+      }
+
+      const termine = loadTermine();
+      termine.push({
+        date: dateVal,
+        subject: subjectVal,
+        category: catVal,
+        note: noteVal
+      });
+      saveTermine(termine);
+
+      // Formular zurücksetzen
+      noteInput.value = "";
+      renderTermine();
+    });
+
+    // Start
+    renderTermine();
+  </script>
+</body>
+</html>
