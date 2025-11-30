@@ -1,19 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <title>Physik Digital 7–10 – Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physik Digital 9–10</title>
   <style>
     :root {
-      --bg-dark: #020617;
+      --bg-main: radial-gradient(circle at top, #020617 0%, #020617 40%, #000 100%);
+      --card-bg: rgba(15, 23, 42, 0.96);
+      --border-soft: rgba(148, 163, 184, 0.5);
       --text-main: #e5e7eb;
-      --text-soft: #9ca3af;
-
-      --k9: linear-gradient(135deg, #a855f7, #6366f1);
-      --k10: linear-gradient(135deg, #fb923c, #f97316);
-      --formeln: linear-gradient(135deg, #facc15, #f59e0b);
-      --contact: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      --text-muted: #94a3b8;
+      --accent-blue: #3b82f6;
     }
 
     * {
@@ -23,148 +21,110 @@
     }
 
     body {
-      min-height: 100vh;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1f2933 0, #020617 55%, #000 100%);
+      background: var(--bg-main);
       color: var(--text-main);
+      min-height: 100vh;
       display: flex;
-      align-items: flex-start;
       justify-content: center;
-      padding: 1.4rem 0.7rem 2.5rem;
+      padding: 1.5rem 0.75rem 2.5rem;
     }
 
-    .app {
-      position: relative;
-      max-width: 520px;
-      width: 100%;
-      background: radial-gradient(circle at top left, #111827 0, #020617 55%, #020617 100%);
-      border-radius: 28px;
-      box-shadow:
-        0 25px 80px rgba(0, 0, 0, 0.9),
-        0 0 0 1px rgba(148, 163, 184, 0.25);
-      padding: 1.3rem 1.3rem 1.8rem;
-      overflow: hidden;
-    }
-
-    /* Schneefall-Hintergrund */
-    .snow-layer {
-      pointer-events: none;
-      position: absolute;
+    /* Schneelayer */
+    #snow-layer {
+      position: fixed;
       inset: 0;
+      pointer-events: none;
+      z-index: 2;
       overflow: hidden;
-      z-index: 0;
     }
 
-    .snowflake {
-      position: absolute;
-      top: -10px;
-      width: 4px;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(248, 250, 252, 0.9);
-      opacity: 0.8;
-      filter: blur(0.3px);
-      animation-name: snow-fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-
-    @keyframes snow-fall {
-      0% {
-        transform: translate3d(0, -10px, 0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.9;
-      }
-      100% {
-        transform: translate3d(var(--drift-x, 0px), 110vh, 0);
-        opacity: 0;
-      }
-    }
-
-    main {
+    .page {
+      width: 100%;
+      max-width: 960px;
+      background: radial-gradient(circle at top left, #020617 0%, #020617 40%, #000 100%);
+      border-radius: 32px;
+      padding: 1.75rem 1.5rem 2rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 32px 80px rgba(15, 23, 42, 0.9);
       position: relative;
-      z-index: 1;
+      z-index: 3;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0.8rem;
-      gap: 0.8rem;
+    @media (min-width: 720px) {
+      .page {
+        padding: 2rem 2.4rem 2.4rem;
+      }
     }
 
-    .logo-block {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
+    header.hero {
+      margin-bottom: 1.5rem;
     }
 
-    .topline {
-      font-size: 0.7rem;
-      letter-spacing: 0.16em;
+    .brand {
+      font-size: 0.78rem;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       color: #9ca3af;
+      margin-bottom: 0.75rem;
     }
 
     h1 {
-      font-size: 1.5rem;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
       font-weight: 700;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.3rem;
     }
 
     .subtitle {
-      font-size: 0.9rem;
-      color: var(--text-soft);
-      margin-top: 0.2rem;
-      max-width: 32rem;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      max-width: 38rem;
+      line-height: 1.5;
     }
 
-    /* Uhr-Block mit Sekunden und blauem Glow */
-
+    /* Uhr-Balken */
     .clock {
-      padding: 0.5rem 0.9rem;
-      border-radius: 16px;
-      border: 1px solid rgba(56, 189, 248, 0.9);
-      background: radial-gradient(circle at top, rgba(37, 99, 235, 0.6), rgba(15, 23, 42, 0.96));
-      box-shadow:
-        0 0 25px rgba(56, 189, 248, 0.8),
-        0 0 45px rgba(37, 99, 235, 0.7);
+      margin: 1.1rem auto 0;
+      max-width: 420px;
+      padding: 0.55rem 1.3rem;
+      border-radius: 999px;
+      background: radial-gradient(circle at top left, #1d4ed8 0%, #0f172a 50%, #020617 100%);
+      border: 1px solid rgba(129, 140, 248, 0.7);
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.7);
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.05rem;
-      font-variant-numeric: tabular-nums;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      color: #e5f2ff;
+      text-shadow: 0 0 12px rgba(15, 23, 42, 0.9);
     }
 
     .clock-time {
+      font-feature-settings: "tnum" 1, "lnum" 1;
       font-size: 1.05rem;
-      font-weight: 700;
-      color: #e0f2fe;
+    }
+
+    .clock-sep {
+      opacity: 0.7;
     }
 
     .clock-date {
-      font-size: 0.75rem;
-      color: #bfdbfe;
+      font-size: 0.82rem;
+      opacity: 0.9;
     }
 
-    .hint-row {
-      margin-top: 0.2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
-
+    /* Hinweis + Aktualisieren */
     .hint {
-      font-size: 0.75rem;
-      color: var(--text-soft);
-      flex: 1 1 auto;
-      min-width: 0;
+      margin-top: 1.1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 40rem;
+      line-height: 1.5;
     }
 
     .hint strong {
@@ -172,507 +132,542 @@
       font-weight: 600;
     }
 
+    .refresh-row {
+      margin-top: 0.8rem;
+    }
+
     .refresh-btn {
-      flex: 0 0 auto;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9));
-      color: #e5e7eb;
-      padding: 0.35rem 0.8rem;
-      font-size: 0.8rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      cursor: pointer;
-    }
-
-    .refresh-btn span.icon {
+      gap: 0.5rem;
+      padding: 0.55rem 1.25rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      background: radial-gradient(circle at top left, #111827 0%, #020617 55%, #000 100%);
+      color: #e5e7eb;
       font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.7);
+      transition: transform 0.08s ease, box-shadow 0.12s ease,
+        background 0.12s ease, border-color 0.12s ease;
     }
 
-    .refresh-btn:hover {
-      border-color: #e5e7eb;
-      background: radial-gradient(circle at top, rgba(30, 64, 175, 0.9), rgba(15, 23, 42, 0.95));
+    .refresh-btn span {
+      font-size: 1.1rem;
     }
 
+    .refresh-btn:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.8);
+    }
+
+    /* Kacheln */
     .tiles {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
+      margin-top: 1.6rem;
+      display: flex;
+      flex-direction: column;
       gap: 0.9rem;
-      margin-top: 1.1rem;
-    }
-
-    @media (min-width: 520px) {
-      .tiles {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
     }
 
     .tile {
       position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0.9rem 0.7rem;
+      justify-content: space-between;
+      padding: 0.9rem 1.3rem;
       border-radius: 999px;
       text-decoration: none;
-      color: #f9fafb;
+      color: #0f172a;
       font-weight: 600;
-      font-size: 0.98rem;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
-      border: 1px solid rgba(15, 23, 42, 0.85);
-      transition:
-        transform 0.12s ease,
-        box-shadow 0.12s ease,
-        filter 0.12s ease,
-        opacity 0.12s ease;
-      backdrop-filter: blur(18px);
+      font-size: 1rem;
+      letter-spacing: 0.03em;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(15, 23, 42, 0.2);
+      overflow: hidden;
     }
 
-    .tile span.label {
+    .tile-main {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.55rem;
     }
 
-    .tile span.icon {
-      font-size: 1.1rem;
+    .tile-main span.icon {
+      font-size: 1.15rem;
     }
 
-    .tile-k9 {
-      background: var(--k9);
-      border-color: rgba(129, 140, 248, 0.95);
+    .tile-label {
+      text-shadow: 0 0 14px rgba(15, 23, 42, 0.4);
     }
 
-    .tile-k10 {
-      background: var(--k10);
-      border-color: rgba(248, 171, 120, 0.95);
+    .tile.k9 {
+      background: linear-gradient(135deg, #8b5cf6, #a855f7);
+      color: #0f172a;
     }
 
-    .tile-formeln {
-      background: var(--formeln);
-      color: #111827;
-      border-color: rgba(245, 158, 11, 0.95);
+    .tile.k10 {
+      background: linear-gradient(135deg, #fb923c, #f97316);
+      color: #0f172a;
     }
 
-    .tile-ask {
-      background: linear-gradient(135deg, #9ca3af, #6b7280);
-      border-color: rgba(156, 163, 175, 0.9);
+    .tile.formel {
+      background: linear-gradient(135deg, #facc15, #f59e0b);
+      color: #0f172a;
+    }
+
+    .tile.ask {
+      background: linear-gradient(135deg, #6b7280, #9ca3af);
+      color: #020617;
     }
 
     .tile:hover {
-      transform: translateY(-3px);
-      filter: saturate(1.1);
-      box-shadow:
-        0 20px 55px rgba(0, 0, 0, 0.95),
-        0 0 35px rgba(56, 189, 248, 0.35);
+      transform: translateY(-1px);
+      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.85);
     }
 
     .tile:active {
-      transform: translateY(-1px) scale(0.99);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.9);
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.8);
     }
 
     .tile-badge {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.9rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      padding: 0.12rem 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.15rem 0.75rem;
       border-radius: 999px;
-      border: 1px solid rgba(248, 250, 252, 0.85);
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
-      box-shadow: 0 0 12px rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(248, 250, 252, 0.9);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      background: rgba(15, 23, 42, 0.65);
+      color: #f9fafb;
     }
 
-    /* Feedback-Karte */
+    /* Feedback-Card */
     .feedback-card {
-      margin-top: 1.6rem;
-      padding: 1rem 1rem 1rem;
+      margin-top: 2rem;
+      background: radial-gradient(circle at top left, #020617 0%, #020617 45%, #020617 100%);
       border-radius: 24px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95));
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.9);
+      padding: 1.35rem 1.3rem 1.4rem;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
     }
 
     .feedback-card h2 {
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
     }
 
-    .feedback-text {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-      margin-bottom: 0.6rem;
+    .feedback-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
     }
 
     .stars {
       display: flex;
-      gap: 0.4rem;
-      margin-bottom: 0.6rem;
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
     }
 
     .star-btn {
-      width: 2rem;
-      height: 2rem;
+      width: 2.4rem;
+      height: 2.4rem;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.8);
-      background: radial-gradient(circle at top, rgba(30, 64, 175, 0.35), rgba(15, 23, 42, 0.95));
-      display: flex;
+      background: radial-gradient(circle at top, #020617 0%, #020617 50%, #000 100%);
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
       cursor: pointer;
-      color: #e5e7eb;
-      transition:
-        transform 0.08s ease,
-        box-shadow 0.08s ease,
-        border-color 0.1s ease,
-        background 0.1s ease;
+      font-size: 1.2rem;
+      transition: transform 0.08s ease, box-shadow 0.12s ease,
+        border-color 0.12s ease, background 0.12s ease;
+    }
+
+    .star-btn span {
+      pointer-events: none;
     }
 
     .star-btn.active {
       border-color: #facc15;
-      background: radial-gradient(circle at top, #facc15, #f97316);
-      color: #111827;
-      box-shadow: 0 0 18px rgba(250, 204, 21, 0.65);
+      background: radial-gradient(circle at top, #facc15 0%, #eab308 40%, #0f172a 100%);
+      box-shadow: 0 0 20px rgba(250, 204, 21, 0.7);
     }
 
-    .star-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
+    .star-btn:active {
+      transform: translateY(1px) scale(0.96);
     }
 
     .feedback-input {
       width: 100%;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.95);
+      color: #e5e7eb;
+      padding: 0.7rem 0.85rem;
+      font-size: 0.9rem;
       resize: vertical;
       min-height: 2.6rem;
-      max-height: 6.5rem;
-      border-radius: 14px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
-      padding: 0.55rem 0.7rem;
-      font-size: 0.85rem;
-      outline: none;
-      margin-bottom: 0.7rem;
+      max-height: 7rem;
+      margin-bottom: 0.8rem;
     }
 
     .feedback-input::placeholder {
-      color: rgba(148, 163, 184, 0.9);
+      color: rgba(148, 163, 184, 0.8);
     }
 
-    .feedback-input:focus {
-      border-color: #38bdf8;
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.7);
-    }
-
-    .feedback-actions {
+    .feedback-row {
       display: flex;
-      justify-content: flex-start;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.7rem;
+      justify-content: space-between;
     }
 
     .feedback-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.55rem;
+      padding: 0.55rem 1.3rem;
       border-radius: 999px;
-      padding: 0.45rem 0.95rem;
-      border: 1px solid rgba(16, 185, 129, 0.9);
-      font-size: 0.85rem;
-      font-weight: 500;
-      text-decoration: none;
+      border: none;
       cursor: pointer;
+      font-size: 0.9rem;
       background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #052e16;
-      box-shadow:
-        0 15px 40px rgba(22, 163, 74, 0.55),
-        0 0 18px rgba(22, 163, 74, 0.7);
-      transition:
-        transform 0.1s ease,
-        box-shadow 0.1s ease,
-        filter 0.1s ease;
+      color: #022c22;
+      font-weight: 600;
+      box-shadow: 0 16px 42px rgba(22, 163, 74, 0.75);
+      text-decoration: none;
     }
 
-    .feedback-btn:hover {
-      transform: translateY(-2px);
-      filter: saturate(1.1);
-      box-shadow:
-        0 18px 55px rgba(22, 163, 74, 0.7),
-        0 0 24px rgba(74, 222, 128, 0.9);
+    .feedback-btn span.icon {
+      font-size: 1.1rem;
     }
 
-    .feedback-btn:active {
-      transform: translateY(-1px) scale(0.99);
-      box-shadow:
-        0 10px 32px rgba(22, 163, 74, 0.6),
-        0 0 18px rgba(74, 222, 128, 0.8);
-    }
-
-    .footer {
-      margin-top: 1.4rem;
-      font-size: 0.75rem;
-      color: var(--text-soft);
-      text-align: center;
-    }
-
-    .footer strong {
-      color: #e5e7eb;
-    }
-
-    .footer-line {
-      margin-top: 0.15rem;
-    }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 1.1rem;
-      transform: translateX(-50%);
-      background: rgba(15, 23, 42, 0.95);
-      color: #e5e7eb;
-      padding: 0.5rem 0.9rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      border: 1px solid rgba(74, 222, 128, 0.8);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9);
+    .feedback-toast {
+      font-size: 0.86rem;
+      color: #bbf7d0;
       opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      z-index: 40;
+      transform: translateY(4px);
+      transition: opacity 0.16s ease, transform 0.16s ease;
     }
 
-    .toast.show {
+    .feedback-toast.show {
       opacity: 1;
-      transform: translate(-50%, -4px);
+      transform: translateY(0);
+    }
+
+    footer {
+      margin-top: 1.6rem;
+      font-size: 0.8rem;
+      color: #64748b;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    footer span {
+      white-space: nowrap;
+    }
+
+    footer span.sep {
+      opacity: 0.4;
+    }
+
+    /* Schneeflocken */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(248, 250, 252, 0.95);
+      box-shadow: 0 0 8px rgba(241, 245, 249, 0.8);
+      opacity: 0.9;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translate3d(0, 0, 0);
+        opacity: 0;
+      }
+      8% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate3d(var(--drift, 0px), 105vh, 0);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <div class="snow-layer" id="snow-layer"></div>
+  <div id="snow-layer"></div>
 
-    <main>
-      <header>
-        <div class="logo-block">
-          <div class="topline">FGO Perleberg · Physik Digital</div>
-          <h1>Physik Digital&nbsp;7–10</h1>
-          <p class="subtitle">
-            Wähle deine Klassenstufe oder die Formelsammlung. Alle Inhalte sind für
-            <strong>Smartphone</strong> &amp; <strong>Smartboard</strong> optimiert.
-          </p>
-        </div>
-        <div class="clock" id="clock">
-          <div class="clock-time" id="clock-time">--:--:--</div>
-          <div class="clock-date" id="clock-date">--.--.----</div>
-        </div>
-      </header>
+  <main class="page">
+    <header class="hero">
+      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
+      <h1>Physik Digital 9–10</h1>
+      <p class="subtitle">
+        Wähle deine Klassenstufe oder die Formelsammlung. Alle Inhalte sind für
+        <strong>Smartphone</strong> &amp; <strong>Smartboard</strong> optimiert.
+      </p>
 
-      <div class="hint-row">
-        <p class="hint">
-          <strong>Hinweis:</strong> Wenn du neue Inhalte nicht siehst, tippe auf
-          <strong>„Aktualisieren“</strong> oder lade die Seite im Browser neu.
-        </p>
-        <button class="refresh-btn" id="refresh-btn" type="button">
-          <span class="icon">↻</span>
+      <div class="clock" id="clockBox">
+        <span class="clock-time" id="clockTime">--:--:--</span>
+        <span class="clock-sep">•</span>
+        <span class="clock-date" id="clockDate">--, --.--.----</span>
+      </div>
+
+      <p class="hint">
+        <strong>Hinweis:</strong> Wenn du neue Inhalte nicht siehst, tippe auf
+        <strong>„Aktualisieren“</strong> oder lade die Seite im Browser neu.
+      </p>
+
+      <div class="refresh-row">
+        <button id="refreshBtn" class="refresh-btn">
+          <span>⟳</span>
           <span>Aktualisieren</span>
         </button>
       </div>
+    </header>
 
-      <section class="tiles">
-        <a href="klasse9.html" class="tile tile-k9">
-          <span class="label">
-            <span class="icon">9️⃣</span>
-            Klasse 9
-          </span>
-          <span class="tile-badge">NEU</span>
-        </a>
-
-        <a href="klasse10.html" class="tile tile-k10">
-          <span class="label">
-            <span class="icon">🔟</span>
-            Klasse 10
-          </span>
-          <span class="tile-badge">NEU</span>
-        </a>
-
-        <a href="formelsammlung.html" class="tile tile-formeln">
-          <span class="label">
-            <span class="icon">ƒ</span>
-            Formelsammlung 7–10
-          </span>
-        </a>
-
-        <a href="mailto:michael.nagel@lk.brandenburg.de?subject=Fragen%20zu%20Physik%20Digital"
-           class="tile tile-ask">
-          <span class="label">
-            <span class="icon">✉️</span>
-            Fragen an die Lehrkraft
-          </span>
-        </a>
-      </section>
-
-      <section class="feedback-card">
-        <h2>Wie gefällt dir diese App?</h2>
-        <p class="feedback-text">
-          Tippe auf die Sterne und schicke mir anonymes Feedback.
-          So kann ich Physik Digital weiter verbessern.
-        </p>
-
-        <div class="stars" id="star-row">
-          <button type="button" class="star-btn" data-value="1">★</button>
-          <button type="button" class="star-btn" data-value="2">★</button>
-          <button type="button" class="star-btn" data-value="3">★</button>
-          <button type="button" class="star-btn" data-value="4">★</button>
-          <button type="button" class="star-btn" data-value="5">★</button>
+    <section class="tiles">
+      <a href="klasse9.html" class="tile k9">
+        <div class="tile-main">
+          <span class="icon">9️⃣</span>
+          <span class="tile-label">Klasse 9</span>
         </div>
+        <span class="tile-badge">NEU</span>
+      </a>
 
-        <textarea
-          id="feedback-text"
-          class="feedback-input"
-          placeholder="Was hat dir geholfen? Was kann besser werden? (optional)"
-        ></textarea>
-
-        <div class="feedback-actions">
-          <button id="feedback-send" class="feedback-btn" type="button">
-            <span>📧</span>
-            <span>Feedback per Mail senden</span>
-          </button>
+      <a href="klasse10.html" class="tile k10">
+        <div class="tile-main">
+          <span class="icon">🔟</span>
+          <span class="tile-label">Klasse 10</span>
         </div>
-      </section>
+        <span class="tile-badge">NEU</span>
+      </a>
 
-      <footer class="footer">
-        <div>Version 1.0 · Stand: Schuljahr 2025</div>
-        <div class="footer-line">
-          © 2025 – <strong>M. Nagel</strong> · FGO Perleberg · Physik Digital&nbsp;7–10
+      <a href="formelsammlung.html" class="tile formel">
+        <div class="tile-main">
+          <span class="icon">ƒ</span>
+          <span class="tile-label">Formelsammlung 7–10</span>
         </div>
-      </footer>
-    </main>
+      </a>
 
-    <div class="toast" id="toast">Danke für dein Feedback!</div>
-  </div>
+      <a href="mailto:michael.nagel@lk.brandenburg.de?subject=Fragen%20zu%20Physik%20Digital"
+         class="tile ask">
+        <div class="tile-main">
+          <span class="icon">✉️</span>
+          <span class="tile-label">Fragen an die Lehrkraft</span>
+        </div>
+      </a>
+    </section>
+
+    <section class="feedback-card">
+      <h2>Wie gefällt dir diese App?</h2>
+      <p>
+        Tippe auf die Sterne und schicke mir anonymes Feedback.
+        So kann ich Physik Digital weiter verbessern.
+      </p>
+
+      <div class="stars" id="starRow">
+        <button type="button" class="star-btn" data-value="1"><span>⭐️</span></button>
+        <button type="button" class="star-btn" data-value="2"><span>⭐️</span></button>
+        <button type="button" class="star-btn" data-value="3"><span>⭐️</span></button>
+        <button type="button" class="star-btn" data-value="4"><span>⭐️</span></button>
+        <button type="button" class="star-btn" data-value="5"><span>⭐️</span></button>
+      </div>
+
+      <textarea
+        id="feedbackText"
+        class="feedback-input"
+        placeholder="Was hat dir geholfen? Was kann besser werden? (optional)"
+      ></textarea>
+
+      <div class="feedback-row">
+        <a id="feedbackSend" class="feedback-btn" href="#">
+          <span class="icon">📧</span>
+          <span>Feedback per Mail senden</span>
+        </a>
+        <div id="feedbackToast" class="feedback-toast">
+          Danke für dein Feedback!
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Version 1.0</span>
+      <span class="sep">·</span>
+      <span>Stand: Schuljahr 2025</span>
+      <span class="sep">·</span>
+      <span>M. Nagel</span>
+      <span class="sep">·</span>
+      <span>Physik Digital 9–10</span>
+    </footer>
+  </main>
 
   <script>
-    // Uhr & Datum (mit Sekunden)
+    // --- Uhr aktualisieren ---
     function updateClock() {
       const now = new Date();
-      const timeEl = document.getElementById('clock-time');
-      const dateEl = document.getElementById('clock-date');
+      const h = String(now.getHours()).padStart(2, "0");
+      const m = String(now.getMinutes()).padStart(2, "0");
+      const s = String(now.getSeconds()).padStart(2, "0");
+      const timeEl = document.getElementById("clockTime");
+      const dateEl = document.getElementById("clockDate");
 
-      if (!timeEl || !dateEl) return;
+      if (timeEl) timeEl.textContent = h + ":" + m + ":" + s;
 
-      const hh = String(now.getHours()).padStart(2, '0');
-      const mm = String(now.getMinutes()).padStart(2, '0');
-      const ss = String(now.getSeconds()).padStart(2, '0');
-      timeEl.textContent = hh + ':' + mm + ':' + ss;
+      const days = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+      const dName = days[now.getDay()];
+      const d = String(now.getDate()).padStart(2, "0");
+      const mo = String(now.getMonth() + 1).padStart(2, "0");
+      const y = now.getFullYear();
 
-      const dd = String(now.getDate()).padStart(2, '0');
-      const mo = String(now.getMonth() + 1).padStart(2, '0');
-      const yyyy = now.getFullYear();
-      const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
-      const day = days[now.getDay()];
-      dateEl.textContent = day + ', ' + dd + '.' + mo + '.' + yyyy;
+      if (dateEl) dateEl.textContent = dName + ", " + d + "." + mo + "." + y;
     }
-    updateClock();
     setInterval(updateClock, 1000);
+    updateClock();
 
-    // Aktualisieren-Button
-    document.getElementById('refresh-btn').addEventListener('click', () => {
-      location.reload();
-    });
+    // --- Refresh-Button ---
+    const refreshBtn = document.getElementById("refreshBtn");
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", () => {
+        window.location.reload();
+      });
+    }
 
-    // Feedback-Logik
-    const starButtons = Array.from(document.querySelectorAll('.star-btn'));
-    let currentRating = 0;
+    // --- NEU-Badges (14 Tage) ---
+    (function handleNewBadges() {
+      const NEW_DAYS = 14;
+      const STORAGE_KEY = "dashboardFirstSeen_v2";
+      let firstSeen = localStorage.getItem(STORAGE_KEY);
 
-    starButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const value = Number(btn.dataset.value || '0');
-        currentRating = value;
-        starButtons.forEach(b => {
-          b.classList.toggle('active', Number(b.dataset.value || '0') <= value);
+      if (!firstSeen) {
+        localStorage.setItem(STORAGE_KEY, Date.now().toString());
+        firstSeen = localStorage.getItem(STORAGE_KEY);
+      }
+
+      const diffMs = Date.now() - Number(firstSeen);
+      const diffDays = diffMs / (1000 * 60 * 60 * 24);
+      const showNew = diffDays <= NEW_DAYS;
+
+      const badges = document.querySelectorAll(".tile-badge");
+      badges.forEach((b) => {
+        b.style.display = showNew ? "inline-flex" : "none";
+      });
+    })();
+
+    // --- Winter-Zeit prüfen ---
+    function isWinter() {
+      const now = new Date();
+      const m = now.getMonth(); // 0 = Jan, 11 = Dez
+      const d = now.getDate();
+
+      if (m === 10 && d >= 30) return true; // ab 30. November
+      if (m === 11) return true;           // Dezember
+      if (m === 0 && d <= 31) return true; // Januar
+      return false;
+    }
+
+    // --- Schneefall aktivieren ---
+    (function initSnow() {
+      if (!isWinter()) return;
+
+      const snowLayer = document.getElementById("snow-layer");
+      if (!snowLayer) return;
+
+      function createFlake() {
+        const flake = document.createElement("div");
+        flake.className = "snowflake";
+
+        const size = 2 + Math.random() * 3;
+        const left = Math.random() * 100;
+        const duration = 6 + Math.random() * 6;
+        const delay = Math.random() * 2;
+        const drift = (Math.random() * 40 - 20).toFixed(1) + "px";
+
+        flake.style.width = size + "px";
+        flake.style.height = size + "px";
+        flake.style.left = left + "vw";
+        flake.style.animationDuration = duration + "s";
+        flake.style.animationDelay = delay + "s";
+        flake.style.setProperty("--drift", drift);
+
+        snowLayer.appendChild(flake);
+
+        setTimeout(() => {
+          if (flake.parentNode === snowLayer) {
+            snowLayer.removeChild(flake);
+          }
+        }, (duration + delay) * 1000 + 500);
+      }
+
+      setInterval(() => {
+        const burst = 3 + Math.floor(Math.random() * 2);
+        for (let i = 0; i < burst; i++) createFlake();
+      }, 260);
+    })();
+
+    // --- Feedback-Logik ---
+    const starButtons = document.querySelectorAll(".star-btn");
+    let currentStars = 0;
+
+    starButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const value = Number(btn.getAttribute("data-value"));
+        currentStars = value;
+        starButtons.forEach((b) => {
+          const v = Number(b.getAttribute("data-value"));
+          b.classList.toggle("active", v <= value);
         });
       });
     });
 
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      if (!toast) return;
-      toast.textContent = message;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2200);
+    const feedbackText = document.getElementById("feedbackText");
+    const feedbackSend = document.getElementById("feedbackSend");
+    const feedbackToast = document.getElementById("feedbackToast");
+
+    if (feedbackSend) {
+      feedbackSend.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const rating = currentStars || 0;
+        const text = (feedbackText && feedbackText.value.trim()) || "";
+
+        const subject = encodeURIComponent("Feedback zu Physik Digital");
+        let body = "Bewertung: " + rating + " von 5 Sternen%0D%0A";
+        body += "%0D%0A";
+        body += encodeURIComponent(text);
+
+        const mailto =
+          "mailto:michael.nagel@lk.brandenburg.de?subject=" +
+          subject +
+          "&body=" +
+          body;
+
+        window.location.href = mailto;
+
+        // nach dem Senden zurücksetzen
+        currentStars = 0;
+        starButtons.forEach((b) => b.classList.remove("active"));
+        if (feedbackText) feedbackText.value = "";
+
+        if (feedbackToast) {
+          feedbackToast.classList.add("show");
+          setTimeout(() => {
+            feedbackToast.classList.remove("show");
+          }, 2500);
+        }
+      });
     }
-
-    document.getElementById('feedback-send').addEventListener('click', () => {
-      const textArea = document.getElementById('feedback-text');
-      const rating = currentRating;
-      const text = (textArea.value || '').trim();
-
-      if (!rating && !text) {
-        showToast('Bitte gib mindestens einen Stern oder einen kurzen Hinweis ein.');
-        return;
-      }
-
-      const subject = encodeURIComponent('Feedback zu Physik Digital 7–10');
-      const lines = [];
-      if (rating) lines.push('Sterne: ' + rating + ' von 5');
-      if (text) {
-        lines.push('');
-        lines.push('Nachricht:');
-        lines.push(text);
-      }
-      const body = encodeURIComponent(lines.join('\n'));
-
-      window.location.href = 'mailto:michael.nagel@lk.brandenburg.de'
-        + '?subject=' + subject
-        + '&body=' + body;
-
-      // zurücksetzen
-      currentRating = 0;
-      starButtons.forEach(b => b.classList.remove('active'));
-      textArea.value = '';
-
-      showToast('Danke für dein Feedback!');
-    });
-
-    // Leichter Schneefall – nur vom 1. Dezember bis 31. Januar
-    (function maybeCreateSnow() {
-      const now = new Date();
-      const month = now.getMonth(); // 0 = Jan, 11 = Dez
-      const day = now.getDate();
-
-      const winterSnow =
-  (month === 10 && day >= 30) || // ab 30. November
-  (month === 11) ||              // ganzer Dezember
-  (month === 0 && day <= 31);    // ganzer Januar
-
-      if (!winterSnow) return;
-
-      const layer = document.getElementById('snow-layer');
-      if (!layer) return;
-
-      const flakeCount = 40;
-      const width = layer.clientWidth || window.innerWidth;
-
-      for (let i = 0; i < flakeCount; i++) {
-        const s = document.createElement('div');
-        s.className = 'snowflake';
-        const size = 2 + Math.random() * 3;
-        s.style.width = size + 'px';
-        s.style.height = size + 'px';
-        s.style.left = Math.random() * width + 'px';
-        s.style.opacity = 0.6 + Math.random() * 0.4;
-        s.style.animationDuration = 8 + Math.random() * 10 + 's';
-        s.style.animationDelay = (-Math.random() * 10) + 's';
-        const drift = (Math.random() * 40 - 20).toFixed(1) + 'px';
-        s.style.setProperty('--drift-x', drift);
-        layer.appendChild(s);
-      }
-    })();
   </script>
 </body>
 </html>
