@@ -7,8 +7,6 @@
   <style>
     :root {
       --bg-dark: #020617;
-      --bg-grad-top: #0f172a;
-      --bg-grad-bottom: #000000;
       --text-main: #e5e7eb;
       --text-soft: #9ca3af;
 
@@ -59,32 +57,32 @@
     }
 
     .snowflake {
-  position: absolute;
-  top: -10px;
-  width: 4px;
-  height: 4px;
-  border-radius: 999px;
-  background: rgba(248, 250, 252, 0.9);
-  opacity: 0.8;
-  filter: blur(0.3px);
-  animation-name: snow-fall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
+      position: absolute;
+      top: -10px;
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(248, 250, 252, 0.9);
+      opacity: 0.8;
+      filter: blur(0.3px);
+      animation-name: snow-fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
 
-@keyframes snow-fall {
-  0% {
-    transform: translate3d(0, -10px, 0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.9;
-  }
-  100% {
-    transform: translate3d(var(--drift-x, 0px), 110vh, 0);
-    opacity: 0;
-  }
-}
+    @keyframes snow-fall {
+      0% {
+        transform: translate3d(0, -10px, 0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translate3d(var(--drift-x, 0px), 110vh, 0);
+        opacity: 0;
+      }
+    }
 
     main {
       position: relative;
@@ -95,7 +93,7 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 1.2rem;
+      margin-bottom: 0.8rem;
       gap: 0.8rem;
     }
 
@@ -125,34 +123,48 @@
       max-width: 32rem;
     }
 
+    /* Uhr-Block mit Sekunden und blauem Glow */
+
     .clock {
-      align-self: flex-start;
-      padding: 0.45rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.75);
-      font-size: 0.8rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.9);
+      background: radial-gradient(circle at top, rgba(37, 99, 235, 0.6), rgba(15, 23, 42, 0.96));
+      box-shadow:
+        0 0 25px rgba(56, 189, 248, 0.8),
+        0 0 45px rgba(37, 99, 235, 0.7);
       display: flex;
       flex-direction: column;
       align-items: flex-end;
       gap: 0.05rem;
-      background: radial-gradient(circle at top, rgba(30, 64, 175, 0.5), rgba(15, 23, 42, 0.95));
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+      font-variant-numeric: tabular-nums;
     }
 
     .clock-time {
-      font-variant-numeric: tabular-nums;
-      font-weight: 600;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #e0f2fe;
     }
 
     .clock-date {
-      font-size: 0.7rem;
-      color: var(--text-soft);
+      font-size: 0.75rem;
+      color: #bfdbfe;
+    }
+
+    .hint-row {
+      margin-top: 0.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
     }
 
     .hint {
-      margin-top: 0.4rem;
       font-size: 0.75rem;
       color: var(--text-soft);
+      flex: 1 1 auto;
+      min-width: 0;
     }
 
     .hint strong {
@@ -160,11 +172,34 @@
       font-weight: 600;
     }
 
+    .refresh-btn {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9));
+      color: #e5e7eb;
+      padding: 0.35rem 0.8rem;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+
+    .refresh-btn span.icon {
+      font-size: 0.9rem;
+    }
+
+    .refresh-btn:hover {
+      border-color: #e5e7eb;
+      background: radial-gradient(circle at top, rgba(30, 64, 175, 0.9), rgba(15, 23, 42, 0.95));
+    }
+
     .tiles {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       gap: 0.9rem;
-      margin-top: 1.3rem;
+      margin-top: 1.1rem;
     }
 
     @media (min-width: 520px) {
@@ -179,7 +214,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 0.85rem 0.6rem;
+      padding: 0.9rem 0.7rem;
       border-radius: 999px;
       text-decoration: none;
       color: #f9fafb;
@@ -249,7 +284,7 @@
       padding: 0.12rem 0.5rem;
       border-radius: 999px;
       border: 1px solid rgba(248, 250, 252, 0.85);
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(15, 23, 42, 0.9);
       color: #e5e7eb;
       box-shadow: 0 0 12px rgba(15, 23, 42, 0.9);
     }
@@ -432,15 +467,21 @@
           </p>
         </div>
         <div class="clock" id="clock">
-          <div class="clock-time" id="clock-time">--:--</div>
+          <div class="clock-time" id="clock-time">--:--:--</div>
           <div class="clock-date" id="clock-date">--.--.----</div>
         </div>
       </header>
 
-      <p class="hint">
-        <strong>Hinweis:</strong> Wenn du neue Inhalte nicht siehst, aktualisiere diese Seite
-        im Browser (↻) oder ziehe auf dem Handy die Seite kurz nach unten, um sie neu zu laden.
-      </p>
+      <div class="hint-row">
+        <p class="hint">
+          <strong>Hinweis:</strong> Wenn du neue Inhalte nicht siehst, tippe auf
+          <strong>„Aktualisieren“</strong> oder lade die Seite im Browser neu.
+        </p>
+        <button class="refresh-btn" id="refresh-btn" type="button">
+          <span class="icon">↻</span>
+          <span>Aktualisieren</span>
+        </button>
+      </div>
 
       <section class="tiles">
         <a href="klasse9.html" class="tile tile-k9">
@@ -516,7 +557,7 @@
   </div>
 
   <script>
-    // Uhr & Datum
+    // Uhr & Datum (mit Sekunden)
     function updateClock() {
       const now = new Date();
       const timeEl = document.getElementById('clock-time');
@@ -526,7 +567,8 @@
 
       const hh = String(now.getHours()).padStart(2, '0');
       const mm = String(now.getMinutes()).padStart(2, '0');
-      timeEl.textContent = hh + ':' + mm;
+      const ss = String(now.getSeconds()).padStart(2, '0');
+      timeEl.textContent = hh + ':' + mm + ':' + ss;
 
       const dd = String(now.getDate()).padStart(2, '0');
       const mo = String(now.getMonth() + 1).padStart(2, '0');
@@ -536,7 +578,12 @@
       dateEl.textContent = day + ', ' + dd + '.' + mo + '.' + yyyy;
     }
     updateClock();
-    setInterval(updateClock, 60000);
+    setInterval(updateClock, 1000);
+
+    // Aktualisieren-Button
+    document.getElementById('refresh-btn').addEventListener('click', () => {
+      location.reload();
+    });
 
     // Feedback-Logik
     const starButtons = Array.from(document.querySelectorAll('.star-btn'));
@@ -592,13 +639,25 @@
       showToast('Danke für dein Feedback!');
     });
 
-    // leichter Schneefall
-    (function createSnow() {
+    // Leichter Schneefall – nur vom 1. Dezember bis 31. Januar
+    (function maybeCreateSnow() {
+      const now = new Date();
+      const month = now.getMonth(); // 0 = Jan, 11 = Dez
+      const day = now.getDate();
+
+      const winterSnow =
+  (month === 10 && day >= 30) || // ab 30. November
+  (month === 11) ||              // ganzer Dezember
+  (month === 0 && day <= 31);    // ganzer Januar
+
+      if (!winterSnow) return;
+
       const layer = document.getElementById('snow-layer');
       if (!layer) return;
 
       const flakeCount = 40;
       const width = layer.clientWidth || window.innerWidth;
+
       for (let i = 0; i < flakeCount; i++) {
         const s = document.createElement('div');
         s.className = 'snowflake';
@@ -610,7 +669,7 @@
         s.style.animationDuration = 8 + Math.random() * 10 + 's';
         s.style.animationDelay = (-Math.random() * 10) + 's';
         const drift = (Math.random() * 40 - 20).toFixed(1) + 'px';
-s.style.setProperty('--drift-x', drift);
+        s.style.setProperty('--drift-x', drift);
         layer.appendChild(s);
       }
     })();
