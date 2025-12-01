@@ -31,17 +31,21 @@
       padding: 1.5rem 0.75rem 2.5rem;
     }
 
-    /* Schneelayer */
+    body.xmas-on {
+      background: radial-gradient(circle at top, #111827 0%, #020617 40%, #000 100%);
+    }
+
+    /* Schneelayer über der ganzen Seite */
     #snow-layer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 9999; /* ganz vorne */
-}
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 9999;
+    }
 
     .page {
       width: 100%;
@@ -53,6 +57,11 @@
       box-shadow: 0 32px 80px rgba(15, 23, 42, 0.9);
       position: relative;
       z-index: 3;
+    }
+
+    body.xmas-on .page {
+      box-shadow: 0 32px 90px rgba(251, 191, 36, 0.65);
+      border-color: rgba(250, 204, 21, 0.8);
     }
 
     @media (min-width: 720px) {
@@ -121,7 +130,7 @@
       opacity: 0.9;
     }
 
-    /* Hinweis + Aktualisieren */
+    /* Hinweis + Buttons */
     .hint {
       margin-top: 1.1rem;
       font-size: 0.9rem;
@@ -135,11 +144,15 @@
       font-weight: 600;
     }
 
-    .refresh-row {
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
       margin-top: 0.8rem;
     }
 
-    .refresh-btn {
+    .refresh-btn,
+    .xmas-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -155,13 +168,27 @@
         background 0.12s ease, border-color 0.12s ease;
     }
 
-    .refresh-btn span {
+    .refresh-btn span.icon,
+    .xmas-btn span.icon {
       font-size: 1.1rem;
     }
 
-    .refresh-btn:active {
+    .refresh-btn:active,
+    .xmas-btn:active {
       transform: translateY(1px) scale(0.99);
       box-shadow: 0 6px 16px rgba(15, 23, 42, 0.8);
+    }
+
+    .xmas-btn {
+      background: linear-gradient(135deg, #16a34a, #b91c1c);
+      border-color: rgba(248, 250, 252, 0.8);
+      color: #fefce8;
+      box-shadow: 0 18px 40px rgba(190, 24, 93, 0.75);
+    }
+
+    body.xmas-on .xmas-btn {
+      filter: brightness(1.08);
+      box-shadow: 0 22px 48px rgba(190, 24, 93, 0.95);
     }
 
     /* Kacheln */
@@ -218,9 +245,22 @@
       color: #0f172a;
     }
 
+    .tile.advent {
+      background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+      color: #022c22;
+    }
+
     .tile.ask {
       background: linear-gradient(135deg, #6b7280, #9ca3af);
       color: #020617;
+    }
+
+    body.xmas-on .tile.k9,
+    body.xmas-on .tile.k10,
+    body.xmas-on .tile.formel,
+    body.xmas-on .tile.advent {
+      box-shadow: 0 0 30px rgba(250, 204, 21, 0.8);
+      border-color: rgba(250, 250, 249, 0.9);
     }
 
     .tile:hover {
@@ -381,7 +421,7 @@
 
     /* Schneeflocken */
     .snowflake {
-      position: fixed;
+      position: absolute;
       top: -10px;
       width: 4px;
       height: 4px;
@@ -407,18 +447,95 @@
         opacity: 0;
       }
     }
+
+    /* Weihnachts-Popup */
+    .xmas-popup-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.86);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 1rem;
+    }
+
+    .xmas-popup-backdrop.show {
+      display: flex;
+    }
+
+    .xmas-popup {
+      max-width: 420px;
+      width: 100%;
+      background: radial-gradient(circle at top, #0f172a 0%, #020617 55%, #000 100%);
+      border-radius: 24px;
+      border: 1px solid rgba(251, 191, 36, 0.9);
+      padding: 1.3rem 1.4rem 1.1rem;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 1);
+      text-align: left;
+      color: #fefce8;
+    }
+
+    .xmas-popup h2 {
+      margin-bottom: 0.4rem;
+      font-size: 1.2rem;
+    }
+
+    .xmas-popup p {
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .xmas-popup-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 0.4rem;
+    }
+
+    .xmas-popup-btn {
+      border-radius: 999px;
+      border: none;
+      padding: 0.5rem 1.1rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #022c22;
+      font-weight: 600;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div id="snow-layer"></div>
+
+  <!-- Weihnachtsmusik -->
+<audio id="xmasMusic" preload="auto" loop>
+  <source src="xmas.mp3" type="audio/mpeg">
+  <!-- Falls der Browser kein MP3 kann, passiert einfach nichts -->
+</audio>
+  <!-- Weihnachts-Popup -->
+  <div id="xmasPopupBackdrop" class="xmas-popup-backdrop">
+    <div class="xmas-popup">
+      <h2>Frohe Vorweihnachtszeit 🎄</h2>
+      <p>
+        Schön, dass du mit der Physik-App arbeitest!<br>
+        Nutze die Zeit bis Weihnachten, um in Ruhe zu üben,
+        Fragen zu stellen und dich entspannt auf Tests vorzubereiten.
+      </p>
+      <p>
+        Denk daran: Fehler gehören zum Lernen dazu – Schritt für Schritt wird’s sicherer. 💪
+      </p>
+      <div class="xmas-popup-footer">
+        <button id="xmasPopupClose" class="xmas-popup-btn">Weiter zur App</button>
+      </div>
+    </div>
+  </div>
 
   <main class="page">
     <header class="hero">
       <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
       <h1>Physik Digital 9–10</h1>
       <p class="subtitle">
-        Wähle deine Klassenstufe oder die Formelsammlung. Alle Inhalte sind für
-        <strong>Smartphone</strong> &amp; <strong>Smartboard</strong> optimiert.
+        Wähle deine Klassenstufe, den Adventskalender oder die Formelsammlung.
+        Alle Inhalte sind für <strong>Smartphone</strong> &amp; <strong>Smartboard</strong> optimiert.
       </p>
 
       <div class="clock" id="clockBox">
@@ -432,10 +549,14 @@
         <strong>„Aktualisieren“</strong> oder lade die Seite im Browser neu.
       </p>
 
-      <div class="refresh-row">
+      <div class="button-row">
         <button id="refreshBtn" class="refresh-btn">
-          <span>⟳</span>
+          <span class="icon">⟳</span>
           <span>Aktualisieren</span>
+        </button>
+        <button id="xmasModeBtn" class="xmas-btn">
+          <span class="icon">🎄</span>
+          <span>Weihnachtsmodus</span>
         </button>
       </div>
     </header>
@@ -455,6 +576,13 @@
           <span class="tile-label">Klasse 10</span>
         </div>
         <span class="tile-badge">NEU</span>
+      </a>
+
+      <a href="advent.html" class="tile advent">
+        <div class="tile-main">
+          <span class="icon">🎁</span>
+          <span class="tile-label">Adventskalender</span>
+        </div>
       </a>
 
       <a href="formelsammlung.html" class="tile formel">
@@ -506,7 +634,7 @@
     </section>
 
     <footer>
-      <span>Version 1.0</span>
+      <span>Version 1.1 (Weihnachts-Edition)</span>
       <span class="sep">·</span>
       <span>Stand: Schuljahr 2025</span>
       <span class="sep">·</span>
@@ -617,6 +745,53 @@
         const burst = 3 + Math.floor(Math.random() * 2);
         for (let i = 0; i < burst; i++) createFlake();
       }, 260);
+    })();
+
+    // --- Weihnachtsmodus (Design + Musik) ---
+    const xmasBtn = document.getElementById("xmasModeBtn");
+    const xmasAudio = document.getElementById("xmasMusic");
+    let xmasActive = false;
+
+    if (xmasBtn) {
+      xmasBtn.addEventListener("click", () => {
+        xmasActive = !xmasActive;
+        document.body.classList.toggle("xmas-on", xmasActive);
+
+        if (xmasActive) {
+          xmasBtn.querySelector("span:last-child").textContent = "Weihnachtsmodus an";
+          if (xmasAudio && xmasAudio.play) {
+            xmasAudio.currentTime = 0;
+            xmasAudio.play().catch(() => {});
+          }
+        } else {
+          xmasBtn.querySelector("span:last-child").textContent = "Weihnachtsmodus";
+          if (xmasAudio && xmasAudio.pause) {
+            xmasAudio.pause();
+          }
+        }
+      });
+    }
+
+    // --- Weihnachts-Popup (einmal pro Jahr) ---
+    (function initXmasPopup() {
+      const now = new Date();
+      const m = now.getMonth(); // 0 = Jan
+      if (m !== 11) return; // nur im Dezember
+
+      const year = now.getFullYear();
+      const KEY = "xmasPopupShown_" + year;
+      if (localStorage.getItem(KEY)) return;
+
+      const backdrop = document.getElementById("xmasPopupBackdrop");
+      const closeBtn = document.getElementById("xmasPopupClose");
+      if (!backdrop || !closeBtn) return;
+
+      backdrop.classList.add("show");
+
+      closeBtn.addEventListener("click", () => {
+        backdrop.classList.remove("show");
+        localStorage.setItem(KEY, "1");
+      });
     })();
 
     // --- Feedback-Logik ---
