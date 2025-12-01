@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physik-Adventskalender</title>
+  <style>
+    :root {
+      --bg: radial-gradient(circle at top, #020617 0%, #020617 40%, #000 100%);
+      --card: rgba(15, 23, 42, 0.96);
+      --border: rgba(148, 163, 184, 0.6);
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #f97316;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 1.5rem 0.75rem 2.5rem;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 900px;
+      background: radial-gradient(circle at top left, #020617 0%, #020617 40%, #000 100%);
+      border-radius: 32px;
+      padding: 1.75rem 1.5rem 2rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 32px 80px rgba(15, 23, 42, 0.9);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 720px) {
+      .page {
+        padding: 2rem 2.4rem 2.4rem;
+      }
+    }
+
+    header {
+      margin-bottom: 1.4rem;
+    }
+
+    h1 {
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      margin-bottom: 0.3rem;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 34rem;
+      line-height: 1.5;
+    }
+
+    .subtitle strong {
+      color: #e5e7eb;
+    }
+
+    /* Grid mit Türchen */
+    .grid {
+      margin-top: 1.4rem;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.55rem;
+    }
+
+    @media (min-width: 640px) {
+      .grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+    }
+
+    .door {
+      border-radius: 18px;
+      border: 1px solid rgba(248, 250, 252, 0.7);
+      background: radial-gradient(circle at top, #b91c1c 0%, #7f1d1d 40%, #111827 100%);
+      color: #fef9c3;
+      padding: 0.65rem 0.4rem;
+      text-align: center;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.8);
+      transition: transform 0.08s ease, box-shadow 0.12s ease, border-color 0.12s ease,
+        background 0.12s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .door span.day {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 0.1rem;
+      text-shadow: 0 0 12px rgba(0, 0, 0, 0.9);
+    }
+
+    .door span.label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #fecaca;
+    }
+
+    .door-icon {
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
+    .door.locked {
+      opacity: 0.55;
+      cursor: default;
+      box-shadow: none;
+      border-color: rgba(148, 163, 184, 0.5);
+    }
+
+    .door.today {
+      border-color: #facc15;
+      box-shadow: 0 0 22px rgba(250, 204, 21, 0.9);
+      background: radial-gradient(circle at top, #f97316 0%, #b91c1c 35%, #111827 100%);
+    }
+
+    .door.opened {
+      border-color: #22c55e;
+      box-shadow: 0 0 22px rgba(34, 197, 94, 0.9);
+      background: radial-gradient(circle at top, #16a34a 0%, #14532d 35%, #111827 100%);
+    }
+
+    .door:not(.locked):active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9);
+    }
+
+    /* Aufgabenbereich */
+    .task-card {
+      margin-top: 1.6rem;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top left, #020617 0%, #020617 55%, #000 100%);
+      padding: 1.2rem 1.2rem 1.35rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+    }
+
+    .task-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      align-items: baseline;
+      margin-bottom: 0.4rem;
+    }
+
+    .task-header h2 {
+      font-size: 1.05rem;
+    }
+
+    .task-header span.badge {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      padding: 0.15rem 0.7rem;
+      color: var(--muted);
+    }
+
+    .task-text {
+      font-size: 0.92rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.5;
+    }
+
+    .task-text strong {
+      color: #e5e7eb;
+    }
+
+    .mc-list {
+      font-size: 0.9rem;
+      margin-bottom: 0.7rem;
+      color: var(--muted);
+    }
+
+    .mc-list div {
+      margin-bottom: 0.15rem;
+    }
+
+    .input-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 0.7rem;
+    }
+
+    .input-row input {
+      flex: 1 1 120px;
+      min-width: 120px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+      padding: 0.45rem 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .input-row span.unit {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .check-btn {
+      border-radius: 999px;
+      border: none;
+      padding: 0.5rem 1.1rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #022c22;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 14px 32px rgba(22, 163, 74, 0.85);
+    }
+
+    .message {
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+
+    .message.ok {
+      color: #bbf7d0;
+    }
+
+    .message.hint {
+      color: #fef3c7;
+    }
+
+    .solution {
+      margin-top: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .solution strong {
+      color: #e5e7eb;
+    }
+
+    .back-row {
+      margin-top: 1.4rem;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .back-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 0.45rem 1.1rem;
+      background: linear-gradient(135deg, #020617, #020617);
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .back-btn span.icon {
+      font-size: 1rem;
+    }
+
+    /* Konfetti-Layer für den 24. */
+    #confetti-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 9999;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 6px;
+      height: 16px;
+      opacity: 0.9;
+      border-radius: 2px;
+      animation-name: confetti-fall;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translate3d(0, -10px, 0) rotateZ(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate3d(var(--drift, 0px), 100vh, 0) rotateZ(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* Weihnachtskarte-Highlight für den 24. */
+    .xmas-card {
+      margin-top: 0.9rem;
+      border-radius: 20px;
+      padding: 1rem 1.1rem;
+      background: radial-gradient(circle at top, #f97316 0%, #92400e 40%, #111827 100%);
+      border: 1px solid rgba(250, 250, 249, 0.9);
+      box-shadow: 0 0 32px rgba(248, 250, 252, 0.8);
+      text-align: center;
+      color: #fefce8;
+    }
+
+    .xmas-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .xmas-card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div id="confetti-layer"></div>
+
+  <!-- Adventsmusik (nutzt dieselbe Datei wie das Dashboard: xmas.mp3) -->
+  <audio id="adventMusic" preload="auto">
+    <source src="xmas.mp3" type="audio/mpeg">
+  </audio>
+
+  <main class="page">
+    <header>
+      <h1>Physik-Adventskalender 🎄</h1>
+      <p class="subtitle">
+        Hinter jedem Türchen versteckt sich eine <strong>kleine, leichte Physikfrage</strong>.
+        Du darfst in Ruhe knobeln – falsche Antworten sind kein Problem, sie helfen beim Lernen.
+      </p>
+    </header>
+
+    <section class="grid" id="doorGrid">
+      <!-- Türen werden per JS generiert -->
+    </section>
+
+    <section class="task-card">
+      <div class="task-header">
+        <h2 id="taskTitle">Wähle ein Türchen</h2>
+        <span class="badge" id="taskBadge">Advent</span>
+      </div>
+      <p class="task-text" id="taskText">
+        Tippe auf ein Türchen. Türchen in der Zukunft sind – wie beim echten Adventskalender –
+        noch geschlossen.
+      </p>
+
+      <div class="mc-list" id="mcList" style="display:none;"></div>
+
+      <div class="input-row" id="inputRow" style="display:none;">
+        <input id="answerInput" type="text" placeholder="A, B, C oder D" />
+        <span class="unit" id="answerUnit"></span>
+        <button id="checkBtn" class="check-btn">Antwort prüfen</button>
+      </div>
+
+      <div id="message" class="message"></div>
+      <div id="solution" class="solution"></div>
+
+      <div id="xmasCard" class="xmas-card" style="display:none;">
+        <h3>Frohe Weihnachten 🎁</h3>
+        <p>
+          Danke für eure tolle Arbeit in Physik 2025 – ich bin stolz auf euch!<br>
+          <strong>– Herr Nagel</strong>
+        </p>
+      </div>
+    </section>
+
+    <div class="back-row">
+      <a href="dashboard.html" class="back-btn">
+        <span class="icon">⬅</span>
+        <span>Zurück zum Dashboard</span>
+      </a>
+    </div>
+  </main>
+
+  <script>
+    // --- Türchen-Icons für etwas Weihnachtsdeko ---
+    const DOOR_ICONS = [
+      "🎄","⭐","🎁","❄️","🕯","🧦","☃️","🍪","🎅","🦌","🌟","🔔",
+      "🎀","🍫","🎶","🧸","🥨","🍬","🍊","🕯","💫","🎉","🎂","🎇"
+    ];
+
+    // --- Hilfsfunktion: heutiger Dezembertag (1–24), sonst null ---
+    function todayDay() {
+      const now = new Date();
+      const m = now.getMonth(); // 0 = Jan, 11 = Dez
+      const d = now.getDate();
+      if (m === 11 && d >= 1 && d <= 24) return d;
+      return null;
+    }
+
+    // --- Aufgaben: sehr leichte Multiple-Choice-Fragen ---
+    // day 1–23, 24 ist nur Überraschung
+    const tasks = [
+      {
+        day: 1,
+        title: "1. Dezember – Stromkreis",
+        question: "Was braucht man, damit Strom fließen kann?",
+        options: {
+          A: "Einen geschlossenen Stromkreis",
+          B: "Nur eine Batterie auf dem Tisch",
+          C: "Nur ein Kabel ohne Anschluss",
+          D: "Eine ausgeschaltete Lampe"
+        },
+        correct: "A",
+        explanation: "Strom kann nur in einem <strong>geschlossenen Stromkreis</strong> fließen."
+      },
+      {
+        day: 2,
+        title: "2. Dezember – Stromstärke",
+        question: "Was misst ein Amperemeter?",
+        options: {
+          A: "Die Spannung",
+          B: "Die Stromstärke",
+          C: "Die Masse eines Körpers",
+          D: "Die Zeit"
+        },
+        correct: "B",
+        explanation: "Das <strong>Amperemeter</strong> misst die <strong>Stromstärke I</strong>."
+      },
+      {
+        day: 3,
+        title: "3. Dezember – Spannung",
+        question: "Wie kann man sich die elektrische Spannung gut vorstellen?",
+        options: {
+          A: "Wie einen 'Druck', der den Strom antreibt",
+          B: "Wie das Gewicht eines Körpers",
+          C: "Wie die Lautstärke von Musik",
+          D: "Wie die Farbe eines Kabels"
+        },
+        correct: "A",
+        explanation: "Spannung ist so ähnlich wie ein <strong>Druck</strong>, der den Strom antreibt."
+      },
+      {
+        day: 4,
+        title: "4. Dezember – Energie im Akku",
+        question: "Welche Energieform steckt in einem aufgeladenen Akku?",
+        options: {
+          A: "Lichtenergie",
+          B: "chemische Energie",
+          C: "Kernenergie",
+          D: "Schallenergie"
+        },
+        correct: "B",
+        explanation: "In einem Akku wird <strong>chemische Energie</strong> gespeichert."
+      },
+      {
+        day: 5,
+        title: "5. Dezember – Reihenschaltung",
+        question: "Was passiert bei einer Reihenschaltung mit mehreren Lampen?",
+        options: {
+          A: "Alle Lampen leuchten gleich hell und der Strom hat nur einen Weg",
+          B: "Jede Lampe hat ihren eigenen Stromkreis",
+          C: "Der Strom fließt rückwärts",
+          D: "Es gibt keine Spannung mehr"
+        },
+        correct: "A",
+        explanation: "Bei der <strong>Reihenschaltung</strong> hat der Strom nur <strong>einen Weg</strong>."
+      },
+      {
+        day: 6,
+        title: "6. Dezember – Parallelschaltung",
+        question: "Was ist typisch für eine Parallelschaltung?",
+        options: {
+          A: "Fällt eine Lampe aus, gehen alle aus",
+          B: "Jede Lampe hat ihren eigenen Zweig und kann unabhängig leuchten",
+          C: "Es gibt keine Spannung",
+          D: "Es gibt keinen Widerstand"
+        },
+        correct: "B",
+        explanation: "Bei der <strong>Parallelschaltung</strong> hat jede Lampe ihren <strong>eigenen Zweig</strong>."
+      },
+      {
+        day: 7,
+        title: "7. Dezember – Ladungen",
+        question: "Wie verhalten sich gleichnamige elektrische Ladungen?",
+        options: {
+          A: "Sie ziehen sich an",
+          B: "Sie stoßen sich ab",
+          C: "Sie drehen sich nur",
+          D: "Sie verändern ihre Farbe"
+        },
+        correct: "B",
+        explanation: "<strong>Gleichnamige Ladungen</strong> stoßen sich <strong>ab</strong>."
+      },
+      {
+        day: 8,
+        title: "8. Dezember – Ohmsches Gesetz",
+        question: "Welche Größen verbindet das Ohmsche Gesetz?",
+        options: {
+          A: "Stromstärke, Spannung, Widerstand",
+          B: "Masse, Volumen, Dichte",
+          C: "Zeit, Weg, Geschwindigkeit",
+          D: "Kraft, Weg, Arbeit"
+        },
+        correct: "A",
+        explanation: "Das Ohmsche Gesetz verknüpft <strong>Stromstärke I</strong>, <strong>Spannung U</strong> und <strong>Widerstand R</strong>."
+      },
+      {
+        day: 9,
+        title: "9. Dezember – Einheit der Spannung",
+        question: "In welcher Einheit gibt man die elektrische Spannung an?",
+        options: {
+          A: "Ampere (A)",
+          B: "Volt (V)",
+          C: "Ohm (Ω)",
+          D: "Joule (J)"
+        },
+        correct: "B",
+        explanation: "Spannung wird in <strong>Volt (V)</strong> angegeben."
+      },
+      {
+        day: 10,
+        title: "10. Dezember – Einheit der Stromstärke",
+        question: "In welcher Einheit misst man die Stromstärke?",
+        options: {
+          A: "Volt (V)",
+          B: "Newton (N)",
+          C: "Ampere (A)",
+          D: "Meter (m)"
+        },
+        correct: "C",
+        explanation: "Die Stromstärke wird in <strong>Ampere (A)</strong> gemessen."
+      },
+      {
+        day: 11,
+        title: "11. Dezember – Widerstand",
+        question: "Wofür steht der elektrische Widerstand?",
+        options: {
+          A: "Wie sehr der Strom 'gebremst' wird",
+          B: "Wie schwer ein Körper ist",
+          C: "Wie laut ein Geräusch ist",
+          D: "Wie hell eine Lampe leuchtet"
+        },
+        correct: "A",
+        explanation: "Der Widerstand zeigt, wie stark der <strong>Stromfluss gebremst</strong> wird."
+      },
+      {
+        day: 12,
+        title: "12. Dezember – Sicherung",
+        question: "Wozu dient eine Sicherung im Stromkreis?",
+        options: {
+          A: "Sie macht das Licht bunt",
+          B: "Sie schützt vor zu großen Strömen",
+          C: "Sie produziert Strom",
+          D: "Sie misst die Temperatur"
+        },
+        correct: "B",
+        explanation: "Eine Sicherung <strong>schützt</strong> vor zu großen Strömen und verhindert Schäden."
+      },
+      {
+        day: 13,
+        title: "13. Dezember – Energie",
+        question: "Was bedeutet es, wenn wir sagen: Ein Gerät verbraucht elektrische Energie?",
+        options: {
+          A: "Energie verschwindet spurlos",
+          B: "Energie wird in andere Formen umgewandelt (z.B. Licht, Wärme)",
+          C: "Energie wird schwerer",
+          D: "Energie wird dunkler"
+        },
+        correct: "B",
+        explanation: "Energie <strong>verschwindet nicht</strong>, sie wird in andere Formen umgewandelt."
+      },
+      {
+        day: 14,
+        title: "14. Dezember – Bewegungsenergie",
+        question: "Wie nennt man die Energie eines bewegten Körpers?",
+        options: {
+          A: "Lageenergie",
+          B: "chemische Energie",
+          C: "kinetische Energie",
+          D: "Kernenergie"
+        },
+        correct: "C",
+        explanation: "Die Energie der Bewegung heißt <strong>kinetische Energie</strong>."
+      },
+      {
+        day: 15,
+        title: "15. Dezember – Lageenergie",
+        question: "Wovon hängt die Lageenergie eines Körpers ab?",
+        options: {
+          A: "Nur von der Zeit",
+          B: "Von Höhe und Masse",
+          C: "Von der Farbe",
+          D: "Nur von der Temperatur"
+        },
+        correct: "B",
+        explanation: "Lageenergie hängt von <strong>Höhe</strong> und <strong>Masse</strong> ab."
+      },
+      {
+        day: 16,
+        title: "16. Dezember – Dichte",
+        question: "Was beschreibt die Dichte eines Stoffes?",
+        options: {
+          A: "Wie warm er ist",
+          B: "Wie viel Masse in einem bestimmten Volumen steckt",
+          C: "Wie schnell er fällt",
+          D: "Wie gut er leuchtet"
+        },
+        correct: "B",
+        explanation: "Die Dichte gibt an, wie viel <strong>Masse</strong> in einem bestimmten <strong>Volumen</strong> steckt."
+      },
+      {
+        day: 17,
+        title: "17. Dezember – Kraft",
+        question: "Welche Aussage passt am besten zu einer Kraft?",
+        options: {
+          A: "Sie kann einen Körper verformen oder seine Bewegung ändern",
+          B: "Sie macht Dinge unsichtbar",
+          C: "Sie ändert nur die Farbe",
+          D: "Sie hat nichts mit Bewegung zu tun"
+        },
+        correct: "A",
+        explanation: "Eine Kraft kann <strong>verformen</strong> oder die <strong>Bewegung ändern</strong>."
+      },
+      {
+        day: 18,
+        title: "18. Dezember – Arbeit",
+        question: "Wann verrichtet man in der Physik Arbeit?",
+        options: {
+          A: "Wenn man nur Zeit misst",
+          B: "Wenn Kraft und Weg auftreten",
+          C: "Wenn man nur einen Körper ansieht",
+          D: "Wenn man laut spricht"
+        },
+        correct: "B",
+        explanation: "Physikalische Arbeit: <strong>Kraft</strong> wirkt über einen <strong>Weg</strong>."
+      },
+      {
+        day: 19,
+        title: "19. Dezember – Geschwindigkeit",
+        question: "Welche Größen braucht man für die durchschnittliche Geschwindigkeit?",
+        options: {
+          A: "Weg und Zeit",
+          B: "Masse und Temperatur",
+          C: "Lautstärke und Farbe",
+          D: "Spannung und Stromstärke"
+        },
+        correct: "A",
+        explanation: "Für die Geschwindigkeit braucht man <strong>Weg</strong> und <strong>Zeit</strong>."
+      },
+      {
+        day: 20,
+        title: "20. Dezember – Schwingung",
+        question: "Was versteht man unter einer vollständigen Schwingung?",
+        options: {
+          A: "Nur das Loslassen eines Körpers",
+          B: "Hin- und Zurückbewegung zum Ausgangspunkt",
+          C: "Nur den höchsten Punkt",
+          D: "Nur den tiefsten Punkt"
+        },
+        correct: "B",
+        explanation: "Eine vollständige Schwingung ist die Bewegung <strong>hin und zurück</strong>."
+      },
+      {
+        day: 21,
+        title: "21. Dezember – Frequenz",
+        question: "Was beschreibt die Frequenz einer Schwingung?",
+        options: {
+          A: "Wie warm etwas ist",
+          B: "Wie oft pro Sekunde etwas schwingt",
+          C: "Wie lang der Weg ist",
+          D: "Wie schwer etwas ist"
+        },
+        correct: "B",
+        explanation: "Die Frequenz ist die Zahl der Schwingungen <strong>pro Sekunde</strong>."
+      },
+      {
+        day: 22,
+        title: "22. Dezember – Welle",
+        question: "Was wird bei einer Welle übertragen?",
+        options: {
+          A: "Nur Stoff",
+          B: "Energie, aber kein Stoff",
+          C: "Nichts",
+          D: "Nur Farbe"
+        },
+        correct: "B",
+        explanation: "Bei einer Welle wird <strong>Energie</strong> übertragen, kein Stoff."
+      },
+      {
+        day: 23,
+        title: "23. Dezember – Lernhaltung",
+        question: "Was hilft dir am meisten beim Lernen in Physik?",
+        options: {
+          A: "Gar nichts tun",
+          B: "Fragen stellen, üben, Fehler zulassen",
+          C: "Nur abschreiben",
+          D: "Alles auswendig lernen ohne Verständnis"
+        },
+        correct: "B",
+        explanation: "Am besten lernst du mit <strong>Fragen, Üben und Fehlern</strong>, aus denen du lernst."
+      }
+    ];
+
+    let selectedDay = null;
+
+    function getTaskForDay(day) {
+      return tasks.find(t => t.day === day) || null;
+    }
+
+    function playAdventMusic() {
+      const audio = document.getElementById("adventMusic");
+      if (audio && audio.play) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+    }
+
+    function createConfettiBurst() {
+      const layer = document.getElementById("confetti-layer");
+      if (!layer) return;
+
+      const colors = ["#fecaca", "#facc15", "#4ade80", "#38bdf8", "#f97316", "#e5e7eb"];
+
+      for (let i = 0; i < 80; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti-piece";
+
+        const left = Math.random() * 100;
+        const duration = 3 + Math.random() * 2;
+        const delay = Math.random() * 0.8;
+        const drift = (Math.random() * 80 - 40).toFixed(1) + "px";
+
+        piece.style.left = left + "vw";
+        piece.style.animationDuration = duration + "s";
+        piece.style.animationDelay = delay + "s";
+        piece.style.setProperty("--drift", drift);
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+        layer.appendChild(piece);
+
+        setTimeout(() => {
+          if (piece.parentNode === layer) {
+            layer.removeChild(piece);
+          }
+        }, (duration + delay) * 1000 + 200);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("doorGrid");
+      const taskTitle = document.getElementById("taskTitle");
+      const taskText = document.getElementById("taskText");
+      const taskBadge = document.getElementById("taskBadge");
+      const mcList = document.getElementById("mcList");
+      const inputRow = document.getElementById("inputRow");
+      const answerInput = document.getElementById("answerInput");
+      const answerUnit = document.getElementById("answerUnit");
+      const checkBtn = document.getElementById("checkBtn");
+      const messageEl = document.getElementById("message");
+      const solutionEl = document.getElementById("solution");
+      const xmasCard = document.getElementById("xmasCard");
+
+      if (!grid || !taskTitle || !taskText || !taskBadge || !mcList ||
+          !inputRow || !answerInput || !answerUnit || !checkBtn ||
+          !messageEl || !solutionEl || !xmasCard) {
+        return;
+      }
+
+      const today = todayDay();
+
+      // Türen generieren
+      for (let d = 1; d <= 24; d++) {
+        const door = document.createElement("button");
+        door.type = "button";
+        door.className = "door";
+        door.dataset.day = String(d);
+
+        const icon = DOOR_ICONS[(d - 1) % DOOR_ICONS.length];
+
+        door.innerHTML = `
+          <span class="day">${d}.</span>
+          <span class="label">Türchen</span>
+          <span class="door-icon">${icon}</span>
+        `;
+
+        // Wenn wir im Dezember sind: zukünftige Tage schließen
+        if (today !== null && d > today) {
+          door.classList.add("locked");
+        }
+        if (today !== null && d === today) {
+          door.classList.add("today");
+        }
+
+        door.addEventListener("click", () => {
+          if (door.classList.contains("locked")) {
+            messageEl.textContent = "Dieses Türchen ist erst an einem späteren Dezembertag dran. 🙂";
+            messageEl.className = "message hint";
+            return;
+          }
+
+          const day = Number(door.dataset.day || "0");
+          if (!day) return;
+          selectedDay = day;
+
+          // Alle Türen zurücksetzen, dann die aktuelle als "opened"
+          Array.from(grid.querySelectorAll(".door")).forEach(dEl => {
+            dEl.classList.remove("opened");
+          });
+          door.classList.add("opened");
+
+          messageEl.textContent = "";
+          messageEl.className = "message";
+          solutionEl.innerHTML = "";
+          xmasCard.style.display = "none";
+
+          if (day === 24) {
+            // Große Überraschung – keine Abfrage, nur Freude
+            taskTitle.textContent = "24. Dezember – Frohe Weihnachten!";
+            taskBadge.textContent = "Heiligabend";
+            taskText.innerHTML =
+              "Heute gibt es keine Frage, sondern ein großes Dankeschön für deine Arbeit im Physik-Unterricht. 🎄";
+
+            mcList.style.display = "none";
+            inputRow.style.display = "none";
+
+            xmasCard.style.display = "block";
+            createConfettiBurst();
+            playAdventMusic();
+
+            return;
+          }
+
+          // Normale Aufgaben 1–23
+          const task = getTaskForDay(day);
+          if (!task) return;
+
+          taskTitle.textContent = task.title;
+          taskBadge.textContent = "Tag " + day + " im Advent";
+          taskText.innerHTML = task.question;
+
+          // Multiple Choice anzeigen
+          mcList.innerHTML = `
+            <div><strong>A)</strong> ${task.options.A}</div>
+            <div><strong>B)</strong> ${task.options.B}</div>
+            <div><strong>C)</strong> ${task.options.C}</div>
+            <div><strong>D)</strong> ${task.options.D}</div>
+          `;
+          mcList.style.display = "block";
+
+          inputRow.style.display = "flex";
+          answerInput.value = "";
+          answerInput.placeholder = "A, B, C oder D";
+          answerUnit.textContent = "";
+        });
+
+        grid.appendChild(door);
+      }
+
+      const positiveMessages = [
+        "Stark, das stimmt – sehr gut gemacht! 🎄",
+        "Super, du hast das Türchen geschafft! ⭐",
+        "Klasse – deine Physik wird immer sicherer. 💪",
+        "Top! Weiter so, Schritt für Schritt. 😊"
+      ];
+
+      const retryMessages = [
+        "Noch nicht ganz – aber guter Versuch! Schau dir die Antwortmöglichkeiten noch einmal an.",
+        "Fast! Überlege, welche Antwort am besten passt.",
+        "Kein Problem, versuch es einfach noch einmal ganz in Ruhe.",
+        "Lernen heißt ausprobieren – du bist auf einem guten Weg!"
+      ];
+
+      checkBtn.addEventListener("click", () => {
+        if (!selectedDay) {
+          messageEl.textContent = "Wähle zuerst ein Türchen aus.";
+          messageEl.className = "message hint";
+          return;
+        }
+        if (selectedDay === 24) {
+          messageEl.textContent = "Am 24. Dezember gibt es nur eine Überraschung – keine Frage. 🎁";
+          messageEl.className = "message hint";
+          return;
+        }
+
+        const task = getTaskForDay(selectedDay);
+        if (!task) return;
+
+        const userRaw = answerInput.value.trim().toUpperCase();
+        if (!["A","B","C","D"].includes(userRaw)) {
+          messageEl.textContent = "Gib bitte A, B, C oder D ein. 🙂";
+          messageEl.className = "message hint";
+          solutionEl.innerHTML = "";
+          return;
+        }
+
+        if (userRaw === task.correct.toUpperCase()) {
+          const msg = positiveMessages[Math.floor(Math.random() * positiveMessages.length)];
+          messageEl.textContent = msg;
+          messageEl.className = "message ok";
+          solutionEl.innerHTML = "Richtig ist <strong>" + task.correct + ")</strong> – " + task.explanation;
+        } else {
+          const msg = retryMessages[Math.floor(Math.random() * retryMessages.length)];
+          messageEl.textContent = msg;
+          messageEl.className = "message hint";
+          solutionEl.innerHTML =
+            "Die beste Antwort ist <strong>" + task.correct + ")</strong> – " + task.explanation;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
