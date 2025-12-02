@@ -34,6 +34,7 @@
     }
 
     .shell { width: 100%; max-width: 800px; }
+
     .card {
       background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), #020617);
       border-radius: var(--radius-xl);
@@ -52,6 +53,7 @@
     }
 
     .title-block { display: flex; flex-direction: column; gap: 3px; }
+
     .eyebrow {
       font-size: 0.68rem;
       letter-spacing: 0.18em;
@@ -177,7 +179,7 @@
       background: rgba(15, 23, 42, 0.9);
     }
 
-    /* --- Zurück-Button --- */
+    /* Zurück-Button */
     .btn-back {
       display: inline-flex;
       align-items: center;
@@ -241,7 +243,6 @@
       <div class="result-box" id="resultBox" style="display:none;"></div>
     </div>
 
-    <!-- Zurück -->
     <div style="text-align:center;">
       <a href="klasse10_training.html" class="btn-back">← Zurück zu Training Klasse 10</a>
     </div>
@@ -258,51 +259,163 @@
         "Lichtenergie in elektrische Energie umzuwandeln"
       ],
       c: 0,
-      exp: "Ein Elektromotor wandelt elektrische Energie in mechanische Bewegung um."
+      exp: "Ein Elektromotor erzeugt Bewegung aus elektrischem Strom."
     },
     {
       q: "Welche Kraft sorgt für das Drehmoment im Elektromotor?",
       a: [
-        "Die Lorentzkraft auf stromdurchflossene Leiter",
-        "Die Gewichtskraft der Spule",
-        "Die Reibungskraft im Lager",
+        "Die Lorentzkraft",
+        "Die Gewichtskraft",
+        "Die Reibungskraft",
         "Die Auftriebskraft"
       ],
       c: 0,
-      exp: "Strom + Magnetfeld = Lorentzkraft → Drehmoment."
+      exp: "Strom + Magnetfeld → Lorentzkraft."
     },
     {
       q: "Welche Energieumwandlung findet im Elektromotor statt?",
       a: [
         "Elektrische Energie → mechanische Energie",
-        "Mechanische Energie → elektrische Energie",
-        "Wärmeenergie → elektrische Energie",
-        "Lichtenergie → mechanische Energie"
+        "Mechanische → elektrische Energie",
+        "Licht → elektrische Energie",
+        "Wärme → mechanische Energie"
       ],
       c: 0,
-      exp: "Genau das macht ein Elektromotor aus."
+      exp: "Motoren wandeln elektrischen Strom in Bewegung um."
     },
     {
       q: "Welche Aufgabe hat der Kommutator?",
       a: [
-        "Er kehrt regelmäßig die Stromrichtung in der Spule um",
-        "Er verstärkt die Spannung",
-        "Er schaltet den Motor an und aus",
-        "Er kühlt die Spule"
+        "Er kehrt die Stromrichtung regelmäßig um",
+        "Er erhöht die Spannung",
+        "Er kühlt die Spule",
+        "Er speichert elektrische Energie"
       ],
       c: 0,
-      exp: "Nur so dreht sich die Spule kontinuierlich weiter."
+      exp: "Nur durch die Umpolung kann sich der Rotor kontinuierlich drehen."
     },
     {
       q: "Warum dreht eine Spule ohne Kommutator nur halb und springt zurück?",
       a: [
-        "Weil sich die Lorentzkraft nach einer halben Drehung umkehrt",
+        "Weil sich nach 180° die Lorentzkraft umkehren würde",
+        "Weil kein Magnetfeld wirkt",
         "Weil die Spule zu schwer ist",
-        "Weil kein Magnetfeld mehr wirkt",
-        "Weil die Spannung zu gering ist"
+        "Weil die Batterie leer ist"
       ],
       c: 0,
-      exp: "Ohne Umpolung würde die Kraft zurücklaufen."
+      exp: "Ohne Umpolung wirkt die Kraft nach einer halben Drehung rückwärts."
+    },
+
+    {
+      q: "Welche beiden Dinge braucht jeder Elektromotor unbedingt?",
+      a: [
+        "Magnetfeld und Strom",
+        "Wasser und Strom",
+        "Licht und Magnetfeld",
+        "Wärme und Reibung"
+      ],
+      c: 0,
+      exp: "Ohne Magnetfeld und Strom gibt es keine Lorentzkraft."
+    },
+    {
+      q: "Was passiert, wenn die Spannung erhöht wird?",
+      a: [
+        "Der Motor dreht schneller",
+        "Der Motor bleibt stehen",
+        "Die Drehrichtung kehrt sich sofort um",
+        "Der Magnet wird schwächer"
+      ],
+      c: 0,
+      exp: "Mehr Spannung → mehr Strom → mehr Drehzahl (bis zur Grenze)."
+    },
+    {
+      q: "Warum sind Dauermagnete im Motor wichtig?",
+      a: [
+        "Sie erzeugen das Magnetfeld",
+        "Sie speichern Energie",
+        "Sie messen den Strom",
+        "Sie erzeugen Licht"
+      ],
+      c: 0,
+      exp: "Das Magnetfeld ist notwendig für die Lorentzkraft."
+    },
+    {
+      q: "Welche Bauteile gehören zu einem einfachen Elektromotor?",
+      a: [
+        "Spule, Magnet, Kommutator, Stromquelle",
+        "Nur Batterie und Kabel",
+        "Nur ein Dauermagnet",
+        "Nur ein Schalter"
+      ],
+      c: 0,
+      exp: "Ein Motor braucht ein magnetisches Feld und eine drehende Spule."
+    },
+    {
+      q: "Warum bewegt sich ein stromdurchflossener Leiter im Magnetfeld?",
+      a: [
+        "Weil die Lorentzkraft wirkt",
+        "Weil die Batterie vibriert",
+        "Weil der Leiter warm wird",
+        "Weil Elektronen leuchten"
+      ],
+      c: 0,
+      exp: "Lorentzkraft ist die Grundlage aller Motoren."
+    },
+
+    {
+      q: "Was passiert bei steigender Stromstärke?",
+      a: [
+        "Das Drehmoment wird größer",
+        "Der Motor stoppt",
+        "Der Magnet wird schwächer",
+        "Die Drehrichtung wechselt"
+      ],
+      c: 0,
+      exp: "Mehr Strom = größere Kraftwirkung."
+    },
+    {
+      q: "Wie nennt man den beweglichen Teil im Motor?",
+      a: [
+        "Rotor",
+        "Stator",
+        "Kondensator",
+        "Kommutator"
+      ],
+      c: 0,
+      exp: "Der Rotor ist das rotierende Element."
+    },
+    {
+      q: "Wie nennt man den feststehenden Teil im Motor?",
+      a: [
+        "Stator",
+        "Rotor",
+        "Relais",
+        "Polschuhe"
+      ],
+      c: 0,
+      exp: "Der Stator hält Magnetfeld / Spulen."
+    },
+    {
+      q: "Was passiert, wenn keine Spannung mehr anliegt?",
+      a: [
+        "Der Rotor bleibt stehen",
+        "Der Rotor dreht schneller",
+        "Die Richtung ändert sich",
+        "Der Magnet verstärkt sich"
+      ],
+      c: 0,
+      exp: "Ohne Strom keine Lorentzkraft."
+    },
+    {
+      q: "Was unterscheidet Motor und Generator?",
+      a: [
+        "Motor: elektrisch→mechanisch; Generator: mechanisch→elektrisch",
+        "Motor ist kleiner",
+        "Generator funktioniert ohne Magnetfeld",
+        "Motor erzeugt Wärme"
+      ],
+      c: 0,
+      exp: "Sie sind Umkehrmaschinen."
     }
   ];
 
@@ -320,9 +433,7 @@
   const nextButtonEl = document.getElementById("nextButton");
   const resultBoxEl = document.getElementById("resultBox");
 
-  // Safari-Fix: Button aktivieren
   nextButtonEl.disabled = false;
-
   totalNumberEl.textContent = questions.length;
 
   function shuffledAnswers(q) {
@@ -374,8 +485,7 @@
     buttons.forEach((btn, index) => {
       btn.classList.add("disabled");
       if (index === correctIndex) btn.classList.add("correct");
-      if (index === selectedIndex && selectedIndex !== correctIndex)
-        btn.classList.add("wrong");
+      if (index === selectedIndex && selectedIndex !== correctIndex) btn.classList.add("wrong");
     });
 
     if (selectedIndex === correctIndex) {
@@ -398,9 +508,9 @@
     const percent = Math.round((correctCount / total) * 100);
 
     let msg = "";
-    if (percent >= 90) msg = "Starke Leistung! Du hast den Elektromotor super verstanden.";
-    else if (percent >= 70) msg = "Gute Arbeit! Ein paar Punkte kannst du noch üben.";
-    else if (percent >= 50) msg = "Ganz okay – schau dir die Theorie nochmal an.";
+    if (percent >= 90) msg = "Stark! Du hast den Elektromotor super verstanden.";
+    else if (percent >= 70) msg = "Gute Arbeit! Ein paar Details kannst du noch üben.";
+    else if (percent >= 50) msg = "Ganz ordentlich – schau dir die Theorie nochmal an.";
     else msg = "Kein Problem – Elektromotoren sind anspruchsvoll.";
 
     resultBoxEl.innerHTML =
