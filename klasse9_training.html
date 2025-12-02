@@ -1506,63 +1506,85 @@
   }
 
   function showQuestion() {
-    const q = currentQuestions[currentIndex];
+  const q = currentQuestions[currentIndex];
 
-    currentNumberEl.textContent = (currentIndex + 1).toString();
-    const progress = ((currentIndex) / currentQuestions.length) * 100;
-    progressBarInner.style.width = `${progress}%`;
+  currentNumberEl.textContent = (currentIndex + 1).toString();
+  const progress = (currentIndex / currentQuestions.length) * 100;
+  progressBarInner.style.width = `${progress}%`;
 
-    questionEl.textContent = q.q;
-    answersEl.innerHTML = "";
-    answered = false;
-    nextBtn.disabled = true;
+  questionEl.textContent = q.q;
+  answersEl.innerHTML = "";
+  answered = false;
+  nextBtn.disabled = true;
 
-    q.a.forEach((answerText, index) => {
-      const btn = document.createElement("button");
-      btn.className = "answer-btn";
-      btn.innerHTML = `<span class="answer-index">${String.fromCharCode(
-        65 + index
-      )}.</span><span>${answerText}</span>`;
-      btn.addEventListener("click", () => handleAnswer(index));
-      answersEl.appendChild(btn);
-    });
+  // Antworten mit ursprünglichem Index vorbereiten
+  const answersWithIndex = q.a.map((text, idx) => ({
+    text,
+    originalIndex: idx
+  }));
+
+  // Fisher-Yates-Shuffle – mischt die Antworten zufällig
+  for (let i = answersWithIndex.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [answersWithIndex[i], answersWithIndex[j]] = [
+      answersWithIndex[j],
+      answersWithIndex[i]
+    ];
   }
 
-  function handleAnswer(selectedIndex) {
-    if (answered) return;
-    answered = true;
+  // merken, an welcher Position NACH dem Mischen die richtige Antwort sitzt
+  const shuffledCorrectIndex = answersWithIndex.findIndex(
+    ans => ans.originalIndex === q.c
+  );
+  q.correctShuffledIndex = shuffledCorrectIndex;
 
-    const q = currentQuestions[currentIndex];
-    const buttons = Array.from(
-      answersEl.querySelectorAll(".answer-btn")
-    );
+  // Buttons erzeugen
+  answersWithIndex.forEach((answerObj, index) => {
+    const btn = document.createElement("button");
+    btn.className = "answer-btn";
+    btn.innerHTML = `<span class="answer-index">${String.fromCharCode(
+      65 + index
+    )}.</span><span>${answerObj.text}</span>`;
+    btn.addEventListener("click", () => handleAnswer(index));
+    answersEl.appendChild(btn);
+  });
+}
 
-    buttons.forEach((btn, index) => {
-      if (index === q.c) {
-        btn.classList.add("correct");
-      }
-      if (index === selectedIndex && index !== q.c) {
-        btn.classList.add("wrong");
-      }
-      btn.disabled = true;
-    });
+function handleAnswer(selectedIndex) {
+  if (answered) return;
+  answered = true;
 
-    if (selectedIndex === q.c) {
-      correctCount++;
-      statusLineEl.innerHTML =
-        "<strong>Richtig!</strong> Gute Arbeit – weiter so.";
-    } else {
-      statusLineEl.innerHTML =
-        "<span class='wrong'>Nicht ganz.</span> Schau dir die richtige Lösung an und versuch es bei der nächsten Frage noch einmal.";
+  const q = currentQuestions[currentIndex];
+  const buttons = Array.from(answersEl.querySelectorAll(".answer-btn"));
+
+  buttons.forEach((btn, index) => {
+    if (index === q.correctShuffledIndex) {
+      // richtige (gemischte) Antwort wird grün
+      btn.classList.add("correct");
     }
-
-    if (currentIndex === currentQuestions.length - 1) {
-      nextBtn.textContent = "Ergebnis anzeigen →";
+    if (index === selectedIndex && index !== q.correctShuffledIndex) {
+      // angeklickte falsche Antwort wird rot
+      btn.classList.add("wrong");
     }
+    btn.disabled = true;
+  });
 
-    nextBtn.disabled = false;
+  if (selectedIndex === q.correctShuffledIndex) {
+    // nur DANN wird gezählt, wenn auch wirklich die richtige (gemischte) Position getroffen wurde
+    correctCount++;
+    statusLineEl.innerHTML =
+      "<strong>Richtig!</strong> Gute Arbeit – weiter so.";
+  } else {
+    statusLineEl.innerHTML =
+      "<span class='wrong'>Nicht ganz.</span> Schau dir die richtige Lösung an und versuch es bei der nächsten Frage noch einmal.";
   }
 
+  if (currentIndex === currentQuestions.length - 1) {
+    nextBtn.textContent = "Ergebnis anzeigen →";
+  }
+
+  nextBtn.disabled = false;
+}
   function showSummary() {
     const total = currentQuestions.length;
     const quote = total === 0 ? 0 : Math.round((correctCount / total) * 100);
