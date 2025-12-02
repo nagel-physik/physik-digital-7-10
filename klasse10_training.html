@@ -413,6 +413,10 @@
             <span class="label">🌊 Wellen</span>
             <span class="badge">Mechanik</span>
           </button>
+<button class="topic-btn" data-topic="elektromotor">
+  <span class="label">⚙ Elektromotor</span>
+  <span class="badge">Level 2</span>
+</button>
         </div>
 
         <p class="hint-text">
@@ -2407,6 +2411,9 @@
   btnBackToTopics.addEventListener("click", () => {
     stopQuiz();
   });
+document.querySelector('[data-topic="elektromotor"]').addEventListener("click", () => {
+  window.location.href = "quiz_klasse10_elektromotor.html";
+});
 </script>
 
 </body>

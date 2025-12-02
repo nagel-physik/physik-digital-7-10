@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quiz – Elektromotor (Klasse 10)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #020617;
+      --card: #0b1220;
+      --accent: #22c55e;
+      --accent-soft: #bbf7d0;
+      --accent-strong: #16a34a;
+      --border: #1f2937;
+      --text: #e5e7eb;
+      --text-soft: #9ca3af;
+      --danger: #ef4444;
+      --radius-xl: 24px;
+      --shadow: 0 22px 55px rgba(15, 23, 42, 0.9);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 45%, #000 100%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .shell { width: 100%; max-width: 800px; }
+    .card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), #020617);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 20px 18px 18px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .title-block { display: flex; flex-direction: column; gap: 3px; }
+    .eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    h1 { margin: 0; font-size: 1.2rem; }
+
+    .badge-level {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(34, 197, 94, 0.6);
+      background: rgba(22, 163, 74, 0.12);
+      font-size: 0.76rem;
+      color: var(--accent-soft);
+    }
+
+    .info-line {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+
+    .progress-shell {
+      flex: 1;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      overflow: hidden;
+    }
+
+    .progress-inner {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
+      transition: width 0.18s ease-out;
+    }
+
+    .counter { min-width: 70px; text-align: right; color: var(--text-soft); }
+
+    .question-box {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 18px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      padding: 12px 13px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+
+    .answers { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+
+    .answer-btn {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      padding: 9px 12px;
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .answer-btn.correct {
+      background: rgba(22, 163, 74, 0.18);
+      border-color: rgba(22, 163, 74, 0.9);
+    }
+    .answer-btn.wrong {
+      background: rgba(220, 38, 38, 0.18);
+      border-color: rgba(248, 113, 113, 0.9);
+    }
+    .answer-btn.disabled { opacity: 0.9; cursor: default; }
+
+    .answer-index {
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      color: var(--text-soft);
+    }
+
+    .explanation { font-size: 0.8rem; color: var(--text-soft); margin-bottom: 10px; }
+
+    .status-line { font-size: 0.8rem; color: var(--text-soft); }
+    .status-line strong { color: var(--accent-soft); }
+    .bad { color: #fecaca; }
+
+    .btn-main {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #0b1120;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(22, 163, 74, 0.7);
+      display: inline-flex;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .result-box {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* --- Zurück-Button --- */
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 14px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .btn-back:hover {
+      background: rgba(30,64,175,0.9);
+      border-color: rgba(129,140,248,0.9);
+      color: #e5e7eb;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <div class="card">
+      <div class="card-header">
+        <div class="title-block">
+          <div class="eyebrow">Physik · Klasse 10</div>
+          <h1>Quiz – Elektromotor</h1>
+        </div>
+        <div class="badge-level">Thema: Elektrischer Motor</div>
+      </div>
+
+      <p class="info-line">
+        Teste dein Wissen zum Elektromotor. Wähle zu jeder Frage die passende Antwort aus.
+      </p>
+
+      <div class="status-bar">
+        <div class="progress-shell">
+          <div class="progress-inner" id="progressBar"></div>
+        </div>
+        <div class="counter">
+          Frage <span id="currentNumber">0</span>/<span id="totalNumber">0</span>
+        </div>
+      </div>
+
+      <div class="question-box" id="questionText">
+        Drücke auf „Quiz starten“, um loszulegen.
+      </div>
+
+      <div class="answers" id="answers"></div>
+      <div class="explanation" id="explanation"></div>
+
+      <div class="status-line" id="statusLine">Bereit, wenn du bereit bist.</div>
+
+      <button class="btn-main" id="nextButton">
+        <span class="icon">▶</span>
+        <span>Quiz starten</span>
+      </button>
+
+      <div class="result-box" id="resultBox" style="display:none;"></div>
+    </div>
+
+    <!-- Zurück -->
+    <div style="text-align:center;">
+      <a href="klasse10_training.html" class="btn-back">← Zurück zu Training Klasse 10</a>
+    </div>
+  </div>
+
+<script>
+  const questions = [
+    {
+      q: "Was ist die Hauptfunktion eines Elektromotors?",
+      a: [
+        "Elektrische Energie in mechanische Energie umzuwandeln",
+        "Mechanische Energie in elektrische Energie umzuwandeln",
+        "Mechanische Energie in Wärmeenergie umzuwandeln",
+        "Lichtenergie in elektrische Energie umzuwandeln"
+      ],
+      c: 0,
+      exp: "Ein Elektromotor wandelt elektrische Energie in mechanische Bewegung um."
+    },
+    {
+      q: "Welche Kraft sorgt für das Drehmoment im Elektromotor?",
+      a: [
+        "Die Lorentzkraft auf stromdurchflossene Leiter",
+        "Die Gewichtskraft der Spule",
+        "Die Reibungskraft im Lager",
+        "Die Auftriebskraft"
+      ],
+      c: 0,
+      exp: "Strom + Magnetfeld = Lorentzkraft → Drehmoment."
+    },
+    {
+      q: "Welche Energieumwandlung findet im Elektromotor statt?",
+      a: [
+        "Elektrische Energie → mechanische Energie",
+        "Mechanische Energie → elektrische Energie",
+        "Wärmeenergie → elektrische Energie",
+        "Lichtenergie → mechanische Energie"
+      ],
+      c: 0,
+      exp: "Genau das macht ein Elektromotor aus."
+    },
+    {
+      q: "Welche Aufgabe hat der Kommutator?",
+      a: [
+        "Er kehrt regelmäßig die Stromrichtung in der Spule um",
+        "Er verstärkt die Spannung",
+        "Er schaltet den Motor an und aus",
+        "Er kühlt die Spule"
+      ],
+      c: 0,
+      exp: "Nur so dreht sich die Spule kontinuierlich weiter."
+    },
+    {
+      q: "Warum dreht eine Spule ohne Kommutator nur halb und springt zurück?",
+      a: [
+        "Weil sich die Lorentzkraft nach einer halben Drehung umkehrt",
+        "Weil die Spule zu schwer ist",
+        "Weil kein Magnetfeld mehr wirkt",
+        "Weil die Spannung zu gering ist"
+      ],
+      c: 0,
+      exp: "Ohne Umpolung würde die Kraft zurücklaufen."
+    }
+  ];
+
+  let currentIndex = -1;
+  let correctCount = 0;
+  let answered = false;
+
+  const totalNumberEl = document.getElementById("totalNumber");
+  const currentNumberEl = document.getElementById("currentNumber");
+  const progressBarEl = document.getElementById("progressBar");
+  const questionTextEl = document.getElementById("questionText");
+  const answersEl = document.getElementById("answers");
+  const explanationEl = document.getElementById("explanation");
+  const statusLineEl = document.getElementById("statusLine");
+  const nextButtonEl = document.getElementById("nextButton");
+  const resultBoxEl = document.getElementById("resultBox");
+
+  // Safari-Fix: Button aktivieren
+  nextButtonEl.disabled = false;
+
+  totalNumberEl.textContent = questions.length;
+
+  function shuffledAnswers(q) {
+    const arr = q.a.map((text, index) => ({ text, originalIndex: index }));
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    const correctShuffledIndex = arr.findIndex(a => a.originalIndex === q.c);
+    return { arr, correctShuffledIndex };
+  }
+
+  let currentShuffled = null;
+
+  function showQuestion() {
+    const q = questions[currentIndex];
+    answered = false;
+
+    currentNumberEl.textContent = currentIndex + 1;
+    progressBarEl.style.width = (currentIndex / questions.length) * 100 + "%";
+
+    questionTextEl.textContent = q.q;
+    answersEl.innerHTML = "";
+    explanationEl.textContent = "";
+    statusLineEl.textContent = "Wähle eine Antwort.";
+
+    nextButtonEl.disabled = true;
+    currentShuffled = shuffledAnswers(q);
+
+    currentShuffled.arr.forEach((answerObj, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "answer-btn";
+      btn.innerHTML =
+        `<span class="answer-index">${String.fromCharCode(65 + idx)}.</span> ${answerObj.text}`;
+      btn.addEventListener("click", () => handleAnswer(idx));
+      answersEl.appendChild(btn);
+    });
+
+    resultBoxEl.style.display = "none";
+  }
+
+  function handleAnswer(selectedIndex) {
+    if (answered) return;
+    answered = true;
+
+    const correctIndex = currentShuffled.correctShuffledIndex;
+    const buttons = Array.from(answersEl.querySelectorAll(".answer-btn"));
+
+    buttons.forEach((btn, index) => {
+      btn.classList.add("disabled");
+      if (index === correctIndex) btn.classList.add("correct");
+      if (index === selectedIndex && selectedIndex !== correctIndex)
+        btn.classList.add("wrong");
+    });
+
+    if (selectedIndex === correctIndex) {
+      correctCount++;
+      statusLineEl.innerHTML = "<strong>Richtig!</strong> Sehr gut!";
+    } else {
+      statusLineEl.innerHTML = "<span class='bad'>Nicht ganz.</span> Schau dir die Erklärung an!";
+    }
+
+    explanationEl.textContent = questions[currentIndex].exp;
+    nextButtonEl.disabled = false;
+
+    if (currentIndex === questions.length - 1) {
+      nextButtonEl.innerHTML = "Ergebnis anzeigen →";
+    }
+  }
+
+  function showResult() {
+    const total = questions.length;
+    const percent = Math.round((correctCount / total) * 100);
+
+    let msg = "";
+    if (percent >= 90) msg = "Starke Leistung! Du hast den Elektromotor super verstanden.";
+    else if (percent >= 70) msg = "Gute Arbeit! Ein paar Punkte kannst du noch üben.";
+    else if (percent >= 50) msg = "Ganz okay – schau dir die Theorie nochmal an.";
+    else msg = "Kein Problem – Elektromotoren sind anspruchsvoll.";
+
+    resultBoxEl.innerHTML =
+      `Du hast <span class='highlight'>${correctCount}/${total}</span> (` +
+      percent +
+      "%) richtig beantwortet.<br>" +
+      msg;
+
+    resultBoxEl.style.display = "block";
+    nextButtonEl.disabled = true;
+  }
+
+  nextButtonEl.addEventListener("click", () => {
+    if (currentIndex === -1) {
+      currentIndex = 0;
+      correctCount = 0;
+      showQuestion();
+      return;
+    }
+
+    if (!answered) return;
+
+    if (currentIndex < questions.length - 1) {
+      currentIndex++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  });
+</script>
+
+</body>
+</html>
