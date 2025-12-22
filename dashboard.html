@@ -880,34 +880,37 @@
 
 
   <script>
-  (function handleSeasonSwitch() {
+  (function seasonControl() {
     const now = new Date();
+    const y = now.getFullYear();
     const m = now.getMonth(); // 0 = Jan, 11 = Dez
     const d = now.getDate();
 
     const isDecember = (m === 11);
-    const isNewYearDay = (now.getFullYear() === 2026 && m === 0 && d === 1);
+    const isBeforeXmas = (m === 11 && d <= 24);
+    const isNewYearDay = (y === 2026 && m === 0 && d === 1);
 
-    const xmasBtn = document.getElementById("xmasModeBtn");
+    const xmasBtn   = document.getElementById("xmasModeBtn");
     const snowLayer = document.getElementById("snow-layer");
     const xmasAudio = document.getElementById("xmasMusic");
+    const adventTile = document.querySelector(".tile.advent");
 
-    // ❌ Außerhalb Dezember: Weihnachts-UI/Effekte AUS
-    if (!isDecember) {
-      // Button ausblenden
-      if (xmasBtn) xmasBtn.style.display = "none";
-
-      // Schneeflocken sofort entfernen (falls Intervall noch läuft)
-      if (snowLayer) snowLayer.innerHTML = "";
-
-      // Musik stoppen
-      if (xmasAudio && typeof xmasAudio.pause === "function") xmasAudio.pause();
-
-      // Weihnachts-Design zurücksetzen
-      document.body.classList.remove("xmas-on");
+    // 🎁 Adventskalender: nur bis 24.12.
+    if (adventTile) {
+      adventTile.style.display = (isBeforeXmas) ? "" : "none";
     }
 
-    // 🎆 Einmalig: Neujahr 2026 (nur am 01.01.2026)
+    // 🎄 Weihnachtsmodus (Button + Schnee + Musik): nur im Dezember (bis 31.12.)
+    if (!isDecember) {
+      if (xmasBtn) xmasBtn.style.display = "none";
+      if (snowLayer) snowLayer.innerHTML = "";
+      if (xmasAudio && typeof xmasAudio.pause === "function") xmasAudio.pause();
+      document.body.classList.remove("xmas-on");
+    } else {
+      if (xmasBtn) xmasBtn.style.display = "";
+    }
+
+    // 🎆 Neujahr: einmalig am 01.01.2026
     if (isNewYearDay) {
       const KEY = "newYear2026Shown";
       if (!localStorage.getItem(KEY)) {
@@ -927,17 +930,13 @@
           font-size: 0.95rem;
           line-height: 1.4;
         `;
-        toast.innerHTML = "🎆 <strong>Frohes neues Jahr 2026!</strong><br>Willkommen zurück bei Physik Digital.";
+        toast.innerHTML =
+          "🎆 <strong>Frohes neues Jahr 2026!</strong><br>Willkommen zurück bei Physik Digital.";
         document.body.appendChild(toast);
 
         setTimeout(() => toast.remove(), 5000);
         localStorage.setItem(KEY, "1");
       }
-    }
-
-    // ✅ Im Dezember: Button sicher einblenden
-    if (isDecember && xmasBtn) {
-      xmasBtn.style.display = "";
     }
   })();
   </script>
