@@ -766,9 +766,14 @@
 
       const badges = document.querySelectorAll(".tile-badge");
       badges.forEach((b) => {
+        // "hot" (z.B. Physik-Spiel) soll immer auffällig bleiben
+        if (b.classList.contains("hot")) {
+          b.style.display = "inline-flex";
+          return;
+        }
         b.style.display = showNew ? "inline-flex" : "none";
       });
-    })();
+})();
 
     // --- Winter-Zeit prüfen ---
     function isWinter() {
