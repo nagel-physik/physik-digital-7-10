@@ -1,0 +1,1136 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <title>Physik-Spiel · Lernpfad</title>
+  <style>
+    :root{
+      --panel: rgba(17,24,39,.92);
+      --border: rgba(148,163,184,.22);
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --shadow: 0 22px 70px rgba(0,0,0,.65);
+      --accentA: rgba(251,191,36,.95);
+      --accentB: rgba(56,189,248,.95);
+      --good: #22c55e;
+      --bad: #ef4444;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;}
+    html, body{height:100%;}
+    body{
+      min-height:100vh;display:flex;align-items:center;justify-content:center;padding:12px;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(56,189,248,.18), transparent 55%),
+        radial-gradient(circle at 85% 15%, rgba(34,197,94,.12), transparent 58%),
+        radial-gradient(circle at 80% 90%, rgba(239,68,68,.14), transparent 58%),
+        linear-gradient(180deg, #0b1220, #020617);
+      color:var(--text);overflow:hidden;
+
+      -webkit-user-select:none; user-select:none; -webkit-touch-callout:none;
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior: none;
+    }
+    .app{
+      width:min(460px, 100%);
+      height:min(860px, 100dvh);
+      background: var(--panel);
+      border:1px solid var(--border);
+      border-radius:22px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .top{padding:12px 12px 10px;border-bottom:1px solid rgba(148,163,184,.16);}
+    .brand{font-size:.75rem; letter-spacing:.18em; text-transform:uppercase; color:rgba(148,163,184,.95);}
+    .navBar{margin-top:8px;display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap;}
+    .navBtn{
+      border:1px solid rgba(148,163,184,.22);
+      background: rgba(2,6,23,.34);
+      color: rgba(229,231,235,.95);
+      border-radius:999px;padding:.40rem .70rem;font-weight:900;cursor:pointer;text-decoration:none;
+      -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; -webkit-tap-highlight-color: transparent;
+    }
+    .navBtn:active{transform: translateY(1px);}
+    h1{font-size:1.1rem; margin-top:6px; font-weight:900;}
+    .sub{margin-top:6px; color:var(--muted); font-size:.90rem; line-height:1.35;}
+    .wordRow{margin-top:10px;display:flex;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap;}
+    .letter{
+      width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+      font-weight:900;background: rgba(2,6,23,.40);border:1px solid rgba(148,163,184,.18);
+      color: rgba(229,231,235,.9);
+    }
+    .letter.on{
+      background: linear-gradient(135deg, var(--accentB), var(--accentA));
+      border-color: rgba(248,250,252,.55);color:#0b1220;
+      box-shadow: 0 10px 30px rgba(56,189,248,.18);
+    }
+    .wordBtn{
+      border:none;border-radius:999px;padding:.48rem .8rem;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;
+      background: linear-gradient(135deg, var(--accentA), var(--accentB));
+      color:#0b1220;box-shadow: 0 14px 40px rgba(56,189,248,.18);cursor:pointer;
+    }
+    .game{padding:10px 12px 14px;display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;}
+    .hud{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+    .pill{
+      border:1px solid rgba(148,163,184,.22);background: rgba(2,6,23,.34);border-radius:999px;
+      padding:.30rem .6rem;font-size:.88rem;color: rgba(229,231,235,.95);
+      display:inline-flex;gap:.45rem;align-items:center;white-space:nowrap;
+    }
+    .pill b{color: var(--accentA)}
+    .gridWrap{
+      flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
+      padding:8px;border-radius:18px;background: rgba(2,6,23,.32);border:1px solid rgba(148,163,184,.16);
+    }
+    canvas{
+      width:100%;
+      height:auto;
+      display:block;border-radius:14px;
+      background: rgba(15,23,42,.55);border:1px solid rgba(148,163,184,.14);
+      touch-action:none;outline:none;
+
+      -webkit-user-select:none; user-select:none; -webkit-touch-callout:none;
+    }
+    .hint{text-align:center;color: var(--muted);font-size:.92rem;line-height:1.35;padding-top:6px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;}
+    .gestures{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;opacity:.95;}
+    .gesture{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.20);background: rgba(2,6,23,.30);font-weight:900;color: rgba(229,231,235,.92);white-space:nowrap;}
+    .gesture .ic{width:26px;height:26px;border-radius:10px;display:flex;align-items:center;justify-content:center;background: rgba(148,163,184,.14);}
+
+    .overlay{position:fixed; inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background: rgba(0,0,0,.55);z-index: 50;}
+    .card{width:min(560px, 100%);background: rgba(2,6,23,.92);border:1px solid rgba(148,163,184,.28);border-radius:22px;box-shadow: var(--shadow);padding:16px;}
+    .card h2{margin:0 0 6px;font-size:1.15rem;font-weight:1000;text-align:center;}
+    .card p{margin:0 0 10px;color: rgba(148,163,184,.95);line-height:1.4;}
+    .btnRow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px;}
+    .bigBtn{border:none;border-radius:999px;padding:.75rem 1.1rem;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;background: linear-gradient(135deg, var(--accentA), var(--accentB));color:#0b1220;cursor:pointer;}
+    .toggle{
+      border:1px solid rgba(148,163,184,.25);background: rgba(15,23,42,.45);
+      color: rgba(229,231,235,.95);border-radius:999px;padding:.55rem .85rem;font-weight:900;cursor:pointer;
+    }
+    .toggle.on{border-color: rgba(56,189,248,.55);box-shadow: 0 10px 28px rgba(56,189,248,.14);}
+    button, a{
+      -webkit-user-select:none; user-select:none; -webkit-touch-callout:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .modalOverlay{position:fixed; inset:0;background: rgba(0,0,0,.62);display:none;align-items:center;justify-content:center;padding:16px;z-index:999;}
+    .modalOverlay.show{display:flex;}
+    .modal{width:min(560px, 100%);background: rgba(2,6,23,.94);border:1px solid rgba(148,163,184,.28);border-radius:20px;box-shadow: var(--shadow);padding:14px;}
+    .modal h2{font-size:1.02rem;letter-spacing:.12em;text-transform:uppercase;color: rgba(148,163,184,.95);margin-bottom:8px;}
+    .q{font-size:1.0rem;font-weight:900;line-height:1.45;margin-bottom:10px;}
+    .answers{display:grid; gap:10px;}
+    .ans{width:100%;text-align:left;border-radius:16px;padding:.72rem .82rem;border:1px solid rgba(148,163,184,.22);background: rgba(15,23,42,.45);color: var(--text);font-weight:900;cursor:pointer;}
+    .ans.good{border-color: rgba(34,197,94,.55);background: rgba(34,197,94,.10);}
+    .ans.bad{border-color: rgba(239,68,68,.55);background: rgba(239,68,68,.10);}
+    .modalFoot{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;color: rgba(229,231,235,.95);font-weight:900;}
+    .status.good{color: var(--good);}
+    .status.bad{color: var(--bad);}
+    .closeBtn{border:none;border-radius:999px;padding:.5rem .85rem;font-weight:900;background: rgba(148,163,184,.16);color: var(--text);cursor:pointer;}
+    .small{font-size:.86rem;color: rgba(148,163,184,.95);line-height:1.35;}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="top">
+      <div class="brand">Physik App · Physik-Spiel · 5er-Linien</div>
+      <div class="navBar">
+        <button class="navBtn" id="backBtn" type="button">← Zurück</button>
+        <a class="navBtn" id="dashLink" href="dashboard.html">🏠 Dashboard</a>
+      </div>
+      <h1 id="title">Abschnitt 1 von 7 · Level 1</h1>
+      <div class="sub"><b>Regel:</b> 5 gleiche Blasen in einer Linie = ✅ → du sammelst Buchstaben für ein <b>Wort</b>. Am Ende kommt eine Frage.</div>
+      <div class="wordRow" id="wordRow"></div>
+    </div>
+
+    <div class="game">
+      <div class="hud">
+        <div class="pill">Fortschritt: <b id="progText">0</b>/<span id="roundsText">8</span></div>
+        <div class="pill">Abschnitt: <b id="secText">1</b>/7</div>
+        <div class="pill">Linie: <b>5</b></div>
+      </div>
+
+      <div class="gridWrap">
+        <canvas id="cv" width="360" height="600" aria-label="Spiel"></canvas>
+      </div>
+
+      <div class="hint">
+        <div class="gestures">
+          <div class="gesture"><span class="ic">👈👉</span></div>
+          <div class="gesture"><span class="ic">👇</span></div>
+          <div class="gesture"><span class="ic">👆</span></div>
+          <div class="gesture"><span class="ic">🔊</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Start / Continue overlay -->
+  <div class="overlay" id="startOverlay">
+    <div class="card">
+      <h2>Willkommen im Physik-Spiel!</h2>
+      <p><b>So funktioniert’s:</b> Du steuerst die fallende Blase und versuchst, <b>5 gleiche Blasen</b> in eine Linie zu bringen (waagerecht, senkrecht oder diagonal).</p>
+      <p>Für jede 5er‑Linie bekommst du <b>Fortschritt</b> und Buchstaben. Am Ende ergibt sich ein <b>Begriff</b> – danach kommt eine Quiz‑Frage.</p>
+      <p class="small"><b>Tipp:</b> Wenn du bei einer Frage unsicher bist, nutze das, was ihr im Unterricht / in der Physik‑App zu diesem Thema schon hattet.</p>
+
+      <div class="btnRow">
+        <button class="toggle on" id="soundToggle" type="button">Sound: AN</button>
+      </div>
+      <div class="btnRow">
+        <button class="bigBtn" id="continueBtn" type="button" style="display:none;">Fortsetzen</button>
+        <button class="bigBtn" id="startBtn" type="button">Start</button>
+        <button class="toggle" id="resetBtn" type="button">Neu starten</button>
+      </div>
+      <p class="small" style="text-align:center;margin-top:10px;">Hinweis: iPhone „stumm“ = kein Ton (Seitenschalter).</p>
+    </div>
+  </div>
+
+  <!-- Quiz modal -->
+  <div class="modalOverlay" id="modal">
+    <div class="modal" role="dialog" aria-modal="true">
+      <h2 id="modalHeading">Quiz</h2>
+      <div class="q" id="qText"></div>
+      <div class="answers" id="answers"></div>
+      <div class="modalFoot">
+        <div class="status" id="status">Wähle eine Antwort.</div>
+        <button class="closeBtn" id="closeBtn" type="button">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Prevent iOS pinch/gesture zoom inside the game
+  document.addEventListener('gesturestart', (e) => e.preventDefault(), {passive:false});
+  document.addEventListener('gesturechange', (e) => e.preventDefault(), {passive:false});
+  document.addEventListener('gestureend', (e) => e.preventDefault(), {passive:false});
+
+  // ===== Config =====
+  const COLS = 8, ROWS = 10, LINE = 5;
+  const ALLOW_DIAGONAL = true;
+  const STATE_KEY = "physikspiel_state_v1";
+
+  const SECTIONS = [
+    {
+      word: "MAGNETISMUS",
+      rounds: 8,
+      bubbles: [
+        {id:"MAG", icon:"🧲", hue: 145},
+        {id:"FEL", icon:"🌀", hue: 210},
+        {id:"KRA", icon:"💥", hue: 25},
+        {id:"NAD", icon:"🧭", hue: 60},
+        {id:"PL1", icon:"",   hue: 265},
+        {id:"PL2", icon:"",   hue: 35},
+      ],
+      quiz1: {
+        q: "Was beschreibt Magnetismus am besten?",
+        a: [
+          {t:"Magnetismus ist eine Kraft, die nur bei Berührung wirkt.", ok:false},
+          {t:"Magnetismus ist eine unsichtbare Kraft, durch die bestimmte Stoffe angezogen oder abgestoßen werden können.", ok:true},
+          {t:"Magnetismus ist eine elektrische Spannung, die in Metallen entsteht.", ok:false},
+          {t:"Magnetismus entsteht nur durch Strom in Leitungen.", ok:false},
+        ],
+        hint: "Wink: Kräfte können auch ohne Berührung wirken – und es gibt Anziehung UND Abstoßung."
+      },
+      quiz2: {
+        q: "Warum können sich Magnete beeinflussen, ohne sich zu berühren?",
+        a: [
+          {t:"Weil Magnete Wärme abgeben, die andere Magnete beeinflusst.", ok:false},
+          {t:"Weil um jeden Magneten ein Magnetfeld existiert, das Kräfte übertragen kann.", ok:true},
+          {t:"Weil Magnete elektrische Ladungen aussenden.", ok:false},
+        ],
+        hint: "Wink: Das „Unsichtbare“ um den Magneten heißt Magnetfeld."
+      }
+    },
+    {
+      word: "ELEKTROMAGNET",
+      rounds: 6,
+      bubbles: [
+        {id:"SPO", icon:"🧷", hue: 140},
+        {id:"SPA", icon:"🌀", hue: 210},
+        {id:"STR", icon:"⚡", hue: 48},
+        {id:"KRN", icon:"🧲", hue: 120},
+        {id:"PL1", icon:"",   hue: 265},
+        {id:"PL2", icon:"",   hue: 35},
+      ],
+      quiz1: {
+        q: "Was macht einen Elektromagneten besonders?",
+        a: [
+          {t:"Er ist immer gleich stark – unabhängig vom Strom.", ok:false},
+          {t:"Man kann ihn mit Strom ein- und ausschalten.", ok:true},
+          {t:"Er zieht alle Metalle an.", ok:false},
+          {t:"Er hat nur einen Pol.", ok:false},
+        ],
+        hint: "Wink: Elektromagnet = Magnetismus durch Strom → schaltbar."
+      },
+      quiz2: {
+        q: "Warum verstärkt ein Eisenkern in der Spule den Elektromagneten?",
+        a: [
+          {t:"Weil Eisen die Luft kühlt und dadurch mehr Strom fließt.", ok:false},
+          {t:"Weil Eisen magnetisierbar ist und das Magnetfeld der Spule bündelt.", ok:true},
+          {t:"Weil Eisen die Spannung erhöht wie ein Transformator.", ok:false},
+        ],
+        hint: "Wink: Eisen ist magnetisierbar und „führt“ Feldlinien besser."
+      }
+    },
+    {
+      word: "ELEKTROMOTOR",
+      rounds: 6,
+      bubbles: [
+        {id:"STR", icon:"⚡", hue: 48},
+        {id:"BEW", icon:"🔄", hue: 200},
+        {id:"MAG", icon:"🧲", hue: 140},
+        {id:"SCH", icon:"⚙️", hue: 35},
+        {id:"PL1", icon:"",   hue: 265},
+        {id:"PL2", icon:"",   hue: 115},
+      ],
+      quiz1: {
+        q: "Welche Energie-Umwandlung passiert im Elektromotor?",
+        a: [
+          {t:"Elektrische Energie → mechanische Bewegung", ok:true},
+          {t:"Mechanische Bewegung → elektrische Energie", ok:false},
+          {t:"Wärme → elektrische Energie", ok:false},
+          {t:"Licht → Wärme", ok:false},
+        ],
+        hint: "Wink: Motor macht aus Strom Bewegung."
+      },
+      quiz2: {
+        q: "Warum dreht sich ein Motor überhaupt?",
+        a: [
+          {t:"Weil Strom immer von selbst Kreise dreht.", ok:false},
+          {t:"Weil auf stromdurchflossene Leiter im Magnetfeld eine Kraft wirkt (Lorentzkraft).", ok:true},
+          {t:"Weil sich Magnete nur bei Wärme drehen.", ok:false},
+        ],
+        hint: "Wink: Strom + Magnetfeld → Kraft auf den Leiter."
+      }
+    },
+    {
+      word: "MAGNETFELD",
+      rounds: 6,
+      bubbles: [
+        {id:"FEL", icon:"🌀", hue: 210},
+        {id:"LIN", icon:"➰", hue: 55},
+        {id:"MAG", icon:"🧲", hue: 140},
+        {id:"FEI", icon:"✨", hue: 35},
+        {id:"PL1", icon:"",   hue: 265},
+        {id:"PL2", icon:"",   hue: 115},
+      ],
+      quiz1: {
+        q: "Womit macht man Magnetfelder im Experiment sichtbar?",
+        a: [
+          {t:"Mit Eisenfeilspänen", ok:true},
+          {t:"Mit einer Stoppuhr", ok:false},
+          {t:"Mit einem Thermometer", ok:false},
+          {t:"Mit einem Maßband", ok:false},
+        ],
+        hint: "Wink: Eisenfeilspäne ordnen sich entlang der Feldlinien."
+      },
+      quiz2: {
+        q: "In welche Richtung zeigen Feldlinien außerhalb eines Stabmagneten?",
+        a: [
+          {t:"Von Nordpol zu Südpol", ok:true},
+          {t:"Von Südpol zu Nordpol", ok:false},
+          {t:"Immer nach oben", ok:false},
+        ],
+        hint: "Wink: Feldlinien außen vom N weg, zum S hin."
+      }
+    },
+    {
+      word: "INDUKTION",
+      rounds: 8,
+      bubbles: [
+        {id:"MAG", icon:"🧲", hue: 140},
+        {id:"BEW", icon:"🔄", hue: 200},
+        {id:"SPA", icon:"⚡", hue: 48},
+        {id:"SPO", icon:"🌀", hue: 210},
+        {id:"PL1", icon:"",   hue: 265},
+        {id:"PL2", icon:"",   hue: 35},
+      ],
+      quiz1: {
+        q: "Wann entsteht eine Induktionsspannung?",
+        a: [
+          {t:"Wenn sich das Magnetfeld ändert (z.B. Magnet/Spule bewegen)", ok:true},
+          {t:"Wenn ein Magnet einfach nur neben einer Spule liegt", ok:false},
+          {t:"Wenn die Spule warm wird", ok:false},
+          {t:"Wenn ein Dauermagnet zerbricht", ok:false},
+        ],
+        hint: "Wink: Entscheidend ist die Änderung – nicht das „Dabeiliegen“."
+      },
+      quiz2: {
+        q: "Warum leuchtet die Lampe am Fahrraddynamo stärker, wenn du schneller fährst?",
+        a: [
+          {t:"Weil sich das Magnetfeld schneller ändert und dadurch mehr Spannung erzeugt wird.", ok:true},
+          {t:"Weil der Magnet dadurch schwerer wird.", ok:false},
+          {t:"Weil mehr Eisenfeilspäne im Dynamo sind.", ok:false},
+        ],
+        hint: "Wink: Schnellere Änderung → größere Induktionsspannung."
+      }
+    },
+    {
+      word: "GENERATOR",
+      rounds: 6,
+      bubbles: [
+        {id:"BEW", icon:"🔄", hue: 200},
+        {id:"SPA", icon:"⚡", hue: 48},
+        {id:"MAG", icon:"🧲", hue: 140},
+        {id:"LAM", icon:"💡", hue: 35},
+        {id:"PL1", icon:"",   hue: 265},
+        {id:"PL2", icon:"",   hue: 115},
+      ],
+      quiz1: {
+        q: "Welche Aussage passt zum Generator?",
+        a: [
+          {t:"Generator: Strom → Bewegung", ok:false},
+          {t:"Generator: Bewegung → Strom", ok:true},
+          {t:"Generator: Wärme → Licht", ok:false},
+          {t:"Generator: Licht → Wärme", ok:false},
+        ],
+        hint: "Wink: Generator ist die „Umkehrung“ vom Motor."
+      },
+      quiz2: {
+        q: "Warum ist im Generator eine Spule (oder ein Leiter) im Magnetfeld wichtig?",
+        a: [
+          {t:"Weil sich nur so bei Bewegung eine Induktionsspannung erzeugen kann.", ok:true},
+          {t:"Weil die Spule den Strom speichert wie eine Batterie.", ok:false},
+          {t:"Weil sie die Pole des Magneten vertauscht.", ok:false},
+        ],
+        hint: "Wink: Spule/Leiter + Magnetfeld + Änderung = Induktion."
+      }
+    },
+    {
+      word: "TRANSFORMATOR",
+      rounds: 6,
+      bubbles: [
+        {id:"WEK", icon:"〰️", hue: 210},
+        {id:"SPA", icon:"⚡", hue: 48},
+        {id:"SPI", icon:"🌀", hue: 140},
+        {id:"KRN", icon:"🧲", hue: 115},
+        {id:"PL1", icon:"",   hue: 265},
+        {id:"PL2", icon:"",   hue: 35},
+      ],
+      quiz1: {
+        q: "Wofür nutzt man einen Transformator?",
+        a: [
+          {t:"Um die Spannung bei Wechselstrom zu erhöhen oder zu verringern.", ok:true},
+          {t:"Um Gleichstrom in Wärme umzuwandeln.", ok:false},
+          {t:"Um Magnete dauerhaft zu entmagnetisieren.", ok:false},
+          {t:"Um Licht in Strom zu verwandeln.", ok:false},
+        ],
+        hint: "Wink: Trafo = Spannung hoch/runter (bei Wechselstrom)."
+      },
+      quiz2: {
+        q: "Warum funktioniert ein Transformator normalerweise nur mit Wechselstrom?",
+        a: [
+          {t:"Weil nur ein sich änderndes Magnetfeld in der zweiten Spule eine Spannung induziert.", ok:true},
+          {t:"Weil Gleichstrom zu kalt ist.", ok:false},
+          {t:"Weil Eisenkerne nur nachts magnetisch sind.", ok:false},
+        ],
+        hint: "Wink: Induktion braucht Änderung – Wechselstrom ändert ständig."
+      }
+    }
+  ];
+
+  // ===== Elements =====
+  const cv = document.getElementById("cv");
+  const ctx = cv.getContext("2d");
+  const wordRow = document.getElementById("wordRow");
+  const titleEl = document.getElementById("title");
+  const progText = document.getElementById("progText");
+  const roundsText = document.getElementById("roundsText");
+  const secText = document.getElementById("secText");
+
+  const startOverlay = document.getElementById("startOverlay");
+  const startBtn = document.getElementById("startBtn");
+  const continueBtn = document.getElementById("continueBtn");
+  const resetBtn = document.getElementById("resetBtn");
+  const soundToggle = document.getElementById("soundToggle");
+
+  const modal = document.getElementById("modal");
+  const modalHeading = document.getElementById("modalHeading");
+  const qText = document.getElementById("qText");
+  const answersEl = document.getElementById("answers");
+  const statusEl = document.getElementById("status");
+  const closeBtn = document.getElementById("closeBtn");
+
+  // ===== State =====
+  let sectionIndex = 0;
+  let grid = Array.from({length: ROWS}, () => Array.from({length: COLS}, () => null));
+  let current = null; // {col,row,displayY,bubble}
+  let desiredCol = null;
+  let running = false;
+  let softDrop = false;
+  let progressWins = 0;     // successes within section (0..rounds)
+  let lettersShown = 0;     // letters revealed for current word
+  let pausedForQuiz = false;
+  let quizStep = 0;         // 1 or 2
+  let clearingCells = new Set();
+  let clearUntilTs = 0;
+
+  // ===== Audio =====
+  let soundOn = true;
+  let audioCtx = null;
+  function ensureAudio(){
+    if(!soundOn) return;
+    if(!audioCtx){
+      try{ audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+      catch(e){ audioCtx = null; }
+    }
+    if(audioCtx && audioCtx.state === "suspended") audioCtx.resume().catch(()=>{});
+  }
+  function beep(freq=520, dur=0.06, type="sine", gain=0.06){
+    if(!soundOn) return;
+    ensureAudio();
+    if(!audioCtx) return;
+    const t0 = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = type; osc.frequency.value = freq;
+    g.gain.setValueAtTime(gain, t0);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    osc.connect(g); g.connect(audioCtx.destination);
+    osc.start(t0); osc.stop(t0 + dur);
+  }
+  const sMove  = () => beep(620, 0.035, "triangle", 0.045);
+  const sDrop  = () => beep(420, 0.06,  "sine",     0.07);
+  const sLock  = () => beep(300, 0.07,  "square",   0.05);
+  const sClear = () => beep(760, 0.10,  "sine",     0.085);
+  const sRight = () => beep(880, 0.08,  "sine",     0.10);
+  const sWrong = () => beep(180, 0.09,  "sawtooth", 0.06);
+
+  soundToggle.addEventListener("click", () => {
+    soundOn = !soundOn;
+    soundToggle.classList.toggle("on", soundOn);
+    soundToggle.textContent = soundOn ? "Sound: AN" : "Sound: AUS";
+    if(soundOn) ensureAudio();
+    saveState();
+  });
+
+  document.getElementById('backBtn')?.addEventListener('click', () => {
+    if (history.length > 1) history.back();
+    else location.href = 'dashboard.html';
+  });
+
+  // ===== Helpers =====
+  function section(){ return SECTIONS[sectionIndex]; }
+  function randBubble(){
+    const b = section().bubbles;
+    return b[Math.floor(Math.random()*b.length)];
+  }
+
+  function resizeCanvasToDisplay(){
+    const rect = cv.getBoundingClientRect();
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+
+    // width drives everything -> exact grid, circles stay circles
+    const w = Math.floor(rect.width * dpr);
+    const cell = w / COLS;
+    const h = Math.floor(cell * ROWS);
+
+    if(cv.width !== w || cv.height !== h){
+      cv.width = w;
+      cv.height = h;
+    }
+  }
+  function cellSize(){ return cv.width / COLS; }
+  function canOccupy(r,c){ return r>=0 && r<ROWS && c>=0 && c<COLS && grid[r][c] === null; }
+
+  function updateHeader(){
+    titleEl.textContent = `Abschnitt ${sectionIndex+1} von ${SECTIONS.length} · Level ${sectionIndex+1}`;
+    roundsText.textContent = String(section().rounds);
+    progText.textContent = String(progressWins);
+    secText.textContent = String(sectionIndex+1);
+  }
+
+  function lettersPerWin(){
+    const w = section().word;
+    return Math.max(1, Math.ceil(w.length / section().rounds));
+  }
+
+  function renderWord(){
+    const w = section().word;
+    wordRow.innerHTML = "";
+    for(let i=0;i<w.length;i++){
+      const d = document.createElement("div");
+      d.className = "letter" + (i < lettersShown ? " on" : "");
+      d.textContent = (i < lettersShown) ? w[i] : "";
+      wordRow.appendChild(d);
+    }
+    if(progressWins >= section().rounds){
+      const b = document.createElement("button");
+      b.className = "wordBtn";
+      b.textContent = w;
+      b.addEventListener("click", openQuiz);
+      wordRow.appendChild(b);
+    }
+  }
+
+  function clearGrid(){
+    grid = Array.from({length: ROWS}, () => Array.from({length: COLS}, () => null));
+    current = null;
+    desiredCol = null;
+    clearingCells = new Set();
+    clearUntilTs = 0;
+    softDrop = false;
+  }
+
+  function spawn(){
+    const c = Math.floor(COLS/2);
+    if(grid[0][c] !== null){
+      gameOver();
+      return;
+    }
+    current = {col:c, row:0, displayY:0, bubble: randBubble()};
+    desiredCol = c;
+  }
+
+  function gameOver(){
+    running = false;
+    pausedForQuiz = false;
+    alert("Game Over – Feld ist voll. Neustart!");
+    hardResetAll();
+  }
+
+  function lockCurrent(){
+    current.displayY = current.row;
+    grid[current.row][current.col] = current.bubble;
+    current = null;
+    desiredCol = null;
+    sLock();
+
+    const matches = findMatches();
+    if(matches.size){
+      clearingCells = matches;
+      clearUntilTs = performance.now() + 520;
+      sClear();
+    }else{
+      if(!pausedForQuiz) spawn();
+    }
+    saveState();
+  }
+
+  function hardDrop(){
+    if(!running || !current || pausedForQuiz || clearingCells.size) return;
+    while(true){
+      const nr = current.row + 1;
+      if(nr < ROWS && canOccupy(nr, current.col)) current.row = nr;
+      else break;
+    }
+    current.displayY = current.row;
+    sDrop();
+    lockCurrent();
+  }
+
+  function setColumnFromX(clientX){
+    if(!running || !current || pausedForQuiz || clearingCells.size) return;
+    const rect = cv.getBoundingClientRect();
+    const x = Math.max(0, Math.min(rect.width - 1, clientX - rect.left));
+    desiredCol = Math.max(0, Math.min(COLS-1, Math.floor((x / rect.width) * COLS)));
+  }
+
+  // ===== Match detection (>=5) =====
+  function findMatches(){
+    const marked = new Set();
+    const addRun = (run) => { for(const [r,c] of run) marked.add(r + "," + c); };
+
+    // horizontal
+    for(let r=0;r<ROWS;r++){
+      let run=[], last=null;
+      for(let c=0;c<COLS;c++){
+        const id = grid[r][c]?.id ?? null;
+        if(id && id===last) run.push([r,c]);
+        else{
+          if(run.length>=LINE) addRun(run);
+          run = id ? [[r,c]] : [];
+          last = id;
+        }
+      }
+      if(run.length>=LINE) addRun(run);
+    }
+
+    // vertical
+    for(let c=0;c<COLS;c++){
+      let run=[], last=null;
+      for(let r=0;r<ROWS;r++){
+        const id = grid[r][c]?.id ?? null;
+        if(id && id===last) run.push([r,c]);
+        else{
+          if(run.length>=LINE) addRun(run);
+          run = id ? [[r,c]] : [];
+          last = id;
+        }
+      }
+      if(run.length>=LINE) addRun(run);
+    }
+
+    if(ALLOW_DIAGONAL){
+      // diag down-right (\)
+      for(let sr=0; sr<ROWS; sr++){
+        let r=sr,c=0,run=[],last=null;
+        while(r<ROWS && c<COLS){
+          const id = grid[r][c]?.id ?? null;
+          if(id && id===last) run.push([r,c]);
+          else{
+            if(run.length>=LINE) addRun(run);
+            run = id ? [[r,c]] : [];
+            last = id;
+          }
+          r++; c++;
+        }
+        if(run.length>=LINE) addRun(run);
+      }
+      for(let sc=1; sc<COLS; sc++){
+        let r=0,c=sc,run=[],last=null;
+        while(r<ROWS && c<COLS){
+          const id = grid[r][c]?.id ?? null;
+          if(id && id===last) run.push([r,c]);
+          else{
+            if(run.length>=LINE) addRun(run);
+            run = id ? [[r,c]] : [];
+            last = id;
+          }
+          r++; c++;
+        }
+        if(run.length>=LINE) addRun(run);
+      }
+
+      // diag down-left (/)
+      for(let sr=0; sr<ROWS; sr++){
+        let r=sr,c=COLS-1,run=[],last=null;
+        while(r<ROWS && c>=0){
+          const id = grid[r][c]?.id ?? null;
+          if(id && id===last) run.push([r,c]);
+          else{
+            if(run.length>=LINE) addRun(run);
+            run = id ? [[r,c]] : [];
+            last = id;
+          }
+          r++; c--;
+        }
+        if(run.length>=LINE) addRun(run);
+      }
+      for(let sc=COLS-2; sc>=0; sc--){
+        let r=0,c=sc,run=[],last=null;
+        while(r<ROWS && c>=0){
+          const id = grid[r][c]?.id ?? null;
+          if(id && id===last) run.push([r,c]);
+          else{
+            if(run.length>=LINE) addRun(run);
+            run = id ? [[r,c]] : [];
+            last = id;
+          }
+          r++; c--;
+        }
+        if(run.length>=LINE) addRun(run);
+      }
+    }
+
+    return marked;
+  }
+
+  function applyClear(){
+    if(!clearingCells.size) return;
+
+    // remove cells
+    for(const key of clearingCells){
+      const [rS,cS] = key.split(",");
+      grid[+rS][+cS] = null;
+    }
+
+    // gravity
+    for(let c=0;c<COLS;c++){
+      const stack=[];
+      for(let r=ROWS-1;r>=0;r--) if(grid[r][c]) stack.push(grid[r][c]);
+      for(let r=ROWS-1;r>=0;r--) grid[r][c] = stack[ROWS-1-r] || null;
+    }
+
+    // scoring: 1 win per 5er-line (approx by cells/5), at least 1
+    const gained = Math.max(1, Math.floor(clearingCells.size / LINE));
+    progressWins = Math.min(section().rounds, progressWins + gained);
+    lettersShown = Math.min(section().word.length, lettersShown + gained * lettersPerWin());
+
+    clearingCells = new Set();
+    updateHeader();
+    renderWord();
+
+    if(progressWins >= section().rounds){
+      pausedForQuiz = true;
+      current = null;
+      desiredCol = null;
+    }else{
+      spawn();
+    }
+    saveState();
+  }
+
+  // ===== Drawing =====
+  function drawGrid(){
+    const s = cellSize();
+    ctx.save();
+    ctx.globalAlpha = 0.10;
+    ctx.strokeStyle = "rgba(148,163,184,.25)";
+    for(let r=0;r<=ROWS;r++){
+      ctx.beginPath(); ctx.moveTo(0, r*s); ctx.lineTo(COLS*s, r*s); ctx.stroke();
+    }
+    for(let c=0;c<=COLS;c++){
+      ctx.beginPath(); ctx.moveTo(c*s, 0); ctx.lineTo(c*s, ROWS*s); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawBubbleAt(cx, cy, bubble, radius, glow=1, flash=0){
+    ctx.save();
+    const alpha = 0.35*glow + 0.35*flash;
+    ctx.shadowColor = `hsla(${bubble.hue}, 95%, 60%, ${alpha})`;
+    ctx.shadowBlur = 10*glow + 14*flash;
+
+    const g = ctx.createRadialGradient(cx - radius*0.35, cy - radius*0.35, radius*0.2, cx, cy, radius*1.1);
+    g.addColorStop(0, `hsla(${bubble.hue}, 95%, ${92 + flash*6}%, 1)`);
+    g.addColorStop(0.35, `hsla(${bubble.hue}, 92%, ${60 + flash*10}%, 1)`);
+    g.addColorStop(1, `hsla(${bubble.hue}, 92%, 36%, 1)`);
+
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI*2); ctx.fill();
+
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = "rgba(248,250,252,.40)";
+    ctx.lineWidth = Math.max(1, radius*0.06);
+    ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI*2); ctx.stroke();
+
+    ctx.globalAlpha = 0.20 + flash*0.25;
+    ctx.fillStyle = "white";
+    ctx.beginPath(); ctx.arc(cx - radius*0.28, cy - radius*0.28, radius*0.20, 0, Math.PI*2); ctx.fill();
+    ctx.globalAlpha = 1;
+
+    if(bubble.icon){
+      ctx.fillStyle = "rgba(2,6,23,.92)";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = `900 ${Math.floor(radius*0.86)}px system-ui, Apple Color Emoji, Segoe UI Emoji`;
+      ctx.fillText(bubble.icon, cx, cy+1);
+    }
+    ctx.restore();
+  }
+
+  function draw(ts=0){
+    resizeCanvasToDisplay();
+    ctx.clearRect(0,0,cv.width,cv.height);
+
+    const s = cellSize();
+    const radius = s*0.44;
+
+    drawGrid();
+
+    const flash = clearingCells.size ? (0.35 + 0.35*Math.sin(ts/80)) : 0;
+
+    for(let r=0;r<ROWS;r++){
+      for(let c=0;c<COLS;c++){
+        const b = grid[r][c];
+        if(!b) continue;
+        const key = r + "," + c;
+        const isClearing = clearingCells.has(key);
+        drawBubbleAt(c*s + s/2, r*s + s/2, b, radius, 0.80, isClearing ? flash : 0);
+      }
+    }
+
+    if(current){
+      const lerp = 0.22;
+      current.displayY = current.displayY + (current.row - current.displayY) * lerp;
+      drawBubbleAt(current.col*s + s/2, current.displayY*s + s/2, current.bubble, radius, 1.05, 0);
+    }
+  }
+
+  // ===== Quiz =====
+  function openQuiz(){
+    if(!pausedForQuiz) return;
+    quizStep = 1;
+    renderQuiz();
+    modal.classList.add("show");
+  }
+
+  function renderQuiz(){
+    const sec = section();
+    const quiz = (quizStep === 1) ? sec.quiz1 : sec.quiz2;
+    modalHeading.textContent = (quizStep === 1) ? "Quiz" : "Warum? (Vertiefung)";
+    qText.textContent = quiz.q;
+
+    answersEl.innerHTML = "";
+    statusEl.textContent = "Wähle eine Antwort.";
+    statusEl.className = "status";
+
+    quiz.a.forEach(a => {
+      const b = document.createElement("button");
+      b.className = "ans";
+      b.textContent = a.t;
+      b.type = "button";
+      b.addEventListener("click", () => gradeAnswer(a.ok, quiz.hint, b));
+      answersEl.appendChild(b);
+    });
+  }
+
+  function gradeAnswer(ok, hint, btn){
+    [...answersEl.querySelectorAll("button")].forEach(x => x.disabled = true);
+    if(ok){
+      btn.classList.add("good");
+      statusEl.textContent = "✅ Richtig!";
+      statusEl.className = "status good";
+      sRight();
+
+      setTimeout(() => {
+        if(quizStep === 1){
+          quizStep = 2;
+          renderQuiz();
+        }else{
+          modal.classList.remove("show");
+          advanceSection();
+        }
+      }, 650);
+    }else{
+      btn.classList.add("bad");
+      statusEl.textContent = "❌ Falsch. " + hint;
+      statusEl.className = "status bad";
+      sWrong();
+      setTimeout(() => {
+        [...answersEl.querySelectorAll("button")].forEach(x => {
+          x.disabled = false;
+          x.classList.remove("bad","good");
+        });
+        statusEl.textContent = "Versuch’s nochmal.";
+        statusEl.className = "status";
+      }, 900);
+    }
+  }
+
+  closeBtn.addEventListener("click", () => modal.classList.remove("show"));
+
+  function advanceSection(){
+    // next section or end
+    if(sectionIndex < SECTIONS.length - 1){
+      sectionIndex++;
+      progressWins = 0;
+      lettersShown = 0;
+      pausedForQuiz = false;
+      quizStep = 0;
+      clearGrid();
+      updateHeader();
+      renderWord();
+      running = true;
+      spawn();
+      saveState();
+    }else{
+      running = false;
+      pausedForQuiz = false;
+      clearState();
+      alert("🎉 Geschafft! Du hast den Lernpfad abgeschlossen.");
+    }
+  }
+
+  // ===== Input =====
+  let startX=0, startY=0;
+  let downSwipeActive = false;
+
+  cv.addEventListener("pointerdown", (e) => {
+    cv.setPointerCapture(e.pointerId);
+    ensureAudio();
+    startX = e.clientX; startY = e.clientY;
+    downSwipeActive = false; softDrop = false;
+    setColumnFromX(e.clientX);
+    saveState();
+  });
+
+  cv.addEventListener("pointermove", (e) => {
+    if(!running || !current || pausedForQuiz || clearingCells.size) return;
+    setColumnFromX(e.clientX);
+    const dy = e.clientY - startY;
+    softDrop = dy > 28;
+    downSwipeActive = softDrop;
+  });
+
+  cv.addEventListener("pointerup", (e) => {
+    const dx = Math.abs(e.clientX - startX);
+    const dy = Math.abs(e.clientY - startY);
+    const isTap = dx < 10 && dy < 10 && !downSwipeActive;
+    softDrop = false; downSwipeActive = false;
+    if(isTap) hardDrop();
+    saveState();
+  });
+
+  // ===== Falling loop =====
+  let fallAccumulator = 0;
+  function stepsPerSecond(){
+    // Slightly faster later in section
+    const base = 1.15;
+    const bonus = Math.min(0.75, progressWins*0.10);
+    const normal = base + bonus;
+    return softDrop ? normal*6.0 : normal;
+  }
+
+  function fallStep(){
+    if(!current) return;
+    const nr = current.row + 1;
+    if(nr < ROWS && canOccupy(nr, current.col)){
+      current.row = nr;
+    }else{
+      lockCurrent();
+    }
+  }
+
+  let lastTs = 0;
+  function loop(ts){
+    if(!lastTs) lastTs = ts;
+    const dt = Math.min(0.033, (ts - lastTs)/1000);
+    lastTs = ts;
+
+    if(running){
+      if(clearingCells.size){
+        if(performance.now() >= clearUntilTs) applyClear();
+      }else if(!pausedForQuiz){
+        if(!current) spawn();
+
+        // Smooth horizontal movement (less twitchy)
+        if(current && desiredCol !== null && desiredCol !== current.col){
+          const dir = Math.sign(desiredCol - current.col);
+          const next = current.col + dir;
+          if(canOccupy(current.row, next)){
+            current.col = next;
+            sMove();
+          }else{
+            desiredCol = current.col;
+          }
+        }
+
+        fallAccumulator += stepsPerSecond() * dt;
+        while(fallAccumulator >= 1){
+          fallAccumulator -= 1;
+          fallStep();
+          if(!current) break;
+        }
+      }
+    }
+
+    draw(ts);
+    requestAnimationFrame(loop);
+  }
+
+  // ===== Persistence =====
+  function saveState(){
+    try{
+      const state = {
+        v: 1,
+        sectionIndex,
+        progressWins,
+        lettersShown,
+        running,
+        pausedForQuiz,
+        soundOn,
+        grid,
+        current,
+        desiredCol
+      };
+      localStorage.setItem(STATE_KEY, JSON.stringify(state));
+    }catch(e){/* ignore */}
+  }
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STATE_KEY);
+      if(!raw) return false;
+      const s = JSON.parse(raw);
+      if(!s || s.v !== 1) return false;
+
+      sectionIndex = Math.max(0, Math.min(SECTIONS.length-1, s.sectionIndex ?? 0));
+      progressWins = Math.max(0, Math.min(section().rounds, s.progressWins ?? 0));
+      lettersShown = Math.max(0, Math.min(section().word.length, s.lettersShown ?? 0));
+      running = !!s.running;
+      pausedForQuiz = !!s.pausedForQuiz;
+
+      soundOn = (s.soundOn !== undefined) ? !!s.soundOn : true;
+      soundToggle.classList.toggle("on", soundOn);
+      soundToggle.textContent = soundOn ? "Sound: AN" : "Sound: AUS";
+
+      if(Array.isArray(s.grid)) grid = s.grid;
+      else clearGrid();
+
+      current = s.current ?? null;
+      desiredCol = s.desiredCol ?? null;
+
+      updateHeader();
+      renderWord();
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+
+  function clearState(){
+    try{ localStorage.removeItem(STATE_KEY); }catch(e){}
+  }
+
+  function hardResetAll(){
+    sectionIndex = 0;
+    progressWins = 0;
+    lettersShown = 0;
+    pausedForQuiz = false;
+    quizStep = 0;
+    fallAccumulator = 0;
+    clearGrid();
+    updateHeader();
+    renderWord();
+    saveState();
+  }
+
+  // ===== Overlay buttons =====
+  function startFresh(){
+    clearState();
+    sectionIndex = 0;
+    progressWins = 0;
+    lettersShown = 0;
+    pausedForQuiz = false;
+    quizStep = 0;
+    fallAccumulator = 0;
+    clearGrid();
+    updateHeader();
+    renderWord();
+    running = true;
+    spawn();
+    saveState();
+  }
+
+  startBtn.addEventListener("click", () => {
+    ensureAudio();
+    startOverlay.style.display = "none";
+    startFresh();
+    beep(520, 0.06, "sine", 0.08);
+  });
+
+  continueBtn.addEventListener("click", () => {
+    ensureAudio();
+    startOverlay.style.display = "none";
+    running = true;
+    if(!current && !pausedForQuiz) spawn();
+    saveState();
+    beep(520, 0.06, "sine", 0.08);
+  });
+
+  resetBtn.addEventListener("click", () => {
+    if(confirm("Wirklich neu starten? Dein Fortschritt wird gelöscht.")){
+      startFresh();
+      startOverlay.style.display = "none";
+    }
+  });
+
+  // ===== Init =====
+  const hadState = loadState();
+  updateHeader();
+  renderWord();
+
+  if(hadState){
+    continueBtn.style.display = "";
+    startBtn.textContent = "Neu starten";
+  }
+
+  // If saved state says game was running, still require tap to unlock audio -> show overlay with "Fortsetzen"
+  startOverlay.style.display = "";
+
+  draw();
+  requestAnimationFrame(loop);
+</script>
+</body>
+</html>
