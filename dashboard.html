@@ -529,7 +529,46 @@
   transform: translateY(1px) scale(0.98);
   box-shadow: 0 0 10px rgba(15, 23, 42, 0.8);
 }
-  </style>
+  
+    .tile-badge.hot{
+      background: linear-gradient(135deg, #facc15, #fb7185);
+      color:#0b1220;
+      box-shadow: 0 0 30px rgba(250, 204, 21, 0.8);
+      border-color: rgba(250, 204, 21, 0.55);
+      animation: pulseHot 1.4s ease-in-out infinite;
+    }
+    @keyframes pulseHot{
+      0%,100%{ transform: scale(1); filter: brightness(1); }
+      50%{ transform: scale(1.06); filter: brightness(1.15); }
+    }
+
+
+/* === Physik-Spiel Kachel (auffällig) === */
+.tile.game{
+  background: linear-gradient(135deg, #2563eb, #22d3ee) !important;
+  color: #020617 !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.15),
+    0 12px 30px rgba(34,211,238,0.35),
+    0 0 40px rgba(59,130,246,0.35) !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+.tile.game:hover,
+.tile.game:active{
+  transform: translateY(-2px) scale(1.01);
+  box-shadow:
+    0 16px 40px rgba(34,211,238,0.55),
+    0 0 60px rgba(59,130,246,0.55) !important;
+}
+.tile.game .tile-title,
+.tile.game .tile-label,
+.tile.game .icon{
+  color: #020617 !important;
+  font-weight: 800 !important;
+}
+
+</style>
 </head>
 <body>
   <div id="snow-layer"></div>
@@ -612,6 +651,15 @@
           <span class="tile-label">Adventskalender</span>
         </div>
       </a>
+
+      <a href="spiel_physik_lernpfad.html" class="tile game" aria-label="Physik-Spiel">
+        <div class="tile-main">
+          <span class="icon">🎮</span>
+          <span class="tile-label">Physik-Spiel</span>
+        </div>
+        <span class="tile-badge hot">NEU!</span>
+      </a>
+
 
       <a href="formelsammlung.html" class="tile formel">
         <div class="tile-main">
@@ -696,6 +744,29 @@
     }
     setInterval(updateClock, 1000);
     updateClock();
+
+    // --- Adventskalender ↔ Physik-Spiel automatisch umschalten ---
+    // Robust ohne Jahres-Fallen: Advent = 01.–24.12., Spiel = 25.12.–30.11.
+    function updateSeasonTiles(now) {
+      const adventTile = document.querySelector(".tile.advent");
+      const gameTile = document.querySelector(".tile.game");
+      if (!adventTile || !gameTile) return;
+
+      const m = now.getMonth(); // 0=Jan ... 11=Dez
+      const d = now.getDate();
+
+      const inAdvent = (m === 11) && (d >= 1) && (d <= 24);
+      const inGameWindow = (m === 11 && d >= 25) || (m >= 0 && m <= 10); // Jan–Nov immer Spiel
+
+      adventTile.style.display = inAdvent ? "" : "none";
+      gameTile.style.display   = inGameWindow ? "" : "none";
+    }
+
+    // sofort + dann regelmäßig prüfen (jede Sekunde reicht, weil Uhr ohnehin läuft)
+    (function initSeasonTiles(){
+      updateSeasonTiles(new Date());
+      setInterval(() => updateSeasonTiles(new Date()), 1000);
+    })();
 
     // --- Refresh-Button ---
     const refreshBtn = document.getElementById("refreshBtn");
@@ -876,69 +947,6 @@
         }
       });
     }
-  </script>
-
-
-  <script>
-  (function seasonControl() {
-    const now = new Date();
-    const y = now.getFullYear();
-    const m = now.getMonth(); // 0 = Jan, 11 = Dez
-    const d = now.getDate();
-
-    const isDecember = (m === 11);
-    const isBeforeXmas = (m === 11 && d <= 24);
-    const isNewYearDay = (y === 2026 && m === 0 && d === 1);
-
-    const xmasBtn   = document.getElementById("xmasModeBtn");
-    const snowLayer = document.getElementById("snow-layer");
-    const xmasAudio = document.getElementById("xmasMusic");
-    const adventTile = document.querySelector(".tile.advent");
-
-    // 🎁 Adventskalender: nur bis 24.12.
-    if (adventTile) {
-      adventTile.style.display = (isBeforeXmas) ? "" : "none";
-    }
-
-    // 🎄 Weihnachtsmodus (Button + Schnee + Musik): nur im Dezember (bis 31.12.)
-    if (!isDecember) {
-      if (xmasBtn) xmasBtn.style.display = "none";
-      if (snowLayer) snowLayer.innerHTML = "";
-      if (xmasAudio && typeof xmasAudio.pause === "function") xmasAudio.pause();
-      document.body.classList.remove("xmas-on");
-    } else {
-      if (xmasBtn) xmasBtn.style.display = "";
-    }
-
-    // 🎆 Neujahr: einmalig am 01.01.2026
-    if (isNewYearDay) {
-      const KEY = "newYear2026Shown";
-      if (!localStorage.getItem(KEY)) {
-        const toast = document.createElement("div");
-        toast.style.cssText = `
-          position: fixed;
-          inset: auto 1rem 1.2rem 1rem;
-          z-index: 10001;
-          max-width: 520px;
-          margin: 0 auto;
-          padding: 0.95rem 1.15rem;
-          border-radius: 16px;
-          background: rgba(15,23,42,0.95);
-          border: 1px solid rgba(148,163,184,0.6);
-          box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-          color: #e5e7eb;
-          font-size: 0.95rem;
-          line-height: 1.4;
-        `;
-        toast.innerHTML =
-          "🎆 <strong>Frohes neues Jahr 2026!</strong><br>Willkommen zurück bei Physik Digital.";
-        document.body.appendChild(toast);
-
-        setTimeout(() => toast.remove(), 5000);
-        localStorage.setItem(KEY, "1");
-      }
-    }
-  })();
   </script>
 
 </body>
