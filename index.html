@@ -1,931 +1,304 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Physik Digital 9–10</title>
+  <meta charset="utf-8" />
+  
+  <link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#0b1220">
+
+<!-- iOS (Home-Screen) -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Physik 9–10">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>Physik App 9–10 – Start</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --bg-main: radial-gradient(circle at top, #020617 0%, #020617 40%, #000 100%);
-      --card-bg: rgba(15, 23, 42, 0.96);
-      --border-soft: rgba(148, 163, 184, 0.5);
+      --bg-dark: #020617;
+      --accent-orange: #f97316;
+      --accent-orange-light: #fbbf24;
+      --accent-orange-deep: #ea580c;
       --text-main: #e5e7eb;
-      --text-muted: #94a3b8;
-      --accent-blue: #3b82f6;
+      --text-soft: #9ca3af;
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: var(--bg-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%, #000 100%);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
+      align-items: center;
       justify-content: center;
-      padding: 1.5rem 0.75rem 2.5rem;
+      overflow: hidden;
     }
 
-    body.xmas-on {
-      background: radial-gradient(circle at top, #111827 0%, #020617 40%, #000 100%);
-    }
-
-    /* Schneelayer über der ganzen Seite */
-    #snow-layer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
+    .app {
+      position: relative;
+      width: 100%;
       height: 100vh;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 9999;
-    }
-
-    .page {
-      width: 100%;
-      max-width: 960px;
-      background: radial-gradient(circle at top left, #020617 0%, #020617 40%, #000 100%);
-      border-radius: 32px;
-      padding: 1.75rem 1.5rem 2rem;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: 0 32px 80px rgba(15, 23, 42, 0.9);
-      position: relative;
-      z-index: 3;
-    }
-
-    body.xmas-on .page {
-      box-shadow: 0 32px 90px rgba(251, 191, 36, 0.65);
-      border-color: rgba(250, 204, 21, 0.8);
-    }
-
-    @media (min-width: 720px) {
-      .page {
-        padding: 2rem 2.4rem 2.4rem;
-      }
-    }
-
-    header.hero {
-      margin-bottom: 1.5rem;
-    }
-
-    .brand {
-      font-size: 0.78rem;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: #9ca3af;
-      margin-bottom: 0.75rem;
-    }
-
-    h1 {
-      font-size: clamp(1.8rem, 4vw, 2.4rem);
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      margin-bottom: 0.3rem;
-    }
-
-    .subtitle {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      max-width: 38rem;
-      line-height: 1.5;
-    }
-
-    /* Uhr-Balken */
-    .clock {
-      margin: 1.1rem auto 0;
-      max-width: 420px;
-      padding: 0.55rem 1.3rem;
-      border-radius: 999px;
-      background: radial-gradient(circle at top left, #1d4ed8 0%, #0f172a 50%, #020617 100%);
-      border: 1px solid rgba(129, 140, 248, 0.7);
-      box-shadow: 0 0 30px rgba(59, 130, 246, 0.7);
+      padding: 1.5rem;
       display: flex;
-      align-items: baseline;
-      justify-content: center;
-      gap: 0.6rem;
-      font-weight: 600;
-      font-size: 0.95rem;
-      letter-spacing: 0.06em;
-      color: #e5f2ff;
-      text-shadow: 0 0 12px rgba(15, 23, 42, 0.9);
-    }
-
-    .clock-time {
-      font-feature-settings: "tnum" 1, "lnum" 1;
-      font-size: 1.05rem;
-    }
-
-    .clock-sep {
-      opacity: 0.7;
-    }
-
-    .clock-date {
-      font-size: 0.82rem;
-      opacity: 0.9;
-    }
-
-    /* Hinweis + Buttons */
-    .hint {
-      margin-top: 1.1rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      max-width: 40rem;
-      line-height: 1.5;
-    }
-
-    .hint strong {
-      color: #e5e7eb;
-      font-weight: 600;
-    }
-
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 0.8rem;
-    }
-
-    .refresh-btn,
-    .xmas-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.55rem 1.25rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.75);
-      background: radial-gradient(circle at top left, #111827 0%, #020617 55%, #000 100%);
-      color: #e5e7eb;
-      font-size: 0.9rem;
-      cursor: pointer;
-      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.7);
-      transition: transform 0.08s ease, box-shadow 0.12s ease,
-        background 0.12s ease, border-color 0.12s ease;
-    }
-
-    .refresh-btn span.icon,
-    .xmas-btn span.icon {
-      font-size: 1.1rem;
-    }
-
-    .refresh-btn:active,
-    .xmas-btn:active {
-      transform: translateY(1px) scale(0.99);
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.8);
-    }
-
-    .xmas-btn {
-      background: linear-gradient(135deg, #16a34a, #b91c1c);
-      border-color: rgba(248, 250, 252, 0.8);
-      color: #fefce8;
-      box-shadow: 0 18px 40px rgba(190, 24, 93, 0.75);
-    }
-
-    body.xmas-on .xmas-btn {
-      filter: brightness(1.08);
-      box-shadow: 0 22px 48px rgba(190, 24, 93, 0.95);
-    }
-
-    /* Kacheln */
-    .tiles {
-      margin-top: 1.6rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-    }
-
-    .tile {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.9rem 1.3rem;
-      border-radius: 999px;
-      text-decoration: none;
-      color: #0f172a;
-      font-weight: 600;
-      font-size: 1rem;
-      letter-spacing: 0.03em;
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(15, 23, 42, 0.2);
-      overflow: hidden;
-    }
-
-    .tile-main {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-    }
-
-    .tile-main span.icon {
-      font-size: 1.15rem;
-    }
-
-    .tile-label {
-      text-shadow: 0 0 14px rgba(15, 23, 42, 0.4);
-    }
-
-    .tile.k9 {
-      background: linear-gradient(135deg, #8b5cf6, #a855f7);
-      color: #0f172a;
-    }
-
-    .tile.k10 {
-      background: linear-gradient(135deg, #fb923c, #f97316);
-      color: #0f172a;
-    }
-
-    .tile.formel {
-      background: linear-gradient(135deg, #facc15, #f59e0b);
-      color: #0f172a;
-    }
-
-    .tile.advent {
-      background: linear-gradient(135deg, #14b8a6, #0ea5e9);
-      color: #022c22;
-    }
-
-    .tile.ask {
-      background: linear-gradient(135deg, #6b7280, #9ca3af);
-      color: #020617;
-    }
-
-    body.xmas-on .tile.k9,
-    body.xmas-on .tile.k10,
-    body.xmas-on .tile.formel,
-    body.xmas-on .tile.advent {
-      box-shadow: 0 0 30px rgba(250, 204, 21, 0.8);
-      border-color: rgba(250, 250, 249, 0.9);
-    }
-
-    .tile:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.85);
-    }
-
-    .tile:active {
-      transform: translateY(1px) scale(0.99);
-      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.8);
-    }
-
-    .tile-badge {
-      display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.15rem 0.75rem;
-      border-radius: 999px;
-      border: 1px solid rgba(248, 250, 252, 0.9);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      background: rgba(15, 23, 42, 0.65);
-      color: #f9fafb;
     }
 
-    /* Feedback-Card */
-    .feedback-card {
-      margin-top: 2rem;
-      background: radial-gradient(circle at top left, #020617 0%, #020617 45%, #020617 100%);
-      border-radius: 24px;
-      padding: 1.35rem 1.3rem 1.4rem;
-      border: 1px solid rgba(148, 163, 184, 0.55);
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
-    }
-
-    .feedback-card h2 {
-      font-size: 1.05rem;
-      margin-bottom: 0.35rem;
-    }
-
-    .feedback-card p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
-    }
-
-    .stars {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 0.85rem;
-    }
-
-    .star-btn {
-      width: 2.4rem;
-      height: 2.4rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      background: radial-gradient(circle at top, #020617 0%, #020617 50%, #000 100%);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.2rem;
-      transition: transform 0.08s ease, box-shadow 0.12s ease,
-        border-color 0.12s ease, background 0.12s ease;
-    }
-
-    .star-btn span {
+    /* dunkler Overlay + Vignette */
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.22), transparent 55%);
       pointer-events: none;
     }
 
-    .star-btn.active {
-      border-color: #facc15;
-      background: radial-gradient(circle at top, #facc15 0%, #eab308 40%, #0f172a 100%);
-      box-shadow: 0 0 20px rgba(250, 204, 21, 0.7);
+    .vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.9);
+      pointer-events: none;
     }
 
-    .star-btn:active {
-      transform: translateY(1px) scale(0.96);
-    }
-
-    .feedback-input {
-      width: 100%;
-      border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(15, 23, 42, 0.95);
-      color: #e5e7eb;
-      padding: 0.7rem 0.85rem;
-      font-size: 0.9rem;
-      resize: vertical;
-      min-height: 2.6rem;
-      max-height: 7rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .feedback-input::placeholder {
-      color: rgba(148, 163, 184, 0.8);
-    }
-
-    .feedback-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.7rem;
-      justify-content: space-between;
-    }
-
-    .feedback-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      padding: 0.55rem 1.3rem;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.9rem;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #022c22;
-      font-weight: 600;
-      box-shadow: 0 16px 42px rgba(22, 163, 74, 0.75);
-      text-decoration: none;
-    }
-
-    .feedback-btn span.icon {
-      font-size: 1.1rem;
-    }
-
-    .feedback-toast {
-      font-size: 0.86rem;
-      color: #bbf7d0;
-      opacity: 0;
-      transform: translateY(4px);
-      transition: opacity 0.16s ease, transform 0.16s ease;
-    }
-
-    .feedback-toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    footer {
-      margin-top: 1.6rem;
-      font-size: 0.8rem;
-      color: #64748b;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    footer span {
-      white-space: nowrap;
-    }
-
-    footer span.sep {
+    /* dezente Physik-Icons im Hintergrund */
+    .floaters {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
       opacity: 0.4;
     }
 
-    /* Schneeflocken */
-    .snowflake {
+    .floaters span {
       position: absolute;
-      top: -10px;
-      width: 4px;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(248, 250, 252, 0.95);
-      box-shadow: 0 0 8px rgba(241, 245, 249, 0.8);
-      opacity: 0.9;
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-fill-mode: forwards;
+      font-size: 3rem;
+      color: rgba(148, 163, 184, 0.14);
+      animation: floatUp 26s linear infinite;
+      filter: blur(0.3px);
     }
 
-    @keyframes fall {
-      0% {
-        transform: translate3d(0, 0, 0);
-        opacity: 0;
-      }
-      8% {
-        opacity: 1;
-      }
-      100% {
-        transform: translate3d(var(--drift, 0px), 105vh, 0);
-        opacity: 0;
-      }
+    .floaters span:nth-child(1) { left: 10%; animation-duration: 24s; animation-delay: -4s; }
+    .floaters span:nth-child(2) { left: 30%; animation-duration: 28s; animation-delay: -10s; }
+    .floaters span:nth-child(3) { left: 55%; animation-duration: 26s; animation-delay: -16s; }
+    .floaters span:nth-child(4) { left: 75%; animation-duration: 30s; animation-delay: -7s; }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh); }
+      100% { transform: translateY(-20vh); }
     }
 
-    /* Weihnachts-Popup */
-    .xmas-popup-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.86);
-      display: none;
+    /* Haupt-Card */
+    .hero {
+      position: relative;
+      z-index: 5;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.8rem 2.4rem 3.2rem;
+      border-radius: 28px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9));
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(148, 163, 184, 0.35);
+      text-align: center;
+      animation: heroFloat 14s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroFloat {
+      0%   { transform: translateY(4px); }
+      100% { transform: translateY(-4px); }
+    }
+
+    .school {
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-bottom: 0.9rem;
+    }
+
+    .headline {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      text-shadow: 0 0 16px rgba(0, 0, 0, 0.9);
+      margin-bottom: 0.4rem;
+    }
+
+    .headline span.highlight {
+      color: var(--accent-orange-light);
+    }
+
+    .subline {
+      font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+      color: var(--text-soft);
+      margin-bottom: 2.2rem;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .subline strong {
+      color: var(--accent-orange-light);
+      font-weight: 600;
+    }
+
+    /* 3D Start-Button */
+    .start-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.6rem;
+    }
+
+    .start-btn {
+      position: relative;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      z-index: 10000;
-      padding: 1rem;
-    }
-
-    .xmas-popup-backdrop.show {
-      display: flex;
-    }
-
-    .xmas-popup {
-      max-width: 420px;
-      width: 100%;
-      background: radial-gradient(circle at top, #0f172a 0%, #020617 55%, #000 100%);
-      border-radius: 24px;
-      border: 1px solid rgba(251, 191, 36, 0.9);
-      padding: 1.3rem 1.4rem 1.1rem;
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 1);
-      text-align: left;
-      color: #fefce8;
-    }
-
-    .xmas-popup h2 {
-      margin-bottom: 0.4rem;
-      font-size: 1.2rem;
-    }
-
-    .xmas-popup p {
-      font-size: 0.9rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .xmas-popup-footer {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 0.4rem;
-    }
-
-    .xmas-popup-btn {
+      gap: 0.6rem;
+      padding: 0.95rem 2.8rem;
       border-radius: 999px;
       border: none;
-      padding: 0.5rem 1.1rem;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #022c22;
-      font-weight: 600;
+      font-size: clamp(1.2rem, 2.3vw, 1.5rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
       cursor: pointer;
+      color: #111827;
+      background: linear-gradient(
+        135deg,
+        var(--accent-orange-light),
+        var(--accent-orange),
+        var(--accent-orange-deep)
+      );
+      box-shadow:
+        0 18px 40px rgba(234, 88, 12, 0.55),
+        0 0 0 1px rgba(248, 250, 252, 0.4);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+      transform: translateY(0);
+      transition:
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out,
+        filter 0.12s ease-out;
     }
-/* Impressum-Link im Footer */
-.impressum-link {
-  margin-left: auto;
-  padding: 0.25rem 0.8rem;
-  border-radius: 999px;
-  border: 1px solid rgba(148, 163, 184, 0.6);
-  background: rgba(15, 23, 42, 0.9);
-  color: #e5e7eb;
-  font-size: 0.8rem;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  transition: background 0.15s ease, border-color 0.15s ease,
-    transform 0.08s ease, box-shadow 0.12s ease;
-}
 
-.impressum-link:hover {
-  background: rgba(30, 64, 175, 0.9);
-  border-color: rgba(191, 219, 254, 0.9);
-  box-shadow: 0 0 18px rgba(59, 130, 246, 0.7);
-  transform: translateY(-1px);
-}
+    .start-btn::before {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: inherit;
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.28), transparent 55%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
 
-.impressum-link:active {
-  transform: translateY(1px) scale(0.98);
-  box-shadow: 0 0 10px rgba(15, 23, 42, 0.8);
-}
-  
-    .tile-badge.hot{
-      background: linear-gradient(135deg, #facc15, #fb7185);
-      color:#0b1220;
-      box-shadow: 0 0 30px rgba(250, 204, 21, 0.8);
-      border-color: rgba(250, 204, 21, 0.55);
-      animation: pulseHot 1.4s ease-in-out infinite;
+    .start-btn span.icon {
+      font-size: 1.4rem;
     }
-    @keyframes pulseHot{
-      0%,100%{ transform: scale(1); filter: brightness(1); }
-      50%{ transform: scale(1.06); filter: brightness(1.15); }
+
+    .start-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow:
+        0 24px 60px rgba(234, 88, 12, 0.7),
+        0 0 0 1px rgba(248, 250, 252, 0.6);
+      filter: brightness(1.03);
     }
-</style>
+
+    .start-btn:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow:
+        0 10px 26px rgba(234, 88, 12, 0.55),
+        0 0 0 1px rgba(248, 250, 252, 0.5);
+    }
+
+    .hint {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      opacity: 0.9;
+    }
+
+    .hint span {
+      color: var(--accent-orange-light);
+      font-weight: 600;
+    }
+
+    .footer {
+      margin-top: 2.2rem;
+      font-size: 0.85rem;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    .footer span {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        padding: 2.1rem 1.4rem 2.4rem;
+      }
+      .start-btn {
+        padding: 0.85rem 2.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div id="snow-layer"></div>
+<div class="app">
+  <div class="bg-overlay"></div>
+  <div class="vignette"></div>
 
-  <!-- Weihnachtsmusik -->
-<audio id="xmasMusic" preload="auto" loop>
-  <source src="xmas.mp3" type="audio/mpeg">
-  <!-- Falls der Browser kein MP3 kann, passiert einfach nichts -->
-</audio>
-  <!-- Weihnachts-Popup -->
-  <div id="xmasPopupBackdrop" class="xmas-popup-backdrop">
-    <div class="xmas-popup">
-      <h2>Frohe Vorweihnachtszeit 🎄</h2>
-      <p>
-        Schön, dass du mit der Physik-App arbeitest!<br>
-        Nutze die Zeit bis Weihnachten, um in Ruhe zu üben,
-        Fragen zu stellen und dich entspannt auf Tests vorzubereiten.
-      </p>
-      <p>
-        Denk daran: Fehler gehören zum Lernen dazu – Schritt für Schritt wird’s sicherer. 💪
-      </p>
-      <div class="xmas-popup-footer">
-        <button id="xmasPopupClose" class="xmas-popup-btn">Weiter zur App</button>
-      </div>
-    </div>
+  <!-- dezente Icons im Hintergrund -->
+  <div class="floaters">
+    <span>🧲</span>
+    <span>⚡</span>
+    <span>🔋</span>
+    <span>🚀</span>
   </div>
 
-  <main class="page">
-    <header class="hero">
-      <div class="brand">FGO PERLEBERG · PHYSIK DIGITAL</div>
-      <h1>Physik Digital 9–10</h1>
-      <p class="subtitle">
-        Wähle deine Klassenstufe, den Adventskalender oder die Formelsammlung.
-        Alle Inhalte sind für <strong>Smartphone</strong> &amp; <strong>Smartboard</strong> optimiert.
-      </p>
+  <!-- Haupt-Startkarte -->
+  <main class="hero" aria-labelledby="titel">
+    <div class="school">FGO PERLEBERG</div>
 
-      <div class="clock" id="clockBox">
-        <span class="clock-time" id="clockTime">--:--:--</span>
-        <span class="clock-sep">•</span>
-        <span class="clock-date" id="clockDate">--, --.--.----</span>
-      </div>
+    <h1 class="headline" id="titel">
+      Lernst du schon –<br />
+      oder <span class="highlight">staunst</span> du noch?
+    </h1>
 
-      <p class="hint">
-        <strong>Hinweis:</strong> Wenn du neue Inhalte nicht siehst, tippe auf
-        <strong>„Aktualisieren“</strong> oder lade die Seite im Browser neu.
-      </p>
+    <p class="subline">
+      <strong>Physik App 9–10</strong><br />
+      Dein Dashboard für Inhalte, Training, Experimente und das Physik‑Spiel.
+    </p>
 
-      <div class="button-row">
-        <button id="refreshBtn" class="refresh-btn">
-          <span class="icon">⟳</span>
-          <span>Aktualisieren</span>
-        </button>
-        <button id="xmasModeBtn" class="xmas-btn">
-          <span class="icon">🎄</span>
-          <span>Weihnachtsmodus</span>
-        </button>
-      </div>
-    </header>
-
-    <section class="tiles">
-      <a href="klasse9.html" class="tile k9">
-        <div class="tile-main">
-          <span class="icon">9️⃣</span>
-          <span class="tile-label">Klasse 9</span>
-        </div>
-        <span class="tile-badge">NEU</span>
+    <div class="start-wrapper">
+      <!-- später zu dashboard.html oder einer App-Seite verlinken -->
+      <a class="start-btn" href="dashboard.html">
+        <span class="icon">▶️</span>
+        <span>Start</span>
       </a>
+    </div>
 
-      <a href="klasse10.html" class="tile k10">
-        <div class="tile-main">
-          <span class="icon">🔟</span>
-          <span class="tile-label">Klasse 10</span>
-        </div>
-        <span class="tile-badge">NEU</span>
-      </a>
+    <p class="hint">
+      Tippe auf <span>Start</span>, um Klasse 9 oder 10 auszuwählen und loszulegen.
+    </p>
 
-      <a href="advent.html" class="tile advent">
-        <div class="tile-main">
-          <span class="icon">🎁</span>
-          <span class="tile-label">Adventskalender</span>
-        </div>
-      </a>
-
-      <a href="spiel_physik_lernpfad.html" class="tile game" aria-label="Physik-Spiel">
-        <div class="tile-main">
-          <span class="icon">🎮</span>
-          <span class="tile-label">Physik-Spiel</span>
-        </div>
-        <span class="tile-badge hot">NEU!</span>
-      </a>
-
-
-      <a href="formelsammlung.html" class="tile formel">
-        <div class="tile-main">
-          <span class="icon">ƒ</span>
-          <span class="tile-label">Formelsammlung 9–10</span>
-        </div>
-      </a>
-
-      <a href="mailto:michael.nagel@lk.brandenburg.de?subject=Fragen%20zu%20Physik%20Digital"
-         class="tile ask">
-        <div class="tile-main">
-          <span class="icon">✉️</span>
-          <span class="tile-label">Fragen an die Lehrkraft</span>
-        </div>
-      </a>
-    </section>
-
-    <section class="feedback-card">
-      <h2>Wie gefällt dir diese App?</h2>
-      <p>
-        Tippe auf die Sterne und schicke mir anonymes Feedback.
-        So kann ich Physik Digital weiter verbessern.
-      </p>
-
-      <div class="stars" id="starRow">
-        <button type="button" class="star-btn" data-value="1"><span>⭐️</span></button>
-        <button type="button" class="star-btn" data-value="2"><span>⭐️</span></button>
-        <button type="button" class="star-btn" data-value="3"><span>⭐️</span></button>
-        <button type="button" class="star-btn" data-value="4"><span>⭐️</span></button>
-        <button type="button" class="star-btn" data-value="5"><span>⭐️</span></button>
-      </div>
-
-      <textarea
-        id="feedbackText"
-        class="feedback-input"
-        placeholder="Was hat dir geholfen? Was kann besser werden? (optional)"
-      ></textarea>
-
-      <div class="feedback-row">
-        <a id="feedbackSend" class="feedback-btn" href="#">
-          <span class="icon">📧</span>
-          <span>Feedback per Mail senden</span>
-        </a>
-        <div id="feedbackToast" class="feedback-toast">
-          Danke für dein Feedback!
-        </div>
-      </div>
-    </section>
-
-  <footer>
-  <span>Version 1.1 (Weihnachts–Edition)</span>
-  <span class="sep">·</span>
-  <span>Stand: Schuljahr 2025</span>
-  <span class="sep">·</span>
-  <span>M. Nagel</span>
-  <span class="sep">·</span>
-  <span>Physik Digital 9–10</span>
-
-  <a href="impressum.html" class="impressum-link">Impressum</a>
-</footer>
+    <div class="footer">
+      <span>Physik an der Friedrich‑Gedike‑Oberschule Perleberg · Sek I · Klassen 9–10</span>
+    </div>
   </main>
-
-  <script>
-    // --- Uhr aktualisieren ---
-    function updateClock() {
-      const now = new Date();
-      const h = String(now.getHours()).padStart(2, "0");
-      const m = String(now.getMinutes()).padStart(2, "0");
-      const s = String(now.getSeconds()).padStart(2, "0");
-      const timeEl = document.getElementById("clockTime");
-      const dateEl = document.getElementById("clockDate");
-
-      if (timeEl) timeEl.textContent = h + ":" + m + ":" + s;
-
-      const days = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-      const dName = days[now.getDay()];
-      const d = String(now.getDate()).padStart(2, "0");
-      const mo = String(now.getMonth() + 1).padStart(2, "0");
-      const y = now.getFullYear();
-
-      if (dateEl) dateEl.textContent = dName + ", " + d + "." + mo + "." + y;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // --- Adventskalender ↔ Physik-Spiel automatisch umschalten ---
-    // Robust ohne Jahres-Fallen: Advent = 01.–24.12., Spiel = 25.12.–30.11.
-    function updateSeasonTiles(now) {
-      const adventTile = document.querySelector(".tile.advent");
-      const gameTile = document.querySelector(".tile.game");
-      if (!adventTile || !gameTile) return;
-
-      const m = now.getMonth(); // 0=Jan ... 11=Dez
-      const d = now.getDate();
-
-      const inAdvent = (m === 11) && (d >= 1) && (d <= 24);
-      const inGameWindow = (m === 11 && d >= 25) || (m >= 0 && m <= 10); // Jan–Nov immer Spiel
-
-      adventTile.style.display = inAdvent ? "" : "none";
-      gameTile.style.display   = inGameWindow ? "" : "none";
-    }
-
-    // sofort + dann regelmäßig prüfen (jede Sekunde reicht, weil Uhr ohnehin läuft)
-    (function initSeasonTiles(){
-      updateSeasonTiles(new Date());
-      setInterval(() => updateSeasonTiles(new Date()), 1000);
-    })();
-
-    // --- Refresh-Button ---
-    const refreshBtn = document.getElementById("refreshBtn");
-    if (refreshBtn) {
-      refreshBtn.addEventListener("click", () => {
-        window.location.reload();
-      });
-    }
-
-    // --- NEU-Badges (14 Tage) ---
-    (function handleNewBadges() {
-      const NEW_DAYS = 14;
-      const STORAGE_KEY = "dashboardFirstSeen_v2";
-      let firstSeen = localStorage.getItem(STORAGE_KEY);
-
-      if (!firstSeen) {
-        localStorage.setItem(STORAGE_KEY, Date.now().toString());
-        firstSeen = localStorage.getItem(STORAGE_KEY);
-      }
-
-      const diffMs = Date.now() - Number(firstSeen);
-      const diffDays = diffMs / (1000 * 60 * 60 * 24);
-      const showNew = diffDays <= NEW_DAYS;
-
-      const badges = document.querySelectorAll(".tile-badge");
-      badges.forEach((b) => {
-        // "hot" (z.B. Physik-Spiel) soll immer auffällig bleiben
-        if (b.classList.contains("hot")) {
-          b.style.display = "inline-flex";
-          return;
-        }
-        b.style.display = showNew ? "inline-flex" : "none";
-      });
-})();
-
-    // --- Winter-Zeit prüfen ---
-    function isWinter() {
-      const now = new Date();
-      const m = now.getMonth(); // 0 = Jan, 11 = Dez
-      const d = now.getDate();
-
-      if (m === 10 && d >= 30) return true; // ab 30. November
-      if (m === 11) return true;           // Dezember
-      if (m === 0 && d <= 31) return true; // Januar
-      return false;
-    }
-
-    // --- Schneefall aktivieren ---
-    (function initSnow() {
-      if (!isWinter()) return;
-
-      const snowLayer = document.getElementById("snow-layer");
-      if (!snowLayer) return;
-
-      function createFlake() {
-        const flake = document.createElement("div");
-        flake.className = "snowflake";
-
-        const size = 2 + Math.random() * 3;
-        const left = Math.random() * 100;
-        const duration = 6 + Math.random() * 6;
-        const delay = Math.random() * 2;
-        const drift = (Math.random() * 40 - 20).toFixed(1) + "px";
-
-        flake.style.width = size + "px";
-        flake.style.height = size + "px";
-        flake.style.left = left + "vw";
-        flake.style.animationDuration = duration + "s";
-        flake.style.animationDelay = delay + "s";
-        flake.style.setProperty("--drift", drift);
-
-        snowLayer.appendChild(flake);
-
-        setTimeout(() => {
-          if (flake.parentNode === snowLayer) {
-            snowLayer.removeChild(flake);
-          }
-        }, (duration + delay) * 1000 + 500);
-      }
-
-      setInterval(() => {
-        const burst = 3 + Math.floor(Math.random() * 2);
-        for (let i = 0; i < burst; i++) createFlake();
-      }, 260);
-    })();
-
-    // --- Weihnachtsmodus (Design + Musik) ---
-    const xmasBtn = document.getElementById("xmasModeBtn");
-    const xmasAudio = document.getElementById("xmasMusic");
-    let xmasActive = false;
-
-    if (xmasBtn) {
-      xmasBtn.addEventListener("click", () => {
-        xmasActive = !xmasActive;
-        document.body.classList.toggle("xmas-on", xmasActive);
-
-        if (xmasActive) {
-          xmasBtn.querySelector("span:last-child").textContent = "Weihnachtsmodus an";
-          if (xmasAudio && xmasAudio.play) {
-            xmasAudio.currentTime = 0;
-            xmasAudio.play().catch(() => {});
-          }
-        } else {
-          xmasBtn.querySelector("span:last-child").textContent = "Weihnachtsmodus";
-          if (xmasAudio && xmasAudio.pause) {
-            xmasAudio.pause();
-          }
-        }
-      });
-    }
-
-    // --- Weihnachts-Popup (einmal pro Jahr) ---
-    (function initXmasPopup() {
-      const now = new Date();
-      const m = now.getMonth(); // 0 = Jan
-      if (m !== 11) return; // nur im Dezember
-
-      const year = now.getFullYear();
-      const KEY = "xmasPopupShown_" + year;
-      if (localStorage.getItem(KEY)) return;
-
-      const backdrop = document.getElementById("xmasPopupBackdrop");
-      const closeBtn = document.getElementById("xmasPopupClose");
-      if (!backdrop || !closeBtn) return;
-
-      backdrop.classList.add("show");
-
-      closeBtn.addEventListener("click", () => {
-        backdrop.classList.remove("show");
-        localStorage.setItem(KEY, "1");
-      });
-    })();
-
-    // --- Feedback-Logik ---
-    const starButtons = document.querySelectorAll(".star-btn");
-    let currentStars = 0;
-
-    starButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const value = Number(btn.getAttribute("data-value"));
-        currentStars = value;
-        starButtons.forEach((b) => {
-          const v = Number(b.getAttribute("data-value"));
-          b.classList.toggle("active", v <= value);
-        });
-      });
+</div>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js").catch(console.warn);
     });
-
-    const feedbackText = document.getElementById("feedbackText");
-    const feedbackSend = document.getElementById("feedbackSend");
-    const feedbackToast = document.getElementById("feedbackToast");
-
-    if (feedbackSend) {
-      feedbackSend.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        const rating = currentStars || 0;
-        const text = (feedbackText && feedbackText.value.trim()) || "";
-
-        const subject = encodeURIComponent("Feedback zu Physik Digital");
-        let body = "Bewertung: " + rating + " von 5 Sternen%0D%0A";
-        body += "%0D%0A";
-        body += encodeURIComponent(text);
-
-        const mailto =
-          "mailto:michael.nagel@lk.brandenburg.de?subject=" +
-          subject +
-          "&body=" +
-          body;
-
-        window.location.href = mailto;
-
-        // nach dem Senden zurücksetzen
-        currentStars = 0;
-        starButtons.forEach((b) => b.classList.remove("active"));
-        if (feedbackText) feedbackText.value = "";
-
-        if (feedbackToast) {
-          feedbackToast.classList.add("show");
-          setTimeout(() => {
-            feedbackToast.classList.remove("show");
-          }, 2500);
-        }
-      });
-    }
-  </script>
+  }
+</script>
 
 </body>
 </html>
