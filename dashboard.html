@@ -568,6 +568,146 @@
   font-weight: 800 !important;
 }
 
+
+/* === Feedback-Kachel === */
+.tile.feedback{
+  background: linear-gradient(135deg, #a855f7, #22c55e) !important;
+  color:#0b1220 !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.14),
+    0 14px 36px rgba(168,85,247,0.25),
+    0 0 60px rgba(34,197,94,0.22) !important;
+}
+.tile.feedback:hover,
+.tile.feedback:active{
+  transform: translateY(-2px) scale(1.01);
+  box-shadow:
+    0 18px 46px rgba(168,85,247,0.35),
+    0 0 70px rgba(34,197,94,0.35) !important;
+}
+
+/* === Feedback-Overlay (Marktanalyse v1) === */
+#feedbackModalBackdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.82);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 12000;
+  padding: 1rem;
+}
+#feedbackModalBackdrop.show{ display:flex; }
+
+.feedback-modal{
+  width: 100%;
+  max-width: 720px;
+  background: radial-gradient(circle at top, #0f172a 0%, #020617 58%, #000 100%);
+  border-radius: 26px;
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  box-shadow: 0 28px 90px rgba(0,0,0,0.95);
+  padding: 1.15rem 1.15rem 1rem;
+  color: #e5e7eb;
+  max-height: 86vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.feedback-modal h2{
+  font-size: 1.15rem;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.02em;
+}
+.feedback-modal p{
+  font-size: 0.9rem;
+  color: rgba(148, 163, 184, 0.95);
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
+}
+.feedback-meta{
+  font-size: 0.82rem;
+  color: rgba(226, 232, 240, 0.85);
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(148,163,184,0.35);
+  border-radius: 18px;
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.9rem;
+}
+.fb-grid{
+  display: grid;
+  gap: 0.85rem;
+}
+.fb-block{
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 18px;
+  padding: 0.8rem 0.85rem;
+}
+.fb-q{
+  font-weight: 700;
+  margin-bottom: 0.55rem;
+}
+.fb-options{
+  display: grid;
+  gap: 0.5rem;
+}
+.fb-opt{
+  display:flex;
+  align-items:flex-start;
+  gap:0.55rem;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+.fb-opt input{
+  margin-top: 0.18rem;
+  transform: scale(1.05);
+}
+.fb-text{
+  width: 100%;
+  min-height: 84px;
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  background: rgba(2, 6, 23, 0.7);
+  color: #e5e7eb;
+  padding: 0.7rem 0.8rem;
+  font-size: 0.92rem;
+  resize: vertical;
+}
+.fb-text::placeholder{ color: rgba(148,163,184,0.85); }
+
+.fb-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  margin-top: 0.85rem;
+}
+.fb-btn{
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.35);
+  background: rgba(15,23,42,0.85);
+  color:#e5e7eb;
+  padding: 0.55rem 1.05rem;
+  font-weight: 700;
+  cursor:pointer;
+  box-shadow: 0 14px 32px rgba(0,0,0,0.55);
+}
+.fb-btn.primary{
+  border: none;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color:#052e16;
+  box-shadow: 0 16px 42px rgba(22,163,74,0.6);
+}
+.fb-btn:disabled{
+  opacity: 0.55;
+  cursor: not-allowed;
+  filter: grayscale(0.3);
+}
+.fb-hint{
+  margin-top: 0.4rem;
+  font-size: 0.82rem;
+  color: rgba(148, 163, 184, 0.95);
+}
+
 </style>
 </head>
 <body>
@@ -660,6 +800,13 @@
         <span class="tile-badge hot">NEU!</span>
       </a>
 
+      <a href="#" class="tile feedback" id="openFeedbackBtn" aria-label="Feedback zur App">
+        <div class="tile-main">
+          <span class="icon">📝</span>
+          <span class="tile-label">Feedback</span>
+        </div>
+        <span class="tile-badge hot">2 MIN</span>
+      </a>
 
       <a href="formelsammlung.html" class="tile formel">
         <div class="tile-main">
@@ -677,39 +824,7 @@
       </a>
     </section>
 
-    <section class="feedback-card">
-      <h2>Wie gefällt dir diese App?</h2>
-      <p>
-        Tippe auf die Sterne und schicke mir anonymes Feedback.
-        So kann ich Physik Digital weiter verbessern.
-      </p>
-
-      <div class="stars" id="starRow">
-        <button type="button" class="star-btn" data-value="1"><span>⭐️</span></button>
-        <button type="button" class="star-btn" data-value="2"><span>⭐️</span></button>
-        <button type="button" class="star-btn" data-value="3"><span>⭐️</span></button>
-        <button type="button" class="star-btn" data-value="4"><span>⭐️</span></button>
-        <button type="button" class="star-btn" data-value="5"><span>⭐️</span></button>
-      </div>
-
-      <textarea
-        id="feedbackText"
-        class="feedback-input"
-        placeholder="Was hat dir geholfen? Was kann besser werden? (optional)"
-      ></textarea>
-
-      <div class="feedback-row">
-        <a id="feedbackSend" class="feedback-btn" href="#">
-          <span class="icon">📧</span>
-          <span>Feedback per Mail senden</span>
-        </a>
-        <div id="feedbackToast" class="feedback-toast">
-          Danke für dein Feedback!
-        </div>
-      </div>
-    </section>
-
-  <footer>
+<footer>
   <span>Version 1.1 (Weihnachts–Edition)</span>
   <span class="sep">·</span>
   <span>Stand: Schuljahr 2025</span>
@@ -720,6 +835,101 @@
 
   <a href="impressum.html" class="impressum-link">Impressum</a>
 </footer>
+  
+  <!-- Feedback-Overlay (Marktanalyse v1) -->
+  <div id="feedbackModalBackdrop" aria-hidden="true">
+    <div class="feedback-modal" role="dialog" aria-modal="true" aria-labelledby="fbTitle">
+      <h2 id="fbTitle">Kurze Rückmeldung zur Physik-App</h2>
+      <p>
+        Diese App wird weiterentwickelt. Bitte nimm dir <strong>2 Minuten</strong> Zeit und beantworte die Fragen ehrlich.
+      </p>
+      <div class="feedback-meta">
+        <strong>Hinweis:</strong> Die Rückmeldung ist anonym. Es werden keine Namen gespeichert.
+      </div>
+
+      <form id="fbForm" class="fb-grid">
+        <div class="fb-block">
+          <div class="fb-q">1. Wie hilfreich ist die Physik-App für dein Lernen?</div>
+          <div class="fb-options">
+            <label class="fb-opt"><input type="radio" name="q1" value="sehr hilfreich" required> sehr hilfreich</label>
+            <label class="fb-opt"><input type="radio" name="q1" value="eher hilfreich"> eher hilfreich</label>
+            <label class="fb-opt"><input type="radio" name="q1" value="geht so"> geht so</label>
+            <label class="fb-opt"><input type="radio" name="q1" value="eher nicht hilfreich"> eher nicht hilfreich</label>
+            <label class="fb-opt"><input type="radio" name="q1" value="gar nicht hilfreich"> gar nicht hilfreich</label>
+          </div>
+        </div>
+
+        <div class="fb-block">
+          <div class="fb-q">2. Was nutzt du in der App am meisten? (Mehrfachauswahl)</div>
+          <div class="fb-options">
+            <label class="fb-opt"><input type="checkbox" name="q2" value="Erklärtexte"> Erklärtexte</label>
+            <label class="fb-opt"><input type="checkbox" name="q2" value="Übersichten/Struktur"> Übersichten / Struktur</label>
+            <label class="fb-opt"><input type="checkbox" name="q2" value="Wiederholen vor Tests"> Wiederholen vor Tests</label>
+            <label class="fb-opt"><input type="checkbox" name="q2" value="Physik-Spiel"> Physik-Spiel</label>
+            <label class="fb-opt"><input type="checkbox" name="q2" value="Anderes/Nichts"> anderes / nichts davon</label>
+          </div>
+          <div class="fb-hint">Bitte mindestens eine Auswahl.</div>
+        </div>
+
+        <div class="fb-block">
+          <div class="fb-q">3. Motiviert dich das Spiel, dich mehr mit Physik zu beschäftigen?</div>
+          <div class="fb-options">
+            <label class="fb-opt"><input type="radio" name="q3" value="ja" required> ja</label>
+            <label class="fb-opt"><input type="radio" name="q3" value="eher ja"> eher ja</label>
+            <label class="fb-opt"><input type="radio" name="q3" value="eher nein"> eher nein</label>
+            <label class="fb-opt"><input type="radio" name="q3" value="nein"> nein</label>
+          </div>
+        </div>
+
+        <div class="fb-block">
+          <div class="fb-q">4. Was würdest du dir beim Spiel wünschen? (Mehrfachauswahl)</div>
+          <div class="fb-options">
+            <label class="fb-opt"><input type="checkbox" name="q4" value="mehr Level"> mehr Level</label>
+            <label class="fb-opt"><input type="checkbox" name="q4" value="schwierigere Fragen"> schwierigere Fragen</label>
+            <label class="fb-opt"><input type="checkbox" name="q4" value="andere Themen"> andere Themen</label>
+            <label class="fb-opt"><input type="checkbox" name="q4" value="besseres Design"> besseres Design</label>
+            <label class="fb-opt"><input type="checkbox" name="q4" value="passt so"> nichts – passt so</label>
+          </div>
+        </div>
+
+        <div class="fb-block">
+          <div class="fb-q">5. Wenn diese App vollständig, ohne Werbung und mit allen Inhalten verfügbar wäre – was fändest du angemessen?</div>
+          <div class="fb-options">
+            <label class="fb-opt"><input type="radio" name="q5" value="kostenlos" required> kostenlos</label>
+            <label class="fb-opt"><input type="radio" name="q5" value="1,99 € pro Jahr"> 1,99 € pro Jahr</label>
+            <label class="fb-opt"><input type="radio" name="q5" value="4,99 € pro Jahr"> 4,99 € pro Jahr</label>
+            <label class="fb-opt"><input type="radio" name="q5" value="1,99 € pro Monat"> 1,99 € pro Monat</label>
+            <label class="fb-opt"><input type="radio" name="q5" value="4,99 € pro Monat"> 4,99 € pro Monat</label>
+          </div>
+        </div>
+
+        <div class="fb-block">
+          <div class="fb-q">6. Für welche Fächer würdest du dir so eine App noch wünschen? (Mehrfachauswahl)</div>
+          <div class="fb-options">
+            <label class="fb-opt"><input type="checkbox" name="q6" value="Mathematik"> Mathematik</label>
+            <label class="fb-opt"><input type="checkbox" name="q6" value="Chemie"> Chemie</label>
+            <label class="fb-opt"><input type="checkbox" name="q6" value="Biologie"> Biologie</label>
+            <label class="fb-opt"><input type="checkbox" name="q6" value="NaWi"> NaWi</label>
+            <label class="fb-opt"><input type="checkbox" name="q6" value="WAT"> WAT</label>
+            <label class="fb-opt"><input type="checkbox" name="q6" value="Lebenspraktische Fähigkeiten"> Lebenspraktische Fähigkeiten</label>
+            <label class="fb-opt"><input type="checkbox" name="q6" value="kein weiteres Fach"> für kein weiteres Fach</label>
+          </div>
+          <div class="fb-hint">Bitte mindestens eine Auswahl.</div>
+        </div>
+
+        <div class="fb-block">
+          <div class="fb-q">7. Was würdest du an der App verbessern oder ergänzen? (optional)</div>
+          <textarea class="fb-text" name="q7" placeholder="Deine Idee / Wunsch / Kritik (freiwillig)"></textarea>
+        </div>
+
+        <div class="fb-actions">
+          <button type="button" class="fb-btn" id="fbCloseBtn">Zurück</button>
+          <button type="submit" class="fb-btn primary" id="fbSendBtn" disabled>Feedback senden</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   </main>
 
   <script>
@@ -895,58 +1105,163 @@
       });
     })();
 
-    // --- Feedback-Logik ---
-    const starButtons = document.querySelectorAll(".star-btn");
-    let currentStars = 0;
 
-    starButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const value = Number(btn.getAttribute("data-value"));
-        currentStars = value;
-        starButtons.forEach((b) => {
-          const v = Number(b.getAttribute("data-value"));
-          b.classList.toggle("active", v <= value);
-        });
-      });
-    });
+    // --- Feedback (Marktanalyse v1) ---
+    const FEEDBACK_VERSION = "physikapp_feedback_v1";
+    const FEEDBACK_DONE_KEY = "feedback_done_version";
+    const USE_COUNT_KEY = "physikapp_use_count";
+    const GAME_OPENED_KEY = "physikapp_game_opened";
 
-    const feedbackText = document.getElementById("feedbackText");
-    const feedbackSend = document.getElementById("feedbackSend");
-    const feedbackToast = document.getElementById("feedbackToast");
+    const feedbackBackdrop = document.getElementById("feedbackModalBackdrop");
+    const openFeedbackBtn = document.getElementById("openFeedbackBtn");
+    const fbForm = document.getElementById("fbForm");
+    const fbCloseBtn = document.getElementById("fbCloseBtn");
+    const fbSendBtn = document.getElementById("fbSendBtn");
 
-    if (feedbackSend) {
-      feedbackSend.addEventListener("click", (e) => {
+    function getDoneVersion(){
+      return localStorage.getItem(FEEDBACK_DONE_KEY) || "";
+    }
+    function setDone(){
+      localStorage.setItem(FEEDBACK_DONE_KEY, FEEDBACK_VERSION);
+    }
+    function incUseCount(){
+      const n = Number(localStorage.getItem(USE_COUNT_KEY) || "0") + 1;
+      localStorage.setItem(USE_COUNT_KEY, String(n));
+      return n;
+    }
+    function getUseCount(){
+      return Number(localStorage.getItem(USE_COUNT_KEY) || "0");
+    }
+    function openFeedback(){
+      if (!feedbackBackdrop) return;
+      feedbackBackdrop.classList.add("show");
+      feedbackBackdrop.setAttribute("aria-hidden","false");
+      // Scroll modal to top for safety
+      const modal = feedbackBackdrop.querySelector(".feedback-modal");
+      if (modal) modal.scrollTop = 0;
+      validateFeedbackForm();
+    }
+    function closeFeedback(){
+      if (!feedbackBackdrop) return;
+      feedbackBackdrop.classList.remove("show");
+      feedbackBackdrop.setAttribute("aria-hidden","true");
+    }
+
+    function getCheckedValues(name){
+      return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(i=>i.value);
+    }
+    function getRadioValue(name){
+      const el = document.querySelector(`input[name="${name}"]:checked`);
+      return el ? el.value : "";
+    }
+
+    function validateFeedbackForm(){
+      if (!fbSendBtn) return;
+      const q1 = getRadioValue("q1");
+      const q2 = getCheckedValues("q2");
+      const q3 = getRadioValue("q3");
+      const q5 = getRadioValue("q5");
+      const q6 = getCheckedValues("q6");
+      const ok = Boolean(q1) && q2.length >= 1 && Boolean(q3) && Boolean(q5) && q6.length >= 1;
+      fbSendBtn.disabled = !ok;
+    }
+
+    // Wire open/close
+    if (openFeedbackBtn){
+      openFeedbackBtn.addEventListener("click", (e) => {
         e.preventDefault();
-
-        const rating = currentStars || 0;
-        const text = (feedbackText && feedbackText.value.trim()) || "";
-
-        const subject = encodeURIComponent("Feedback zu Physik Digital");
-        let body = "Bewertung: " + rating + " von 5 Sternen%0D%0A";
-        body += "%0D%0A";
-        body += encodeURIComponent(text);
-
-        const mailto =
-          "mailto:michael.nagel@lk.brandenburg.de?subject=" +
-          subject +
-          "&body=" +
-          body;
-
-        window.location.href = mailto;
-
-        // nach dem Senden zurücksetzen
-        currentStars = 0;
-        starButtons.forEach((b) => b.classList.remove("active"));
-        if (feedbackText) feedbackText.value = "";
-
-        if (feedbackToast) {
-          feedbackToast.classList.add("show");
-          setTimeout(() => {
-            feedbackToast.classList.remove("show");
-          }, 2500);
+        openFeedback();
+      });
+    }
+    if (fbCloseBtn){
+      fbCloseBtn.addEventListener("click", () => closeFeedback());
+    }
+    // Click outside closes ONLY if already done (optional). For v1 we keep it strict:
+    if (feedbackBackdrop){
+      feedbackBackdrop.addEventListener("click", (e) => {
+        if (e.target === feedbackBackdrop && getDoneVersion() === FEEDBACK_VERSION){
+          closeFeedback();
         }
       });
     }
+
+    // Track usage: count clicks on tiles and buttons (lightweight)
+    document.querySelectorAll(".tile").forEach((tile) => {
+      tile.addEventListener("click", () => {
+        incUseCount();
+      }, { passive: true });
+
+      // Mark game opened for the automatic trigger
+      if (tile.classList.contains("game")){
+        tile.addEventListener("click", () => {
+          localStorage.setItem(GAME_OPENED_KEY, "1");
+        }, { passive: true });
+      }
+    });
+    if (refreshBtn){
+      refreshBtn.addEventListener("click", () => incUseCount(), { passive: true });
+    }
+
+    // Validate as user interacts
+    if (fbForm){
+      fbForm.addEventListener("input", validateFeedbackForm);
+      fbForm.addEventListener("change", validateFeedbackForm);
+
+      fbForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // collect answers
+        const q1 = getRadioValue("q1");
+        const q2 = getCheckedValues("q2").join(", ");
+        const q3 = getRadioValue("q3");
+        const q4 = getCheckedValues("q4").join(", ") || "-";
+        const q5 = getRadioValue("q5");
+        const q6 = getCheckedValues("q6").join(", ");
+        const q7 = (fbForm.querySelector('textarea[name="q7"]')?.value || "").trim() || "-";
+
+        const now = new Date();
+        const stamp = now.toLocaleString("de-DE");
+
+        const subject = encodeURIComponent("Feedback Physik-App (v1)");
+        const bodyLines = [
+          "Feedback-Version: " + FEEDBACK_VERSION,
+          "Zeitpunkt: " + stamp,
+          "",
+          "1) Hilfreich: " + q1,
+          "2) Meist genutzt: " + q2,
+          "3) Spiel motiviert: " + q3,
+          "4) Spiel-Wünsche: " + q4,
+          "5) Preis angemessen: " + q5,
+          "6) Weitere Fächer: " + q6,
+          "7) Verbesserungsidee: " + q7,
+          ""
+        ];
+        const body = encodeURIComponent(bodyLines.join("\n"));
+
+        // mark done BEFORE opening mail (so freiwillig = keine Pflicht mehr)
+        setDone();
+
+        window.location.href =
+          "mailto:michael.nagel@lk.brandenburg.de?subject=" + subject + "&body=" + body;
+
+        // Close after triggering mail client (optional)
+        closeFeedback();
+      });
+    }
+
+    // Automatic show: once per version, after real usage
+    (function maybeShowFeedback(){
+      // if already done for this version: never show automatically
+      if (getDoneVersion() === FEEDBACK_VERSION) return;
+
+      const useCount = getUseCount();
+      const gameOpened = localStorage.getItem(GAME_OPENED_KEY) === "1";
+
+      if (useCount >= 5 || gameOpened){
+        openFeedback();
+      }
+    })();
+
   </script>
 
 </body>
