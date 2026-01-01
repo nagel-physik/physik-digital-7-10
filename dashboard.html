@@ -721,15 +721,9 @@
   <!-- Weihnachts-Popup -->
   <div id="xmasPopupBackdrop" class="xmas-popup-backdrop">
     <div class="xmas-popup">
-      <h2>Frohe Vorweihnachtszeit 🎄</h2>
-      <p>
-        Schön, dass du mit der Physik-App arbeitest!<br>
-        Nutze die Zeit bis Weihnachten, um in Ruhe zu üben,
-        Fragen zu stellen und dich entspannt auf Tests vorzubereiten.
-      </p>
-      <p>
-        Denk daran: Fehler gehören zum Lernen dazu – Schritt für Schritt wird’s sicherer. 💪
-      </p>
+      <h2 id="popupTitle">🎄</h2>
+      <p id="popupP1"></p>
+      <p id="popupP2"></p>
       <div class="xmas-popup-footer">
         <button id="xmasPopupClose" class="xmas-popup-btn">Weiter zur App</button>
       </div>
@@ -825,7 +819,7 @@
     </section>
 
 <footer>
-  <span>Version 1.1 (Weihnachts–Edition)</span>
+  <span>Version 1.1</span>
   <span class="sep">·</span>
   <span>Stand: Schuljahr 2025</span>
   <span class="sep">·</span>
@@ -1013,13 +1007,11 @@
       const m = now.getMonth(); // 0 = Jan, 11 = Dez
       const d = now.getDate();
 
+      // Winter-Optik nur bis 31.12.
       if (m === 10 && d >= 30) return true; // ab 30. November
-      if (m === 11) return true;           // Dezember
-      if (m === 0 && d <= 31) return true; // Januar
-      return false;
-    }
-
-    // --- Schneefall aktivieren ---
+      if (m === 11) return true;            // Dezember
+      return false;                         // ab 01.01. kein Wintermodus mehr
+    }// --- Schneefall aktivieren ---
     (function initSnow() {
       if (!isWinter()) return;
 
@@ -1063,7 +1055,13 @@
     const xmasAudio = document.getElementById("xmasMusic");
     let xmasActive = false;
 
-    if (xmasBtn) {
+    
+    // Ab 01.01.: Winter-Button ausblenden und evtl. aktiven Modus sicher deaktivieren
+    if (xmasBtn && !isWinter()) {
+      xmasBtn.style.display = "none";
+      document.body.classList.remove("xmas-on");
+    }
+if (xmasBtn) {
       xmasBtn.addEventListener("click", () => {
         xmasActive = !xmasActive;
         document.body.classList.toggle("xmas-on", xmasActive);
@@ -1084,29 +1082,57 @@
     }
 
     // --- Weihnachts-Popup (einmal pro Jahr) ---
-    (function initXmasPopup() {
-      const now = new Date();
-      const m = now.getMonth(); // 0 = Jan
-      if (m !== 11) return; // nur im Dezember
+    
+// --- Saison-Popup: Dezember (Weihnachten) / 01.–07. Januar (Neujahr) ---
+(function initSeasonPopup() {
+  const now = new Date();
+  const m = now.getMonth(); // 0=Jan, 11=Dez
+  const d = now.getDate();
+  const year = now.getFullYear();
 
-      const year = now.getFullYear();
-      const KEY = "xmasPopupShown_" + year;
-      if (localStorage.getItem(KEY)) return;
+  const backdrop = document.getElementById("xmasPopupBackdrop");
+  const closeBtn = document.getElementById("xmasPopupClose");
+  const titleEl = document.getElementById("popupTitle");
+  const p1 = document.getElementById("popupP1");
+  const p2 = document.getElementById("popupP2");
+  if (!backdrop || !closeBtn || !titleEl || !p1 || !p2) return;
 
-      const backdrop = document.getElementById("xmasPopupBackdrop");
-      const closeBtn = document.getElementById("xmasPopupClose");
-      if (!backdrop || !closeBtn) return;
+  // Neujahr (01.–07. Januar) – einmal pro Jahr
+  const inNewYear = (m === 0 && d >= 1 && d <= 7);
+  if (inNewYear) {
+    const KEY = "newYearPopupShown_" + year;
+    if (localStorage.getItem(KEY)) return;
 
-      backdrop.classList.add("show");
+    titleEl.textContent = "Frohes neues Jahr 🎉";
+    p1.innerHTML = "Schön, dass du wieder da bist!<br>Neues Jahr – neue Ziele: Schritt für Schritt sicherer werden. 💪";
+    p2.innerHTML = "Tipp: Wenn du bei einer Frage hängst, schau kurz in der App nach – dann klappt’s direkt besser. ✅";
 
-      closeBtn.addEventListener("click", () => {
-        backdrop.classList.remove("show");
-        localStorage.setItem(KEY, "1");
-      });
-    })();
+    backdrop.classList.add("show");
+    closeBtn.addEventListener("click", () => {
+      backdrop.classList.remove("show");
+      localStorage.setItem(KEY, "1");
+    });
+    return;
+  }
 
+  // Weihnachtsgruß (nur im Dezember) – einmal pro Jahr
+  if (m === 11) {
+    const KEY = "xmasPopupShown_" + year;
+    if (localStorage.getItem(KEY)) return;
 
-    // --- Feedback (Marktanalyse v1) ---
+    titleEl.textContent = "Frohe Vorweihnachtszeit 🎄";
+    p1.innerHTML = "Schön, dass du mit der Physik-App arbeitest!<br>Nutze die Zeit bis Weihnachten, um in Ruhe zu üben.";
+    p2.innerHTML = "Denk daran: Fehler gehören zum Lernen dazu – Schritt für Schritt wird’s sicherer. 💪";
+
+    backdrop.classList.add("show");
+    closeBtn.addEventListener("click", () => {
+      backdrop.classList.remove("show");
+      localStorage.setItem(KEY, "1");
+    });
+  }
+})();
+
+// --- Feedback (Marktanalyse v1) ---
     const FEEDBACK_VERSION = "physikapp_feedback_v1";
     const FEEDBACK_DONE_KEY = "feedback_done_version";
     const USE_COUNT_KEY = "physikapp_use_count";
